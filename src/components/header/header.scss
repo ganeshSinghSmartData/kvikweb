@@ -1,10 +1,18 @@
 .header {
-  min-height: 77px;
+  height: 77px;
   padding: 5px 0;
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#0b8ee9+0,2db7fe+100 */
   background: #0b8ee9; /* Old browsers */
-  background: -moz-linear-gradient(left, #0b8ee9 0%, #2db7fe 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(left, #0b8ee9 0%, #2db7fe 100%); /* Chrome10-25,Safari5.1-6 */
+  background: -moz-linear-gradient(
+    left,
+    #0b8ee9 0%,
+    #2db7fe 100%
+  ); /* FF3.6-15 */
+  background: -webkit-linear-gradient(
+    left,
+    #0b8ee9 0%,
+    #2db7fe 100%
+  ); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(
     to right,
     #0b8ee9 0%,

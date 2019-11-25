@@ -7,7 +7,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { equipmentsLimit } from "../../utilities/constants";
+import SignInModal from "./../../components/commonUi/modal/modal";
 
 class Register extends Component {
   constructor(props) {
@@ -18,7 +18,11 @@ class Register extends Component {
 
   componentDidMount() {}
   render() {
-    return <div className="black-bg"></div>;
+    return (
+      <div className="black-bg">
+        <SignInModal isOpen={true}></SignInModal>
+      </div>
+    );
   }
 }
 
