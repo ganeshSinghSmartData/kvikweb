@@ -1,0 +1,111 @@
+.btn {
+  font-family: $secondary-font-family;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 9px 15px;
+  border-radius: 40px;
+}
+.btn-link {
+  color: $orange-200;
+  &:hover {
+    color: $orange-200;
+    text-decoration: none;
+  }
+}
+
+.btn-lg,
+.btn-group-lg > .btn {
+  font-size: 20px;
+  font-weight: 400;
+  padding: 9px 20px;
+}
+.btn-primary,
+.primary-bg,
+.primary-bg-bar .progress-bar {
+  background-color: $primary;
+  border-color: $primary;
+}
+.btn-primary1.filter-bar-btn {
+  background-color: $primary;
+}
+.btn-primary,
+.social-icons .btn span {
+  &:hover {
+    background-color: $primary-hover;
+    border-color: $primary-hover;
+  }
+}
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle,
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: $primary-hover;
+  border-color: $primary-hover;
+}
+
+.btn-secondary {
+  @include secondary-gradient($orange, $orange-100);
+  border: none;
+  &:hover {
+    @include secondary-gradient-hover($orange-hover, $orange-200);
+    border: none;
+  }
+}
+
+.btn-secondary1,
+.secondary-bg-dark .progress-bar {
+  background-color: $orange-200;
+}
+.job-location svg,
+.svg-secondary-100 svg,
+.rating-btn.svg-secondary-100 svg {
+  fill: $orange-200;
+}
+.secondary-100-hover {
+  &:hover {
+    svg {
+      fill: $orange-200;
+    }
+  }
+  &:hover {
+    color: $orange-200;
+  }
+}
+.btn-info {
+  font-weight: 400;
+  background-color: $info;
+  border-color: $info;
+  color: $dark-default;
+  &:hover {
+    background-color: $secondary;
+    border-color: $secondary;
+  }
+}
+.btn-info:not(:disabled):not(.disabled):active,
+.btn-info:not(:disabled):not(.disabled).active,
+.show > .btn-info.dropdown-toggle,
+.btn-info:not(:disabled):not(.disabled):active,
+.btn-info:not(:disabled):not(.disabled).active,
+.show > .btn-info.dropdown-toggle,
+.btn-info:focus,
+.btn-info.focus,
+.btn-info:not(:disabled):not(.disabled):active:focus,
+.btn-info:not(:disabled):not(.disabled).active:focus,
+.show > .btn-info.dropdown-toggle:focus {
+  color: #fff;
+  background-color: $secondary;
+  border-color: $secondary;
+  box-shadow: 0 0 0 0.2rem #ffca82;
+}
+
+.btn-light:not(:disabled):not(.disabled):active,
+.btn-light:not(:disabled):not(.disabled).active,
+.show > .btn-light.dropdown-toggle {
+  background-color: $secondary;
+}
+
+// Custom style start
+.btn.signup {
+  min-width: 159px;
+}

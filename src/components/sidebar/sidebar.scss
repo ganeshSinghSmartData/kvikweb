@@ -1,0 +1,232 @@
+@import "../../assets/css/variables";
+.sidebar-col {
+  max-width: 295px;
+  transition: all ease 0.3s 0s;
+  transform: translateX(0);
+  z-index: 5;
+  // display: none !important;
+}
+
+// .footer {
+//   display: none !important;
+// }
+.sidebar {
+  background-color: #fff;
+  border: 1px solid #e2e5e7;
+  padding: 17px 20px 94px;
+  border-radius: 10px;
+}
+.sidebar-item {
+  margin: 0 0 10px 0;
+}
+.sidebar-item {
+  > h3 {
+    font-family: $secondary-font-family;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+  }
+}
+.sidebar-list-blc {
+  > ul > li {
+    margin: 0;
+    padding: 0 0 0 15px;
+    position: relative;
+  }
+}
+.sidebar-list-blc {
+  > ul > li:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(163, 163, 163, 0.5);
+    display: inline-block;
+  }
+}
+
+.sidebar-list {
+  padding-left: 15px;
+  color: #9a9a9a;
+  line-height: 33px;
+  display: none;
+}
+.sidebar-list {
+  > ul > li {
+    line-height: normal;
+    padding: 0 0 16px 0;
+  }
+}
+.sidebar-list {
+  > ul > li {
+    line-height: normal;
+    padding: 0 0 8px 0;
+  }
+}
+.sidebar-list {
+  > ul > li .btn-link {
+    font-weight: 400;
+    color: #9a9a9a;
+    text-decoration: none;
+    padding: 0 0 8px 0;
+    &:hover {
+      color: $dark-default;
+    }
+  }
+}
+.active-sub-list {
+  .sidebar-list {
+    display: block;
+  }
+}
+
+.sidebar-list-blc h4,
+.sidebar-list-blc h5 {
+  min-height: 33px;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0;
+}
+// .sidebar-list-blc h5 {
+//   min-height: 29px;
+// }
+.sidebar-list-blc h4 label,
+.sidebar-list-blc h5 label {
+  padding-right: 15px;
+}
+.sidebar-list-blc h4 {
+  svg {
+    width: 10px;
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transition: all ease 0.3s 0s;
+    -webkit-transition: all ease 0.3s 0s;
+    -moz-transition: all ease 0.3s 0s;
+    -ms-transition: all ease 0.3s 0s;
+    -o-transition: all ease 0.3s 0s;
+  }
+}
+.sidebar-list-blc .active-sub-list h4 {
+  svg {
+    width: 10px;
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+  }
+}
+.sidebar-list-blc h4 {
+  svg {
+    width: 10px;
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transition: all ease 0.3s 0s;
+    -webkit-transition: all ease 0.3s 0s;
+    -moz-transition: all ease 0.3s 0s;
+    -ms-transition: all ease 0.3s 0s;
+    -o-transition: all ease 0.3s 0s;
+  }
+}
+
+.item-toggle-btn,
+.list-toggle-btn {
+  width: 40px;
+  height: 28px;
+  margin: 0 0 0;
+}
+.list-toggle-btn {
+  margin-top: 3px;
+  &:hover {
+    path {
+      fill: $secondary-100;
+    }
+  }
+}
+.item-toggle-btn {
+  > span {
+    width: 16px;
+    height: 16px;
+    background: #ccc;
+    border-radius: 50%;
+    transition: all ease 0.3s 0s;
+  }
+  &:hover {
+    > span {
+      background: $secondary-100;
+    }
+  }
+}
+.item-toggle-btn {
+  > span span {
+    width: 8px;
+    height: 2px;
+    background: white;
+    &:after {
+      content: "";
+      position: absolute;
+      width: 8px;
+      height: 2px;
+      background: white;
+      transform: rotate(90deg);
+    }
+  }
+}
+.item-toggle-btn {
+  > span .active:after {
+    content: "";
+    width: 0;
+  }
+}
+.sidebar-list-blc h5.postal-head {
+  font-family: $secondary-font-family;
+  min-height: initial;
+  padding-bottom: 4px;
+}
+.postal-head label {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+@media (max-width: 767px) {
+  .sidebar-col {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    padding: 0;
+    overflow: auto;
+    box-shadow: 0 0 13px #0000008c;
+    transform: translateX(-100%);
+    .sidebar {
+      border-radius: 0;
+    }
+  }
+  .sidebar-col.active {
+    transform: translateX(0);
+  }
+  .sidebar-toogle-btn {
+    top: 0;
+    left: 0px;
+    width: 50px;
+    z-index: 4;
+    svg {
+      width: 22px;
+      height: 22px;
+      path {
+        fill: white;
+      }
+    }
+  }
+  .sidebar-toogle-btn.d-none {
+    display: block;
+  }
+}

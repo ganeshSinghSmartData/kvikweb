@@ -1,0 +1,15 @@
+.logo {
+  * {
+    cursor: pointer;
+  }
+  svg {
+    width: 78px;
+    height: 29px;
+  }
+}
+.logo.signup-logo {
+  svg {
+    width: 235px;
+    height: 87px;
+  }
+}

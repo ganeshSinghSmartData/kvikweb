@@ -1,0 +1,65 @@
+.header {
+  min-height: 77px;
+  padding: 5px 0;
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#0b8ee9+0,2db7fe+100 */
+  background: #0b8ee9; /* Old browsers */
+  background: -moz-linear-gradient(left, #0b8ee9 0%, #2db7fe 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, #0b8ee9 0%, #2db7fe 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    to right,
+    #0b8ee9 0%,
+    #2db7fe 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0b8ee9', endColorstr='#2db7fe',GradientType=1 ); /* IE6-9 */
+  .logo {
+    img {
+      position: relative;
+      top: -6px;
+    }
+  }
+  .nav-toggle-btn {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.18);
+    text-align: center;
+    span {
+      display: block;
+      position: absolute;
+      height: 3px;
+      width: 68%;
+      left: 6px;
+      background: #ffffffd6;
+      margin: 3px 0px;
+      border-radius: 10px;
+      transition: 0.25s ease-in-out;
+      transform: rotate(0deg);
+      transform-origin: left center;
+    }
+    span:nth-child(1) {
+      top: 7px;
+    }
+    span:nth-child(2) {
+      top: 15px;
+    }
+    span:nth-child(3) {
+      top: 23px;
+    }
+  }
+}
+
+.nav-toggle-btn.active {
+  span:nth-child(1) {
+    transform: rotate(45deg);
+    top: 6px;
+    left: 9px;
+  }
+  span:nth-child(2) {
+    width: 0%;
+    opacity: 0;
+  }
+  span:nth-child(3) {
+    transform: rotate(-45deg);
+    left: 9px;
+    top: 25px;
+  }
+}

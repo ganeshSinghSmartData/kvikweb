@@ -1,0 +1,42 @@
+@import "../../../assets/css/variables";
+.form-control {
+  font-family: $secondary-font-family;
+  font-size: 14px;
+  height: 41px;
+  padding-left: 18px;
+  border-color: #e1e1e1;
+  color: #333;
+  border-radius: 22px;
+  -o-border-radius: 22px;
+  &:focus {
+    border-color: #2db7fe;
+    box-shadow: 0 0 0 0.2rem rgba(45, 183, 254, 0.33);
+  }
+}
+.form-control::-webkit-input-placeholder {
+  color: rgba(51, 51, 51, 0.6);
+}
+.form-control:-ms-input-placeholder {
+  color: rgba(51, 51, 51, 0.6);
+}
+.form-control::placeholder {
+  color: rgba(51, 51, 51, 0.6);
+}
+
+.input-icon {
+  position: absolute;
+  left: 18px;
+  svg {
+    width: 15px;
+    height: 15px;
+    fill: #6d6d6d;
+  }
+}
+.form-control.input-icon-cell {
+  padding-left: 50px;
+  padding-right: 18px;
+}
+.error-msg {
+  font-size: 12px;
+  margin: 5px 0 0 20px;
+}

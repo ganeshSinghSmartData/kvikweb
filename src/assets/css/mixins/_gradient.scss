@@ -1,0 +1,22 @@
+@mixin secondary-gradient($orange, $orange-100) {
+  background: $orange-hover; /* Old browsers */
+  background: -moz-linear-gradient(left, $orange 0%, $orange-100 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, $orange 0%, $orange-100 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    to right,
+    $orange 0%,
+    $orange-100 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$orange', endColorstr='$orange-100 ',GradientType=1 ); /* IE6-9 */
+}
+@mixin secondary-gradient-hover($orange-hover, $orange-200) {
+  background: $orange-hover; /* Old browsers */
+  background: -moz-linear-gradient(left, $orange-hover 0%, $orange-200 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, $orange-hover 0%, $orange-200 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    to right,
+    $orange-hover 0%,
+    $orange-200 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$orange', endColorstr='$orange-200',GradientType=1 ); /* IE6-9 */
+}

@@ -1,0 +1,35 @@
+.sidebar-list-blc {
+  h5 {
+    span {
+      font-size: 12px;
+    }
+  }
+}
+.filter-row {
+  .form-control {
+    font-weight: 500;
+  }
+  margin: 0 0 23px 0;
+}
+.filter-bar-outer .filter-bar {
+  background-color: rgba(51, 51, 51, 0.1);
+}
+.filter-bar {
+  height: 5px;
+  border-radius: 3px;
+}
+.filter-bar-blc {
+  .filter-bar-btn {
+    width: 20px;
+    height: 20px;
+    border: 5px solid #333;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin: -7px 0;
+    border-radius: 50%;
+    &:focus {
+      outline: none;
+    }
+  }
+}

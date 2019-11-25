@@ -1,0 +1,21 @@
+@import "../../../../assets/css/variables";
+.btn.rating-btn {
+  padding: 3px;
+  &:hover {
+    svg {
+      fill: $secondary-100;
+    }
+  }
+}
+.rating-btn {
+  svg {
+    fill: #707070;
+    width: 19px;
+    height: 18px;
+  }
+}
+.job-detail-amnt {
+  font-size: 23px;
+  font-weight: 500;
+  margin: 0;
+}

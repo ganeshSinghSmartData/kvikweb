@@ -1,0 +1,74 @@
+@import "../../assets/css/variables";
+.footer {
+  font-family: $secondary-font-family;
+  background: #fff;
+  padding: 13px 16px;
+  margin-top: 30px;
+}
+.social-icons {
+  svg {
+    width: 13px;
+    height: auto;
+    fill: white;
+  }
+}
+button.btn.fcbk {
+  svg {
+    width: 7px;
+  }
+}
+.social-icons {
+  margin-top: -33px;
+  padding: 0 0 15px 0;
+}
+.social-icons {
+  .btn {
+    background: #fff;
+    width: 37px;
+    height: 37px;
+    margin-right: 3px;
+    margin-left: 3px;
+  }
+}
+.social-icons {
+  .btn span {
+    height: 24px;
+    width: 24px;
+    transition: all ease 0.3s 0s;
+    -webkit-transition: all ease 0.3s 0s;
+    -moz-transition: all ease 0.3s 0s;
+    -ms-transition: all ease 0.3s 0s;
+    -o-transition: all ease 0.3s 0s;
+  }
+}
+.footer-links {
+  .btn {
+    font-weight: 400;
+    color: #333;
+    padding: 0 10px;
+    &:hover.btn {
+      text-decoration: none;
+    }
+  }
+}
+.footer-links {
+  p {
+    font-size: 12px;
+    color: #707070;
+  }
+}
+.footer-links ul {
+  margin: 0 0 5px 0;
+  li:last-child:after {
+    width: 0;
+  }
+}
+.footer-links {
+  li:after {
+    content: "";
+    width: 1px;
+    height: 12px;
+    background: #333;
+    display: inline-block;
+  }
+}

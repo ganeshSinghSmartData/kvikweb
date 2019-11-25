@@ -1,0 +1,27 @@
+@import "../../../../assets/css/variables";
+.login-type {
+  margin: 33px 0 25px;
+  h4 {
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 11px;
+  }
+}
+.login-type-list {
+  .btn-link {
+    width: 30px;
+    height: 30px;
+    background-color: #000;
+    margin: 0 9px 0 0;
+    &:hover {
+      background-color: $secondary-100;
+    }
+    svg {
+      width: 16px;
+      height: 16px;
+      path {
+        fill: #fff;
+      }
+    }
+  }
+}

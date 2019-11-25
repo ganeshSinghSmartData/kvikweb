@@ -1,0 +1,62 @@
+@import "../../assets/css/variables";
+.job-list-blc {
+  margin-top: 29px;
+}
+.job-list-heading {
+  font-family: $secondary-font-family;
+  min-height: 41px;
+  margin-bottom: 9px;
+  > h3 {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 10px 10px 0px 0;
+    color: #000;
+  }
+}
+.list-icon {
+  svg path {
+    fill: #b3b3b3;
+  }
+}
+.list-icon.active {
+  svg path {
+    fill: #333;
+  }
+}
+.joblist-more {
+  padding-bottom: 30px;
+  .btn {
+    font-size: 16px;
+    min-width: 158px;
+    min-height: 52px;
+  }
+  .data-loader-btn {
+    .spinner-border {
+      margin: 3px 4px 0 0;
+    }
+  }
+}
+.scroll-tp-btn {
+  width: 57px;
+  height: 57px;
+  background-color: rgba(163, 163, 163, 0.45);
+  bottom: 123px;
+  right: 0;
+  opacity: 0;
+  transition: all ease 0.3s 0s;
+  transform: rotate(-90deg);
+  svg {
+    width: 24px;
+    path {
+      fill: white;
+    }
+  }
+  &:hover,
+  &:focus {
+    background-color: $secondary;
+  }
+}
+.scroll-tp-btn.on {
+  opacity: 1;
+  bottom: 143px;
+}

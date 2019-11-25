@@ -1,0 +1,27 @@
+$dark-default: #333;
+$blue: #2db7fe;
+$blue-100: #078ace;
+$yellow: #fea62c;
+$orange: #ffb12c;
+$orange-hover: #fc9f00;
+$orange-100: #fd782e;
+$orange-200: #ff6c00;
+$green: #28a745;
+$white: #fff;
+$red: #ff0000;
+
+$primary: $blue;
+$primary-hover: $blue-100;
+$secondary: $yellow;
+$secondary-100: $orange-100;
+$secondary-100-hover: $orange-200;
+$success: $green;
+$info: $white;
+// $warning: $yellow;
+$danger: $red;
+
+$Roboto: "Roboto", sans-serif;
+$poppins: "Poppins", sans-serif;
+
+$primary-font-family: $Roboto;
+$secondary-font-family: $poppins;

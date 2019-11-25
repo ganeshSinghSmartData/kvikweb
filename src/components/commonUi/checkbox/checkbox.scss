@@ -1,0 +1,29 @@
+.checkbox {
+  margin-right: 10px;
+  > input {
+    position: absolute;
+    opacity: 0;
+  }
+}
+.checkbox {
+  span {
+    svg {
+      width: 15px;
+      height: 15px;
+      display: none;
+      path {
+        fill: #333;
+      }
+    }
+  }
+}
+.checkbox input[type="checkbox"]:checked + span svg {
+  display: block;
+}
+.checkbox {
+  span {
+    width: 22px;
+    height: 22px;
+    border: 1px solid rgba(109, 109, 109, 0.3);
+  }
+}

@@ -1,0 +1,28 @@
+.text-primary {
+  color: $primary !important;
+}
+.text-primary-hover {
+  &:hover {
+    color: $primary !important;
+  }
+}
+.text-secondary {
+  color: $orange-100 !important;
+}
+.text-secondary-hover {
+  &:hover {
+    color: $orange-100 !important;
+  }
+}
+.footer-links {
+  color: $primary !important;
+  .btn-link {
+    &:focus {
+      text-decoration: none;
+    }
+    &:hover {
+      text-decoration: none;
+      color: $primary !important;
+    }
+  }
+}

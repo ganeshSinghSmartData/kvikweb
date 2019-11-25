@@ -1,0 +1,197 @@
+@import "../../../assets//css/variables";
+.modal-dialog {
+  height: calc(100% - 40px);
+  width: 90%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  .modal-content {
+    max-height: 100%;
+  }
+}
+
+.modal-lg.signup {
+  height: calc(100% - 40px);
+  width: 90%;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+// signup Modal style start
+.modal-lg.signup {
+  max-width: 970px;
+}
+.modal-dialog.signup {
+  .modal-content {
+    border-radius: 0;
+    border: none;
+  }
+  .flex-fill {
+    flex-basis: 0 !important;
+  }
+}
+.signup-modal-pic {
+  width: 473px;
+  background: url("../../../assets/images/signup-pic.jpg") 0 0 no-repeat;
+  background-size: cover;
+  background-blend-mode: soft-light;
+  background-color: #0680bf;
+  color: #fff;
+}
+@supports (-ms-ime-align: auto) {
+  .signup-modal-pic:after {
+    content: "";
+    background-color: #057af3;
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    opacity: 0.5;
+  }
+  .signup-modal-pic {
+    > h3 {
+      z-index: 2;
+    }
+    .curl {
+      z-index: 2;
+    }
+  }
+}
+.curl {
+  right: -4px;
+  top: 39%;
+}
+.curl {
+  svg {
+    width: 54px;
+    height: 250px;
+  }
+}
+.signup-modal-pic {
+  > h3 {
+    font-size: 18px;
+    font-weight: 400;
+  }
+}
+.signup-modal-pic {
+  > h3 {
+    span {
+      margin-top: 20px;
+    }
+  }
+}
+.signup-modal-frm {
+  margin: 88px 67px 50px 67px;
+  .form-group {
+    margin-bottom: 9px;
+  }
+}
+.signup-modal-frm {
+  h2 {
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 43px;
+    label {
+      font-family: "Poppins", sans-serif;
+      font-size: 49px;
+      font-weight: 500;
+      line-height: 1;
+      margin-top: 7px;
+    }
+  }
+}
+.forgot-btn.btn-link {
+  font-weight: 400;
+  color: #333;
+}
+
+.signup-link-rw {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  span {
+    margin-right: 4px;
+  }
+  .btn-link {
+    font-size: 16px;
+    font-weight: 500;
+    color: #1460b2;
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+.close-btn.btn {
+  z-index: 1;
+  top: 8px;
+  right: 8px;
+  padding: 7px;
+}
+.close-btn {
+  svg {
+    width: 25px;
+    height: 25px;
+    fill: #333;
+  }
+}
+.signup-agree {
+  margin-bottom: 23px;
+  cursor: pointer;
+  label {
+    cursor: pointer;
+    margin-right: 10px;
+  }
+}
+
+// signup Modal style end
+@media (max-width: 1024px) {
+  .signup-modal-pic {
+    width: 350px;
+    .logo.signup-logo {
+      svg {
+        width: 200px;
+        height: auto;
+      }
+    }
+  }
+  .signup-modal-frm {
+    margin: 50px 40px;
+  }
+}
+@media (max-width: 767px) {
+  .close-btn.btn {
+    &:hover {
+      svg {
+        fill: #fff !important;
+      }
+    }
+  }
+  .signup-modal-blc {
+    flex-direction: column;
+    .signup-modal-pic {
+      width: auto;
+      height: 120px;
+      flex: none;
+      .logo.signup-logo {
+        svg {
+          width: 120px;
+        }
+      }
+      .curl {
+        display: none;
+      }
+    }
+    .signup-modal-frm {
+      margin: 20px;
+      h2 {
+        label {
+          font-size: 32px;
+        }
+      }
+    }
+  }
+  .close-btn svg {
+    fill: #fff;
+  }
+}
