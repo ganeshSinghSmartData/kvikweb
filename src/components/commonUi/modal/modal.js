@@ -1,33 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 import { Modal, ModalBody, Button, Form } from "reactstrap";
 import InputCell from "../input/inputCell";
 import Checkbox from "../checkbox/checkbox";
 import Logo from "../../commonUi/logo/logo";
 import LoginType from "./loginType/loginType";
+import { Link } from "react-router-dom";
 
 import "./modal.scss";
-const SignInModal = isOpen => {
-  const [modal, setModal] = useState({
-    modal: isOpen,
-    modalType: true
-  });
-  const toggle = () => setModal(!modal);
+const SignInModal = ({ _isOpen, _toggleModal, _modalType, ...props }) => {
   return (
     <div>
       <Modal
-        isOpen={modal}
-        toggle={modal}
+        isOpen={_isOpen}
         size="lg"
         className={
           "d-flex flex-column align-items-center justify-content-center " +
-          (modal.modalType ? "signup" : "")
+          (_modalType ? "signup" : "")
         }
       >
-        {/* <ModalHeader toggle={toggle}>Modal title</ModalHeader> */}
         <Button
           color="link"
           className="position-absolute close-btn secondary-100-hover"
-          onClick={toggle}
+          onClick={() => _toggleModal(!_isOpen)}
         >
           <svg
             id="cancel"
@@ -50,9 +44,7 @@ const SignInModal = isOpen => {
             </g>
           </svg>
         </Button>
-        <ModalBody
-          className={"overflow-auto " + (modal.modalType ? "p-0" : "")}
-        >
+        <ModalBody className={"overflow-auto " + (_modalType ? "p-0" : "")}>
           <div className="signup-modal-blc d-flex">
             <div className="signup-modal-pic d-flex align-items-center justify-content-center position-relative">
               <span className="curl position-absolute">
@@ -80,62 +72,88 @@ const SignInModal = isOpen => {
             </div>
 
             <div className="signup-modal-frm flex-fill">
-              <h2>
-                Welcome Back,
-                <label className="d-block">Sign Up</label>
-              </h2>
               <Form>
-                <InputCell
-                  inputCell={true}
-                  InputType="name"
-                  placeholder="First Name"
-                />
-                <InputCell
-                  inputCell={true}
-                  InputType="name"
-                  placeholder="Last Name"
-                />
-                <InputCell
-                  inputCell={true}
-                  InputType="email"
-                  placeholder="Email"
-                />
-                <InputCell
-                  inputCell={true}
-                  InputType="password"
-                  placeholder="Password"
-                />
-                <div className="signup-agree d-flex align-items-start">
-                  <label className="d-flex align-items-start">
-                    <Checkbox /> I agree with terms and conditions
-                  </label>
-                  <Button
-                    color="link"
-                    className="forgot-btn btn btn-link flex-shrink-0 ml-auto p-0 text-primary-hover"
-                  >
-                    Forgot Password?
-                  </Button>
-                </div>
-                <div className="text-center">
-                  <Button size="lg" className="signup">
-                    SIGN UP
-                  </Button>
-                </div>
-                <LoginType />
-                <p className="signup-link-rw text-center">
-                  <span>Don't have an account?</span>
-                  <Button color="link" className="p-0">
-                    Sign Up Now
-                  </Button>
-                </p>
+                {_modalType === "/register" && (
+                  <div>
+                    <h2>
+                      Welcome <label className="d-block">Sign Up</label>
+                    </h2>
+                    <InputCell
+                      inputCell={true}
+                      InputType="name"
+                      placeholder="First Name"
+                    />
+                    <InputCell
+                      inputCell={true}
+                      InputType="name"
+                      placeholder="Last Name"
+                    />
+                    <InputCell
+                      inputCell={true}
+                      InputType="email"
+                      placeholder="Email"
+                    />
+                    <InputCell
+                      inputCell={true}
+                      InputType="password"
+                      placeholder="Password"
+                    />
+                    <div className="signup-agree d-flex align-items-start">
+                      <label className="d-flex align-items-start">
+                        <Checkbox /> I agree with terms and conditions
+                      </label>
+                    </div>
+                    <div className="text-center">
+                      <Button size="lg" className="signup">
+                        SIGN UP
+                      </Button>
+                    </div>
+                  </div>
+                )}
+                {_modalType === "/login" && (
+                  <div>
+                    <h2>
+                      Welcome Back, <label className="d-block">Login</label>
+                    </h2>
+                    <InputCell
+                      inputCell={true}
+                      InputType="email"
+                      placeholder="Email"
+                    />
+                    <InputCell
+                      inputCell={true}
+                      InputType="password"
+                      placeholder="Password"
+                    />
+                    <div className="signup-agree d-flex align-items-start">
+                      <label className="d-flex align-items-start">
+                        <Checkbox /> Remember me
+                      </label>
+                      <Button
+                        color="link"
+                        className="forgot-btn btn btn-link flex-shrink-0 ml-auto p-0 text-primary-hover"
+                      >
+                        Forgot Password?
+                      </Button>
+                    </div>
+                    <div className="text-center">
+                      <Button size="lg" className="signup">
+                        LOGIN
+                      </Button>
+                    </div>
+                    <LoginType {...props} />
+                    <p className="signup-link-rw text-center">
+                      <span>Don't have an account?</span>
+                      <Link className="text-black" to={"/register"}>
+                        Sign Up Now
+                      </Link>
+                    </p>
+                  </div>
+                )}
               </Form>
             </div>
           </div>
         </ModalBody>
-        {/* <ModalFooter>
-          <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
-          <Button color="secondary" onClick={toggle}>Cancel</Button>
-        </ModalFooter> */}
       </Modal>
     </div>
   );

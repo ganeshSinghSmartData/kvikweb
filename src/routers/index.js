@@ -1,19 +1,64 @@
 /*********** Routes for applications **************/
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Job from "../components/jobs/jobs";
-import Header from "../components/header/header";
-import Login from "../containers/auth/login";
-import Register from "../containers/auth/register";
+import { publicLayout, privateLayout } from "../components/Layouts";
+import AppRoute from "./AppRoute";
+import { Authorization } from "../authorization";
+import { public_type } from "../utilities/constants";
 
-const Routers = () => {
+import HomePage from "../containers/home";
+
+const Routers = store => {
   return (
     <Router>
-      <Header />
       <Switch>
-        <Route exact path="/" component={Job} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
+        <AppRoute
+          exact={true}
+          path="/"
+          component={HomePage}
+          requireAuth={Authorization}
+          layout={publicLayout}
+          store={store}
+          type={public_type}
+        />
+
+        <AppRoute
+          exact={true}
+          path="/login"
+          component={HomePage}
+          requireAuth={Authorization}
+          layout={publicLayout}
+          store={store}
+          type={public_type}
+        />
+        <AppRoute
+          exact={true}
+          path="/register"
+          component={HomePage}
+          requireAuth={Authorization}
+          layout={publicLayout}
+          store={store}
+          type={public_type}
+        />
+
+        {/* <AppRoute
+          exact
+          path="/forgot-password"
+          component={ForgotPassword}
+          requireAuth={Authorization}
+          layout={publicLayout}
+          store={store}
+          type={public_type}
+        /> */}
+        {/* <AppRoute
+          exact
+          path="/reset-password/:token"
+          component={ForgotPassword}
+          requireAuth={Authorization}
+          layout={publicLayout}
+          store={store}
+          type={public_type}
+        /> */}
       </Switch>
     </Router>
   );
