@@ -1,6 +1,10 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
 import Job from "./../../components/jobs/jobs";
 import SignInModal from "./../../components/commonUi/modal/modal";
+import { registerUser, loginUser } from "./../../actions/user";
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -8,13 +12,37 @@ class Home extends Component {
       isModal: false
     };
     this.toggleModal = this.toggleModal.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleForgotPassword = this.handleForgotPassword.bind(this);
   }
 
   componentDidMount() {}
 
-  toggleModal = value => {
+  toggleModal() {
+    console.log("Came here at a time : ");
     this.props.history.push("/");
+  }
+
+  handleSubmit = values => {
+    if (values.lname || values.fname) {
+      this.props.registerUser(values, callback => {
+        if (callback) {
+          this.toggleModal();
+        }
+      });
+    } else {
+      this.props.loginUser(values, callback => {
+        if (callback) {
+          this.toggleModal();
+        }
+      });
+    }
   };
+
+  handleForgotPassword = values => {
+    console.log("Handling forgot password feature");
+  };
+
   handleSocialLogin = user => {
     console.log(user);
   };
@@ -32,6 +60,8 @@ class Home extends Component {
             _isOpen={path === "/register" || path === "/login"}
             _toggleModal={this.toggleModal}
             _modalType={path}
+            _handleSubmit={this.handleSubmit}
+            _handleForgotPassword={this.handleForgotPassword}
             handleSocialLogin={this.handleSocialLogin}
             handleSocialLoginFailure={this.handleSocialLoginFailure}
           />
@@ -47,7 +77,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  /* dashboardCounts: bindActionCreators(dashboardCounts, dispatch) */
+  registerUser: bindActionCreators(registerUser, dispatch),
+  loginUser: bindActionCreators(loginUser, dispatch)
 });
 
-export default Home;
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

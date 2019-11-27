@@ -1,14 +1,20 @@
 import React from "react";
 import "./jobProduct.scss";
+import { StringToDate, DaysBetween } from "./../../../utilities/common";
+import { Link } from "react-router-dom";
+
 const JobProduct = ({ product, listType }) => {
   return (
     <div className={"job-wrapper " + (listType ? "d-flex flex-column" : "")}>
       <div className="job-pic text-center flex-shrink-0">
-        <img
-          // src={require(`../../../assets/images/joblist/${product.images[0].path}`)}
-          src={require("../../../assets/images/joblist/image1.jpg")}
-          alt="Job type"
-        />
+        <Link className="text-black" to={`/job-details/${product._id}`}>
+          <img
+            src={require("../../../assets/images/joblist/image1.jpg")}
+            // src={require(`../../../assets/images/joblist/${product.images[0].path}`)}
+            // src={require(`${apiUrl}${product.images[0].path}`)}
+            alt="Job image"
+          />
+        </Link>
       </div>
       <div
         className={
@@ -19,7 +25,9 @@ const JobProduct = ({ product, listType }) => {
           <label className={"flex-fill m-0 " + (listType ? "order-2" : "")}>
             {product.jobtitle || ""}
           </label>
-          <span className="text-primary flex-shrink-0 ml-auto">$700.20</span>
+          <span className="text-primary flex-shrink-0 ml-auto">
+            ${product.budget || 0}
+          </span>
         </div>
         <div className="job-location d-flex">
           <svg
@@ -37,7 +45,7 @@ const JobProduct = ({ product, listType }) => {
               />
             </g>
           </svg>
-          {product.budget || ""}
+          {product.location}, {product.city}
         </div>
         {listType ? (
           <div className="job-desc">
@@ -47,11 +55,12 @@ const JobProduct = ({ product, listType }) => {
         <div className="job-time d-flex space-bet justify-content-between mt-auto">
           <label className="d-flex flex-column">
             Time Left
-            <span>1d 11h 05m</span>
+            {/* <span>1d 11h 05m</span> */}
+            <span>{DaysBetween(product.jobStartDate, product.jobEndDate)}</span>
           </label>
           <label className="d-flex flex-column text-left">
             Date
-            <span>14 Sep 2019</span>
+            <span>{StringToDate(product.jobStartDate)}</span>
           </label>
         </div>
       </div>

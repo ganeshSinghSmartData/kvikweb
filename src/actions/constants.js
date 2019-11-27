@@ -9,11 +9,9 @@ export const IS_FETCHING = "IS_FETCHING";
 export const IS_STATUS = "IS_STATUS";
 
 /************ User *************/
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-export const LOG_OUT = "LOG_OUT";
-export const UPDATE_CUSTOMER_DETAILS = "UPDATE_CUSTOMER_DETAILS";
-export const UPDATE_OPERATOR_DETAILS = "UPDATE_OPERATOR_DETAILS";
-export const UPDATE_AGENCY_DETAILS = "UPDATE_AGENCY_DETAILS";
+export const REGISTER_USERS = "REGISTER_USERS";
+export const LOGIN_USERS = "LOGIN_USERS";
+export const LOGOUT_USERS = "LOGOUT_USERS";
 
 /************EDit CENTRE*********************/
 
@@ -23,3 +21,4 @@ export const UPDATE_AGENCY_DETAILS = "UPDATE_AGENCY_DETAILS";
 
 /************ Job *************/
 export const GET_JOB_PRODUCTS = "GET_JOB_PRODUCTS";
+export const GET_JOB_DETAILS = "GET_JOB_DETAILS";

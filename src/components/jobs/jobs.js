@@ -7,7 +7,6 @@ import JobProduct from "./jobProduct/jobProduct";
 import Banner from "../banner/banner";
 import Sidebar from "../sidebar/sidebar";
 import Footer from "../footer/footer";
-// import JobDetail from "./jobDetail/jobDetail";
 import Heading from "../../components/commonUi/heading/heading";
 import Paragraph from "../../components/commonUi/paragraph/paragraph";
 // import SpinnerOverlay from '../commonUi/spinner/spinnerOverlay/spinnerOverlay';
@@ -33,12 +32,12 @@ const Job = () => {
   const scrollTopFunction = () => {
     wrapperRef.current.scroll({ top: 0, left: 0, behavior: "smooth" });
   };
-  let jobProduct = useSelector(state => state.job.list);
+  let jobs = useSelector(state => state.job);
   useEffect(() => {
-    if (jobProduct && !jobProduct.length) {
+    if (!jobs.jobProduct.length) {
       dispatch(getJobProduct());
     }
-  }, jobProduct);
+  }, jobs);
 
   return (
     <React.Fragment>
@@ -82,7 +81,7 @@ const Job = () => {
               <div className="job-list-blc">
                 <div className="job-list-heading d-flex">
                   <h3 className="flex-fill">
-                    Jobs in vicinity of your locations: 2860
+                    Jobs in vicinity of your locations: {jobs.count}
                   </h3>
                   <div className="job-list-icon d-flex ml-auto">
                     <Button
@@ -130,8 +129,8 @@ const Job = () => {
                 <Row
                   className={"job-listing " + (listType ? "job-list-row" : "")}
                 >
-                  {jobProduct &&
-                    jobProduct.map((item, key) => {
+                  {jobs &&
+                    jobs.jobProduct.map((item, key) => {
                       return (
                         <Col lg="4" className="col d-flex" key={key}>
                           <JobProduct product={item} listType={listType} />

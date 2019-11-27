@@ -8,14 +8,24 @@ import * as TYPE from "../../actions/constants";
 
 /******** Reducers ********/
 const initialState = {
-  list: [],
+  jobProduct: [],
+  jobDetails: {},
   count: 0
 };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case TYPE.GET_JOB_PRODUCTS:
-      return { ...state, list: action.data };
+      return {
+        ...state,
+        jobProduct: action.data.joblisting,
+        count: action.data.count
+      };
+    case TYPE.GET_JOB_DETAILS:
+      return {
+        ...state,
+        jobDetails: action.data
+      };
     default:
       return state;
   }

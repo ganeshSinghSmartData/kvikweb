@@ -7,6 +7,8 @@ import { Authorization } from "../authorization";
 import { public_type } from "../utilities/constants";
 
 import HomePage from "../containers/home";
+import ProfilePage from "../containers/home";
+import JobDetails from "../containers/job-details";
 
 const Routers = store => {
   return (
@@ -41,6 +43,24 @@ const Routers = store => {
           type={public_type}
         />
 
+        <AppRoute
+          exact={true}
+          path="/profile"
+          component={ProfilePage}
+          requireAuth={Authorization}
+          layout={publicLayout}
+          store={store}
+          type={public_type}
+        />
+        <AppRoute
+          exact={true}
+          path="/job-details/:job_id"
+          component={JobDetails}
+          requireAuth={Authorization}
+          layout={publicLayout}
+          store={store}
+          type={public_type}
+        />
         {/* <AppRoute
           exact
           path="/forgot-password"

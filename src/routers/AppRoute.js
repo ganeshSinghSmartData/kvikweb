@@ -11,7 +11,7 @@ import { Route, Redirect } from "react-router-dom";
 import {
   public_type,
   private_type,
-  dashboard_path
+  profile_path
 } from "../utilities/constants";
 
 const AppRoute = ({
@@ -32,7 +32,7 @@ const AppRoute = ({
         return (
           <Redirect
             to={{
-              pathname: `/${dashboard_path}`,
+              pathname: `/${profile_path}`,
               state: { from: props.location }
             }}
           />

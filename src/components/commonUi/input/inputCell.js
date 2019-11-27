@@ -1,12 +1,13 @@
 import React from "react";
 import { FormGroup, Input } from "reactstrap";
+import { LocalForm, Control } from "react-redux-form";
 import "./inputCell.scss";
 const InputCell = props => {
   return (
     <FormGroup>
       <div className={"position-relative d-flex align-items-center"}>
         <span className="input-icon">
-          {props.InputType === "name" ? (
+          {props.InputType === "text" ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="46"
@@ -50,7 +51,16 @@ const InputCell = props => {
             </svg>
           ) : null}
         </span>
-        <Input placeholder={props.placeholder} className="input-icon-cell" />
+        <Control.text
+          placeholder={props.placeholder}
+          // model={props.Model}
+          className="input-icon-cell"
+        />
+        {/* <Input
+          placeholder={props.placeholder}
+          model={props.Model}
+          className="input-icon-cell"
+        /> */}
       </div>
       {/* <div className="error-msg text-danger">
         This Field is required.

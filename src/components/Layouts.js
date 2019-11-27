@@ -33,7 +33,7 @@ export const privateLayout = props => {
   const path = props.children.props.history.location.pathname;
   let _class = "";
   switch (path) {
-    case "/dashboard":
+    case "/":
       _class = "black-bg";
       break;
     case "/forgot-password":

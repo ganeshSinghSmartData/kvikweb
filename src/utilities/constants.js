@@ -7,4 +7,18 @@
 /************ User *************/
 export const public_type = "public";
 export const private_type = "private";
-export const dashboard_path = "dashboard";
+export const profile_path = "profile";
+export const MONTH_NAME = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec"
+];

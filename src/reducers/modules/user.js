@@ -14,9 +14,11 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case TYPE.LOGIN_SUCCESS:
+    case TYPE.LOGIN_USERS:
       return { ...state, data: action.data, isFetching: false, loggedIn: true };
-    case TYPE.LOG_OUT:
+    case TYPE.REGISTER_USERS:
+      return { ...state, loggedIn: false };
+    case TYPE.LOGOUT_USERS:
       return initialState;
     default:
       return state;
