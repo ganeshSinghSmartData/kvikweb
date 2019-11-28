@@ -13,25 +13,31 @@ const Nav = props => {
     >
       <ul className="d-flex align-items-center">
         <li>
-          <Button color="link">Bids</Button>
+          <Link className="btn btn-link">
+            Bids
+        </Link>
         </li>
         <li>
-          <Button color="link">Categories</Button>
+          <Link className="btn btn-link">
+            Categories
+        </Link>
         </li>
         <li>
-          <Button color="link">Help</Button>
+          <Link className="btn btn-link">
+            Help
+        </Link>
         </li>
         <li>
-          {/* <Link className="text-black" to={"/register"}>
+          {/* <Link className="btn btn-link" to={"/register"}>
             <Button color="link">Create an Account</Button>
           </Link> */}
-          <Link className="text-black" to={"/register"}>
-            <Button color="link">Create an Account</Button>
+          <Link className="btn btn-link" to={"/register"}>
+            Create an Account
           </Link>
         </li>
         <li>
-          <Link className="text-black" to={"/login"}>
-            <Button color="link">Login</Button>
+          <Link className="login-btn btn btn-info" to={"/login"}>
+            Login
           </Link>
         </li>
       </ul>

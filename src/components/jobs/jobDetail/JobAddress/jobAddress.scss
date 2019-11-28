@@ -5,6 +5,17 @@
 }
 .job-user-info {
   padding: 5px 0 0 15px;
+  .job-user-rw {
+    margin-bottom: 18px;
+    .job-user-l {
+      margin-right: 15px;
+    }
+    .job-user-r {
+      .rating-blc {
+        margin-top: -5px;
+      }
+    }
+  }
   li {
     span {
       width: 22px;
@@ -21,7 +32,12 @@
   h4 {
     font-size: 18px;
     font-weight: 500;
-    margin-bottom: 18px;
+    span {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(0, 0, 0, 0.7);
+      margin: 5px 0 0;
+    }
   }
   p {
     margin-bottom: 11px;

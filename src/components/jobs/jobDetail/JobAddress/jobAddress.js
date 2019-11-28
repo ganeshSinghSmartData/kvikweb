@@ -1,14 +1,27 @@
 import React from 'react';
+import { Button } from 'reactstrap';
 import UserImage from '../userImage/userImage';
+import RatingBlock from '../../../jobs/ratingBock/ratingBlock';
 import './jobAddress.scss';
-const JobAdress = (props) => {
+const JobAddress = (props) => {
   return (
     <div className="job-address d-flex">
       <UserImage />
       <div className="job-user-info flex-fill">
-        <h4>
-          Rapha Conrad
-        </h4>
+        <div className="job-user-rw d-flex">
+          <div className="job-user-l">
+            <h4>
+              Rapha Conrad
+              <span className="d-block">
+                Service Seeker
+              </span>
+            </h4>
+          </div>
+          <div className="job-user-r">
+            <RatingBlock />
+            <Button color="link" className="view-review-btn p-0">View Reviews</Button>
+          </div>
+        </div>
         <ul>
           <li className="d-flex">
             <span className="svg-secondary-100 flex-shrink-0">
@@ -30,6 +43,20 @@ const JobAdress = (props) => {
           </li>
           <li className="d-flex">
             <span className="svg-secondary-100 flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                <g id="telephone" transform="translate(-0.006)">
+                  <g id="Group_8114" data-name="Group 8114" transform="translate(0.006)">
+                    <path id="Path_3555" data-name="Path 3555" d="M13.69,56.317a1.261,1.261,0,0,0-1.907,0c-.446.442-.891.884-1.33,1.333a.263.263,0,0,1-.367.067c-.288-.157-.6-.285-.873-.457a13.828,13.828,0,0,1-3.334-3.034,7.9,7.9,0,0,1-1.195-1.914.274.274,0,0,1,.067-.352c.446-.431.88-.873,1.318-1.315a1.266,1.266,0,0,0,0-1.951c-.348-.352-.7-.7-1.045-1.049s-.715-.723-1.079-1.079a1.269,1.269,0,0,0-1.907,0c-.449.442-.88.9-1.337,1.33a2.171,2.171,0,0,0-.682,1.465A6.2,6.2,0,0,0,.5,52.035a16.228,16.228,0,0,0,2.88,4.8,17.825,17.825,0,0,0,5.9,4.618,8.537,8.537,0,0,0,3.27.951,2.4,2.4,0,0,0,2.056-.783c.382-.427.813-.817,1.217-1.225a1.274,1.274,0,0,0,.007-1.94Q14.765,57.382,13.69,56.317Z" transform="translate(-0.006 -44.409)" fill="#ff8b0e" />
+                    <path id="Path_3556" data-name="Path 3556" d="M241.914,101.326l1.382-.236A6.2,6.2,0,0,0,238.049,96l-.195,1.39a4.795,4.795,0,0,1,4.06,3.937Z" transform="translate(-228.945 -92.404)" fill="#ff8b0e" />
+                    <path id="Path_3557" data-name="Path 3557" d="M248.792,2.914A10.191,10.191,0,0,0,242.949,0l-.195,1.39a8.893,8.893,0,0,1,7.525,7.293l1.382-.236A10.266,10.266,0,0,0,248.792,2.914Z" transform="translate(-233.662)" fill="#ff8b0e" />
+                  </g>
+                </g>
+              </svg>
+            </span>
+            <p>+911234567891</p>
+          </li>
+          <li className="d-flex">
+            <span className="svg-secondary-100 flex-shrink-0">
               <svg xmlns="http://www.w3.org/2000/svg" width="23.003" height="23.003" viewBox="0 0 23.003 23.003">
                 <path id="Forma_1" data-name="Forma 1" d="M0,11.5A11.5,11.5,0,1,1,11.5,23,11.514,11.514,0,0,1,0,11.5Zm2.447,0A9.054,9.054,0,1,0,11.5,2.446,9.065,9.065,0,0,0,2.445,11.5Zm8.933,1.539a.947.947,0,0,1-.947-.947V4.93a.947.947,0,0,1,1.894,0v6.215h5.168a.947.947,0,1,1,0,1.894Z" transform="translate(0.002 0.002)" />
               </svg>
@@ -47,4 +74,4 @@ const JobAdress = (props) => {
   );
 };
 
-export default JobAdress;
+export default JobAddress;

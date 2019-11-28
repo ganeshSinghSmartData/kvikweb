@@ -2,4 +2,10 @@
   height: 160px;
   background: url("../../assets/images/banner.jpg") 0 0 no-repeat;
   background-size: cover;
+  .banner-title {
+    font-size: 28px;
+    font-weight: 400;
+    color: #fff;
+    padding: 15px;
+  }
 }

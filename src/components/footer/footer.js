@@ -3,7 +3,7 @@ import './footer.scss';
 import { Container, Row, Col, Button } from 'reactstrap';
 const Footer = () => {
   return (
-    <footer className="footer position-relative">
+    <footer className="footer position-relative mt-auto">
       <Container>
         <Row>
           <Col>
