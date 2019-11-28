@@ -33,11 +33,12 @@ const Job = () => {
     wrapperRef.current.scroll({ top: 0, left: 0, behavior: "smooth" });
   };
   let jobs = useSelector(state => state.job);
+
   useEffect(() => {
     if (!jobs.jobProduct.length) {
       dispatch(getJobProduct());
     }
-  }, jobs);
+  }, []);
 
   return (
     <React.Fragment>

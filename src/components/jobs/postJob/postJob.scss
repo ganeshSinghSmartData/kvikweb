@@ -1,0 +1,113 @@
+@import "../../../assets/css/variables";
+.post-wrapper {
+  margin: 44px 0 0;
+  .post-job-nav {
+    position: relative;
+    margin: -50px 0 45px;
+    li {
+      padding: 0 58px 0 0;
+      position: relative;
+      &:after {
+        content: "";
+        position: absolute;
+        height: 2px;
+        top: 50%;
+        left: 0;
+        right: 0;
+        margin-top: -6px;
+        background-color: #e1e1e1;
+      }
+      .btn {
+        position: relative;
+        z-index: 1;
+        span {
+          position: relative;
+          z-index: 1;
+        }
+        &:focus {
+          text-decoration: none;
+        }
+      }
+    }
+    li.active {
+      .btn {
+        width: 50px;
+        height: 50px;
+        background-color: #fff;
+        border: 2px solid $primary;
+        top: -6px;
+        &:after {
+          position: absolute;
+          left: 4px;
+          top: 4px;
+          right: 4px;
+          bottom: 4px;
+          z-index: 0;
+          content: "";
+          border-radius: 50%;
+          display: inline-block;
+          background: $primary;
+        }
+      }
+    }
+    li.complete {
+      .btn {
+        background-color: $primary;
+      }
+      &:after {
+        background-color: $primary;
+      }
+    }
+    li:last-child {
+      padding-right: 0;
+      &:after {
+        height: 0;
+      }
+    }
+    .btn {
+      width: 40px;
+      height: 40px;
+      background-color: #e1e1e1;
+      font-size: 14px;
+      font-weight: 400;
+      color: #fff;
+    }
+  }
+  .post-job-btns {
+    margin: 45px 0 0;
+    .btn {
+      min-width: 130px;
+      margin: 0 5px;
+    }
+  }
+  .post-job-gallery {
+    margin-bottom: 16px;
+    img {
+      width: 111px;
+      height: 111px;
+      object-fit: contain;
+      border-radius: 5px;
+    }
+    ul {
+      max-width: 626px;
+      width: 100%;
+      li {
+        margin: 0 17px 11px 0;
+        .add-gallery-btn {
+          width: 111px;
+          height: 111px;
+          border-radius: 5px;
+          input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
