@@ -125,6 +125,8 @@ export default ({
                   Placeholder={"Address"}
                   Model=".address"
                   InputType={"text"}
+                  InputIcon={true}
+                  className="input-icon-cell-rt"
                 />
               </div>
               <div className="col-md-4">
@@ -136,7 +138,7 @@ export default ({
                   InputType={"text"}
                 />
               </div>
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <label className="input-title">Frequency</label>
                 <InputCell
                   Name={"frequency"}
@@ -153,8 +155,26 @@ export default ({
                 </InputCell>
               </div>
 
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <label className="input-title">Duration</label>
+                <InputCell
+                  Name={"duration"}
+                  Placeholder={"Duration"}
+                  Model=".duration"
+                  InputType={"number"}
+                />
+              </div>
+              <div className="col-md-4">
+                <label className="input-title"></label>
+                <InputCell
+                  Name={"duration"}
+                  Placeholder={"Duration"}
+                  Model=".duration"
+                  InputType={"number"}
+                />
+              </div>
+              <div className="col-md-4">
+                <label className="input-title"></label>
                 <InputCell
                   Name={"duration"}
                   Placeholder={"Duration"}

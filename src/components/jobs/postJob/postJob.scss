@@ -79,6 +79,15 @@
       color: #fff;
     }
   }
+  .post-job-form {
+    > div {
+      display: flex;
+      flex-direction: column;
+      .form-group {
+        margin-top: auto;
+      }
+    }
+  }
   .post-job-btns {
     margin: 45px 0 0;
     .btn {
