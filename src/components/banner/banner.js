@@ -4,7 +4,7 @@ import SearchService from '../searchService/searchService';
 const Banner = () => {
   return (
     <section className="banner d-flex flex-column flex-shrink-0">
-      {/*<SearchService />*/}
+      <SearchService />
       <h2 className="banner-title m-auto">Post a Job</h2>
     </section>
   );

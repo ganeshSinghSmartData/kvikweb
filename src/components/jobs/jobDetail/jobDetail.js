@@ -2,13 +2,14 @@ import React from "react";
 import { Row, Col } from "reactstrap";
 import Heading from "../../commonUi/heading/heading";
 import Paragraph from "../../commonUi/paragraph/paragraph";
-import ratingBlock from '../ratingBock/ratingBlock';
+import RatingBlock from '../ratingBock/ratingBlock';
 import JobAddress from "./JobAddress/jobAddress";
 import Proposal from "./proposal/proposal";
 import SignInModal from "../../commonUi/modal/modal";
 import "./jobDetail.scss";
 
 import { StringToDate, DaysBetween } from "./../../../utilities/common";
+import { apiUrl } from "./../../../environment";
 
 const jobDetail = ({ job }) => {
   return (
@@ -19,10 +20,12 @@ const jobDetail = ({ job }) => {
         <Row className="job-detail-rw row flex-shrink-0">
           <Col md="4" className="job-detail-pic-col">
             <div className="job-detail-pic">
-              <img
-                src={require("../../../assets/images/joblist/image1.jpg")}
-                alt="Job Post User"
-              />
+              {apiUrl && (
+                <img
+                  src={`${apiUrl}/${job.images[0]["original"]}`}
+                  alt="Job Post User"
+                />
+              )}
             </div>
           </Col>
           <Col md="8" className="job-detail-info">
@@ -30,7 +33,7 @@ const jobDetail = ({ job }) => {
               <div className="job-detail-hd-rw job-detail-hd-rw d-flex align-items-start">
                 <div className="job-detail-hd-col d-flex flex-fill">
                   <h3 className="text-primary">{job.jobtitle}</h3>
-                  <ratingBlock />
+                  <RatingBlock />
                 </div>
                 <label className="job-detail-amnt flex-shrink-0">
                   $ {job.budget}
@@ -45,12 +48,12 @@ const jobDetail = ({ job }) => {
             <JobAddress />
           </Col>
         </Row>
-        <div className="proposal-blc flex-shrink-0">
+        {/* <div className="proposal-blc flex-shrink-0">
           <h4>PROPOSALS</h4>
           <Proposal />
           <Proposal />
           <Proposal />
-        </div>
+        </div> */}
       </div>
     </div>
   );

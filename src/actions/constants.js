@@ -12,6 +12,8 @@ export const IS_STATUS = "IS_STATUS";
 export const REGISTER_USERS = "REGISTER_USERS";
 export const LOGIN_USERS = "LOGIN_USERS";
 export const LOGOUT_USERS = "LOGOUT_USERS";
+export const USER_BID_LISTING = "USER_BID_LISTING";
+export const GET_USER_DETAILS = "GET_USER_DETAILS";
 
 /************EDit CENTRE*********************/
 
@@ -22,3 +24,4 @@ export const LOGOUT_USERS = "LOGOUT_USERS";
 /************ Job *************/
 export const GET_JOB_PRODUCTS = "GET_JOB_PRODUCTS";
 export const GET_JOB_DETAILS = "GET_JOB_DETAILS";
+export const POST_JOB_PRODUCTS = "POST_JOB_PRODUCTS";

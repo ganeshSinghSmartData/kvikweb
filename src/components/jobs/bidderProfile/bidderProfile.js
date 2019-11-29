@@ -15,8 +15,8 @@ const BidderProfile = () => {
           <div className="bidder-profl-r ml-auto">
             <div className="profile-bar ml-auto">
               <span className="profile-percentage">95%</span>
-              <div class="progress">
-                <div class="progress-bar bg-primary" role="progressbar" style={{ width: '25%' }}></div>
+              <div className="progress">
+                <div className="progress-bar bg-primary" role="progressbar" style={{ width: '25%' }}></div>
               </div>
               <span className="d-block profile-bar-txt text-left">Profile Completion</span>
             </div>

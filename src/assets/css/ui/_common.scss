@@ -49,15 +49,12 @@ body {
 }
 .wrapper-inner {
   padding-top: 30px;
-  > .container {
-    margin-bottom: 50px;
-  }
 }
 
 .data-page {
   background-color: #fff;
   border: 1px solid #e2e5e7;
-  padding: 30px;
+  padding: 30px 15px;
   border-radius: 10px;
 }
 .data-block {
@@ -71,9 +68,7 @@ body {
 .mb-50 {
   margin-bottom: 50px !important;
 }
-.flex-fill {
-  min-height: 0;
-}
+
 // Background Color style start
 .bg-primary {
   background-color: $primary !important;

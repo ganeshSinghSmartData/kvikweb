@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import "./nav.scss";
 const Nav = props => {
@@ -13,24 +12,21 @@ const Nav = props => {
     >
       <ul className="d-flex align-items-center">
         <li>
-          <Link className="btn btn-link">
+          <Link className="btn btn-link" to={''}>
             Bids
-        </Link>
+          </Link>
         </li>
         <li>
-          <Link className="btn btn-link">
+          <Link className="btn btn-link" to={''}>
             Categories
         </Link>
         </li>
         <li>
-          <Link className="btn btn-link">
+          <Link className="btn btn-link" to={''}>
             Help
         </Link>
         </li>
         <li>
-          {/* <Link className="btn btn-link" to={"/register"}>
-            <Button color="link">Create an Account</Button>
-          </Link> */}
           <Link className="btn btn-link" to={"/register"}>
             Create an Account
           </Link>

@@ -9,6 +9,7 @@ import { public_type } from "../utilities/constants";
 import HomePage from "../containers/home";
 import ProfilePage from "../containers/home";
 import JobDetails from "../containers/job-details";
+import PostNewJob from "../containers/post-job";
 
 const Routers = store => {
   return (
@@ -61,24 +62,15 @@ const Routers = store => {
           store={store}
           type={public_type}
         />
-        {/* <AppRoute
-          exact
-          path="/forgot-password"
-          component={ForgotPassword}
+        <AppRoute
+          exact={true}
+          path="/post-job"
+          component={PostNewJob}
           requireAuth={Authorization}
           layout={publicLayout}
           store={store}
           type={public_type}
-        /> */}
-        {/* <AppRoute
-          exact
-          path="/reset-password/:token"
-          component={ForgotPassword}
-          requireAuth={Authorization}
-          layout={publicLayout}
-          store={store}
-          type={public_type}
-        /> */}
+        />
       </Switch>
     </Router>
   );

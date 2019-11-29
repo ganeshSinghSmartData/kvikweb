@@ -26,6 +26,8 @@ export default function reducer(state = initialState, action) {
         ...state,
         jobDetails: action.data
       };
+    case TYPE.POST_JOB_PRODUCTS:
+      return state;
     default:
       return state;
   }

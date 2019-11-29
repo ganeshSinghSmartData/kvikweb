@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import smoothscroll from "smoothscroll-polyfill";
 import JobProduct from "./jobProduct/jobProduct";
 import Sidebar from "../sidebar/sidebar";
-import JobDetail from './jobDetail/jobDetail';
-import PostJob from './postJob/postJob';
+import PostJob from './postJob';
 import BidderProfile from '../jobs/bidderProfile/bidderProfile';
 import Heading from "../../components/commonUi/heading/heading";
 import Paragraph from "../../components/commonUi/paragraph/paragraph";
@@ -33,11 +32,12 @@ const Job = () => {
     wrapperRef.current.scroll({ top: 0, left: 0, behavior: "smooth" });
   };
   let jobs = useSelector(state => state.job);
+
   useEffect(() => {
     if (!jobs.jobProduct.length) {
       dispatch(getJobProduct());
     }
-  }, jobs);
+  }, [jobs]);
 
   return (
     <React.Fragment>

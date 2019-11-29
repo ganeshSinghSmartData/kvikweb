@@ -1,19 +1,21 @@
 import React from "react";
-import "./jobProduct.scss";
-import { StringToDate, DaysBetween } from "./../../../utilities/common";
+import moment from "moment";
 import { Link } from "react-router-dom";
 
+import "./jobProduct.scss";
+import { StringToDate, AddOffset } from "./../../../utilities/common";
+// import CountDown from "../../../utilities/countDown";
+
+import { apiUrl } from "./../../../environment";
+
 const JobProduct = ({ product, listType }) => {
+  const currentSeconds = moment().format("x");
+  const secDiff = AddOffset(Number(product.jobEndDate)) - currentSeconds;
   return (
     <div className={"job-wrapper " + (listType ? "d-flex flex-column" : "")}>
       <div className="job-pic text-center flex-shrink-0">
-        <Link to={`/job-details/${product._id}`}>
-          <img
-            src={require("../../../assets/images/joblist/image1.jpg")}
-            // src={require(`../../../assets/images/joblist/${product.images[0].path}`)}
-            // src={require(`${apiUrl}${product.images[0].path}`)}
-            alt="Job image"
-          />
+        <Link className="text-black" to={`/job-details/${product._id}`}>
+          <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job image" />
         </Link>
       </div>
       <div
@@ -57,8 +59,19 @@ const JobProduct = ({ product, listType }) => {
         <div className="job-time d-flex space-bet justify-content-between mt-auto">
           <label className="d-flex flex-column">
             Time Left
-            {/* <span>1d 11h 05m</span> */}
-            <span>{DaysBetween(product.jobStartDate, product.jobEndDate)}</span>
+            <span>1d 11h 05m</span>
+            {/* <CountDown
+              style={{ flex: 1 }}
+              until={secDiff / 1000}
+              size={moderateScale(14)}
+              digitStyle={{ backgroundColor: Colors.White }}
+              digitTxtStyle={{ color: Colors.counterBrown }}
+              timeLabelStyle={{ color: Colors.counterBrown }}
+              timeToShow={["D", "H", "M", "S"]}
+              timeLabels={{ d: "Days", h: "Hours", m: "Mins", s: "Secs" }}
+              fromDetails={true}
+            /> */}
+            {/* <span>{DaysBetween(product.jobStartDate, product.jobEndDate)}</span> */}
           </label>
           <label className="d-flex flex-column text-left">
             Date

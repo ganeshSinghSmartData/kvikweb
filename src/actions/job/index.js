@@ -7,6 +7,10 @@ export const is_fetching = status => ({ type: TYPE.IS_FETCHING, status });
 export const is_search = status => ({ type: TYPE.IS_STATUS, status });
 export const get_job_products = data => ({ type: TYPE.GET_JOB_PRODUCTS, data });
 export const get_job_details = data => ({ type: TYPE.GET_JOB_DETAILS, data });
+export const post_job_products = data => ({
+  type: TYPE.POST_JOB_PRODUCTS,
+  data
+});
 
 /****** action creator for get jobs ********/
 export const getJobProduct = params => {
@@ -38,6 +42,27 @@ export const getJobDetails = job_id => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(get_job_details(response.data));
+      } else if (response.status === 401) {
+        console.log("errror with 401 : ");
+      } else {
+        dispatch(is_fetching(false));
+      }
+    });
+  };
+};
+
+/****** action creator for get jobs ********/
+export const createNewJob = params => {
+  return (dispatch, getState) => {
+    const {
+      data: { loginToken }
+    } = getState().user;
+    console.log("loginToken: ", loginToken);
+
+    ApiClient.post(`${apiUrl}/add_job`, params, loginToken).then(response => {
+      if (response.status === 200) {
+        dispatch(is_fetching(false));
+        dispatch(post_job_products(response.data));
       } else if (response.status === 401) {
         console.log("errror with 401 : ");
       } else {
