@@ -1,11 +1,7 @@
 import React from "react";
 import { Control } from "react-redux-form";
-import {
-  invalidEmail,
-  emptyField,
-  invalidPass,
-  required
-} from "./../../../utilities/message";
+import Match from "../../../utilities/validation";
+import Errors from "./../error";
 
 import "./inputCell.scss";
 const InputCell = props => {
@@ -56,22 +52,34 @@ const InputCell = props => {
           </svg>
         ) : null}
       </span>
+      {console.log("props: ", props)}
       <Control.text
         type={props.InputType}
         name={props.Name}
         placeholder={props.Placeholder}
         model={props.Model}
         className="input-icon-cell"
-        /* errors={{
-          ...ErrorValidation
-        }} */
+        errors={
+          (props.Errors === "required" && {
+            required: val => !val || !val.length
+          }) ||
+          (props.Errors === "required" && {
+            invalidEmail: val => !Match.validateEmail(val)
+          }) ||
+          (props.Errors === "required" && {
+            invalidPass: val => val => !Match.validatePassword(val)
+          }) ||
+          (props.Errors === "required" && {
+            invalidPass: val => !Match.validatePassword(val)
+          })
+        }
       />
-      {/* <Errors
+      <Errors
         model={props.Model}
         errors={{
-          ...errorMessages
+          ...props.Errors
         }}
-      /> */}
+      />
       {/* <Errors
           model="user.username"
           messages={{

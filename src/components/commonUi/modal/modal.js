@@ -93,24 +93,28 @@ const SignInModal = ({
                       Placeholder={"First Name"}
                       Model=".fname"
                       InputType={"text"}
+                      Errors={"required"}
                     />
                     <InputCell
                       Name={"lname"}
                       Placeholder={"Last Name"}
                       Model=".lname"
                       InputType={"text"}
+                      Errors={""}
                     />
                     <InputCell
                       Name={"email"}
                       Placeholder={"Email"}
                       Model=".email"
                       InputType={"email"}
+                      Errors={("required", "invalidEmail")}
                     />
                     <InputCell
                       Name={"password"}
                       Placeholder={"Password"}
                       Model=".password"
                       InputType={"password"}
+                      Errors={"required"}
                     />
                     <div className="signup-agree d-flex align-items-start">
                       <label className="d-flex align-items-start">
@@ -134,12 +138,14 @@ const SignInModal = ({
                       Placeholder={"Email"}
                       Model=".email"
                       InputType={"email"}
+                      Errors={"required"}
                     />
                     <InputCell
                       Name={"password"}
                       Placeholder={"Password"}
                       Model=".password"
                       InputType={"password"}
+                      Errors={"required"}
                     />
                     <div className="signup-agree d-flex align-items-start">
                       <label className="d-flex align-items-start">
