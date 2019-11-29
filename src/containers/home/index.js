@@ -19,7 +19,6 @@ class Home extends Component {
   componentDidMount() {}
 
   toggleModal() {
-    console.log("Came here at a time : ");
     this.props.history.push("/");
   }
 
@@ -50,6 +49,7 @@ class Home extends Component {
   handleSocialLoginFailure = err => {
     console.error("social error =====>", err);
   };
+
   render() {
     const path = this.props.location.pathname;
     return (

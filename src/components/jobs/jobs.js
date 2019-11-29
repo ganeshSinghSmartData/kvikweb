@@ -1,52 +1,42 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Container, Row, Col, Button } from "reactstrap";
+import React, { useState, useEffect } from "react";
+import { Row, Col, Button } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import smoothscroll from "smoothscroll-polyfill";
 import JobProduct from "./jobProduct/jobProduct";
 import Sidebar from "../sidebar/sidebar";
-import PostJob from './postJob';
-import BidderProfile from '../jobs/bidderProfile/bidderProfile';
+import PostJob from "./postJob";
+import BidderProfile from "../jobs/bidderProfile/bidderProfile";
 import Heading from "../../components/commonUi/heading/heading";
 import Paragraph from "../../components/commonUi/paragraph/paragraph";
+import { pagination } from "../../utilities/constants";
 // import SpinnerOverlay from '../commonUi/spinner/spinnerOverlay/spinnerOverlay';
 import "./jobs.scss";
-import { getJobProduct } from "./../../actions/job";
+import { getJobProduct, reset_job_products } from "./../../actions/job";
 smoothscroll.polyfill();
 const Job = () => {
   const dispatch = useDispatch();
   const [listType, setlistType] = useState(false);
-  const [scrollVisible, setscrollVisible] = useState(false);
+  let [page, setPage] = useState(pagination.page);
   const toggleListType = value => {
     setlistType(value);
   };
-  const wrapperRef = useRef(null);
-  const scrollCheck = () => {
-    let scrollTopCheck = wrapperRef.current.scrollTop;
-    if (scrollTopCheck > 300) {
-      setscrollVisible(true);
-    } else {
-      setscrollVisible(false);
-    }
-  };
-  const scrollTopFunction = () => {
-    wrapperRef.current.scroll({ top: 0, left: 0, behavior: "smooth" });
-  };
   let jobs = useSelector(state => state.job);
 
+  const showMoreProduct = page => {
+    setPage(page);
+    dispatch(getJobProduct({ page: page }));
+  };
+
   useEffect(() => {
-    if (!jobs.jobProduct.length) {
-      dispatch(getJobProduct());
-    }
-  }, [jobs]);
+    dispatch(reset_job_products());
+    dispatch(getJobProduct({ page: page }));
+    // checkRecordsLength();
+  }, []);
 
   return (
     <React.Fragment>
       {/* <SpinnerOverlay className="position-fixed" /> */}
-      <section
-        className="d-flex flex-column position-relative"
-        onScroll={scrollCheck}
-        ref={wrapperRef}
-      >
+      <section className="d-flex flex-column position-relative">
         <Button className="sidebar-toogle-btn text-right position-fixed rounded-left d-md-none flex-shrink-0">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -63,8 +53,8 @@ const Job = () => {
             />
           </svg>
         </Button>
-        <BidderProfile />
-        <PostJob />
+        {/* <BidderProfile />
+        <PostJob /> */}
         <Row className="d-flex flex-nowrap position-relative">
           <Col className="sidebar-col d-flex flex-column">
             <Sidebar />
@@ -74,9 +64,9 @@ const Job = () => {
             <Paragraph>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               Pellentesque leo ipsum, consequat a tellus pharetra, commodo
-              bibendum dui. In rhoncus lacus ut justo lacinia, id tempus
-              ligula convallis.
-              </Paragraph>
+              bibendum dui. In rhoncus lacus ut justo lacinia, id tempus ligula
+              convallis.
+            </Paragraph>
             <div className="job-list-blc">
               <div className="job-list-heading d-flex">
                 <h3 className="flex-fill">
@@ -137,50 +127,30 @@ const Job = () => {
                     );
                   })}
               </Row>
-              <Row className="joblist-more">
-                <Col className="d-flex justify-content-center">
-                  <Button color="secondary" className="data-loader-btn">
-                    <span className="d-flex justify-content-center">
-                      <span
-                        className="spinner-border spinner-border-sm"
-                        role="status"
-                        aria-hidden="true"
-                      ></span>
-                      Loading...
+              {jobs.jobProduct.length >= pagination.limit && (
+                <Row className="joblist-more">
+                  <Col className="d-flex justify-content-center">
+                    <Button
+                      color="secondary"
+                      className="data-loader-btn"
+                      onClick={() => showMoreProduct(++page)}
+                    >
+                      <span className="d-flex justify-content-center">
+                        <span
+                          className="spinner-border spinner-border-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                        Loading...
                       </span>
-                    <span>SHOW MORE</span>
-                  </Button>
-                </Col>
-              </Row>
+                      <span>SHOW MORE</span>
+                    </Button>
+                  </Col>
+                </Row>
+              )}
             </div>
           </Col>
         </Row>
-      </section>
-      <section>
-        <Container className="position-relative">
-          <button
-            type="button"
-            className={
-              "btn btn-light scroll-tp-btn rounded-circle position-absolute " +
-              (scrollVisible ? "on" : "")
-            }
-            onClick={scrollTopFunction}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="31.49"
-              height="22.142"
-              viewBox="0 0 31.49 22.142"
-            >
-              <path
-                id="arrow-up"
-                d="M21.2,5.007a1.117,1.117,0,0,0-1.587,1.571l8.047,8.047H1.111A1.106,1.106,0,0,0,0,15.737a1.118,1.118,0,0,0,1.111,1.127H27.665L19.618,24.9a1.139,1.139,0,0,0,0,1.587,1.112,1.112,0,0,0,1.587,0l9.952-9.952a1.093,1.093,0,0,0,0-1.571Z"
-                transform="translate(0 -4.674)"
-                fill="#1e201d"
-              />
-            </svg>
-          </button>
-        </Container>
       </section>
     </React.Fragment>
   );

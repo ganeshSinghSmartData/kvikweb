@@ -2,10 +2,14 @@ import * as TYPE from "../constants";
 import ApiClient from "../../api-client";
 import { apiUrl } from "../../environment";
 // import { toastAction, toastErrorAction } from "../toast-actions";
+import { pagination } from "../../utilities/constants";
 
 export const is_fetching = status => ({ type: TYPE.IS_FETCHING, status });
 export const is_search = status => ({ type: TYPE.IS_STATUS, status });
 export const get_job_products = data => ({ type: TYPE.GET_JOB_PRODUCTS, data });
+export const reset_job_products = () => ({
+  type: TYPE.RESET_JOB_PRODUCTS
+});
 export const get_job_details = data => ({ type: TYPE.GET_JOB_DETAILS, data });
 export const post_job_products = data => ({
   type: TYPE.POST_JOB_PRODUCTS,
@@ -13,12 +17,23 @@ export const post_job_products = data => ({
 });
 
 /****** action creator for get jobs ********/
-export const getJobProduct = params => {
+export const getJobProduct = ({
+  page,
+  search = "",
+  long = "",
+  lat = "",
+  category = ""
+}) => {
   return (dispatch, getState) => {
+    const skip = (page - 1) * pagination.limit;
     /* const {
       data: { loginToken }
     } = getState().user; */
-    ApiClient.get(`${apiUrl}/api/job_listing`, params).then(response => {
+
+    ApiClient.get(
+      `${apiUrl}/api/job_listing?lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${pagination.limit}&search=${search}`,
+      {}
+    ).then(response => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(get_job_products(response));

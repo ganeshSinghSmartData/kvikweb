@@ -93,6 +93,8 @@ const SignInModal = ({
                       Placeholder={"First Name"}
                       Model=".fname"
                       InputType={"text"}
+                      className="input-icon-cell"
+                      InputIcon={true}
                       Errors={{ required: "required" }}
                     />
                     <InputCell
@@ -100,13 +102,17 @@ const SignInModal = ({
                       Placeholder={"Last Name"}
                       Model=".lname"
                       InputType={"text"}
-                      Errors={{}}
+                      className="input-icon-cell"
+                      InputIcon={true}
+                      Errors={{ required: "required" }}
                     />
                     <InputCell
                       Name={"email"}
                       Placeholder={"Email"}
                       Model=".email"
                       InputType={"email"}
+                      className="input-icon-cell"
+                      InputIcon={true}
                       Errors={{
                         required: "required",
                         invalidEmail: "invalidEmail"
@@ -117,7 +123,9 @@ const SignInModal = ({
                       Placeholder={"Password"}
                       Model=".password"
                       InputType={"password"}
-                      Errors={"required"}
+                      className="input-icon-cell"
+                      InputIcon={true}
+                      Errors={{ required: "required" }}
                     />
                     <div className="signup-agree d-flex align-items-start">
                       <label className="d-flex align-items-start">
@@ -141,14 +149,18 @@ const SignInModal = ({
                       Placeholder={"Email"}
                       Model=".email"
                       InputType={"email"}
-                      Errors={"required"}
+                      className="input-icon-cell"
+                      InputIcon={true}
+                      Errors={{ required: "required" }}
                     />
                     <InputCell
                       Name={"password"}
                       Placeholder={"Password"}
                       Model=".password"
                       InputType={"password"}
-                      Errors={"required"}
+                      className="input-icon-cell"
+                      InputIcon={true}
+                      Errors={{ required: "required" }}
                     />
                     <div className="signup-agree d-flex align-items-start">
                       <label className="d-flex align-items-start">

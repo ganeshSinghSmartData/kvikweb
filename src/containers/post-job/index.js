@@ -17,7 +17,7 @@ class PostNewJob extends Component {
     this.handleStageChange = this.handleStageChange.bind(this);
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   //   Handling Job Ppost
   handleJobPost(jobData) {

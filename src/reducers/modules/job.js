@@ -18,7 +18,7 @@ export default function reducer(state = initialState, action) {
     case TYPE.GET_JOB_PRODUCTS:
       return {
         ...state,
-        jobProduct: action.data.joblisting,
+        jobProduct: [...state.jobProduct, ...action.data.joblisting],
         count: action.data.count
       };
     case TYPE.GET_JOB_DETAILS:
@@ -28,6 +28,8 @@ export default function reducer(state = initialState, action) {
       };
     case TYPE.POST_JOB_PRODUCTS:
       return state;
+    case TYPE.RESET_JOB_PRODUCTS:
+      return { ...state, jobProduct: [] };
     default:
       return state;
   }
