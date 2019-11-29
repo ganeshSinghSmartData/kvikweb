@@ -5,6 +5,18 @@ import Errors from "./../error";
 
 import "./inputCell.scss";
 const InputCell = props => {
+  /**************** Error validations ****************/
+  const validation = () => {
+    let errors = {};
+    if (props.Errors["required"] === "required") {
+      errors = { ...errors, required: val => !val || !val.length };
+    }
+    if (props.Errors["invalidEmail"] === "invalidEmail") {
+      errors = { ...errors, invalidEmail: val => !Match.validateEmail(val) };
+    }
+    return errors;
+  };
+
   return (
     <div className={"position-relative d-flex align-items-center"}>
       <span className="input-icon">
@@ -52,27 +64,13 @@ const InputCell = props => {
           </svg>
         ) : null}
       </span>
-      {console.log("props: ", props)}
       <Control.text
         type={props.InputType}
         name={props.Name}
         placeholder={props.Placeholder}
         model={props.Model}
         className="input-icon-cell"
-        errors={
-          (props.Errors === "required" && {
-            required: val => !val || !val.length
-          }) ||
-          (props.Errors === "required" && {
-            invalidEmail: val => !Match.validateEmail(val)
-          }) ||
-          (props.Errors === "required" && {
-            invalidPass: val => val => !Match.validatePassword(val)
-          }) ||
-          (props.Errors === "required" && {
-            invalidPass: val => !Match.validatePassword(val)
-          })
-        }
+        errors={validation()}
       />
       <Errors
         model={props.Model}
@@ -80,14 +78,6 @@ const InputCell = props => {
           ...props.Errors
         }}
       />
-      {/* <Errors
-          model="user.username"
-          messages={{
-            required: 'Username is required.',
-            minLength: 'Username must be more than 8 characters.',
-          }}
-        /> */}
-      {/* <div className="error-msg text-danger">This Field is required.</div> */}
     </div>
   );
 };

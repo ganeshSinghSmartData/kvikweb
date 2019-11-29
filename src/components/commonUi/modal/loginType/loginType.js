@@ -1,6 +1,5 @@
 import React from "react";
-import { Button, Form } from "reactstrap";
-import InputCell from "../../input/inputCell";
+
 import "./loginType.scss";
 import SocialButton from "../../social-button";
 const LoginType = props => {

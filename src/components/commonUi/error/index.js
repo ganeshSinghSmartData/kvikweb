@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Errors } from "react-redux-form";
 import {
   invalidEmail,
-  emptyField,
   invalidPass,
   required
 } from "./../../../utilities/message";
@@ -16,6 +15,8 @@ const errors = ({ model, errors }) => {
       show="touched"
       messages={{
         required,
+        invalidEmail,
+        invalidPass,
         ...errors
       }}
     />
