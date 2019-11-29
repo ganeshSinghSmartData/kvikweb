@@ -5,20 +5,24 @@
  */
 
 import React from "react";
+import { Container } from "reactstrap";
 import Header from "./header/header";
-// import Sidebar from './Sidebar';
-// import Footer from "./Footer";
+import Banner from "./banner/banner";
+import Footer from "./footer/footer";
 
 /*************** Public Layout ***************/
 export const publicLayout = props => {
   window.scrollTo(0, 0);
   return (
-    <div className="main">
+    <div className="main-wrapper d-flex flex-column flex-fill">
       <Header />
-      <div className="main-header-bg custom-main-header-bg">
-        {props.children}
+      <Banner />
+      <div className="wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto">
+        <Container className="d-flex flex-column flex-shrink-0">
+          {props.children}
+        </Container>
+        <Footer />
       </div>
-      {/* <Footer /> */}
     </div>
   );
 };
@@ -42,7 +46,7 @@ export const privateLayout = props => {
     default:
   }
   return (
-    <div className="main">
+    <div className="main-wrapper d-flex flex-column flex-fill">
       {/* <DashboardHeader /> */}
       {props.children}
       {/* <Footer /> */}

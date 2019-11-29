@@ -1,5 +1,5 @@
 .btn {
-  font-family: $secondary-font-family;
+  font-family: $secondary-font-family !important;
   font-size: 14px;
   font-weight: 500;
   padding: 9px 15px;
@@ -22,17 +22,17 @@
 .btn-primary,
 .primary-bg,
 .primary-bg-bar .progress-bar {
-  background-color: $primary;
-  border-color: $primary;
+  background-color: $primary !important;
+  border-color: $primary !important;
 }
 .btn-primary1.filter-bar-btn {
-  background-color: $primary;
+  background-color: $primary !important;
 }
 .btn-primary,
 .social-icons .btn span {
   &:hover {
-    background-color: $primary-hover;
-    border-color: $primary-hover;
+    background-color: $primary-hover !important;
+    border-color: $primary-hover !important;
   }
 }
 .btn-primary:not(:disabled):not(.disabled):active,
@@ -40,8 +40,8 @@
 .show > .btn-primary.dropdown-toggle,
 .dropdown-item.active,
 .dropdown-item:active {
-  background-color: $primary-hover;
-  border-color: $primary-hover;
+  background-color: $primary-hover !important;
+  border-color: $primary-hover !important;
 }
 
 .btn-secondary {
@@ -55,7 +55,7 @@
 
 .btn-secondary1,
 .secondary-bg-dark .progress-bar {
-  background-color: $orange-200;
+  background-color: $orange-200 !important;
 }
 .job-location svg,
 .svg-secondary-100 svg,
@@ -74,12 +74,12 @@
 }
 .btn-info {
   font-weight: 400;
-  background-color: $info;
-  border-color: $info;
-  color: $dark-default;
+  background-color: $info !important;
+  border-color: $info !important;
+  color: $dark-default !important;
   &:hover {
-    background-color: $secondary;
-    border-color: $secondary;
+    background-color: $secondary !important;
+    border-color: $secondary !important;
   }
 }
 .btn-info:not(:disabled):not(.disabled):active,
@@ -94,18 +94,41 @@
 .btn-info:not(:disabled):not(.disabled).active:focus,
 .show > .btn-info.dropdown-toggle:focus {
   color: #fff;
-  background-color: $secondary;
-  border-color: $secondary;
+  background-color: $secondary !important;
+  border-color: $secondary !important;
   box-shadow: 0 0 0 0.2rem #ffca82;
 }
 
 .btn-light:not(:disabled):not(.disabled):active,
 .btn-light:not(:disabled):not(.disabled).active,
 .show > .btn-light.dropdown-toggle {
-  background-color: $secondary;
+  background-color: $secondary !important;
 }
 
 // Custom style start
 .btn.signup {
   min-width: 159px;
+}
+
+.btn-dark {
+  background-color: $dark-default !important;
+  border-color: $dark-default !important;
+}
+
+.btn-dark {
+  color: #fff;
+  &:hover {
+    color: #fff;
+    background-color: $dark-default-light !important;
+    border-color: $dark-default-light !important;
+  }
+  &:focus {
+    text-decoration: none;
+  }
+}
+.btn-dark:not(:disabled):not(.disabled):active,
+.btn-dark:not(:disabled):not(.disabled).active,
+.show > .btn-dark.dropdown-toggle {
+  background-color: $dark-default-light !important;
+  border-color: $dark-default-light !important;
 }

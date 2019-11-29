@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col } from "reactstrap";
 import Heading from "../../commonUi/heading/heading";
 import Paragraph from "../../commonUi/paragraph/paragraph";
-import RatingBock from "../ratingBock/ratingBock";
+import RatingBlock from '../ratingBock/ratingBlock';
 import JobAddress from "./JobAddress/jobAddress";
 import Proposal from "./proposal/proposal";
 import SignInModal from "../../commonUi/modal/modal";
@@ -33,7 +33,7 @@ const jobDetail = ({ job }) => {
               <div className="job-detail-hd-rw job-detail-hd-rw d-flex align-items-start">
                 <div className="job-detail-hd-col d-flex flex-fill">
                   <h3 className="text-primary">{job.jobtitle}</h3>
-                  <RatingBock />
+                  <RatingBlock />
                 </div>
                 <label className="job-detail-amnt flex-shrink-0">
                   $ {job.budget}

@@ -33,25 +33,8 @@ const SignInModal = ({
           className="position-absolute close-btn secondary-100-hover"
           onClick={() => _toggleModal()}
         >
-          <svg
-            id="cancel"
-            xmlns="http://www.w3.org/2000/svg"
-            width="475.2"
-            height="475.2"
-            viewBox="0 0 475.2 475.2"
-          >
-            <g id="Group_1" data-name="Group 1">
-              <path
-                id="Path_1"
-                data-name="Path 1"
-                d="M405.6,69.6a237.588,237.588,0,1,0-336,336,237.588,237.588,0,1,0,336-336ZM386.5,386.5a210.519,210.519,0,0,1-297.8,0C6.6,304.4,6.6,170.8,88.7,88.7a210.519,210.519,0,0,1,297.8,0C468.6,170.8,468.6,304.4,386.5,386.5Z"
-              />
-              <path
-                id="Path_2"
-                data-name="Path 2"
-                d="M342.3,132.9a13.46,13.46,0,0,0-19.1,0l-85.6,85.6L152,132.9A13.506,13.506,0,1,0,132.9,152l85.6,85.6-85.6,85.6a13.55,13.55,0,0,0,9.5,23.1,13.173,13.173,0,0,0,9.5-4l85.6-85.6,85.6,85.6a13.588,13.588,0,0,0,9.5,4,13.01,13.01,0,0,0,9.5-4,13.46,13.46,0,0,0,0-19.1l-85.4-85.6L342.3,152A13.46,13.46,0,0,0,342.3,132.9Z"
-              />
-            </g>
+          <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
+            <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
           </svg>
         </Button>
         <ModalBody className={"overflow-auto " + (_modalType ? "p-0" : "")}>
@@ -167,7 +150,7 @@ const SignInModal = ({
                     <LoginType {...props} />
                     <p className="signup-link-rw text-center">
                       <span>Don't have an account?</span>
-                      <Link className="text-black" to={"/register"}>
+                      <Link to={"/register"}>
                         Sign Up Now
                       </Link>
                     </p>

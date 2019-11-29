@@ -253,7 +253,7 @@ export default ({
                 BACK
               </Button>
             )}
-            {_currentstage != 3 && (
+            {_currentstage !== 3 && (
               <Button
                 color="secondary"
                 onClick={() => {

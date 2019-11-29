@@ -1,5 +1,6 @@
 import React from 'react';
 import UserImage from '../userImage/userImage';
+import RatingBlock from '../../ratingBock/ratingBlock';
 import './proposal.scss';
 const Proposal = (props) => {
   return (
@@ -15,7 +16,8 @@ const Proposal = (props) => {
       </div>
       <div className="proposal-col-r time-rate text-right flex-shrink-0">
         1 Day Ago
-          <p className="text-primary">$650.00</p>
+        <h3 className="text-primary">$650.00</h3>
+        <RatingBlock />
       </div>
     </div>
   );

@@ -26,17 +26,43 @@
 .input-icon {
   position: absolute;
   left: 18px;
+  top: 8px;
   svg {
     width: 15px;
     height: 15px;
     fill: #6d6d6d;
   }
 }
+.input-icon-cell-rt .input-icon {
+  left: auto;
+  right: 18px;
+}
 .form-control.input-icon-cell {
   padding-left: 50px;
   padding-right: 18px;
 }
+.input-icon-cell-rt .form-control {
+  padding-right: 50px;
+}
 .error-msg {
   font-size: 12px;
   margin: 5px 0 0 20px;
+}
+.input-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: $primary;
+}
+
+textarea.form-control {
+  height: 121px;
+  border-radius: 10px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+.custom-select {
+  background: url(../../../assets/images/icons/angle-down.svg) no-repeat right 1.4rem center/11px 10px #fff;
+  svg {
+    fill: $dark-default;
+  }
 }

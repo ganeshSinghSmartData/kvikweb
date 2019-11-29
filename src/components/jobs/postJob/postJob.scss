@@ -1,9 +1,15 @@
 @import "../../../assets/css/variables";
 .post-wrapper {
   margin: 44px 0 0;
+  @media (max-width: 767px) {
+    padding: 15px;
+  }
   .post-job-nav {
     position: relative;
     margin: -50px 0 45px;
+    @media (max-width: 767px) {
+      margin: -36px 0 45px;
+    }
     li {
       padding: 0 58px 0 0;
       position: relative;
@@ -91,8 +97,12 @@
     ul {
       max-width: 626px;
       width: 100%;
+      @media (max-width: 767px) {
+        justify-content: center;
+        margin: initial;
+      }
       li {
-        margin: 0 17px 11px 0;
+        margin: 0 14px 11px 0;
         .add-gallery-btn {
           width: 111px;
           height: 111px;

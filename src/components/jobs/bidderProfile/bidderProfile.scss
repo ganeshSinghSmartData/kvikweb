@@ -1,0 +1,85 @@
+@import "../../../assets/css/variables";
+
+.bidder-profl-blc-rw {
+  margin-bottom: 20px;
+  .bidder-profl-l {
+    margin-right: 20px;
+    .job-address {
+      margin-top: 0;
+    }
+  }
+  .bidder-profl-r {
+    .profile-bar {
+      width: 215px;
+      text-align: right;
+      .profile-percentage {
+        font-size: 16px;
+        font-weight: bold;
+      }
+      .progress {
+        height: 6px;
+        .progress-bar {
+          border-radius: 5px;
+        }
+      }
+      .profile-bar-txt {
+        font-weight: 300;
+        color: #000;
+        margin: 4px 0 0 0;
+      }
+    }
+
+    .mark-btn {
+      margin-top: 63px;
+      .btn {
+        max-width: 327px;
+        width: 100%;
+      }
+    }
+  }
+  .bidder-profl-rw {
+    margin-bottom: 8px;
+  }
+  .bidder-profile-desc {
+    > h3 {
+      font-size: 16px;
+      font-weight: 400;
+      color: #000;
+    }
+  }
+  .bidder-profile-l-padd {
+    margin-left: 79px;
+  }
+  .bidder-profile-list {
+    li {
+      border: 1px solid $primary;
+      border-radius: 5px;
+      padding: 15px 10px;
+      margin-right: 20px;
+      min-width: 158px;
+      h3 {
+        font-size: 16px;
+        font-weight: 700;
+      }
+      label {
+        font-size: 13px;
+        color: #757575;
+      }
+    }
+  }
+}
+.view-review-btn {
+  font-weight: 300;
+  color: #000;
+  &:focus {
+    text-decoration: none;
+  }
+}
+.bidder-review {
+  h2 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+    margin-bottom: 15px;
+  }
+}
