@@ -20,9 +20,9 @@ class PostNewJob extends Component {
   componentDidMount() {}
 
   //   Handling Job Ppost
-  handleJobPost(jobData) {
-    console.log("jobData : ", jobData);
-    this.props.createNewJob(jobData);
+  handleJobPost(jobData, imageData) {
+    console.log("jobData : ", jobData, imageData);
+    // this.props.createNewJob(jobData);
   }
 
   //   Handling Job Update
@@ -42,7 +42,7 @@ class PostNewJob extends Component {
         <PostJob
           _currentstage={this.state.stage}
           _handleStageChange={this.handleStageChange}
-          _handleJobPost={this.handleJobUpdate}
+          _handleJobPost={this.handleJobPost}
           _handleJobUpdate={this.handleJobUpdate}
         />
       </React.Fragment>

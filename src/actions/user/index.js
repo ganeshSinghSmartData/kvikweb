@@ -13,6 +13,8 @@ export const get_user_details = data => ({ type: TYPE.GET_USER_DETAILS, data });
 
 /****** action creator for register users ********/
 export const registerUser = (params, callback) => {
+  console.log("apiUrl:  ", apiUrl);
+
   return (dispatch, getState) => {
     /* const {
       data: { loginToken }
@@ -23,11 +25,11 @@ export const registerUser = (params, callback) => {
         dispatch(register_users(response));
         toastAction(false, response.message);
         callback(true);
-      } else if (response.status === 401) {
-        console.log("errror with 401 : ");
-        toastErrorAction(dispatch, response.message);
       } else {
-        dispatch(is_fetching(false));
+        console.log("errror with 401 : ", response);
+        toastErrorAction(dispatch, response.msg);
+        /* } else {
+        dispatch(is_fetching(false)); */
       }
     });
   };
