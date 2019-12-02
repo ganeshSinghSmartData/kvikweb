@@ -62,9 +62,13 @@
 .rating-btn.svg-secondary-100 svg {
   fill: $orange-200;
 }
-.secondary-100-hover {
+.secondary-100-hover,
+.svg-seconary-100-hover {
   &:hover {
     svg {
+      fill: $orange-200;
+    }
+    path {
       fill: $orange-200;
     }
   }

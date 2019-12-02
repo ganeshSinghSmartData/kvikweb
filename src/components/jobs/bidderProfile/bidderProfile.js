@@ -67,7 +67,7 @@ const BidderProfile = () => {
         <h2>REVIEWS</h2>
         <Proposal />
       </div>
-      {/*
+
       <Button color="primary" className="chat-btn rounded-circle position-absolute">
         <svg id="chat" xmlns="http://www.w3.org/2000/svg" width="19.361" height="19.37" viewBox="0 0 19.361 19.37">
           <g id="Group_7885" data-name="Group 7885">
@@ -75,8 +75,7 @@ const BidderProfile = () => {
           </g>
         </svg>
       </Button>
-    */}
-      {/* <Chat /> */}
+      <Chat />
     </div>
   );
 };
