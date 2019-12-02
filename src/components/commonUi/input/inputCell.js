@@ -1,20 +1,37 @@
 import React from "react";
 import { FormGroup } from "reactstrap";
 import { Control } from "react-redux-form";
-import {
-  invalidEmail,
-  emptyField,
-  invalidPass,
-  required
-} from "./../../../utilities/message";
+import Match from "../../../utilities/validation";
+import Error from "./../error";
 
 import "./inputCell.scss";
-const InputCell = ({ InputType, Name, Model, Placeholder, InputIcon, className = '' }) => {
-  console.log('props.className', className)
+const InputCell = ({
+  InputType,
+  Name,
+  Model,
+  Placeholder,
+  InputIcon,
+  className = "",
+  Errors
+}) => {
+  /**************** Error validations ****************/
+  const validation = () => {
+    let errors = {};
+    if (Errors["required"] === "required") {
+      errors = { ...errors, required: val => !val || !val.length };
+    }
+    if (Errors["invalidEmail"] === "invalidEmail") {
+      errors = { ...errors, invalidEmail: val => !Match.validateEmail(val) };
+    }
+    return errors;
+  };
+
   return (
     <FormGroup>
-      <div className={`position-relative d-flex align-items-center ${className}`}>
-        {InputIcon ?
+      <div
+        className={`position-relative d-flex align-items-center ${className}`}
+      >
+        {InputIcon ? (
           <span className="input-icon">
             {InputType === "text" ? (
               <svg
@@ -59,37 +76,24 @@ const InputCell = ({ InputType, Name, Model, Placeholder, InputIcon, className =
                 />
               </svg>
             ) : null}
-          </span> : null
-        }
-
-
+          </span>
+        ) : null}
         <Control.text
           type={InputType}
           name={Name}
           placeholder={Placeholder}
           model={Model}
           className={"form-control"}
-        /* errors={{
-          ...ErrorValidation
-        }} */
+          errors={validation()}
         />
-        {/* <Errors
-        model={props.Model}
-        errors={{
-          ...errorMessages
-        }}
-      /> */}
-        {/* <Errors
-          model="user.username"
-          messages={{
-            required: 'Username is required.',
-            minLength: 'Username must be more than 8 characters.',
+        <Error
+          model={Model}
+          errors={{
+            ...Errors
           }}
-        /> */}
-        {/* <div className="error-msg text-danger">This Field is required.</div> */}
+        />
       </div>
     </FormGroup>
-
   );
 };
 

@@ -1,11 +1,15 @@
-import React from 'react';
-import './banner.scss';
-import SearchService from '../searchService/searchService';
-const Banner = () => {
+import React from "react";
+import "./banner.scss";
+import SearchService from "../searchService/searchService";
+const Banner = path => {
+  const location = path.path.props.location.pathname;
   return (
     <section className="banner d-flex flex-column flex-shrink-0">
-      <SearchService />
-      <h2 className="banner-title m-auto">Post a Job</h2>
+      {location !== "/post-job" ? (
+        <SearchService />
+      ) : (
+        <h2 className="banner-title m-auto">Post a Job</h2>
+      )}
     </section>
   );
 };

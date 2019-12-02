@@ -4,7 +4,7 @@
  * @author: smartData
  */
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from "react";
 import { Container } from "reactstrap";
 import Header from "./header/header";
 import Banner from "./banner/banner";
@@ -29,7 +29,7 @@ export const publicLayout = props => {
   return (
     <div className="main-wrapper d-flex flex-column flex-fill">
       <Header />
-      <Banner />
+      <Banner path={props.children} />
       <div className="wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto">
         <Container className="d-flex flex-column flex-shrink-0 mb-50">
           {props.children}

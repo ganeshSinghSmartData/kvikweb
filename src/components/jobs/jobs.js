@@ -4,34 +4,39 @@ import { useDispatch, useSelector } from "react-redux";
 import smoothscroll from "smoothscroll-polyfill";
 import JobProduct from "./jobProduct/jobProduct";
 import Sidebar from "../sidebar/sidebar";
-import PostJob from './postJob';
-import BidderProfile from '../jobs/bidderProfile/bidderProfile';
+import PostJob from "./postJob";
+import BidderProfile from "../jobs/bidderProfile/bidderProfile";
 import Heading from "../../components/commonUi/heading/heading";
 import Paragraph from "../../components/commonUi/paragraph/paragraph";
+import { pagination } from "../../utilities/constants";
 // import SpinnerOverlay from '../commonUi/spinner/spinnerOverlay/spinnerOverlay';
 import "./jobs.scss";
-import { getJobProduct } from "./../../actions/job";
+import { getJobProduct, reset_job_products } from "./../../actions/job";
 smoothscroll.polyfill();
 const Job = () => {
   const dispatch = useDispatch();
   const [listType, setlistType] = useState(false);
+  let [page, setPage] = useState(pagination.page);
   const toggleListType = value => {
     setlistType(value);
   };
   let jobs = useSelector(state => state.job);
 
+  const showMoreProduct = page => {
+    setPage(page);
+    dispatch(getJobProduct({ page: page }));
+  };
+
   useEffect(() => {
-    if (!jobs.jobProduct.length) {
-      dispatch(getJobProduct());
-    }
+    dispatch(reset_job_products());
+    dispatch(getJobProduct({ page: page }));
+    // checkRecordsLength();
   }, []);
 
   return (
     <React.Fragment>
       {/* <SpinnerOverlay className="position-fixed" /> */}
-      <section
-        className="d-flex flex-column position-relative"
-      >
+      <section className="d-flex flex-column position-relative">
         <Button className="sidebar-toogle-btn text-right position-fixed rounded-left d-md-none flex-shrink-0">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -48,8 +53,8 @@ const Job = () => {
             />
           </svg>
         </Button>
-        <BidderProfile />
-        <PostJob />
+        {/* <BidderProfile />
+        <PostJob /> */}
         <Row className="d-flex flex-nowrap position-relative">
           <Col className="sidebar-col d-flex flex-column">
             <Sidebar />
@@ -59,9 +64,9 @@ const Job = () => {
             <Paragraph>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               Pellentesque leo ipsum, consequat a tellus pharetra, commodo
-              bibendum dui. In rhoncus lacus ut justo lacinia, id tempus
-              ligula convallis.
-              </Paragraph>
+              bibendum dui. In rhoncus lacus ut justo lacinia, id tempus ligula
+              convallis.
+            </Paragraph>
             <div className="job-list-blc">
               <div className="job-list-heading d-flex">
                 <h3 className="flex-fill">
@@ -122,21 +127,27 @@ const Job = () => {
                     );
                   })}
               </Row>
-              <Row className="joblist-more">
-                <Col className="d-flex justify-content-center">
-                  <Button color="secondary" className="data-loader-btn">
-                    <span className="d-flex justify-content-center">
-                      <span
-                        className="spinner-border spinner-border-sm"
-                        role="status"
-                        aria-hidden="true"
-                      ></span>
-                      Loading...
+              {jobs.jobProduct.length >= pagination.limit && (
+                <Row className="joblist-more">
+                  <Col className="d-flex justify-content-center">
+                    <Button
+                      color="secondary"
+                      className="data-loader-btn"
+                      onClick={() => showMoreProduct(++page)}
+                    >
+                      <span className="d-flex justify-content-center">
+                        <span
+                          className="spinner-border spinner-border-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                        Loading...
                       </span>
-                    <span>SHOW MORE</span>
-                  </Button>
-                </Col>
-              </Row>
+                      <span>SHOW MORE</span>
+                    </Button>
+                  </Col>
+                </Row>
+              )}
             </div>
           </Col>
         </Row>

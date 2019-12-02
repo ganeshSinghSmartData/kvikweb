@@ -46,6 +46,7 @@ export default ({
                   Model=".jobAbout"
                   InputType="select"
                   ClassName={"custom-select"}
+                  Errors={{ required: "required" }}
                 >
                   <option>1</option>
                   <option>2</option>
@@ -61,6 +62,7 @@ export default ({
                   Placeholder={"First Name"}
                   Model=".lname"
                   InputType={"text"}
+                  Errors={{ required: "required" }}
                 />
               </div>
               <div className="col-md-6">
@@ -70,6 +72,7 @@ export default ({
                   Placeholder={"About the job"}
                   Model=".aboutTheJob"
                   InputType={"textarea"}
+                  Errors={{ required: "required" }}
                 />
               </div>
               <div className="col-md-6">
@@ -78,6 +81,7 @@ export default ({
                   Placeholder={"Cost"}
                   Model=".cost"
                   InputType={"number"}
+                  Errors={{ required: "required" }}
                 />
               </div>
             </div>
@@ -107,6 +111,7 @@ export default ({
                   Placeholder={"Location"}
                   Model=".location"
                   InputType={"text"}
+                  Errors={{ required: "required" }}
                 />
               </div>
               <div className="col-md-6">
@@ -116,6 +121,7 @@ export default ({
                   Placeholder={"Address"}
                   Model=".address"
                   InputType={"text"}
+                  Errors={{ required: "required" }}
                 />
               </div>
               <div className="col-md-4">
@@ -126,7 +132,8 @@ export default ({
                   Model=".address"
                   InputType={"text"}
                   InputIcon={true}
-                  className="input-icon-cell-rt"
+                  ClassName="input-icon-cell-rt"
+                  Errors={{ required: "required" }}
                 />
               </div>
               <div className="col-md-4">
@@ -136,6 +143,7 @@ export default ({
                   Placeholder={"Address"}
                   Model=".address"
                   InputType={"text"}
+                  Errors={{ required: "required" }}
                 />
               </div>
               <div className="col-md-4">
@@ -146,6 +154,7 @@ export default ({
                   InputType="select"
                   Placeholder={"Frequency"}
                   ClassName={"custom-select"}
+                  Errors={{ required: "required" }}
                 >
                   <option>1</option>
                   <option>2</option>
@@ -162,6 +171,7 @@ export default ({
                   Placeholder={"Duration"}
                   Model=".duration"
                   InputType={"number"}
+                  Errors={{ required: "required" }}
                 />
               </div>
               <div className="col-md-4">
@@ -171,6 +181,7 @@ export default ({
                   Placeholder={"Duration"}
                   Model=".duration"
                   InputType={"number"}
+                  Errors={{ required: "required" }}
                 />
               </div>
               <div className="col-md-4">
@@ -180,6 +191,7 @@ export default ({
                   Placeholder={"Duration"}
                   Model=".duration"
                   InputType={"number"}
+                  Errors={{ required: "required" }}
                 />
               </div>
             </div>
