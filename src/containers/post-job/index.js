@@ -20,9 +20,36 @@ class PostNewJob extends Component {
   componentDidMount() {}
 
   //   Handling Job Ppost
-  handleJobPost(jobData, imageData) {
-    console.log("jobData : ", jobData, imageData);
-    // this.props.createNewJob(jobData);
+  handleJobPost(jobData, startDate, endDate, imageData, currentstage) {
+    if (currentstage !== 3) {
+      this.handleStageChange(1);
+    } else {
+      let formData = new FormData();
+
+      for (var key in imageData) {
+        if (!Number(imageData[key])) {
+          formData.append("file", imageData[key]);
+        }
+      }
+      console.log("jobData.startDate : ", typeof startDate, endDate);
+
+      formData.append("category", jobData.category);
+      formData.append("jobtitle", jobData.jobtitle);
+      formData.append("description", jobData.description);
+      formData.append("budget", jobData.budget);
+      formData.append("street", jobData.street);
+      formData.append("city", jobData.city);
+      formData.append("location", jobData.location);
+      formData.append("startDate", startDate);
+      formData.append("endDate", endDate);
+      formData.append("frequency", jobData.frequency);
+      /* this.props.createNewJob(formData, callback => {
+        if (callback) {
+          console.log("Job Successfullt poseted : ", callback);
+          // this.props.history()
+        }
+      }); */
+    }
   }
 
   //   Handling Job Update

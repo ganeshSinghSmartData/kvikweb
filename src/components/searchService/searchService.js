@@ -5,6 +5,7 @@ import { Container, Row, Col, Form, Input, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const SearchService = () => {
+  const loggedInUser = useSelector(state => state.user.loggedIn);
   return (
     <div className="src-service-blc d-flex flex-column flex-fill">
       <Container className="d-flex flex-column flex-fill">
@@ -37,9 +38,11 @@ const SearchService = () => {
                   <Button color="primary">Search</Button>
                 </Form>
               </div>
-              <Link className="text-black" to={"/post-job"}>
-                <Button className="post-job-btn">Post a Job</Button>
-              </Link>
+              {loggedInUser && (
+                <Link className="text-black" to={"/post-job"}>
+                  <Button className="post-job-btn">Post a Job</Button>
+                </Link>
+              )}
             </div>
           </Col>
         </Row>

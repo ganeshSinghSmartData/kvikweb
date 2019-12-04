@@ -1,7 +1,7 @@
 import * as TYPE from "../constants";
 import ApiClient from "../../api-client";
 import { apiUrl } from "../../environment";
-// import { toastAction, toastErrorAction } from "../toast-actions";
+import { toastAction, toastErrorAction } from "../toast-actions";
 import { pagination } from "../../utilities/constants";
 
 export const is_fetching = status => ({ type: TYPE.IS_FETCHING, status });
@@ -67,22 +67,26 @@ export const getJobDetails = job_id => {
 };
 
 /****** action creator for get jobs ********/
-export const createNewJob = params => {
+export const createNewJob = (params, callback) => {
   return (dispatch, getState) => {
     const {
-      data: { loginToken }
+      data: { token }
     } = getState().user;
-    console.log("loginToken: ", loginToken);
-
-    ApiClient.post(`${apiUrl}/add_job`, params, loginToken).then(response => {
-      if (response.status === 200) {
-        dispatch(is_fetching(false));
-        dispatch(post_job_products(response.data));
-      } else if (response.status === 401) {
-        console.log("errror with 401 : ");
-      } else {
-        dispatch(is_fetching(false));
+    ApiClient._postFormData(`${apiUrl}/api/add_job`, params, token).then(
+      response => {
+        if (response.status === 200) {
+          dispatch(is_fetching(false));
+          dispatch(post_job_products(response.data));
+          toastAction(true, response.msg);
+          callback(true);
+        } else if (response.status === 401) {
+          callback(false);
+          console.log("errror with 401 : ");
+        } else {
+          dispatch(is_fetching(false));
+          callback(false);
+        }
       }
-    });
+    );
   };
 };

@@ -3,6 +3,8 @@ import { Input, Button } from "reactstrap";
 import { Control } from "react-redux-form";
 import { Link } from "react-router-dom";
 import { LocalForm } from "react-redux-form";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import InputCell from "../../commonUi/input/inputCell";
 import "./postJob.scss";
@@ -14,9 +16,15 @@ export default ({
   _handleJobUpdate
 }) => {
   const [images, setImages] = useState([]);
+  const [imageData, setImageData] = useState([]);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
   let files;
   const handleImageOnchange = event => {
     files = event.target.files;
+    setImageData(files);
+    console.log("files: ", files);
     const imagesData = Object.values(files).reduce((list, key) => {
       if (key && typeof key === "object") {
         let url = URL.createObjectURL(key);
@@ -26,22 +34,34 @@ export default ({
     }, []);
     setImages(imagesData);
   };
+
+  /********** Change class on steps ************/
+  const getClass = step => {
+    if (step === _currentstage) {
+      return "active";
+    } else if (step < _currentstage) {
+      return "complete";
+    } else if (step > _currentstage) {
+      return "link";
+    }
+  };
+
   return (
     <div className="post-wrapper data-block ml-auto mr-auto">
       {/* Top Header Buttons */}
       <div className="post-job-nav d-flex justify-content-center">
         <ul className="d-flex">
-          <li className="complete">
+          <li className={getClass(1)}>
             <Button color="link">
               <span>1</span>
             </Button>
           </li>
-          <li className="active">
+          <li className={getClass(2)}>
             <Button color="link">
               <span>2</span>
             </Button>
           </li>
-          <li>
+          <li className={getClass(3)}>
             <Button color="link">
               <span>3</span>
             </Button>
@@ -49,7 +69,11 @@ export default ({
         </ul>
       </div>
       <div className="post-job-inner">
-        <LocalForm onSubmit={values => _handleJobPost(values, files)}>
+        <LocalForm
+          onSubmit={values =>
+            _handleJobPost(values, startDate, endDate, imageData, _currentstage)
+          }
+        >
           {/* Stage 1 */}
           {_currentstage === 1 && (
             <div className="row flex-wrap post-job-form">
@@ -66,9 +90,9 @@ export default ({
               <div className="col-md-6">
                 <label className="input-title">Job Title</label>
                 <InputCell
-                  Name={"password"}
+                  Name={"jobtitle"}
                   Placeholder={"Job Title"}
-                  Model=".jobTitle"
+                  Model=".jobtitle"
                   InputType={"text"}
                   Errors={{ required: "required" }}
                 />
@@ -78,7 +102,7 @@ export default ({
                 <InputCell
                   Name={"aboutjob"}
                   Placeholder={"About the job"}
-                  Model=".aboutTheJob"
+                  Model=".description"
                   InputType={"textarea"}
                   Errors={{ required: "required" }}
                 />
@@ -123,32 +147,29 @@ export default ({
                 <InputCell
                   Name={"postalCode"}
                   Placeholder={"Postal Code"}
-                  Model=".postalCode"
+                  Model=".location"
                   InputType={"number"}
                   Errors={{ required: "required" }}
                 />
               </div>
               <div className="col-md-4">
                 <label className="input-title">Start Date</label>
-                <InputCell
-                  Name={"startDate"}
-                  Placeholder={"Start Date"}
-                  Model=".startDate"
-                  InputType={"date"}
-                  InputIcon={true}
-                  ClassName="input-icon-cell-rt"
-                  Errors={{ required: "required" }}
+                <DatePicker
+                  selected={startDate}
+                  onChange={date => setStartDate(date)}
+                  timeInputLabel="Time:"
+                  dateFormat="MM/dd/yyyy h:mm aa"
+                  showTimeInput
                 />
               </div>
               <div className="col-md-4">
-                <label className="input-title">Start Time</label>
-                <InputCell
-                  Name={"startTime"}
-                  Placeholder={"Start Time"}
-                  Model=".startTime"
-                  InputType={"time"}
-                  InputIcon={true}
-                  Errors={{ required: "required" }}
+                <label className="input-title">End Date</label>
+                <DatePicker
+                  selected={endDate}
+                  onChange={date => setEndDate(date)}
+                  timeInputLabel="Time:"
+                  dateFormat="MM/dd/yyyy h:mm aa"
+                  showTimeInput
                 />
               </div>
               <div className="col-md-4">
@@ -159,30 +180,6 @@ export default ({
                   InputType="select"
                   Placeholder={"Frequency"}
                   ClassName={"custom-select"}
-                  Errors={{ required: "required" }}
-                />
-              </div>
-
-              <div className="col-md-4">
-                <label className="input-title">End Date</label>
-                <InputCell
-                  Name={"endDate"}
-                  Placeholder={"End Date"}
-                  Model=".endDate"
-                  InputType={"date"}
-                  InputIcon={true}
-                  ClassName="input-icon-cell-rt"
-                  Errors={{ required: "required" }}
-                />
-              </div>
-              <div className="col-md-4">
-                <label className="input-title">End Time</label>
-                <InputCell
-                  Name={"endTime"}
-                  Placeholder={"End Time"}
-                  Model=".endTime"
-                  InputType={"time"}
-                  InputIcon={true}
                   Errors={{ required: "required" }}
                 />
               </div>
@@ -258,10 +255,11 @@ export default ({
             )}
             {_currentstage !== 3 && (
               <Button
+                type="submit"
                 color="secondary"
-                onClick={() => {
+                /* onClick={() => {
                   _handleStageChange(1);
-                }}
+                }} */
               >
                 NEXT
               </Button>

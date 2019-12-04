@@ -3,6 +3,11 @@ import { FormGroup } from "reactstrap";
 import { Control } from "react-redux-form";
 import Match from "../../../utilities/validation";
 import Error from "./../error";
+import {
+  invalidEmail,
+  invalidPass,
+  required
+} from "./../../../utilities/message";
 
 import "./inputCell.scss";
 const InputCell = ({
@@ -14,14 +19,17 @@ const InputCell = ({
   ClassName = "",
   Errors
 }) => {
+  let ErrorsObject = {};
   /**************** Error validations ****************/
   const validation = () => {
     let errors = {};
     if (Errors["required"] === "required") {
       errors = { ...errors, required: val => !val || !val.length };
+      ErrorsObject = { required };
     }
     if (Errors["invalidEmail"] === "invalidEmail") {
       errors = { ...errors, invalidEmail: val => !Match.validateEmail(val) };
+      ErrorsObject = { invalidEmail };
     }
     return errors;
   };
@@ -172,7 +180,7 @@ const InputCell = ({
         <Error
           model={Model}
           errors={{
-            ...Errors
+            ...ErrorsObject
           }}
         />
       </div>
