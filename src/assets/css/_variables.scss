@@ -1,7 +1,9 @@
 $dark-default: #333;
 $dark-default-light: #444;
 $blue: #2db7fe;
-$blue-100: #078ace;
+$blue-dark: #078ace;
+$blue-light1: #2cb8fd;
+$blue-light2: #2cc3fe;
 $yellow: #fea62c;
 $orange: #ffb12c;
 $orange-hover: #fc9f00;
@@ -12,9 +14,12 @@ $white: #fff;
 $red: #ff0000;
 
 $primary: $blue;
-$primary-hover: $blue-100;
+$primary-dark: $blue-dark;
+$primary-light1: $blue-light1;
+$primary-light2: $blue-light2;
 $secondary: $yellow;
 $secondary-100: $orange-100;
+$secondary-200: $orange-200;
 $secondary-100-hover: $orange-200;
 $success: $green;
 $info: $white;

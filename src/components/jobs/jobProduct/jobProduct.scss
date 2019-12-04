@@ -118,8 +118,7 @@
       color: #24231f;
     }
     label {
-      max-width: 235px;
-      width: 100%;
+      width: 44%;
       border-left: 1px solid #24231f;
       padding-left: 20px;
       line-height: 1;
@@ -171,7 +170,7 @@
     }
   }
 }
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .job-listing {
     flex-direction: column !important;
     .job-wrapper {

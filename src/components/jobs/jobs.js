@@ -5,7 +5,8 @@ import smoothscroll from "smoothscroll-polyfill";
 import JobProduct from "./jobProduct/jobProduct";
 import Sidebar from "../sidebar/sidebar";
 import PostJob from "./postJob";
-import BidderProfile from "../jobs/bidderProfile/bidderProfile";
+import BidderProfile from "./bidderProfile/bidderProfile";
+import UserProfileDetail from "../jobs/userProfileDetail/userProfileDetail";
 import Heading from "../../components/commonUi/heading/heading";
 import Paragraph from "../../components/commonUi/paragraph/paragraph";
 import { pagination } from "../../utilities/constants";
@@ -53,8 +54,9 @@ const Job = () => {
             />
           </svg>
         </Button>
-        {/* <BidderProfile />
-        <PostJob /> */}
+        <BidderProfile />
+        <UserProfileDetail />
+        <PostJob />
         <Row className="d-flex flex-nowrap position-relative">
           <Col className="sidebar-col d-flex flex-column">
             <Sidebar />

@@ -9,9 +9,25 @@
     }
   }
   .bidder-profl-r {
+    max-width: 327px;
+    width: 100%;
+    @media (max-width: 900px) {
+      max-width: 220px;
+    }
+    @media (max-width: 767px) {
+      margin-left: 0 !important;
+      max-width: none;
+    }
+    @media (max-width: 600px) {
+      margin-left: 0 !important;
+      max-width: none;
+    }
     .profile-bar {
       width: 215px;
       text-align: right;
+      @media (max-width: 767px) {
+        width: 100%;
+      }
       .profile-percentage {
         font-size: 16px;
         font-weight: bold;
@@ -30,25 +46,14 @@
     }
 
     .mark-btn {
-      margin-top: 63px;
-      .btn {
-        max-width: 327px;
-        width: 100%;
-      }
+      padding-top: 15px;
     }
   }
   .bidder-profl-rw {
-    margin-bottom: 8px;
-  }
-  .bidder-profile-desc {
-    > h3 {
-      font-size: 16px;
-      font-weight: 400;
-      color: #000;
+    margin-bottom: 20px;
+    @media (max-width: 767px) {
+      flex-direction: column !important;
     }
-  }
-  .bidder-profile-l-padd {
-    margin-left: 79px;
   }
   .bidder-profile-list {
     li {
@@ -56,8 +61,15 @@
       border-radius: 5px;
       padding: 15px 10px;
       margin-right: 20px;
+      margin-bottom: 20px;
       min-width: 158px;
+      @media (max-width: 767px) {
+        width: 100%;
+        min-width: initial;
+        margin-right: 0;
+      }
       h3 {
+        font-family: $primary-font-family;
         font-size: 16px;
         font-weight: 700;
       }
@@ -68,7 +80,14 @@
     }
   }
 }
+.bidder-profile-l-padd {
+  margin-left: 79px;
+  @media (max-width: 767px) {
+    margin-left: 0;
+  }
+}
 .view-review-btn {
+  font-family: $primary-font-family;
   font-weight: 300;
   color: #000;
   &:focus {

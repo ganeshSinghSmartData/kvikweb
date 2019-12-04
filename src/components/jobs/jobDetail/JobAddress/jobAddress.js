@@ -1,14 +1,14 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 import UserImage from '../userImage/userImage';
-import RatingBlock from '../../../jobs/ratingBock/ratingBlock';
+import RatingBlock from '../../ratingBock/ratingBlock';
 import './jobAddress.scss';
 const JobAddress = (props) => {
   return (
     <div className="job-address d-flex">
       <UserImage />
       <div className="job-user-info flex-fill">
-        <div className="job-user-rw d-flex">
+        <div className="job-user-rw d-flex flex-wrap">
           <div className="job-user-l">
             <h4>
               Rapha Conrad

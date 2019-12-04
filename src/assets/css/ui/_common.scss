@@ -32,6 +32,9 @@ svg path {
   -ms-transition: all 0.1s ease-in-out;
   -o-transition: all 0.1s ease-in-out;
 }
+svg {
+  height: auto;
+}
 body {
   color: $dark-default;
   #root {
@@ -48,13 +51,19 @@ body {
 }
 .wrapper-inner {
   padding-top: 30px;
+  @media (max-width: 767px) {
+    padding-top: 15px;
+  }
 }
 
 .data-page {
   background-color: #fff;
   border: 1px solid #e2e5e7;
-  padding: 30px 15px;
+  padding: 30px 30px;
   border-radius: 10px;
+  @media (max-width: 767px) {
+    padding: 15px;
+  }
 }
 .data-block {
   max-width: 876px;

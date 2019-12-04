@@ -23,7 +23,7 @@ const JobProduct = ({ product, listType }) => {
           "job-inner " + (listType ? "d-flex flex-column flex-fill" : "")
         }
       >
-        <div className={"job-title d-flex " + (listType ? "flex-column" : "")}>
+        <div className={"job-title d-flex flex-wrap " + (listType ? "flex-column" : "")}>
           <label className={"flex-fill m-0 " + (listType ? "order-2" : "")}>
             {product.jobtitle || ""}
           </label>

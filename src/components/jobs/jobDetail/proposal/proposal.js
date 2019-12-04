@@ -15,7 +15,7 @@ const Proposal = (props) => {
           </p>
       </div>
       <div className="proposal-col-r time-rate text-right flex-shrink-0">
-        1 Day Ago
+        <span className="d-block"> 1 Day Ago</span>
         <h3 className="text-primary">$650.00</h3>
         <RatingBlock />
       </div>

@@ -1,12 +1,13 @@
 @import "../../../assets//css/variables";
 .modal-dialog {
   height: calc(100% - 40px);
-  width: 90%;
+  width: calc(100% - 40px);
+  margin: auto;
   margin-top: 20px;
   margin-bottom: 20px;
   .modal-header {
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
     .modal-title {
       display: flex;
       align-items: center;
@@ -29,11 +30,6 @@
 // signup Modal style start
 .modal-dialog.signup {
   max-width: 970px;
-  height: calc(100% - 40px);
-  width: 90%;
-  margin: auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
   .modal-content {
     border-radius: 0;
     border: none;
@@ -160,6 +156,9 @@
     margin-right: 10px;
   }
 }
+.start-job-btn {
+  min-width: 130px;
+}
 // signup Modal style end
 @media (max-width: 1024px) {
   .signup-modal-pic {
@@ -260,6 +259,7 @@
     h2 {
       font-size: 18px;
       font-weight: 400;
+      margin-bottom: 9px;
     }
     h3 {
       font-size: 16px;
@@ -280,6 +280,31 @@
         }
       }
     }
+  }
+}
+
+.bidder-completion {
+  .bidder-label {
+    font-size: 16px;
+    color: #000;
+    margin: 0 0 5px 0;
+  }
+  .bidder-rate {
+    margin: 25px 0 0;
+    .rating-btn svg {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  .bidder-completion-blc {
+    .bid-confirm-btns {
+      margin: 15px 0 0;
+    }
+  }
+}
+.bidder-completion .modal-content {
+  .modal-body {
+    padding: 15px 30px 25px;
   }
 }
 // Bid Confirmation Modal end

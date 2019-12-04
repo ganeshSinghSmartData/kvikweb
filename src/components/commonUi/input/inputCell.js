@@ -1,5 +1,5 @@
 import React from "react";
-import { FormGroup } from "reactstrap";
+import { FormGroup, Label } from "reactstrap";
 import { Control } from "react-redux-form";
 import Match from "../../../utilities/validation";
 import Error from "./../error";
@@ -29,7 +29,7 @@ const InputCell = ({
   return (
     <FormGroup>
       <div
-        className={`position-relative d-flex align-items-center ${className}`}
+        className={`position-relative d-flex flex-wrap align-items-center ${className}`}
       >
         {InputIcon ? (
           <span className="input-icon">
@@ -90,9 +90,9 @@ const InputCell = ({
           model={Model}
           errors={{
             ...Errors
-          }}
-        />
+          }} />
       </div>
+
     </FormGroup>
   );
 };

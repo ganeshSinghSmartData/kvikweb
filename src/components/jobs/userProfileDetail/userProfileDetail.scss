@@ -1,0 +1,148 @@
+@import "../../../assets/css/variables";
+
+.user-profl-blc-rw {
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
+  @media (max-width: 600px) {
+    .user-profl-rw {
+      flex-direction: column;
+    }
+  }
+}
+.user-profl-l {
+  .job-address {
+    margin-top: 0;
+  }
+  @media (max-width: 600px) {
+    order: 2;
+  }
+}
+.user-profl-edit {
+  margin: 0 0 0 20px;
+  @media (max-width: 600px) {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .edit-btn {
+    background-color: #fff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    min-width: 106px;
+    font-size: 12px;
+    font-weight: 300;
+    span {
+      margin: 0 8px 0 0;
+      svg {
+        width: 15px;
+      }
+    }
+    &:hover {
+      background-color: #fafafa;
+      * {
+        cursor: pointer;
+      }
+      path {
+        fill: $secondary-200;
+      }
+    }
+  }
+}
+.user-profl-col-r {
+  flex-basis: 300px;
+  flex-shrink: 0;
+  margin: 0 0 0 75px;
+  @media (max-width: 900px) {
+    margin-left: 0;
+  }
+  h2 {
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+    margin: 0 0 12px 0;
+  }
+  .user-cards-rw {
+    margin: 0 0 17px 0;
+    .user-cards {
+      border: 1px solid $secondary-200;
+      padding: 20px;
+      text-align: center;
+      font-size: 18px;
+      color: #757575;
+      border-radius: 10px;
+      > span {
+        margin: 0 0 15px 0;
+        svg {
+          width: 59px;
+        }
+      }
+    }
+    .card-chip {
+      min-height: 180px;
+      background: $dark-default;
+      border: 1px solid #707070;
+      color: #fff;
+      padding: 21px 18px 15px;
+      border-radius: 15px;
+      .card-chip-hd {
+        margin: 0 0 20px 0;
+        svg {
+          width: 45px;
+        }
+      }
+      .card-chip-no {
+        font-size: 20px;
+        border: 1px solid $primary-light2;
+        border-radius: 10px;
+        padding: 6px 10px;
+        margin: 0 0 20px 0;
+        @media (max-width: 600px) {
+          font-size: 15px;
+        }
+        span {
+          margin: 0 21px 0 0;
+          @media (max-width: 600px) {
+            margin: 0 15px 0 0;
+          }
+        }
+        .last-digit {
+          margin-right: 0;
+        }
+        .grey-digit {
+          color: #757575;
+        }
+      }
+      .card-chip-col {
+        > h2 {
+          font-size: 10px;
+          font-weight: 400;
+          color: $primary-light1;
+          margin: 0 0 7px 0;
+        }
+        > h3 {
+          font-size: 13px;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+  .card-detail {
+    margin-top: 25px;
+    h2 {
+      font-weight: 700;
+      color: $dark-default;
+    }
+    .card-detail-item {
+      label {
+        margin: 0;
+        font-size: 10px;
+        color: #2cb8fd;
+      }
+    }
+    .card-detail-btn {
+      margin-top: 24px;
+      .btn {
+        min-width: 147px;
+      }
+    }
+  }
+}

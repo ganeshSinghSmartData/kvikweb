@@ -2,6 +2,9 @@
 .chat-btn {
   width: 50px;
   height: 50px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
 }
 .chat-block {
   max-width: 433px;
@@ -10,10 +13,12 @@
   border: 1px solid #fd782e;
   border-radius: 15px;
   position: fixed;
-  top: 0;
-  right: 0;
+  bottom: -5px;
+  right: -5px;
   z-index: 999;
   box-shadow: -11px -11px 20px rgba(0, 0, 0, 0.1);
+  transition: all ease 0.3s 0s;
+  transform: translateX(100%);
   .chat-head {
     margin: 29px 29px 0;
     padding: 0 14px;
@@ -101,4 +106,7 @@
       }
     }
   }
+}
+.chat-block.on {
+  transform: translateX(0);
 }

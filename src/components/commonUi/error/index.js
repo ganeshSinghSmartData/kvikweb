@@ -8,6 +8,8 @@ import {
 } from "./../../../utilities/message";
 
 const errors = ({ model, errors }) => {
+  console.log('errors  : ', errors);
+
   return (
     <Errors
       className="errors"

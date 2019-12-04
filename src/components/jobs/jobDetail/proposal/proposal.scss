@@ -36,10 +36,16 @@
     color: rgba(0, 0, 0, 0.7);
   }
 }
+.proposal-col-r {
+  font-family: $secondary-font-family;
+}
 .time-rate {
   font-size: 12px;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.5);
+  span {
+    font-weight: 500;
+  }
   h3 {
     font-size: 20px;
     font-weight: 500;
@@ -47,7 +53,7 @@
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .proposal-blc {
     > h4 {
       margin-bottom: 15px;

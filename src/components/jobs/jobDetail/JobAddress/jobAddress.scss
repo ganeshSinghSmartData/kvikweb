@@ -34,6 +34,7 @@
     font-size: 18px;
     font-weight: 500;
     span {
+      font-family: $primary-font-family;
       font-size: 14px;
       font-weight: 300;
       color: rgba(0, 0, 0, 0.7);
@@ -64,15 +65,33 @@
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
+  .job-user-info {
+    .job-user-rw {
+      flex-direction: column !important;
+      text-align: center;
+    }
+  }
+  .job-user-info {
+    .job-user-rw {
+      .job-user-r {
+        .rating-blc {
+          margin: 0;
+          justify-content: center;
+        }
+      }
+    }
+    .job-user-rw {
+      .job-user-l {
+        margin-right: 0;
+      }
+    }
+  }
   .job-address {
     flex-direction: column;
     align-items: center;
   }
   .job-user-info {
     padding-left: 0;
-    h4 {
-      text-align: center;
-    }
   }
 }

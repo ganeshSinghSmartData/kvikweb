@@ -1,9 +1,9 @@
 import React from "react";
-import { Row, Col } from "reactstrap";
+import { Row, Col, Button } from "reactstrap";
 import Heading from "../../commonUi/heading/heading";
 import Paragraph from "../../commonUi/paragraph/paragraph";
 import RatingBlock from '../ratingBock/ratingBlock';
-import JobAddress from "./JobAddress/jobAddress";
+import JobAddress from "./jobAddress/jobAddress";
 import Proposal from "./proposal/proposal";
 import SignInModal from "../../commonUi/modal/modal";
 import "./jobDetail.scss";
@@ -46,6 +46,9 @@ const jobDetail = ({ job }) => {
               <Paragraph>{job.description}</Paragraph>
             </div>
             <JobAddress />
+            <div className="place-bid-rw text-center">
+              <Button color="secondary" className="place-bid-btn">Place a Bid</Button>
+            </div>
           </Col>
         </Row>
         {/* <div className="proposal-blc flex-shrink-0">

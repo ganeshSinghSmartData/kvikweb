@@ -31,8 +31,8 @@
 .btn-primary,
 .social-icons .btn span {
   &:hover {
-    background-color: $primary-hover !important;
-    border-color: $primary-hover !important;
+    background-color: $primary-dark !important;
+    border-color: $primary-dark !important;
   }
 }
 .btn-primary:not(:disabled):not(.disabled):active,
@@ -40,8 +40,8 @@
 .show > .btn-primary.dropdown-toggle,
 .dropdown-item.active,
 .dropdown-item:active {
-  background-color: $primary-hover !important;
-  border-color: $primary-hover !important;
+  background-color: $primary-dark !important;
+  border-color: $primary-dark !important;
 }
 
 .btn-secondary {
@@ -59,6 +59,7 @@
 }
 .job-location svg,
 .svg-secondary-100 svg,
+.svg-secondary-100 svg path,
 .rating-btn.svg-secondary-100 svg {
   fill: $orange-200;
 }
@@ -101,12 +102,6 @@
   background-color: $secondary !important;
   border-color: $secondary !important;
   box-shadow: 0 0 0 0.2rem #ffca82;
-}
-
-.btn-light:not(:disabled):not(.disabled):active,
-.btn-light:not(:disabled):not(.disabled).active,
-.show > .btn-light.dropdown-toggle {
-  background-color: $secondary !important;
 }
 
 // Custom style start

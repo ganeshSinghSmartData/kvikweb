@@ -33,22 +33,34 @@
     fill: #6d6d6d;
   }
 }
-.input-icon-cell-rt .input-icon {
-  left: auto;
-  right: 18px;
+.input-icon-cell-rt {
+  .input-icon {
+    left: auto;
+    right: 18px;
+  }
+  .form-control {
+    padding-right: 50px;
+  }
 }
 .input-icon-cell .form-control {
   padding-left: 50px;
   padding-right: 18px;
 }
-.input-icon-cell-rt .form-control {
-  padding-right: 50px;
-}
-.error-msg {
+
+.errors {
   font-size: 12px;
-  margin: 5px 0 0 20px;
+  color: $danger;
+  margin-top: 5px;
+  margin-left: 5px;
+  width: 100%;
+}
+.input-icon-cell {
+  .errors {
+    margin-left: 20px;
+  }
 }
 .input-title {
+  font-family: $secondary-font-family;
   font-size: 12px;
   font-weight: 500;
   color: $primary;
@@ -64,5 +76,17 @@ textarea.form-control {
   background: url(../../../assets/images/icons/angle-down.svg) no-repeat right 1.4rem center/11px 10px #fff;
   svg {
     fill: $dark-default;
+  }
+}
+.input-line-blc {
+  .form-control {
+    border-color: transparent;
+    border-bottom-color: #e1e1e1;
+    border-radius: 0;
+    padding: 0;
+    &:focus {
+      border-bottom-color: $primary;
+      box-shadow: none;
+    }
   }
 }
