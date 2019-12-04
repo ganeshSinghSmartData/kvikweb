@@ -24,7 +24,6 @@ export default ({
   const handleImageOnchange = event => {
     files = event.target.files;
     setImageData(files);
-    console.log("files: ", files);
     const imagesData = Object.values(files).reduce((list, key) => {
       if (key && typeof key === "object") {
         let url = URL.createObjectURL(key);

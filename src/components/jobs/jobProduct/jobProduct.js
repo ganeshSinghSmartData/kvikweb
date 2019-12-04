@@ -1,5 +1,5 @@
 import React from "react";
-import moment from "moment";
+// import moment from "moment";
 import { Link } from "react-router-dom";
 
 import "./jobProduct.scss";
@@ -9,8 +9,8 @@ import { StringToDate, AddOffset } from "./../../../utilities/common";
 import { apiUrl } from "./../../../environment";
 
 const JobProduct = ({ product, listType }) => {
-  const currentSeconds = moment().format("x");
-  const secDiff = AddOffset(Number(product.jobEndDate)) - currentSeconds;
+  /* const currentSeconds = moment().format("x");
+  const secDiff = AddOffset(Number(product.jobEndDate)) - currentSeconds; */
   return (
     <div className={"job-wrapper " + (listType ? "d-flex flex-column" : "")}>
       <div className="job-pic text-center flex-shrink-0">
@@ -23,7 +23,11 @@ const JobProduct = ({ product, listType }) => {
           "job-inner " + (listType ? "d-flex flex-column flex-fill" : "")
         }
       >
-        <div className={"job-title d-flex flex-wrap " + (listType ? "flex-column" : "")}>
+        <div
+          className={
+            "job-title d-flex flex-wrap " + (listType ? "flex-column" : "")
+          }
+        >
           <label className={"flex-fill m-0 " + (listType ? "order-2" : "")}>
             {product.jobtitle || ""}
           </label>

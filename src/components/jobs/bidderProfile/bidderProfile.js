@@ -1,20 +1,20 @@
-import React, { useState, } from 'react';
-import { Button } from 'reactstrap';
-import JobAddress from '../jobDetail/jobAddress/jobAddress';
+import React, { useState } from "react";
+import { Button } from "reactstrap";
+import JobAddress from "../jobDetail/JobAddress/jobAddress";
 import Proposal from "../jobDetail/proposal/proposal";
-import Chat from './chat/chat';
-import UserInfo from '../../jobs/bidderProfile/userInfo/userInfo';
-import './bidderProfile.scss';
+import Chat from "./chat/chat";
+import UserInfo from "../../jobs/bidderProfile/userInfo/userInfo";
+import "./bidderProfile.scss";
 const BidderProfile = () => {
   const [chatVisible, setchatVisible] = useState(false);
   const chatToggle = () => {
-    setchatVisible(!chatVisible)
-    console.log('chatVisible', chatVisible)
-  }
-  const chatHideCallback = (value) => {
-    setchatVisible(value)
-    console.log('chatHideCallback', value)
-  }
+    setchatVisible(!chatVisible);
+    console.log("chatVisible", chatVisible);
+  };
+  const chatHideCallback = value => {
+    setchatVisible(value);
+    console.log("chatHideCallback", value);
+  };
 
   return (
     <>
@@ -30,14 +30,20 @@ const BidderProfile = () => {
                 <div className="profile-bar ml-auto">
                   <span className="profile-percentage">95%</span>
                   <div className="progress">
-                    <div className="progress-bar bg-primary" role="progressbar" style={{ width: '25%' }}></div>
+                    <div
+                      className="progress-bar bg-primary"
+                      role="progressbar"
+                      style={{ width: "25%" }}
+                    ></div>
                   </div>
-                  <span className="d-block profile-bar-txt text-left">Profile Completion</span>
+                  <span className="d-block profile-bar-txt text-left">
+                    Profile Completion
+                  </span>
                 </div>
                 <div className="mark-btn mt-auto">
                   <Button color="secondary" block>
                     Mark as Done
-              </Button>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -45,26 +51,16 @@ const BidderProfile = () => {
             <div className="bidder-profl-rw bidder-profile-l-padd bidder-profile-list">
               <ul className="d-flex flex-wrap">
                 <li>
-                  <h3>
-                    43
-              </h3>
+                  <h3>43</h3>
                   <label>Jobs</label>
                 </li>
                 <li>
-                  <h3>
-                    $31k+
-                </h3>
-                  <label>
-                    Total Earnings
-                </label>
+                  <h3>$31k+</h3>
+                  <label>Total Earnings</label>
                 </li>
                 <li>
-                  <h3>
-                    1,500
-                </h3>
-                  <label>
-                    Hours Worked
-                </label>
+                  <h3>1,500</h3>
+                  <label>Hours Worked</label>
                 </li>
               </ul>
             </div>
@@ -74,14 +70,33 @@ const BidderProfile = () => {
             <Proposal />
           </div>
 
-          <Button color="primary" className="chat-btn rounded-circle position-fixed" onClick={chatToggle}>
-            <svg id="chat" xmlns="http://www.w3.org/2000/svg" width="19.361" height="19.37" viewBox="0 0 19.361 19.37">
+          <Button
+            color="primary"
+            className="chat-btn rounded-circle position-fixed"
+            onClick={chatToggle}
+          >
+            <svg
+              id="chat"
+              xmlns="http://www.w3.org/2000/svg"
+              width="19.361"
+              height="19.37"
+              viewBox="0 0 19.361 19.37"
+            >
               <g id="Group_7885" data-name="Group 7885">
-                <path id="Path_3432" data-name="Path 3432" d="M16.643,2.839A9.682,9.682,0,0,0,2.31,15.825,3.634,3.634,0,0,1,.785,17.59a.9.9,0,0,0,.26,1.7,4.608,4.608,0,0,0,.685.053h0a6.262,6.262,0,0,0,3.48-1.127A9.685,9.685,0,0,0,16.643,2.839Z" transform="translate(-0.117 0)" fill="#fff" />
+                <path
+                  id="Path_3432"
+                  data-name="Path 3432"
+                  d="M16.643,2.839A9.682,9.682,0,0,0,2.31,15.825,3.634,3.634,0,0,1,.785,17.59a.9.9,0,0,0,.26,1.7,4.608,4.608,0,0,0,.685.053h0a6.262,6.262,0,0,0,3.48-1.127A9.685,9.685,0,0,0,16.643,2.839Z"
+                  transform="translate(-0.117 0)"
+                  fill="#fff"
+                />
               </g>
             </svg>
           </Button>
-          <Chat chatToggle={chatVisible} chatHideCallback={(value) => chatHideCallback(value)} />
+          <Chat
+            chatToggle={chatVisible}
+            chatHideCallback={value => chatHideCallback(value)}
+          />
         </div>
       </div>
     </>

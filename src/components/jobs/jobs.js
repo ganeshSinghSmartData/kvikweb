@@ -54,9 +54,9 @@ const Job = () => {
             />
           </svg>
         </Button>
-        <BidderProfile />
-        <UserProfileDetail />
-        <PostJob />
+        {/* <BidderProfile /> */}
+        {/* <UserProfileDetail /> */}
+        {/* <PostJob /> */}
         <Row className="d-flex flex-nowrap position-relative">
           <Col className="sidebar-col d-flex flex-column">
             <Sidebar />

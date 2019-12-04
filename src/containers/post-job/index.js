@@ -31,7 +31,24 @@ class PostNewJob extends Component {
           formData.append("file", imageData[key]);
         }
       }
-      console.log("jobData.startDate : ", typeof startDate, endDate);
+      const startdate = new Date(startDate);
+      const newStartDate =
+        startdate.getFullYear() +
+        "-" +
+        (startdate.getMonth() + 1) +
+        "-" +
+        startdate.getDate() +
+        " " +
+        startdate.toLocaleTimeString("en-US");
+      const enddate = new Date(endDate);
+      const newEndDate =
+        enddate.getFullYear() +
+        "-" +
+        (enddate.getMonth() + 1) +
+        "-" +
+        enddate.getDate() +
+        " " +
+        enddate.toLocaleTimeString("en-US");
 
       formData.append("category", jobData.category);
       formData.append("jobtitle", jobData.jobtitle);
@@ -40,15 +57,15 @@ class PostNewJob extends Component {
       formData.append("street", jobData.street);
       formData.append("city", jobData.city);
       formData.append("location", jobData.location);
-      formData.append("startDate", startDate);
-      formData.append("endDate", endDate);
+      formData.append("jobStartDate", newStartDate);
+      formData.append("jobEndDate", newEndDate);
       formData.append("frequency", jobData.frequency);
-      /* this.props.createNewJob(formData, callback => {
+      this.props.createNewJob(formData, callback => {
         if (callback) {
           console.log("Job Successfullt poseted : ", callback);
           // this.props.history()
         }
-      }); */
+      });
     }
   }
 
