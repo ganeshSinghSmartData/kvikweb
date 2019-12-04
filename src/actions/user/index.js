@@ -13,21 +13,16 @@ export const get_user_details = data => ({ type: TYPE.GET_USER_DETAILS, data });
 
 /****** action creator for register users ********/
 export const registerUser = (params, callback) => {
-  return (dispatch, getState) => {
-    /* const {
-      data: { loginToken }
-    } = getState().user; */
+  return dispatch => {
     ApiClient.post(`${apiUrl}/register`, params).then(response => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(register_users(response));
         toastAction(false, response.message);
         callback(true);
-      } else if (response.status === 401) {
-        console.log("errror with 401 : ");
-        toastErrorAction(dispatch, response.message);
       } else {
-        dispatch(is_fetching(false));
+        console.log("errror with 401 : ", response);
+        toastErrorAction(dispatch, response.msg);
       }
     });
   };
@@ -35,19 +30,15 @@ export const registerUser = (params, callback) => {
 
 /****** action creator for login users jobs ********/
 export const loginUser = (params, callback) => {
-  return (dispatch, getState) => {
-    /* const {
-        data: { loginToken }
-      } = getState().user; */
+  return dispatch => {
     ApiClient.post(`${apiUrl}/login`, params).then(response => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(login_users(response));
-        toastAction(false, response.message);
+        toastAction(true, response.msg);
         callback(true);
-      } else if (response.status === 401) {
-        console.log("errror with 401 : ");
-        // toastErrorAction(dispatch, response.message);
+      } else if (response.status === 404) {
+        toastErrorAction(dispatch, response.msg);
       } else {
         dispatch(is_fetching(false));
       }

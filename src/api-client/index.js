@@ -104,7 +104,30 @@ class ApiClient {
         });
     });
   }
+  /*************** Form-Data Method ***********/
+  static _postFormData(url, params, token = null) {
+    setAuthorizationToken(axios, token);
+    return new Promise(function(fulfill, reject) {
+      // var body = new FormData();
+      // body.append("file", params);
+      axios
+        .post(url, params, {
+          ...config,
+          ...{ headers: { "Content-Type": "multipart/form-data" } }
+        })
 
+        .then(function(response) {
+          fulfill(response.data);
+        })
+        .catch(function(error) {
+          if (error && error.response) {
+            fulfill(error.response.data);
+          } else {
+            reject(error);
+          }
+        });
+    });
+  }
   /*************** Form-Data Method ***********/
   static postFormData(url, params, token = null) {
     setAuthorizationToken(axios, token);

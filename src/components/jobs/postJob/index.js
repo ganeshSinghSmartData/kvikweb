@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Input, Button } from "reactstrap";
+import { Control } from "react-redux-form";
 import { Link } from "react-router-dom";
 import { LocalForm } from "react-redux-form";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import InputCell from "../../commonUi/input/inputCell";
 import "./postJob.scss";
@@ -12,22 +15,53 @@ export default ({
   _handleJobPost,
   _handleJobUpdate
 }) => {
+  const [images, setImages] = useState([]);
+  const [imageData, setImageData] = useState([]);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
+  let files;
+  const handleImageOnchange = event => {
+    files = event.target.files;
+    setImageData(files);
+    console.log("files: ", files);
+    const imagesData = Object.values(files).reduce((list, key) => {
+      if (key && typeof key === "object") {
+        let url = URL.createObjectURL(key);
+        list.push(url);
+      }
+      return list;
+    }, []);
+    setImages(imagesData);
+  };
+
+  /********** Change class on steps ************/
+  const getClass = step => {
+    if (step === _currentstage) {
+      return "active";
+    } else if (step < _currentstage) {
+      return "complete";
+    } else if (step > _currentstage) {
+      return "link";
+    }
+  };
+
   return (
     <div className="post-wrapper data-block ml-auto mr-auto">
       {/* Top Header Buttons */}
       <div className="post-job-nav d-flex justify-content-center">
         <ul className="d-flex">
-          <li className="complete">
+          <li className={getClass(1)}>
             <Button color="link">
               <span>1</span>
             </Button>
           </li>
-          <li className="active">
+          <li className={getClass(2)}>
             <Button color="link">
               <span>2</span>
             </Button>
           </li>
-          <li>
+          <li className={getClass(3)}>
             <Button color="link">
               <span>3</span>
             </Button>
@@ -35,32 +69,30 @@ export default ({
         </ul>
       </div>
       <div className="post-job-inner">
-        <LocalForm>
+        <LocalForm
+          onSubmit={values =>
+            _handleJobPost(values, startDate, endDate, imageData, _currentstage)
+          }
+        >
           {/* Stage 1 */}
           {_currentstage === 1 && (
             <div className="row flex-wrap post-job-form">
               <div className="col-md-6">
                 <label className="input-title">Select Category</label>
                 <InputCell
-                  Name={"select"}
-                  Model=".jobAbout"
+                  Name={"category"}
+                  Model=".category"
                   InputType="select"
                   ClassName={"custom-select"}
                   Errors={{ required: "required" }}
-                >
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </InputCell>
+                ></InputCell>
               </div>
               <div className="col-md-6">
                 <label className="input-title">Job Title</label>
                 <InputCell
-                  Name={"password"}
-                  Placeholder={"First Name"}
-                  Model=".lname"
+                  Name={"jobtitle"}
+                  Placeholder={"Job Title"}
+                  Model=".jobtitle"
                   InputType={"text"}
                   Errors={{ required: "required" }}
                 />
@@ -70,16 +102,17 @@ export default ({
                 <InputCell
                   Name={"aboutjob"}
                   Placeholder={"About the job"}
-                  Model=".aboutTheJob"
+                  Model=".description"
                   InputType={"textarea"}
                   Errors={{ required: "required" }}
                 />
               </div>
               <div className="col-md-6">
+                <label className="input-title">Budget</label>
                 <InputCell
-                  Name={"cost"}
-                  Placeholder={"Cost"}
-                  Model=".cost"
+                  Name={"budget"}
+                  Placeholder={"Budget"}
+                  Model=".budget"
                   InputType={"number"}
                   Errors={{ required: "required" }}
                 />
@@ -89,61 +122,54 @@ export default ({
           {/* Stage 2 */}
           {_currentstage === 2 && (
             <div className="row flex-wrap post-job-form">
-              {/* <div className="col-md-6">
-                <label className="input-title">Select Category</label>
+              <div className="col-md-4">
+                <label className="input-title">Street</label>
                 <InputCell
-                  Name={"select"}
-                  Model=".jobAbout"
-                  InputType="select"
-                  ClassName={"custom-select"}
-                >
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </InputCell>
-              </div> */}
-              <div className="col-md-6">
-                <label className="input-title">Location</label>
+                  Name={"street"}
+                  Placeholder={"Street"}
+                  Model=".street"
+                  InputType={"text"}
+                  Errors={{ required: "required" }}
+                />
+              </div>
+              <div className="col-md-4">
+                <label className="input-title">City</label>
                 <InputCell
-                  Name={"location"}
-                  Placeholder={"Location"}
+                  Name={"city"}
+                  Placeholder={"City"}
+                  Model=".city"
+                  InputType={"text"}
+                  Errors={{ required: "required" }}
+                />
+              </div>
+              <div className="col-md-4">
+                <label className="input-title">Postal Code</label>
+                <InputCell
+                  Name={"postalCode"}
+                  Placeholder={"Postal Code"}
                   Model=".location"
-                  InputType={"text"}
-                  Errors={{ required: "required" }}
-                />
-              </div>
-              <div className="col-md-6">
-                <label className="input-title">Address</label>
-                <InputCell
-                  Name={"address"}
-                  Placeholder={"Address"}
-                  Model=".address"
-                  InputType={"text"}
+                  InputType={"number"}
                   Errors={{ required: "required" }}
                 />
               </div>
               <div className="col-md-4">
-                <label className="input-title">Date</label>
-                <InputCell
-                  Name={"address"}
-                  Placeholder={"Address"}
-                  Model=".address"
-                  InputType={"text"}
-                  InputIcon={true}
-                  ClassName="input-icon-cell-rt"
-                  Errors={{ required: "required" }}
+                <label className="input-title">Start Date</label>
+                <DatePicker
+                  selected={startDate}
+                  onChange={date => setStartDate(date)}
+                  timeInputLabel="Time:"
+                  dateFormat="MM/dd/yyyy h:mm aa"
+                  showTimeInput
                 />
               </div>
               <div className="col-md-4">
-                <label className="input-title">Time</label>
-                <InputCell
-                  Name={"address"}
-                  Placeholder={"Address"}
-                  Model=".address"
-                  InputType={"text"}
-                  Errors={{ required: "required" }}
+                <label className="input-title">End Date</label>
+                <DatePicker
+                  selected={endDate}
+                  onChange={date => setEndDate(date)}
+                  timeInputLabel="Time:"
+                  dateFormat="MM/dd/yyyy h:mm aa"
+                  showTimeInput
                 />
               </div>
               <div className="col-md-4">
@@ -155,43 +181,6 @@ export default ({
                   Placeholder={"Frequency"}
                   ClassName={"custom-select"}
                   Errors={{ required: "required" }}
-                >
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </InputCell>
-              </div>
-
-              <div className="col-md-4">
-                <label className="input-title">Duration</label>
-                <InputCell
-                  Name={"duration"}
-                  Placeholder={"Duration"}
-                  Model=".duration"
-                  InputType={"number"}
-                  Errors={{ required: "required" }}
-                />
-              </div>
-              <div className="col-md-4">
-                <label className="input-title"></label>
-                <InputCell
-                  Name={"duration"}
-                  Placeholder={"Duration"}
-                  Model=".duration"
-                  InputType={"number"}
-                  Errors={{ required: "required" }}
-                />
-              </div>
-              <div className="col-md-4">
-                <label className="input-title"></label>
-                <InputCell
-                  Name={"duration"}
-                  Placeholder={"Duration"}
-                  Model=".duration"
-                  InputType={"number"}
-                  Errors={{ required: "required" }}
                 />
               </div>
             </div>
@@ -200,49 +189,28 @@ export default ({
           {_currentstage === 3 && (
             <div className="post-job-gallery d-flex">
               <ul className="d-flex flex-wrap ml-auto mr-auto">
-                <li>
-                  <img
-                    src={require("./../../../assets/images/job-gallery/1.jpg")}
-                    alt="Job Pic"
-                  />
-                </li>
-                <li>
-                  <img
-                    src={require("../../../assets/images/job-gallery/1.jpg")}
-                    alt="Job Pic"
-                  />
-                </li>
-                <li>
-                  <img
-                    src={require("../../../assets/images/job-gallery/1.jpg")}
-                    alt="Job Pic"
-                  />
-                </li>
-                <li>
-                  <img
-                    src={require("../../../assets/images/job-gallery/1.jpg")}
-                    alt="Job Pic"
-                  />
-                </li>
-                <li>
-                  <img
-                    src={require("../../../assets/images/job-gallery/1.jpg")}
-                    alt="Job Pic"
-                  />
-                </li>
-                <li>
-                  <img
-                    src={require("../../../assets/images/job-gallery/1.jpg")}
-                    alt="Job Pic"
-                  />
-                </li>
+                {images &&
+                  images.length > 0 &&
+                  images.map((item, key) => {
+                    return (
+                      <li key={key}>
+                        <img src={item} alt="Job Pic" />
+                      </li>
+                    );
+                  })}
                 <li>
                   <Button
                     color="primary"
                     block
                     className="add-gallery-btn position-relative"
                   >
-                    <Input type="file" name="file" />
+                    <Input
+                      type="file"
+                      model=".images"
+                      name="file"
+                      multiple="multiple"
+                      onChange={event => handleImageOnchange(event)}
+                    />
                     <svg
                       id="_x38__3_"
                       xmlns="http://www.w3.org/2000/svg"
@@ -287,21 +255,17 @@ export default ({
             )}
             {_currentstage !== 3 && (
               <Button
+                type="submit"
                 color="secondary"
-                onClick={() => {
+                /* onClick={() => {
                   _handleStageChange(1);
-                }}
+                }} */
               >
                 NEXT
               </Button>
             )}
             {_currentstage === 3 && (
-              <Button
-                color="secondary"
-                onClick={() => {
-                  _handleJobPost("stage");
-                }}
-              >
+              <Button color="secondary" type="submit">
                 POST NOW
               </Button>
             )}
