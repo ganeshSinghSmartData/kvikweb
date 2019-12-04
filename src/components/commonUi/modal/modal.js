@@ -1,35 +1,65 @@
-import React, { useState } from 'react';
-import { Modal, ModalBody, Button, Form } from 'reactstrap';
-import InputCell from '../input/inputCell';
-import Checkbox from '../checkbox/checkbox';
-import Logo from '../../commonUi/logo/logo';
-import LoginType from './loginType/loginType';
+import React, { useState } from "react";
+import { Modal, ModalHeader, ModalBody, Button } from "reactstrap";
+import { LocalForm, Control } from "react-redux-form";
+import { Link } from "react-router-dom";
 
-import './modal.scss';
-const SignInModal = (props) => {
-  const [modal, setModal] = useState({
-    modal: false,
-    modalType: true
-  });
+import Checkbox from "../checkbox/checkbox";
+import Logo from "../../commonUi/logo/logo";
+import LoginType from "./loginType/loginType";
+import InputCell from "./../input/inputCell";
+import RatingBlock from '../../jobs/ratingBock/ratingBlock';
+import UserImage from '../../jobs/jobDetail/userImage/userImage';
+
+import "./modal.scss";
+
+const SignInModal = ({
+  _isOpen,
+  _toggleModal,
+  _modalType,
+  _handleSubmit,
+  _handleForgotPassword,
+  ...props
+}) => {
+
+  const [modal, setModal] = useState(true);
   const toggle = () => setModal(!modal);
   return (
     <div>
-      <Modal isOpen={modal} toggle={toggle} size="lg" className={"d-flex flex-column align-items-center justify-content-center " + (modal.modalType ? 'signup' : '')}>
-        {/* <ModalHeader toggle={toggle}>Modal title</ModalHeader> */}
-        <Button color="link" className="position-absolute close-btn secondary-100-hover" onClick={toggle}>
-          <svg id="cancel" xmlns="http://www.w3.org/2000/svg" width="475.2" height="475.2" viewBox="0 0 475.2 475.2">
-            <g id="Group_1" data-name="Group 1">
-              <path id="Path_1" data-name="Path 1" d="M405.6,69.6a237.588,237.588,0,1,0-336,336,237.588,237.588,0,1,0,336-336ZM386.5,386.5a210.519,210.519,0,0,1-297.8,0C6.6,304.4,6.6,170.8,88.7,88.7a210.519,210.519,0,0,1,297.8,0C468.6,170.8,468.6,304.4,386.5,386.5Z" />
-              <path id="Path_2" data-name="Path 2" d="M342.3,132.9a13.46,13.46,0,0,0-19.1,0l-85.6,85.6L152,132.9A13.506,13.506,0,1,0,132.9,152l85.6,85.6-85.6,85.6a13.55,13.55,0,0,0,9.5,23.1,13.173,13.173,0,0,0,9.5-4l85.6-85.6,85.6,85.6a13.588,13.588,0,0,0,9.5,4,13.01,13.01,0,0,0,9.5-4,13.46,13.46,0,0,0,0-19.1l-85.4-85.6L342.3,152A13.46,13.46,0,0,0,342.3,132.9Z" />
-            </g>
+      <Modal
+        isOpen={_isOpen}
+        size="lg"
+        className={
+          "d-flex flex-column align-items-center justify-content-center " +
+          (_modalType ? "signup" : "")
+        }
+      >
+        <Button
+          color="link"
+          className="position-absolute close-btn"
+          onClick={() => _toggleModal()}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
+            <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
           </svg>
         </Button>
-        <ModalBody className={"overflow-auto " + (modal.modalType ? 'p-0' : '')}>
+        <ModalBody className={"overflow-auto " + (_modalType ? "p-0" : "")}>
           <div className="signup-modal-blc d-flex">
+
             <div className="signup-modal-pic d-flex align-items-center justify-content-center position-relative">
               <span className="curl position-absolute">
-                <svg xmlns="http://www.w3.org/2000/svg" width="53.005" height="245.634" viewBox="0 0 53.005 245.634">
-                  <path id="Shape_1" data-name="Shape 1" d="M679.7,250.128C661.9,338.756,627,344.316,627,344.316s52.729,37.911,52.7,124.855S680.4,157.336,679.7,250.128Z" transform="translate(-627 -236.026)" fill="#fff" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="53.005"
+                  height="245.634"
+                  viewBox="0 0 53.005 245.634"
+                >
+                  <path
+                    id="Shape_1"
+                    data-name="Shape 1"
+                    d="M679.7,250.128C661.9,338.756,627,344.316,627,344.316s52.729,37.911,52.7,124.855S680.4,157.336,679.7,250.128Z"
+                    transform="translate(-627 -236.026)"
+                    fill="#fff"
+                  />
                 </svg>
               </span>
               <h3 className="text-center position-relative">
@@ -41,45 +71,296 @@ const SignInModal = (props) => {
             </div>
 
             <div className="signup-modal-frm flex-fill">
-              <h2>
-                Welcome Back,
-                <label className='d-block'>Sign Up</label>
-              </h2>
-              <Form>
-                <InputCell inputCell={true} InputType="text" />
-                <InputCell inputCell={true} InputType="text" />
-                <InputCell inputCell={true} InputType="email" />
-                <InputCell inputCell={true} InputType="password" />
-                <div className="signup-agree d-flex align-items-start">
-                  <label className="d-flex align-items-start">
-                    <Checkbox /> I agree with terms and conditions
-                  </label>
-                  <Button color="link" className="forgot-btn btn btn-link flex-shrink-0 ml-auto p-0 text-primary-hover">
-                    Forgot Password?
-                    </Button>
+              <LocalForm onSubmit={values => _handleSubmit(values)}>
+                {_modalType === "/register" && (
+                  <React.Fragment>
+                    <h2>
+                      Welcome <label className="d-block">Sign Up</label>
+                    </h2>
+                    <InputCell
+                      Name={"fname"}
+                      Placeholder={"First Name"}
+                      Model=".fname"
+                      InputType={"text"}
+                      className="input-icon-cell"
+                      InputIcon={true}
+                      Errors={{ required: "required" }}
+                    />
+                    <InputCell
+                      Name={"lname"}
+                      Placeholder={"Last Name"}
+                      Model=".lname"
+                      InputType={"text"}
+                      className="input-icon-cell"
+                      InputIcon={true}
+                      Errors={{ required: "required" }}
+                    />
+                    <InputCell
+                      Name={"email"}
+                      Placeholder={"Email"}
+                      Model=".email"
+                      InputType={"email"}
+                      className="input-icon-cell"
+                      InputIcon={true}
+                      Errors={{
+                        required: "required",
+                        invalidEmail: "invalidEmail"
+                      }}
+                    />
+                    <InputCell
+                      Name={"password"}
+                      Placeholder={"Password"}
+                      Model=".password"
+                      InputType={"password"}
+                      className="input-icon-cell"
+                      InputIcon={true}
+                      Errors={{ required: "required" }}
+                    />
+                    <div className="signup-agree d-flex align-items-start">
+                      <label className="d-flex align-items-start">
+                        <Checkbox /> I agree with terms and conditions
+                      </label>
+                    </div>
+                    <div className="text-center">
+                      <Button size="lg" className="signup">
+                        SIGN UP
+                      </Button>
+                    </div>
+                  </React.Fragment>
+                )}
+                {_modalType === "/login" && (
+                  <div>
+                    <h2>
+                      Welcome Back, <label className="d-block">Login</label>
+                    </h2>
+                    <InputCell
+                      Name={"email"}
+                      Placeholder={"Email"}
+                      Model=".email"
+                      InputType={"email"}
+                      className="input-icon-cell"
+                      InputIcon={true}
+                      Errors={{ required: "required" }}
+                    />
+                    <InputCell
+                      Name={"password"}
+                      Placeholder={"Password"}
+                      Model=".password"
+                      InputType={"password"}
+                      className="input-icon-cell"
+                      InputIcon={true}
+                      Errors={{ required: "required" }}
+                    />
+                    <div className="signup-agree d-flex align-items-start">
+                      <label className="d-flex align-items-start">
+                        <Checkbox /> Remember me
+                      </label>
+                      <Button
+                        color="link"
+                        className="forgot-btn btn btn-link flex-shrink-0 ml-auto p-0 text-primary-hover"
+                        onClick={_handleForgotPassword("")}
+                      >
+                        Forgot Password?
+                      </Button>
+                    </div>
+                    <div className="text-center">
+                      <Button size="lg" className="signup">
+                        LOGIN
+                      </Button>
+                    </div>
+                    <LoginType {...props} />
+                    <p className="signup-link-rw text-center">
+                      <span>Don't have an account?</span>
+                      <Link className="text-black" to={"/register"}>
+                        Sign Up Now
+                      </Link>
+                    </p>
+                  </div>
+                )}
+              </LocalForm>
+            </div>
+
+          </div>
+        </ModalBody>
+      </Modal>
+
+
+      {/* <Modal isOpen={modal} toggle={toggle} size="lg"
+        className={"d-flex flex-column align-items-center   justify-content-center bid-modal secondary-font-family"}>
+        <ModalHeader>
+          <span>Modal title</span>
+          <Button color="link" className="close-btn btn2" onClick={toggle}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
+              <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
+            </svg>
+          </Button>
+        </ModalHeader>
+        <ModalBody className={"overflow-auto"}>
+          <div className="bid-desc-blc">
+            <h2>Description</h2>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero Lorem ipsum dolor sit amet, consetetur.</p>
+
+            <form>
+              <div className="row bid-desc-frm">
+                <div className="col-md-6">
+                  <InputCell Name={"amount1"}
+                    Placeholder={"amount"}
+                    Model=".amount1"
+                    InputType={"text"}
+                    className="input-line-blc"
+                    Errors={{ required: "required" }}
+                  />
                 </div>
-                <div className="text-center">
-                  <Button size="lg" className="signup">
-                    SIGN UP
-                  </Button>
+                <div className="col-md-6">
+                  <InputCell Name={"amount2"}
+                    Placeholder={"amount"}
+                    Model=".amount2"
+                    InputType={"text"}
+                    className="input-line-blc"
+                    Errors={{ required: "required" }}
+                  />
                 </div>
-                <LoginType />
-                <p className="signup-link-rw text-center">
-                  <span>Don't have an account?</span>
-                  <Button color="link" className="p-0">
-                    Sign Up Now
-                  </Button>
+              </div>
+              <div className="bid-frm-btns text-center">
+                <Button color="link" className="btn-dark">REJECT</Button>
+                <Button color="secondary">SEND</Button>
+              </div>
+            </form>
+          </div>
+        </ModalBody>
+      </Modal>
+                */}
+
+
+      {/*
+      <Modal isOpen={modal} toggle={toggle} size="lg" className={"d-flex flex-column align-items-center justify-content-center bid-modal secondary-font-family"}>
+        <ModalHeader>
+          <span>Bid Details</span>
+          <Button color="link" className="close-btn btn2" onClick={toggle}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
+              <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
+            </svg>
+          </Button>
+        </ModalHeader>
+        <ModalBody className={"overflow-auto"}>
+          <div className="bid-detail-blc d-flex">
+            <div className="bid-detail-l">
+              <UserImage />
+            </div>
+            <div className="bid-detail-r">
+              <div className="bid-detail-rw">
+                <h2>
+                  Jorden Luise
+                <span>1 Day Ago</span>
+                </h2>
+                <p>
+                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero Lorem ipsum dolor sit amet, consetetur.
                 </p>
-              </Form>
+                <div className="bid-price">
+                  $ 650.00
+                </div>
+              </div>
+              <div className="bid-frm-btns text-center">
+                <Button color="link" className="btn-dark">REJECT</Button>
+                <Button color="secondary">SEND</Button>
+              </div>
             </div>
           </div>
         </ModalBody>
-        {/* <ModalFooter>
-          <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
-          <Button color="secondary" onClick={toggle}>Cancel</Button>
-        </ModalFooter> */}
       </Modal>
+      */}
+
+      {
+        /*
+        <Modal isOpen={modal} toggle={toggle} size="lg" className={"d-flex flex-column align-items-center justify-content-center confirm-modal secondary-font-family"}>
+        <ModalHeader>
+          <span>Confirmation</span>
+          <Button color="link" className="close-btn btn2" onClick={toggle}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
+              <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
+            </svg>
+          </Button>
+        </ModalHeader>
+        <ModalBody className={"overflow-auto"}>
+          <div className="bid-confirm-blc text-center">
+            <h2 className="text-primary">The job request has been accepted by </h2>
+            <h3>Joseph Allison</h3>
+            <div className="bid-confirm-btns d-flex flex-column align-items-center">
+              <Button color="secondary" className="start-job-btn">START JOB</Button>
+              <Button color="link">Remind me later</Button>
+            </div>
+          </div>
+        </ModalBody>
+      </Modal>
+        */
+      }
+
+
+      {/* <Modal isOpen={modal} toggle={toggle} size="lg" className={"d-flex flex-column align-items-center justify-content-center confirm-modal bidder-completion secondary-font-family"}>
+        <ModalHeader className="border-0">
+          <Button color="link" className="close-btn btn2" onClick={toggle}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
+              <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
+            </svg>
+          </Button>
+        </ModalHeader>
+        <ModalBody className={"overflow-auto"}>
+          <div className="bid-confirm-blc bidder-completion-blc text-center">
+            <div className="bidder-label">
+              Joseph Allison
+            </div>
+            <h2 className="text-primary">Has been completed the job</h2>
+            <h3>Tap a star to rate him</h3>
+            <div className="bidder-rate d-flex justify-content-center">
+              <RatingBlock />
+            </div>
+            <div className="bid-confirm-btns d-flex flex-column align-items-center">
+              <Button color="link">Remind me later</Button>
+            </div>
+          </div>
+        </ModalBody>
+      </Modal> */}
+
+
+      {/*
+      <Modal isOpen={modal} toggle={toggle} size="lg" className={"d-flex flex-column align-items-center justify-content-center bid-modal secondary-font-family"}>
+        <ModalHeader>
+          <span>Payment Completed</span>
+          <Button color="link" className="close-btn btn2" onClick={toggle}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
+              <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
+            </svg>
+          </Button>
+        </ModalHeader>
+        <ModalBody className={"overflow-auto"}>
+          <div className="bid-detail-blc d-flex">
+            <div className="bid-detail-l">
+              <UserImage />
+            </div>
+            <div className="bid-detail-r">
+              <div className="bid-detail-rw">
+                <h2>
+                  Jorden Luise
+                <span>1 Day Ago</span>
+                </h2>
+                <p>
+                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero Lorem ipsum dolor sit amet, consetetur.
+                </p>
+                <div className="bid-price">
+                  $ 650.00
+                </div>
+              </div>
+              <div className="bid-frm-btns text-center">
+                <Button color="link" className="btn-dark">REJECT</Button>
+                <Button color="secondary">SEND</Button>
+              </div>
+            </div>
+          </div>
+        </ModalBody>
+      </Modal>
+      */}
+
     </div>
   );
-}
+};
 export default SignInModal;

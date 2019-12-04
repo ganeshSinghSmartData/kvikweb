@@ -1,37 +1,40 @@
-import React from 'react';
-import { Button } from 'reactstrap';
-import './nav.scss';
-const Nav = (props) => {
-  const stopPropagationHandler = (e) => {
+import React from "react";
+import { Link } from "react-router-dom";
+import "./nav.scss";
+const Nav = props => {
+  const stopPropagationHandler = e => {
     e.nativeEvent.stopImmediatePropagation();
-  }
+  };
   return (
-    <nav className={"d-flex align-items-center " + (props.className)} onClick={stopPropagationHandler}>
+    <nav
+      className={"d-flex align-items-center " + props.className}
+      onClick={stopPropagationHandler}
+    >
       <ul className="d-flex align-items-center">
         <li>
-          <Button color="link">
+          <Link className="btn btn-link" to={''}>
             Bids
-        </Button>
+          </Link>
         </li>
         <li>
-          <Button color="link">
+          <Link className="btn btn-link" to={''}>
             Categories
-        </Button>
+        </Link>
         </li>
         <li>
-          <Button color="link">
+          <Link className="btn btn-link" to={''}>
             Help
-        </Button>
+        </Link>
         </li>
         <li>
-          <Button color="link">
+          <Link className="btn btn-link" to={"/register"}>
             Create an Account
-        </Button>
+          </Link>
         </li>
         <li>
-          <Button color="info" className="login-btn">
+          <Link className="login-btn btn btn-info" to={"/login"}>
             Login
-          </Button>
+          </Link>
         </li>
       </ul>
     </nav>

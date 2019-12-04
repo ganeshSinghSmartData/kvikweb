@@ -27,9 +27,9 @@ const Header = () => {
   }
   return (
     <header className="header d-flex flex-column flex-shrink-0">
-      <Container className="d-flex flex-column h-100">
-        <Row className="d-flex flex-column h-100">
-          <Col className="d-flex align-items-center">
+      <Container>
+        <Row>
+          <Col className="d-flex">
             <Button color="link" className="logo p-0 rounded-0">
               <Logo className="m-0" />
             </Button>

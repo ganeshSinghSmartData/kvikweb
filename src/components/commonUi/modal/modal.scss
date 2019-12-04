@@ -1,27 +1,35 @@
 @import "../../../assets//css/variables";
 .modal-dialog {
   height: calc(100% - 40px);
-  width: 90%;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  .modal-content {
-    max-height: 100%;
-  }
-}
-
-.modal-lg.signup {
-  height: calc(100% - 40px);
-  width: 90%;
+  width: calc(100% - 40px);
   margin: auto;
   margin-top: 20px;
   margin-bottom: 20px;
+  .modal-header {
+    padding-left: 20px;
+    padding-right: 20px;
+    .modal-title {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      span {
+        margin-right: 15px;
+      }
+      .close-btn.btn2 {
+        margin-left: auto;
+      }
+    }
+  }
+  .modal-content {
+    max-height: 100%;
+    .modal-body {
+      padding: 25px 30px;
+    }
+  }
 }
-
 // signup Modal style start
-.modal-lg.signup {
-  max-width: 970px;
-}
 .modal-dialog.signup {
+  max-width: 970px;
   .modal-content {
     border-radius: 0;
     border: none;
@@ -123,16 +131,21 @@
   }
 }
 .close-btn.btn {
-  z-index: 1;
+  width: 34px;
+  height: 34px;
   top: 8px;
-  right: 8px;
-  padding: 7px;
-}
-.close-btn {
+  right: 16px;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 0;
+  margin: 5px 0 0 15px;
   svg {
-    width: 25px;
-    height: 25px;
-    fill: #333;
+    width: 15px;
+    height: 15px;
+    fill: #fff;
+  }
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.4);
   }
 }
 .signup-agree {
@@ -143,7 +156,9 @@
     margin-right: 10px;
   }
 }
-
+.start-job-btn {
+  min-width: 130px;
+}
 // signup Modal style end
 @media (max-width: 1024px) {
   .signup-modal-pic {
@@ -159,13 +174,148 @@
     margin: 50px 40px;
   }
 }
-@media (max-width: 767px) {
-  .close-btn.btn {
-    &:hover {
-      svg {
-        fill: #fff !important;
+
+//Bid-Modal style start
+.modal-dialog.bid-modal {
+  max-width: 670px;
+  .modal-header {
+    border-bottom: 1px solid #e5f5f5;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    .modal-title {
+      font-size: 20px;
+      color: #000;
+    }
+  }
+  .modal-body {
+    padding-bottom: 45px;
+    @media (max-width: 767px) {
+      padding-bottom: 25px;
+    }
+    .bid-desc-blc {
+      h2 {
+        font-size: 18px;
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.5);
+        margin-bottom: 12px;
+      }
+      .bid-desc-frm {
+        padding: 0 91px;
+        @media (max-width: 767px) {
+          padding: 0;
+        }
       }
     }
+    .bid-detail-l {
+      margin: 0 40px 0 0;
+    }
+    .bid-detail-r {
+      .bid-detail-rw h2 {
+        font-size: 18px;
+        color: #000;
+        span {
+          display: block;
+          font-size: 12px;
+          font-weight: 500;
+          color: rgba(0, 0, 0, 0.5);
+          margin: 5px 0 0;
+        }
+      }
+      p {
+        font-size: 12px;
+      }
+      .bid-detail-rw {
+        margin: 0 0 45px;
+        .bid-price {
+          font-size: 20px;
+          font-weight: 500;
+          margin: 25px 0 0;
+        }
+      }
+    }
+  }
+}
+.bid-frm-btns {
+  margin-top: 19px;
+  padding: 0 76px;
+  @media (max-width: 767px) {
+    padding: 0;
+  }
+  .btn {
+    margin: 0 5px 10px 0;
+    min-width: 130px;
+    @media (max-width: 767px) {
+      width: 100%;
+    }
+  }
+}
+//Bid-Modal style end
+
+// Bid Confirmation Modal start
+.confirm-modal {
+  max-width: 435px;
+  width: 90%;
+  .bid-confirm-blc {
+    h2 {
+      font-size: 18px;
+      font-weight: 400;
+      margin-bottom: 9px;
+    }
+    h3 {
+      font-size: 16px;
+      font-weight: 400;
+      color: #000;
+    }
+    .bid-confirm-btns {
+      margin: 25px 0 0;
+      .btn {
+        font-size: 13px;
+      }
+      .btn-link {
+        font-size: 16px;
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.7);
+        &:hover {
+          color: $secondary-100;
+        }
+      }
+    }
+  }
+}
+
+.bidder-completion {
+  .bidder-label {
+    font-size: 16px;
+    color: #000;
+    margin: 0 0 5px 0;
+  }
+  .bidder-rate {
+    margin: 25px 0 0;
+    .rating-btn svg {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  .bidder-completion-blc {
+    .bid-confirm-btns {
+      margin: 15px 0 0;
+    }
+  }
+}
+.bidder-completion .modal-content {
+  .modal-body {
+    padding: 15px 30px 25px;
+  }
+}
+// Bid Confirmation Modal end
+
+@media (max-width: 767px) {
+  .modal-dialog {
+    margin: auto;
+  }
+  .close-btn.btn {
+    right: 16px;
+    padding: 2px;
   }
   .signup-modal-blc {
     flex-direction: column;
@@ -190,8 +340,5 @@
         }
       }
     }
-  }
-  .close-btn svg {
-    fill: #fff;
   }
 }

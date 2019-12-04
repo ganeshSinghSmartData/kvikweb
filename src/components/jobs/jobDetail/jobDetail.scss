@@ -11,6 +11,15 @@
     margin-bottom: 17px;
   }
 }
+.job-detail-hd-col {
+  margin: 3px 15px 0 0;
+  .rating-blc {
+    margin-top: -2px;
+    @media (max-width: 600px) {
+      margin-left: -3px;
+    }
+  }
+}
 .job-detail-inner {
   background-color: #fff;
   border: 1px solid #e2e5e7;
@@ -23,11 +32,12 @@
   }
 }
 .job-detail-hd-rw {
+  margin: 0 0 3px 0;
   h3 {
     font-family: $secondary-font-family;
     font-size: 24px;
     font-weight: 400;
-    margin: 0 10px 5px 0;
+    margin: 0 10px 0 0;
   }
   p {
     font-weight: 300;
@@ -38,8 +48,13 @@
   margin: 0 0 49px 0;
 }
 .job-detail-pic {
+  height: 330px;
   padding: 8px;
   border: 1px solid rgba(163, 163, 163, 0.4);
+  img {
+    width: 100%;
+    height: 100% !important;
+  }
 }
 .job-detail-desc {
   font-family: $secondary-font-family;
@@ -58,7 +73,7 @@
 
 @media (max-width: 767px) {
   .job-detail-blc {
-    margin-top: -40px;
+    margin-top: 0px;
   }
   .job-detail-hd-rw {
     h3 {
@@ -70,18 +85,22 @@
   }
   .job-detail-pic-col {
     margin-bottom: 20px;
-    .job-detail-pic {
-      img {
-        width: 100%;
-      }
-    }
   }
 }
-@media (max-width: 550px) {
+.place-bid-rw {
+  margin-top: 20px;
+  .place-bid-btn {
+    max-width: 327px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
   .job-detail-hd-rw {
     font-family: $secondary-font-family;
     h3 {
       font-size: 18px;
+      margin: 0 0 10px 0;
     }
     .job-detail-amnt {
       font-size: 18px;

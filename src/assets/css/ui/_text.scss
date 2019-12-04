@@ -7,7 +7,7 @@
   }
 }
 .text-secondary {
-  color: $orange-100 !important;
+  color: $orange-200 !important;
 }
 .text-secondary-hover {
   &:hover {
@@ -25,4 +25,10 @@
       color: $primary !important;
     }
   }
+}
+.primary-font-family {
+  font-family: $primary-font-family;
+}
+.secondary-font-family {
+  font-family: $secondary-font-family;
 }
