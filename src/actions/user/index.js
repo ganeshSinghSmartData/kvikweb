@@ -18,7 +18,7 @@ export const registerUser = (params, callback) => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(register_users(response));
-        toastAction(false, response.message);
+        toastAction(true, response.msg);
         callback(true);
       } else {
         console.log("errror with 401 : ", response);
@@ -35,12 +35,32 @@ export const loginUser = (params, callback) => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(login_users(response));
-        toastAction(true, response.msg);
+        // toastAction(true, "User successfully logged In");
         callback(true);
       } else if (response.status === 404) {
         toastErrorAction(dispatch, response.msg);
       } else {
         dispatch(is_fetching(false));
+      }
+    });
+  };
+};
+
+/****** action creator for logout ********/
+export const logout = (params = {}) => {
+  return (dispatch, getState) => {
+    dispatch(is_fetching(true));
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient.post(`${apiUrl}/logout`, params, token).then(response => {
+      if (response.status === 200) {
+        toastAction(true, "User successfully logged out");
+        dispatch(is_fetching(false));
+        dispatch(logout_users());
+      } else {
+        dispatch(is_fetching(false));
+        toastAction(false, response.msg);
       }
     });
   };

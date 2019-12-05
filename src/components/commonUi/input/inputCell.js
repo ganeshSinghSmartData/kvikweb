@@ -22,20 +22,16 @@ const InputCell = ({
   let ErrorsObject = {};
   /**************** Error validations ****************/
   const validation = () => {
-    console.log(" I am in validation method  Errors  : ", Errors);
-
     let errors = {};
     if (Errors["required"] === "required") {
       errors = { ...errors, required: val => !val || !val.length };
       ErrorsObject = { required };
     }
     if (Errors["invalidEmail"] === "invalidEmail") {
-      console.log("I came herer to validate email");
       errors = { ...errors, invalidEmail: val => !Match.validateEmail(val) };
       ErrorsObject = { invalidEmail };
     }
     if (Errors["invalidPass"] === "invalidPass") {
-      console.log("I came herer to validate password");
       errors = { ...errors, invalidPass: val => !Match.validatePassword(val) };
       ErrorsObject = { invalidPass };
     }

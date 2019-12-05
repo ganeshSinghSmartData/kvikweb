@@ -126,11 +126,11 @@ const SignInModal = ({
                         invalidPass: "invalidPass"
                       }}
                     />
-                    <div className="signup-agree d-flex align-items-start">
+                    {/* <div className="signup-agree d-flex align-items-start">
                       <label className="d-flex align-items-start">
                         <Checkbox /> I agree with terms and conditions
                       </label>
-                    </div>
+                    </div> */}
                     <div className="text-center">
                       <Button size="lg" className="signup">
                         SIGN UP
@@ -167,7 +167,7 @@ const SignInModal = ({
                         invalidPass: "invalidPass"
                       }}
                     />
-                    <div className="signup-agree d-flex align-items-start">
+                    {/* <div className="signup-agree d-flex align-items-start">
                       <label className="d-flex align-items-start">
                         <Checkbox /> Remember me
                       </label>
@@ -179,7 +179,7 @@ const SignInModal = ({
                       >
                         Forgot Password?
                       </Button>
-                    </div>
+                    </div> */}
                     <div className="text-center">
                       <Button type="submit" size="lg" className="signup">
                         LOGIN

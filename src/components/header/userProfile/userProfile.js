@@ -10,7 +10,6 @@ import "./userProfile.scss";
 const UserProfile = props => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen(prevState => !prevState);
-  const _handleLogOut = () => {};
   return (
     <div
       className={
@@ -56,16 +55,17 @@ const UserProfile = props => {
             />
           </svg>
         </DropdownToggle>
-        <DropdownMenu right>
-          {/* <DropdownItem header>Header</DropdownItem> */}
-          <DropdownItem onClick="_handleLogOut">Log Out</DropdownItem>
-          {/* <DropdownItem>Some Action</DropdownItem>
+        {/* <DropdownMenu right>
+          <DropdownItem header>Profile</DropdownItem>
+          <DropdownItem>View Profile</DropdownItem>
+          <DropdownItem>Edit Profile</DropdownItem>
+          <DropdownItem divider />
           <DropdownItem disabled>Action (disabled)</DropdownItem>
           <DropdownItem divider />
           <DropdownItem>Foo Action</DropdownItem>
           <DropdownItem>Bar Action</DropdownItem>
-          <DropdownItem>Quo Action</DropdownItem> */}
-        </DropdownMenu>
+          <DropdownItem>Quo Action</DropdownItem>
+        </DropdownMenu> */}
       </Dropdown>
     </div>
   );

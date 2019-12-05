@@ -27,17 +27,6 @@ const AppRoute = ({
     {...rest}
     render={props => {
       const isLogin = requireAuth(store);
-
-      if (isLogin && props.location.pathname === "/") {
-        return (
-          <Redirect
-            to={{
-              pathname: `/${profile_path}`,
-              state: { from: props.location }
-            }}
-          />
-        );
-      }
       if (type === public_type) {
         return (
           <Layout>
