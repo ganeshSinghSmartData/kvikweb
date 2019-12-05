@@ -129,7 +129,7 @@ const Job = () => {
                     );
                   })}
               </Row>
-              {jobs.jobProduct.length >= pagination.limit && (
+              {jobs.jobProduct.length < jobs.count && (
                 <Row className="joblist-more">
                   <Col className="d-flex justify-content-center">
                     <Button
@@ -138,12 +138,12 @@ const Job = () => {
                       onClick={() => showMoreProduct(++page)}
                     >
                       <span className="d-flex justify-content-center">
-                        <span
+                        {/* <span
                           className="spinner-border spinner-border-sm"
                           role="status"
                           aria-hidden="true"
                         ></span>
-                        Loading...
+                        Loading... */}
                       </span>
                       <span>SHOW MORE</span>
                     </Button>
