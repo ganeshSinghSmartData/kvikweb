@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import datetimeDifference from "datetime-difference";
 
 import "./jobProduct.scss";
 import { StringToDate } from "./../../../utilities/common";
@@ -10,7 +11,12 @@ import { apiUrl } from "./../../../environment";
 
 /********* Get time ago in string format *********/
 
-const JobProduct = ({ product, listType, _time }) => {
+const JobProduct = ({ product, listType }) => {
+  const timeleft = datetimeDifference(
+    new Date(),
+    new Date(Number(product.jobEndDate))
+  );
+
   return (
     <div className={"job-wrapper " + (listType ? "d-flex flex-column" : "")}>
       <div className="job-pic text-center flex-shrink-0">
@@ -68,7 +74,7 @@ const JobProduct = ({ product, listType, _time }) => {
         <div className="job-time d-flex space-bet justify-content-between mt-auto">
           <label className="d-flex flex-column">
             Time Left
-            <span>{_time}</span>
+            <span>{`${timeleft.days}d ${timeleft.hours}h ${timeleft.minutes}m`}</span>
           </label>
           <label className="d-flex flex-column text-left">
             Date

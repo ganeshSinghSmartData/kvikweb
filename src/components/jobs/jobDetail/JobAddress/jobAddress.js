@@ -2,8 +2,10 @@ import React from "react";
 import { Button } from "reactstrap";
 import UserImage from "../userImage/userImage";
 import RatingBlock from "../../ratingBock/ratingBlock";
+import datetimeDifference from "datetime-difference";
 import "./jobAddress.scss";
-const JobAddress = props => {
+const JobAddress = enddate => {
+  const timeleft = datetimeDifference(new Date(), new Date(Number(enddate)));
   return (
     <div className="job-address d-flex">
       <UserImage />
@@ -118,6 +120,10 @@ const JobAddress = props => {
               </svg>
             </span>
             <p>
+              {/*               <label>{`${timeleft.days} Days`}</label>
+              <label>{`${timeleft.hours} Hours`}</label>
+              <label>{`${timeleft.minutes} Mins`}</label>
+              <label>{`${timeleft.seconds} Secs`}</label> */}
               <label>2 Days</label>
               <label>4 Hours</label>
               <label>31 Mins</label>

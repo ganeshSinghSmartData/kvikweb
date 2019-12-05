@@ -3297,6 +3297,11 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
+date-diff@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/date-diff/-/date-diff-0.2.1.tgz#5ebc707baddf56bd7cbd1e5d4fcec4acaf50d259"
+  integrity sha512-Cjq+RuGGqLSIyWo9It3ShVEAmHSjifF/UAPSTlT0GBT8O5zgfY0hwaH4y1n9uoB71ey3pfybbcRpvUwCEclLKw==
+
 date-fns@^2.0.1:
   version "2.8.1"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.8.1.tgz#2109362ccb6c87c3ca011e9e31f702bc09e4123b"
@@ -3306,6 +3311,11 @@ date-now@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
   integrity sha1-6vQ5/U1ISK105cx9vvIAZyueNFs=
+
+datetime-difference@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/datetime-difference/-/datetime-difference-1.0.2.tgz#f08dd5fbffa4239c3a572217c8c64e746dacd87e"
+  integrity sha512-nQrIuV1WhKLD9VxfoXm6NbvScy3XbuoJ5Q+POKpLf3ZN9QYkIHpXzEJHK51a+ltrMQpyCkVzGrZmWbxjCjHMvQ==
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.8, debug@^2.6.9:
   version "2.6.9"

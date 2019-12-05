@@ -16,40 +16,6 @@ import "./jobs.scss";
 import { getJobProduct, reset_job_products } from "./../../actions/job";
 smoothscroll.polyfill();
 
-export const timeAgo = time => {
-  var seconds = Math.floor((new Date() - new Date(time)) / 1000);
-  var interval = Math.floor(seconds / 31536000);
-
-  if (interval >= 1) {
-    let text = interval > 1 ? " years" : " year";
-    return interval + text + " ago";
-  }
-  interval = Math.floor(seconds / 2592000);
-  if (interval >= 1) {
-    let text = interval > 1 ? " months" : " month";
-    return interval + text + " ago";
-  }
-  interval = Math.floor(seconds / 86400);
-  if (interval >= 1) {
-    let text = interval > 1 ? " days" : " day";
-    return interval + text + " ago";
-  }
-  interval = Math.floor(seconds / 3600);
-  if (interval >= 1) {
-    let text = interval > 1 ? " hours" : " hour";
-    return interval + text + " ago";
-  }
-  interval = Math.floor(seconds / 60);
-  if (interval >= 1) {
-    let text = interval > 1 ? " minutes" : " minute";
-    return interval + text + " ago";
-  }
-  if (seconds == 0 || seconds == 1) {
-    return "Now";
-  }
-  return Math.floor(seconds) + " seconds ago";
-};
-
 const Job = () => {
   const dispatch = useDispatch();
   const [listType, setlistType] = useState(false);
@@ -67,21 +33,7 @@ const Job = () => {
   useEffect(() => {
     dispatch(reset_job_products());
     dispatch(getJobProduct({ page: page }));
-    // checkRecordsLength();
   }, []);
-
-  const [_time, setTime] = useState([]);
-
-  const getTimeInterval = (i = 0, date) => {
-    let intervalId = [];
-    intervalId[i] = setInterval(() => {
-      if (date <= new Date().getTime()) {
-        clearInterval(intervalId[i]);
-      }
-      _time[i] = timeAgo(date);
-      setTime([..._time]);
-    }, 1000);
-  };
 
   return (
     <React.Fragment>
@@ -171,14 +123,9 @@ const Job = () => {
               >
                 {jobs &&
                   jobs.jobProduct.map((item, key) => {
-                    getTimeInterval(key, DaysBetween(Number(item.jobEndDate)));
                     return (
                       <Col lg="4" className="product-col" key={key}>
-                        <JobProduct
-                          product={item}
-                          listType={listType}
-                          _time={_time[key]}
-                        />
+                        <JobProduct product={item} listType={listType} />
                       </Col>
                     );
                   })}
