@@ -1,5 +1,6 @@
 @import "../../../assets/css/variables";
-.form-control {
+.form-control,
+.react-datepicker-wrapper input {
   font-family: $secondary-font-family;
   font-size: 14px;
   height: 41px;
@@ -9,6 +10,16 @@
   border-radius: 22px;
   -o-border-radius: 22px;
   &:focus {
+    border-color: #2db7fe;
+    box-shadow: 0 0 0 0.2rem rgba(45, 183, 254, 0.33);
+  }
+}
+.react-datepicker-wrapper input {
+  width: 100%;
+  border-style: solid;
+  border-width: 1px;
+  &:focus {
+    outline: none;
     border-color: #2db7fe;
     box-shadow: 0 0 0 0.2rem rgba(45, 183, 254, 0.33);
   }
@@ -27,6 +38,7 @@
   position: absolute;
   left: 18px;
   top: 8px;
+  z-index: 1;
   svg {
     width: 15px;
     height: 15px;

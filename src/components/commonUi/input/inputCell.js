@@ -152,7 +152,7 @@ const InputCell = ({
             name={Name}
             placeholder={Placeholder}
             model={Model}
-            className={ClassName}
+            className={"custom-select"}
             errors={validation()}
           >
             {Name === "frequency" &&
@@ -181,7 +181,7 @@ const InputCell = ({
             name={Name}
             placeholder={Placeholder}
             model={Model}
-            className={ClassName}
+            className={"form-control"}
             errors={validation()}
           ></Control.textarea>
         )}
