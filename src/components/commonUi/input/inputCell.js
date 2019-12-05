@@ -144,7 +144,7 @@ const InputCell = ({
             name={Name}
             placeholder={Placeholder}
             model={Model}
-            className={"custom-select"}
+            className={"form-control custom-select"}
             errors={validation()}
           >
             {Name === "frequency" &&
