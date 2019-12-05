@@ -34,9 +34,6 @@
     border-radius: 0;
     border: none;
   }
-  .flex-fill {
-    flex-basis: 0 !important;
-  }
 }
 .signup-modal-pic {
   width: 473px;
@@ -310,9 +307,6 @@
 // Bid Confirmation Modal end
 
 @media (max-width: 767px) {
-  .modal-dialog {
-    margin: auto;
-  }
   .close-btn.btn {
     right: 16px;
     padding: 2px;

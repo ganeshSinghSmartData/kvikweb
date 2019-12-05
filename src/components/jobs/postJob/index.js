@@ -82,7 +82,6 @@ export default ({
                   Name={"category"}
                   Model=".category"
                   InputType="select"
-                  ClassName={"custom-select"}
                   Errors={{ required: "required" }}
                 ></InputCell>
               </div>
@@ -178,7 +177,6 @@ export default ({
                   Model=".frequency"
                   InputType="select"
                   Placeholder={"Frequency"}
-                  ClassName={"custom-select"}
                   Errors={{ required: "required" }}
                 />
               </div>
@@ -186,7 +184,7 @@ export default ({
           )}
           {/* Stage 3 */}
           {_currentstage === 3 && (
-            <div className="post-job-gallery d-flex">
+            <div className="post-job-gallery d-flex justify-content-center">
               <ul className="d-flex flex-wrap ml-auto mr-auto">
                 {images &&
                   images.length > 0 &&
@@ -256,9 +254,9 @@ export default ({
               <Button
                 type="submit"
                 color="secondary"
-                /* onClick={() => {
-                  _handleStageChange(1);
-                }} */
+              /* onClick={() => {
+                _handleStageChange(1);
+              }} */
               >
                 NEXT
               </Button>

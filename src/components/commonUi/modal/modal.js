@@ -82,7 +82,7 @@ const SignInModal = ({
                       Placeholder={"First Name"}
                       Model=".fname"
                       InputType={"text"}
-                      className="input-icon-cell"
+                      ClassName="input-icon-cell"
                       InputIcon={true}
                       Errors={{ required: "required" }}
                     />
@@ -91,7 +91,7 @@ const SignInModal = ({
                       Placeholder={"Last Name"}
                       Model=".lname"
                       InputType={"text"}
-                      className="input-icon-cell"
+                      ClassName="input-icon-cell"
                       InputIcon={true}
                       Errors={{ required: "required" }}
                     />
@@ -100,7 +100,7 @@ const SignInModal = ({
                       Placeholder={"Email"}
                       Model=".email"
                       InputType={"email"}
-                      className="input-icon-cell"
+                      ClassName="input-icon-cell"
                       InputIcon={true}
                       Errors={{
                         required: "required",
@@ -112,7 +112,7 @@ const SignInModal = ({
                       Placeholder={"Password"}
                       Model=".password"
                       InputType={"password"}
-                      className="input-icon-cell"
+                      ClassName="input-icon-cell"
                       InputIcon={true}
                       Errors={{ required: "required" }}
                     />
@@ -138,7 +138,7 @@ const SignInModal = ({
                       Placeholder={"Email"}
                       Model=".email"
                       InputType={"email"}
-                      className="input-icon-cell"
+                      ClassName="input-icon-cell"
                       InputIcon={true}
                       Errors={{ required: "required" }}
                     />
@@ -147,7 +147,7 @@ const SignInModal = ({
                       Placeholder={"Password"}
                       Model=".password"
                       InputType={"password"}
-                      className="input-icon-cell"
+                      ClassName="input-icon-cell"
                       InputIcon={true}
                       Errors={{ required: "required" }}
                     />
