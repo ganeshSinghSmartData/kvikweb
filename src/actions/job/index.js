@@ -49,8 +49,6 @@ export const getJobProduct = ({
 
 /****** action creator for get jobs ********/
 export const getJobDetails = job_id => {
-  console.log("Here i am  in job details get : ", job_id);
-
   return (dispatch, getState) => {
     /* const {
       data: { loginToken }

@@ -17,17 +17,17 @@ const Nav = props => {
     >
       <ul className="d-flex align-items-center">
         <li>
-          <Link className="btn btn-link" to={""}>
+          <Link className="btn btn-link" disabled={true} to={""}>
             Bids
           </Link>
         </li>
         <li>
-          <Link className="btn btn-link" to={""}>
+          <Link className="btn btn-link" disabled={true} to={""}>
             Categories
           </Link>
         </li>
         <li>
-          <Link className="btn btn-link" to={""}>
+          <Link className="btn btn-link" disabled={true} to={""}>
             Help
           </Link>
         </li>
