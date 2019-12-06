@@ -16,6 +16,7 @@ class JobDetails extends Component {
   componentDidMount() {
     const params = this.props.match.params.job_id;
     if (params) {
+      console.log("params :", params);
       this.props.getJobDetails(params);
     }
   }
