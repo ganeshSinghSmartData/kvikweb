@@ -31,6 +31,10 @@ const InputCell = ({
       errors = { ...errors, invalidEmail: val => !Match.validateEmail(val) };
       ErrorsObject = { invalidEmail };
     }
+    if (Errors["invalidPass"] === "invalidPass") {
+      errors = { ...errors, invalidPass: val => !Match.validatePassword(val) };
+      ErrorsObject = { invalidPass };
+    }
     return errors;
   };
 
@@ -144,7 +148,7 @@ const InputCell = ({
             name={Name}
             placeholder={Placeholder}
             model={Model}
-            className={ClassName}
+            className={"form-control custom-select"}
             errors={validation()}
           >
             {Name === "frequency" &&
@@ -173,7 +177,7 @@ const InputCell = ({
             name={Name}
             placeholder={Placeholder}
             model={Model}
-            className={ClassName}
+            className={"form-control"}
             errors={validation()}
           ></Control.textarea>
         )}

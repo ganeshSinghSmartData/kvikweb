@@ -7,8 +7,8 @@ import Checkbox from "../checkbox/checkbox";
 import Logo from "../../commonUi/logo/logo";
 import LoginType from "./loginType/loginType";
 import InputCell from "./../input/inputCell";
-import RatingBlock from '../../jobs/ratingBock/ratingBlock';
-import UserImage from '../../jobs/jobDetail/userImage/userImage';
+import RatingBlock from "../../jobs/ratingBock/ratingBlock";
+import UserImage from "../../jobs/jobDetail/userImage/userImage";
 
 import "./modal.scss";
 
@@ -20,7 +20,6 @@ const SignInModal = ({
   _handleForgotPassword,
   ...props
 }) => {
-
   const [modal, setModal] = useState(true);
   const toggle = () => setModal(!modal);
   return (
@@ -38,13 +37,21 @@ const SignInModal = ({
           className="position-absolute close-btn"
           onClick={() => _toggleModal()}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
-            <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="357"
+            height="357"
+            viewBox="0 0 357 357"
+          >
+            <path
+              id="Forma_1"
+              data-name="Forma 1"
+              d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+            />
           </svg>
         </Button>
         <ModalBody className={"overflow-auto " + (_modalType ? "p-0" : "")}>
           <div className="signup-modal-blc d-flex">
-
             <div className="signup-modal-pic d-flex align-items-center justify-content-center position-relative">
               <span className="curl position-absolute">
                 <svg
@@ -82,7 +89,7 @@ const SignInModal = ({
                       Placeholder={"First Name"}
                       Model=".fname"
                       InputType={"text"}
-                      className="input-icon-cell"
+                      ClassName="input-icon-cell"
                       InputIcon={true}
                       Errors={{ required: "required" }}
                     />
@@ -91,7 +98,7 @@ const SignInModal = ({
                       Placeholder={"Last Name"}
                       Model=".lname"
                       InputType={"text"}
-                      className="input-icon-cell"
+                      ClassName="input-icon-cell"
                       InputIcon={true}
                       Errors={{ required: "required" }}
                     />
@@ -100,7 +107,7 @@ const SignInModal = ({
                       Placeholder={"Email"}
                       Model=".email"
                       InputType={"email"}
-                      className="input-icon-cell"
+                      ClassName="input-icon-cell"
                       InputIcon={true}
                       Errors={{
                         required: "required",
@@ -112,15 +119,18 @@ const SignInModal = ({
                       Placeholder={"Password"}
                       Model=".password"
                       InputType={"password"}
-                      className="input-icon-cell"
+                      ClassName="input-icon-cell"
                       InputIcon={true}
-                      Errors={{ required: "required" }}
+                      Errors={{
+                        required: "required",
+                        invalidPass: "invalidPass"
+                      }}
                     />
-                    <div className="signup-agree d-flex align-items-start">
+                    {/* <div className="signup-agree d-flex align-items-start">
                       <label className="d-flex align-items-start">
                         <Checkbox /> I agree with terms and conditions
                       </label>
-                    </div>
+                    </div> */}
                     <div className="text-center">
                       <Button size="lg" className="signup">
                         SIGN UP
@@ -138,33 +148,40 @@ const SignInModal = ({
                       Placeholder={"Email"}
                       Model=".email"
                       InputType={"email"}
-                      className="input-icon-cell"
+                      ClassName="input-icon-cell"
                       InputIcon={true}
-                      Errors={{ required: "required" }}
+                      Errors={{
+                        required: "required",
+                        invalidEmail: "invalidEmail"
+                      }}
                     />
                     <InputCell
                       Name={"password"}
                       Placeholder={"Password"}
                       Model=".password"
                       InputType={"password"}
-                      className="input-icon-cell"
+                      ClassName="input-icon-cell"
                       InputIcon={true}
-                      Errors={{ required: "required" }}
+                      Errors={{
+                        required: "required",
+                        invalidPass: "invalidPass"
+                      }}
                     />
-                    <div className="signup-agree d-flex align-items-start">
+                    {/* <div className="signup-agree d-flex align-items-start">
                       <label className="d-flex align-items-start">
                         <Checkbox /> Remember me
                       </label>
                       <Button
+                        type="button"
                         color="link"
                         className="forgot-btn btn btn-link flex-shrink-0 ml-auto p-0 text-primary-hover"
                         onClick={_handleForgotPassword("")}
                       >
                         Forgot Password?
                       </Button>
-                    </div>
+                    </div> */}
                     <div className="text-center">
-                      <Button size="lg" className="signup">
+                      <Button type="submit" size="lg" className="signup">
                         LOGIN
                       </Button>
                     </div>
@@ -179,11 +196,9 @@ const SignInModal = ({
                 )}
               </LocalForm>
             </div>
-
           </div>
         </ModalBody>
       </Modal>
-
 
       {/* <Modal isOpen={modal} toggle={toggle} size="lg"
         className={"d-flex flex-column align-items-center   justify-content-center bid-modal secondary-font-family"}>
@@ -231,7 +246,6 @@ const SignInModal = ({
       </Modal>
                 */}
 
-
       {/*
       <Modal isOpen={modal} toggle={toggle} size="lg" className={"d-flex flex-column align-items-center justify-content-center bid-modal secondary-font-family"}>
         <ModalHeader>
@@ -270,8 +284,7 @@ const SignInModal = ({
       </Modal>
       */}
 
-      {
-        /*
+      {/*
         <Modal isOpen={modal} toggle={toggle} size="lg" className={"d-flex flex-column align-items-center justify-content-center confirm-modal secondary-font-family"}>
         <ModalHeader>
           <span>Confirmation</span>
@@ -292,9 +305,7 @@ const SignInModal = ({
           </div>
         </ModalBody>
       </Modal>
-        */
-      }
-
+        */}
 
       {/* <Modal isOpen={modal} toggle={toggle} size="lg" className={"d-flex flex-column align-items-center justify-content-center confirm-modal bidder-completion secondary-font-family"}>
         <ModalHeader className="border-0">
@@ -320,7 +331,6 @@ const SignInModal = ({
           </div>
         </ModalBody>
       </Modal> */}
-
 
       {/*
       <Modal isOpen={modal} toggle={toggle} size="lg" className={"d-flex flex-column align-items-center justify-content-center bid-modal secondary-font-family"}>
@@ -359,7 +369,6 @@ const SignInModal = ({
         </ModalBody>
       </Modal>
       */}
-
     </div>
   );
 };

@@ -35,12 +35,14 @@ const SearchService = () => {
                     placeholder="Search for a service"
                     className="border-0 flex-fill h-100"
                   />
-                  <Button color="primary">Search</Button>
+                  <Button color="primary" type="button">
+                    Search
+                  </Button>
                 </Form>
               </div>
               {loggedInUser && (
                 <Link className="text-black" to={"/post-job"}>
-                  <Button className="post-job-btn">Post a Job</Button>
+                  <Button className="post-job-btn btn-block">Post a Job</Button>
                 </Link>
               )}
             </div>

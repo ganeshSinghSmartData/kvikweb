@@ -57,8 +57,8 @@ export const getJobDetails = job_id => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(get_job_details(response.data));
-      } else if (response.status === 401) {
-        console.log("errror with 401 : ");
+      } else if (response.status === 404) {
+        toastAction(false, response.msg);
       } else {
         dispatch(is_fetching(false));
       }

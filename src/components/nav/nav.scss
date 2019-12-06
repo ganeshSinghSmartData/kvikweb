@@ -52,6 +52,10 @@ nav {
           padding: 13px 15px;
           border-radius: 0;
           border-bottom: 1px solid #49bcff;
+          &:hover {
+            background-color: rgba(256, 256, 256, 0.1);
+            text-decoration: none;
+          }
         }
         .btn.login-btn {
           margin: 10px 15px 0;

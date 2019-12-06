@@ -10,10 +10,12 @@ import UserProfileDetail from "../jobs/userProfileDetail/userProfileDetail";
 import Heading from "../../components/commonUi/heading/heading";
 import Paragraph from "../../components/commonUi/paragraph/paragraph";
 import { pagination } from "../../utilities/constants";
+import { DaysBetween } from "./../../utilities/common";
 // import SpinnerOverlay from '../commonUi/spinner/spinnerOverlay/spinnerOverlay';
 import "./jobs.scss";
 import { getJobProduct, reset_job_products } from "./../../actions/job";
 smoothscroll.polyfill();
+
 const Job = () => {
   const dispatch = useDispatch();
   const [listType, setlistType] = useState(false);
@@ -31,7 +33,6 @@ const Job = () => {
   useEffect(() => {
     dispatch(reset_job_products());
     dispatch(getJobProduct({ page: page }));
-    // checkRecordsLength();
   }, []);
 
   return (
@@ -62,7 +63,7 @@ const Job = () => {
             <Sidebar />
           </Col>
           <Col className="job-rt-col">
-            <Heading className="text-primary h2">Welcome to Kvik</Heading>
+            <Heading className="text-primary h1">Welcome to Kvik</Heading>
             <Paragraph>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               Pellentesque leo ipsum, consequat a tellus pharetra, commodo
@@ -71,9 +72,9 @@ const Job = () => {
             </Paragraph>
             <div className="job-list-blc">
               <div className="job-list-heading d-flex">
-                <h3 className="flex-fill">
+                {/* <h3 className="flex-fill">
                   Jobs in vicinity of your locations: {jobs.count}
-                </h3>
+                </h3> */}
                 <div className="job-list-icon d-flex ml-auto">
                   <Button
                     color="link"
@@ -129,7 +130,7 @@ const Job = () => {
                     );
                   })}
               </Row>
-              {jobs.jobProduct.length >= pagination.limit && (
+              {jobs.jobProduct.length < jobs.count && (
                 <Row className="joblist-more">
                   <Col className="d-flex justify-content-center">
                     <Button
@@ -138,12 +139,12 @@ const Job = () => {
                       onClick={() => showMoreProduct(++page)}
                     >
                       <span className="d-flex justify-content-center">
-                        <span
+                        {/* <span
                           className="spinner-border spinner-border-sm"
                           role="status"
                           aria-hidden="true"
                         ></span>
-                        Loading...
+                        Loading... */}
                       </span>
                       <span>SHOW MORE</span>
                     </Button>

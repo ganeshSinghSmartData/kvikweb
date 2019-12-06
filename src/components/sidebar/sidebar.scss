@@ -72,6 +72,7 @@
     color: #9a9a9a;
     text-decoration: none;
     padding: 0 0 8px 0;
+    border-radius: 0;
     &:hover {
       color: $dark-default;
     }
@@ -214,6 +215,7 @@
     transform: translateX(0);
   }
   .sidebar-toogle-btn {
+    display: none;
     top: 255px;
     left: 0px;
     width: 50px;

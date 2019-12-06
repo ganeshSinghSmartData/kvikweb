@@ -46,28 +46,32 @@ export default ({
   };
 
   return (
-    <div className="post-wrapper data-block ml-auto mr-auto">
+    <div className="post-wrapper data-block ml-auto mr-auto position-relative">
       {/* Top Header Buttons */}
       <div className="post-job-nav d-flex justify-content-center">
         <ul className="d-flex">
           <li className={getClass(1)}>
-            <Button color="link">
+            <Button color="link" className="disabled">
               <span>1</span>
             </Button>
           </li>
           <li className={getClass(2)}>
-            <Button color="link">
+            <Button color="link" className="disabled">
               <span>2</span>
             </Button>
           </li>
           <li className={getClass(3)}>
-            <Button color="link">
+            <Button color="link" className="disabled">
               <span>3</span>
             </Button>
           </li>
         </ul>
       </div>
-      <div className="post-job-inner">
+      <div
+        className={`post-job-inner ${
+          _currentstage === 3 ? "gallery-block" : ""
+        }`}
+      >
         <LocalForm
           onSubmit={values =>
             _handleJobPost(values, startDate, endDate, imageData, _currentstage)
@@ -82,7 +86,6 @@ export default ({
                   Name={"category"}
                   Model=".category"
                   InputType="select"
-                  ClassName={"custom-select"}
                   Errors={{ required: "required" }}
                 ></InputCell>
               </div>
@@ -178,7 +181,6 @@ export default ({
                   Model=".frequency"
                   InputType="select"
                   Placeholder={"Frequency"}
-                  ClassName={"custom-select"}
                   Errors={{ required: "required" }}
                 />
               </div>
@@ -186,7 +188,7 @@ export default ({
           )}
           {/* Stage 3 */}
           {_currentstage === 3 && (
-            <div className="post-job-gallery d-flex">
+            <div className="post-job-gallery d-flex justify-content-center">
               <ul className="d-flex flex-wrap ml-auto mr-auto">
                 {images &&
                   images.length > 0 &&
@@ -257,8 +259,8 @@ export default ({
                 type="submit"
                 color="secondary"
                 /* onClick={() => {
-                  _handleStageChange(1);
-                }} */
+                _handleStageChange(1);
+              }} */
               >
                 NEXT
               </Button>

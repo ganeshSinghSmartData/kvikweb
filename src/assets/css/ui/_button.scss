@@ -51,6 +51,18 @@
     @include secondary-gradient-hover($orange-hover, $orange-200);
     border: none;
   }
+  &:focus {
+    background-color: #ffa92d;
+    border-color: #ffad2c;
+    box-shadow: 0 0 0 0.2rem rgb(255, 175, 51);
+  }
+}
+.btn-secondary:not(:disabled):not(.disabled):active:focus,
+.btn-secondary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-secondary.dropdown-toggle:focus {
+  background-color: #ffa92d;
+  border-color: #ffad2c;
+  box-shadow: 0 0 0 0.2rem rgb(255, 175, 51);
 }
 
 .btn-secondary1,
