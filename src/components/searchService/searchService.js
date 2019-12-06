@@ -40,7 +40,7 @@ const SearchService = () => {
               </div>
               {loggedInUser && (
                 <Link className="text-black" to={"/post-job"}>
-                  <Button className="post-job-btn">Post a Job</Button>
+                  <Button className="post-job-btn btn-block">Post a Job</Button>
                 </Link>
               )}
             </div>

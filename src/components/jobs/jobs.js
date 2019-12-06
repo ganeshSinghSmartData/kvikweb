@@ -63,7 +63,7 @@ const Job = () => {
             <Sidebar />
           </Col>
           <Col className="job-rt-col">
-            <Heading className="text-primary h2">Welcome to Kvik</Heading>
+            <Heading className="text-primary h1">Welcome to Kvik</Heading>
             <Paragraph>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               Pellentesque leo ipsum, consequat a tellus pharetra, commodo
