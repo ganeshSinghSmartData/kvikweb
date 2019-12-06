@@ -64,7 +64,7 @@ const JobProduct = ({ product, listType }) => {
               </g>
             </svg>
           </span>
-          {product.location}, {product.city}
+          <label className="mb-0">{product.location}, {product.city}</label>
         </div>
         {listType ? (
           <div className="job-desc">

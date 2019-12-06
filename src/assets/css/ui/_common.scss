@@ -73,6 +73,17 @@ body {
   padding: 30px;
   border-radius: 10px;
 }
+.dataLoader {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.15);
+  z-index: 5;
+}
+.dataLoader.block {
+  border-radius: 10px;
+}
 .mb-50 {
   margin-bottom: 50px !important;
 }
