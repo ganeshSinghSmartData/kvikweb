@@ -22,6 +22,7 @@
   }
   .modal-content {
     max-height: 100%;
+    min-height: 250px;
     .modal-body {
       padding: 25px 30px;
     }
@@ -86,6 +87,10 @@
   }
 }
 .signup-modal-frm {
+  flex-basis: 0 !important;
+  @media (max-width: 767px) {
+    flex-basis: auto !important;
+  }
   margin: 88px 67px 50px 67px;
   .form-group {
     margin-bottom: 9px;

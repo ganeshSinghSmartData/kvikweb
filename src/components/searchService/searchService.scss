@@ -1,4 +1,11 @@
 @import "../../assets/css/variables";
+.src-service-blc {
+  a {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
 .src-service {
   max-width: 382px;
   width: 100%;
@@ -28,6 +35,11 @@
       height: 19px;
       fill: #707070;
     }
+  }
+}
+@-moz-document url-prefix() {
+  .src-service {
+    max-width: 410px;
   }
 }
 .post-job-btn {
