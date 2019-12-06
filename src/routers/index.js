@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { publicLayout, privateLayout } from "../components/Layouts";
 import AppRoute from "./AppRoute";
 import { Authorization } from "../authorization";
-import { public_type } from "../utilities/constants";
+import { public_type, private_type } from "../utilities/constants";
 
 import HomePage from "../containers/home";
 import ProfilePage from "../containers/home";
@@ -51,7 +51,7 @@ const Routers = store => {
           requireAuth={Authorization}
           layout={publicLayout}
           store={store}
-          type={public_type}
+          type={private_type}
         />
         <AppRoute
           exact={true}
@@ -69,7 +69,7 @@ const Routers = store => {
           requireAuth={Authorization}
           layout={publicLayout}
           store={store}
-          type={public_type}
+          type={private_type}
         />
       </Switch>
     </Router>

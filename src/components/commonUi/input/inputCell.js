@@ -31,6 +31,10 @@ const InputCell = ({
       errors = { ...errors, invalidEmail: val => !Match.validateEmail(val) };
       ErrorsObject = { invalidEmail };
     }
+    if (Errors["invalidPass"] === "invalidPass") {
+      errors = { ...errors, invalidPass: val => !Match.validatePassword(val) };
+      ErrorsObject = { invalidPass };
+    }
     return errors;
   };
 

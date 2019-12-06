@@ -37,6 +37,8 @@ const production = {
 
 if (process.env.REACT_APP_ENV === "prod") {
   module.exports = production;
-} else {
+} else if (process.env.REACT_APP_ENV === "dev") {
   module.exports = staging;
+} else {
+  module.exports = local;
 }

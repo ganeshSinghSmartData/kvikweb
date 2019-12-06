@@ -7,10 +7,9 @@
 /************ User *************/
 export const public_type = "public";
 export const private_type = "private";
-export const profile_path = "profile";
 export const pagination = {
   page: 1,
-  limit: 2
+  limit: 9
 };
 export const MONTH_NAME = [
   "Jan",

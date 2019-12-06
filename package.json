@@ -6,6 +6,8 @@
     "axios": "^0.19.0",
     "bootstrap": "^4.4.1",
     "connected-react-router": "^6.6.1",
+    "date-diff": "^0.2.1",
+    "datetime-difference": "^1.0.2",
     "moment": "^2.24.0",
     "node-sass": "^4.13.0",
     "react": "^16.12.0",
