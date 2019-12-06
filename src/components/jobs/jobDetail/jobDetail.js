@@ -8,6 +8,7 @@ import {
   CarouselIndicators,
   CarouselCaption
 } from "reactstrap";
+import Slider from "react-slick";
 import Heading from "../../commonUi/heading/heading";
 import Paragraph from "../../commonUi/paragraph/paragraph";
 import RatingBlock from "../ratingBock/ratingBlock";
@@ -15,6 +16,8 @@ import JobAddress from "./JobAddress/jobAddress";
 import Proposal from "./proposal/proposal";
 import SignInModal from "../../commonUi/modal/modal";
 import "./jobDetail.scss";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import { StringToDate, DaysBetween } from "./../../../utilities/common";
 import { apiUrl } from "./../../../environment";
@@ -31,6 +34,13 @@ export default ({ job }) => {
       thmbnails.push(obj);
     });
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
   const next = () => {
     if (animating) return;
     const nextIndex =
@@ -86,7 +96,7 @@ export default ({ job }) => {
                 />
               )}
             </div>
-            <Carousel activeIndex={activeIndex} next={next} previous={previous}>
+            {/* <Carousel activeIndex={activeIndex} next={next} previous={previous}>
               <CarouselIndicators
                 items={thmbnails}
                 activeIndex={activeIndex}
@@ -104,7 +114,22 @@ export default ({ job }) => {
                 directionText="Next"
                 onClickHandler={next}
               />
-            </Carousel>
+            </Carousel> */}
+
+            <Slider {...settings}>
+              {thmbnails.map((item, key) => (
+                <div key={key}>
+                  <img
+                    src={item.src}
+                    alt="Job Post User"
+                    /* onClick={key => {
+                      console.log("key : ", key);
+                      // setImageIndex(key);
+                    }} */
+                  />
+                </div>
+              ))}
+            </Slider>
           </Col>
           <Col md="8" className="job-detail-info">
             <div className="job-detail-hd">
@@ -123,7 +148,10 @@ export default ({ job }) => {
               <h4>Description</h4>
               <Paragraph>{job.description}</Paragraph>
             </div>
-            <JobAddress />
+            <JobAddress
+              end_date={DaysBetween(job.jobEndDate)}
+              job_seeker_id={job.job_seeker_id._id}
+            />
             {/* <div className="place-bid-rw text-center">
               <Button color="secondary" className="place-bid-btn">
                 Place a Bid

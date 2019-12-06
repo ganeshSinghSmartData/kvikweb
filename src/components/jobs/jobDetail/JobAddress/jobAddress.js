@@ -1,11 +1,23 @@
 import React from "react";
 import { Button } from "reactstrap";
+import { useDispatch, useSelector } from "react-redux";
 import UserImage from "../userImage/userImage";
 import RatingBlock from "../../ratingBock/ratingBlock";
 import datetimeDifference from "datetime-difference";
+
 import "./jobAddress.scss";
-const JobAddress = enddate => {
-  const timeleft = datetimeDifference(new Date(), new Date(Number(enddate)));
+import { getUserDetails } from "./../../../../actions/user";
+
+const JobAddress = ({ end_date, job_seeker_id }) => {
+  const dispatch = useDispatch();
+  const timeleft = datetimeDifference(new Date(), new Date(end_date));
+
+  let userDetails = useSelector(state => state.user.userDetails);
+  if (!Object.keys(userDetails).length) {
+    if (job_seeker_id) {
+      dispatch(getUserDetails(job_seeker_id));
+    }
+  }
   return (
     <div className="job-address d-flex">
       <UserImage />
@@ -120,14 +132,14 @@ const JobAddress = enddate => {
               </svg>
             </span>
             <p>
-              {/*               <label>{`${timeleft.days} Days`}</label>
+              <label>{`${timeleft.days} Days`}</label>
               <label>{`${timeleft.hours} Hours`}</label>
               <label>{`${timeleft.minutes} Mins`}</label>
-              <label>{`${timeleft.seconds} Secs`}</label> */}
-              <label>2 Days</label>
+              <label>{`${timeleft.seconds} Secs`}</label>
+              {/*               <label>2 Days</label>
               <label>4 Hours</label>
               <label>31 Mins</label>
-              <label>26 Secs</label>
+              <label>26 Secs</label> */}
             </p>
           </li>
         </ul>
