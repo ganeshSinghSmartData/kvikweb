@@ -64,7 +64,6 @@ class PostNewJob extends Component {
       formData.append("frequency", jobData.frequency);
       this.props.createNewJob(formData, callback => {
         if (callback) {
-          console.log("Job Successfullt poseted : ", callback);
           this.setState({ dataload: true });
           this.props.history.push("/");
         }

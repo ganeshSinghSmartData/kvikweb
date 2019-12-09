@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import InputCell from "../../commonUi/input/inputCell";
 import "./postJob.scss";
+import { set } from "date-fns/esm";
 
 export default ({
   _currentstage,
@@ -16,14 +17,14 @@ export default ({
   _handleJobUpdate
 }) => {
   const [images, setImages] = useState([]);
-  const [imageData, setImageData] = useState([]);
+  const [imageData, setImageData] = useState({});
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-  let files;
+  let files = {};
   const handleImageOnchange = event => {
     files = event.target.files;
-    setImageData(files);
+    setImageData({ ...imageData, ...files });
     const imagesData = Object.values(files).reduce((list, key) => {
       if (key && typeof key === "object") {
         let url = URL.createObjectURL(key);
@@ -31,8 +32,20 @@ export default ({
       }
       return list;
     }, []);
-    setImages(imagesData);
+    setImages([...images, ...imagesData]);
   };
+
+  const removeImage = index => {
+    images.splice(index, 1);
+    let updatedImageData = { ...imageData }
+    for (var key in updatedImageData) {
+      if (!Number(updatedImageData[key]) && (parseInt(key) === index)) {
+        delete updatedImageData[key];
+      }
+    }
+    setImageData(updatedImageData);
+    setImages(images);
+  }
 
   /********** Change class on steps ************/
   const getClass = step => {
@@ -195,7 +208,7 @@ export default ({
                   images.map((item, key) => {
                     return (
                       <li key={key}>
-                        <img src={item} alt="Job Pic" />
+                        <img src={item} alt="Job Pic" onClick={() => removeImage(key)} />
                       </li>
                     );
                   })}
