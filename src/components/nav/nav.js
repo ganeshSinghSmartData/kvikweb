@@ -48,10 +48,10 @@ const Nav = props => {
               Logout
             </Link>
           ) : (
-            <Link className="login-btn btn btn-info" to={"/login"}>
-              Login
+              <Link className="login-btn btn btn-info" to={"/login"}>
+                Login
             </Link>
-          )}
+            )}
         </li>
       </ul>
     </nav>

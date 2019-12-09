@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  Row,
-  Col,
-  Carousel,
-  CarouselItem,
-  CarouselControl,
-  CarouselIndicators,
-  CarouselCaption
-} from "reactstrap";
+import { Row, Col } from "reactstrap";
 import Slider from "react-slick";
 import Heading from "../../commonUi/heading/heading";
 import Paragraph from "../../commonUi/paragraph/paragraph";
@@ -15,6 +7,8 @@ import RatingBlock from "../ratingBock/ratingBlock";
 import JobAddress from "./JobAddress/jobAddress";
 import Proposal from "./proposal/proposal";
 import SignInModal from "../../commonUi/modal/modal";
+
+
 import "./jobDetail.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -41,45 +35,8 @@ export default ({ job }) => {
     slidesToShow: 1,
     slidesToScroll: 1
   };
-  const next = () => {
-    if (animating) return;
-    const nextIndex =
-      activeIndex === thmbnails.length - 1 ? 0 : activeIndex + 1;
-    setActiveIndex(nextIndex);
-  };
 
-  const previous = () => {
-    if (animating) return;
-    const nextIndex =
-      activeIndex === 0 ? thmbnails.length - 1 : activeIndex - 1;
-    setActiveIndex(nextIndex);
-  };
-
-  const goToIndex = newIndex => {
-    setImageIndex(newIndex);
-    if (animating) return;
-    setActiveIndex(newIndex);
-  };
-
-  const slides = thmbnails.map(thmbnail => {
-    return (
-      <CarouselItem
-        onExiting={() => setAnimating(true)}
-        onExited={() => setAnimating(false)}
-        key={thmbnail.src}
-      >
-        <img src={thmbnail.src} alt={thmbnail.altText} />
-        <CarouselCaption
-          captionText={thmbnail.caption}
-          captionHeader={thmbnail.caption}
-        />
-      </CarouselItem>
-    );
-  });
-
-  const [activeIndex, setActiveIndex] = useState(0);
   const [imageIndex, setImageIndex] = useState(0);
-  const [animating, setAnimating] = useState(false);
 
   return (
     <div className="job-detail-blc d-flex flex-column flex-fill">
@@ -96,34 +53,10 @@ export default ({ job }) => {
                 />
               )}
             </div>
-            {/* <Carousel activeIndex={activeIndex} next={next} previous={previous}>
-              <CarouselIndicators
-                items={thmbnails}
-                activeIndex={activeIndex}
-                onClickHandler={goToIndex}
-                key={activeIndex}
-              />
-              {slides}
-              <CarouselControl
-                direction="prev"
-                directionText="Previous"
-                onClickHandler={previous}
-              />
-              <CarouselControl
-                direction="next"
-                directionText="Next"
-                onClickHandler={next}
-              />
-            </Carousel> */}
-
             <Slider {...settings}>
               {thmbnails.map((item, key) => (
                 <div key={key}>
-                  <img
-                    src={item.src}
-                    alt="Job Post User"
-                    onClick={() => setImageIndex(key)}
-                  />
+                  <img src={item.src} alt="Job Post User" onClick={() => setImageIndex(key)} />
                 </div>
               ))}
             </Slider>

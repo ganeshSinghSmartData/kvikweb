@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import PostJob from "../../components/jobs/postJob";
+import Loader from "./../../components/Loader";
 import { createNewJob } from "./../../actions/job";
 
 class PostNewJob extends Component {
@@ -62,12 +63,12 @@ class PostNewJob extends Component {
       formData.append("jobStartDate", newStartDate);
       formData.append("jobEndDate", newEndDate);
       formData.append("frequency", jobData.frequency);
-      this.props.createNewJob(formData, callback => {
-        if (callback) {
-          this.setState({ dataload: true });
-          this.props.history.push("/");
-        }
-      });
+      /*       this.props.createNewJob(formData, callback => {
+              if (callback) {
+                this.setState({ dataload: true });
+                this.props.history.push("/");
+              }
+            }); */
     }
   }
 
@@ -85,17 +86,7 @@ class PostNewJob extends Component {
   render() {
     return (
       <React.Fragment>
-        {this.state.dataload && (
-          <div className="dataLoader block position-absolute w-100 h-100 d-flex justify-content-center align-items-center">
-            <div className="d-flex flex-column justify-content-center align-items-center">
-              <span
-                className="spinner-border text-primary"
-                role="status"
-                aria-hidden="true"
-              ></span>
-            </div>
-          </div>
-        )}
+        {this.state.dataload && <Loader loading={this.state.dataload} />}
         <PostJob
           _currentstage={this.state.stage}
           _handleStageChange={this.handleStageChange}

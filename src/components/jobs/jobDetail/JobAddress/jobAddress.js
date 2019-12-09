@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import UserImage from "../userImage/userImage";
@@ -7,17 +7,22 @@ import datetimeDifference from "datetime-difference";
 
 import "./jobAddress.scss";
 import { getUserDetails } from "./../../../../actions/user";
+import { setTimeout } from "timers";
 
 const JobAddress = ({ end_date, job_seeker_id }) => {
+  const [timeleft, seTimeleft] = useState(datetimeDifference(new Date(), new Date(end_date)));
   const dispatch = useDispatch();
-  const timeleft = datetimeDifference(new Date(), new Date(end_date));
+  setInterval(() => {
+    const time = datetimeDifference(new Date(), new Date(end_date));
+    seTimeleft(time);
+  }, 1000);
 
-  let userDetails = useSelector(state => state.user.userDetails);
-  if (!Object.keys(userDetails).length) {
-    if (job_seeker_id) {
-      dispatch(getUserDetails(job_seeker_id));
-    }
-  }
+  /*   let userDetails = useSelector(state => state.user.userDetails);
+    if (!Object.keys(userDetails).length) {
+      if (job_seeker_id) {
+        dispatch(getUserDetails(job_seeker_id));
+      }
+    } */
   return (
     <div className="job-address d-flex">
       <UserImage />

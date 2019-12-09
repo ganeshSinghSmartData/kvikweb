@@ -4,18 +4,19 @@ import { Link } from "react-router-dom";
 import datetimeDifference from "datetime-difference";
 
 import "./jobProduct.scss";
-import { StringToDate } from "./../../../utilities/common";
-// import CountDown from "../../../utilities/countDown";
-
+import { StringToDate, DaysBetween } from "./../../../utilities/common";
 import { apiUrl } from "./../../../environment";
 
 /********* Get time ago in string format *********/
 
 const JobProduct = ({ product, listType }) => {
-  const timeleft = datetimeDifference(
-    new Date(),
-    new Date(Number(product.jobEndDate))
-  );
+  const [timeleft, seTimeleft] = useState(datetimeDifference(new Date(), new Date(DaysBetween(product.jobEndDate))));
+
+  setInterval(() => {
+    const time = datetimeDifference(new Date(), new Date(DaysBetween(product.jobEndDate)));
+    seTimeleft(time);
+  }, 1000 * 60);
+
 
   return (
     <div className={"job-wrapper " + (listType ? "d-flex flex-column" : "")}>
