@@ -29,11 +29,11 @@ const Header = () => {
     <header className="header d-flex flex-column flex-shrink-0">
       <Container>
         <Row>
-          <Col className="d-flex">
+          <Col className="d-flex header-inner">
             <Button color="link" className="logo p-0 rounded-0">
               <Logo className="m-0" />
             </Button>
-            <div className="d-flex align-items-center ml-auto">
+            <div className="d-flex align-items-center ml-auto nav-wrapper">
               <Nav className={"d-sm-none d-md-block nav " + (navVisible ? 'active' : '')} />
               <UserProfile />
               <Button color="link" className={"nav-toggle-btn rounded-circle p-0 d-md-none position-relative flex-shrink-0 " + (navVisible ? 'active' : '')} onClick={navToggle}>

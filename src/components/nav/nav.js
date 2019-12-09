@@ -15,7 +15,7 @@ const Nav = props => {
       className={"d-flex align-items-center " + props.className}
       onClick={stopPropagationHandler}
     >
-      <ul className="d-flex align-items-center">
+      <ul className="d-flex align-items-center flex-wrap">
         <li>
           <Link className="btn btn-link" disabled={true} to={""}>
             Bids

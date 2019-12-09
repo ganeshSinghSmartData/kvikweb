@@ -280,7 +280,7 @@ const SignInModal = ({
       </Modal>
                 */}
 
-      {/*
+      {/* 
       <Modal isOpen={modal} toggle={toggle} size="lg" className={"d-flex flex-column align-items-center justify-content-center bid-modal secondary-font-family"}>
         <ModalHeader>
           <span>Bid Details</span>
@@ -315,8 +315,8 @@ const SignInModal = ({
             </div>
           </div>
         </ModalBody>
-      </Modal>
-      */}
+      </Modal> */}
+
 
       {/*
         <Modal isOpen={modal} toggle={toggle} size="lg" className={"d-flex flex-column align-items-center justify-content-center confirm-modal secondary-font-family"}>
@@ -403,6 +403,37 @@ const SignInModal = ({
         </ModalBody>
       </Modal>
       */}
+
+      {/* <Modal isOpen={modal} toggle={toggle} size="lg" className={"d-flex flex-column align-items-center justify-content-center payment-modal secondary-font-family text-center"}>
+        <ModalHeader className="border-0">
+          <Button color="link" className="close-btn btn2" onClick={toggle}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
+              <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
+            </svg>
+          </Button>
+        </ModalHeader>
+        <ModalBody className={"overflow-auto pt-0 d-flex justify-content-center"}>
+          <div className="payment-detail-blc">
+            <div className="payment-logo">
+              <img src={require('../../../assets/images/icons/check-ball.svg')} alt="Check Icon" />
+            </div>
+            <h2>Payment Completed</h2>
+            <p>
+              <span className="d-block">1234 5678 1256 7894</span>
+              <span>26th Aug 2019 </span>
+            </p>
+            <h4>
+              Paid Amount
+            <span className="d-block">$250</span>
+            </h4>
+            <span className="to-line">to</span>
+            <div className="payment-profile d-flex justify-content-center">
+              <UserImage />
+              <label className="mb-0 d-flex align-items-center">Rapha Conrad</label>
+            </div>
+          </div>
+        </ModalBody>
+      </Modal> */}
     </div>
   );
 };

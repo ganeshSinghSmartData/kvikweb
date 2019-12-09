@@ -37,10 +37,10 @@ export default ({ job }) => {
     });
 
   const settings = {
-    dots: true,
-    infinite: true,
+    dots: false,
+    infinite: false,
     speed: 500,
-    slidesToShow: 1,
+    slidesToShow: 3,
     slidesToScroll: 1
   };
 
@@ -79,13 +79,21 @@ export default ({ job }) => {
                 />
               )}
             </div>
-            <Slider {...settings}>
-              {thmbnails.map((item, key) => (
-                <div key={key}>
-                  <img src={item.src} alt="Job Post User" onClick={() => setImageIndex(key)} />
-                </div>
-              ))}
-            </Slider>
+            <div className="d-flex justify-content-center">
+              <div className="job-slider-track-inner">
+                <Slider {...settings}>
+                  {thmbnails.map((item, key) => (
+                    <div key={key}>
+                      <img
+                        src={item.src}
+                        alt="Job Post User"
+                        onClick={() => setImageIndex(key)}
+                      />
+                    </div>
+                  ))}
+                </Slider>
+              </div>
+            </div>
           </Col>
           <Col md="8" className="job-detail-info">
             <div className="job-detail-hd">
@@ -120,9 +128,6 @@ export default ({ job }) => {
           _modalType={"Place your bid"}
           _handleSubmit={handleSubmit}
           _frequency={job.frequency}
-        /* _handleForgotPassword={this.handleForgotPassword}
-        handleSocialLogin={this.handleSocialLogin}
-        handleSocialLoginFailure={this.handleSocialLoginFailure}  */
         />
         {/* <div className="proposal-blc flex-shrink-0">
           <h4>PROPOSALS</h4>
@@ -134,5 +139,3 @@ export default ({ job }) => {
     </div>
   );
 };
-
-// export default jobDetail;

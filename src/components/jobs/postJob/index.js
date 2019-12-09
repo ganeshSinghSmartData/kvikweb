@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import { LocalForm } from "react-redux-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
 import InputCell from "../../commonUi/input/inputCell";
+import DataLoader from '../../commonUi/loader/loader';
 import "./postJob.scss";
 import { set } from "date-fns/esm";
 
@@ -60,6 +60,7 @@ export default ({
 
   return (
     <div className="post-wrapper data-block ml-auto mr-auto position-relative">
+      {/* <DataLoader /> */}
       {/* Top Header Buttons */}
       <div className="post-job-nav d-flex justify-content-center">
         <ul className="d-flex">
@@ -207,8 +208,13 @@ export default ({
                   images.length > 0 &&
                   images.map((item, key) => {
                     return (
-                      <li key={key}>
-                        <img src={item} alt="Job Pic" onClick={() => removeImage(key)} />
+                      <li key={key} className="position-relative">
+                        <Button color="link" className="gallery-btn d-flex align-items-center justify-content-center" onClick={() => removeImage(key)}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
+                            <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
+                          </svg>
+                        </Button>
+                        <img src={item} alt="Job Pic" />
                       </li>
                     );
                   })}

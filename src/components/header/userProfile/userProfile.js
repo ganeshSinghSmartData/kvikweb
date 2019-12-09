@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from 'react-redux'
 import {
   Dropdown,
   DropdownToggle,
@@ -9,6 +10,8 @@ import {
 import "./userProfile.scss";
 const UserProfile = props => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const user = useSelector(state => state.user);
+
   const toggle = () => setDropdownOpen(prevState => !prevState);
   return (
     <div
@@ -41,6 +44,7 @@ const UserProfile = props => {
       </Button>
       <Dropdown isOpen={dropdownOpen} toggle={toggle} className="user-dropdown">
         <DropdownToggle caret color="link">
+          <label className="mb-0">{`${user.data.fname} ${user.data.lname}`}</label>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="81.309"
@@ -55,7 +59,7 @@ const UserProfile = props => {
             />
           </svg>
         </DropdownToggle>
-        {/* <DropdownMenu right>
+        {/*         <DropdownMenu right>
           <DropdownItem header>Profile</DropdownItem>
           <DropdownItem>View Profile</DropdownItem>
           <DropdownItem>Edit Profile</DropdownItem>
