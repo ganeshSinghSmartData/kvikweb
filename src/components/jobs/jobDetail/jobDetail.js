@@ -8,7 +8,7 @@ import {
   CarouselIndicators,
   CarouselCaption
 } from "reactstrap";
-// import Slider from "react-slick";
+import Slider from "react-slick";
 import Heading from "../../commonUi/heading/heading";
 import Paragraph from "../../commonUi/paragraph/paragraph";
 import RatingBlock from "../ratingBock/ratingBlock";
@@ -116,21 +116,17 @@ export default ({ job }) => {
               />
             </Carousel> */}
 
-            {/*
             <Slider {...settings}>
               {thmbnails.map((item, key) => (
                 <div key={key}>
                   <img
                     src={item.src}
                     alt="Job Post User"
-                   onClick={key => {
-                      console.log("key : ", key);
-                      // setImageIndex(key);
-                    }}
+                    onClick={() => setImageIndex(key)}
                   />
                 </div>
               ))}
-            </Slider>*/}
+            </Slider>
           </Col>
           <Col md="8" className="job-detail-info">
             <div className="job-detail-hd">
