@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Row, Col } from "reactstrap";
+import { useSelector, useDispatch } from "react-redux";
+import { Button, Row, Col } from "reactstrap";
 import Slider from "react-slick";
 import Heading from "../../commonUi/heading/heading";
 import Paragraph from "../../commonUi/paragraph/paragraph";
 import RatingBlock from "../ratingBock/ratingBlock";
 import JobAddress from "./JobAddress/jobAddress";
 import Proposal from "./proposal/proposal";
-import SignInModal from "../../commonUi/modal/modal";
+import PlaceYourBidModal from "../../commonUi/modal/modal";
+
 
 
 import "./jobDetail.scss";
@@ -15,8 +17,14 @@ import "slick-carousel/slick/slick-theme.css";
 
 import { StringToDate, DaysBetween } from "./../../../utilities/common";
 import { apiUrl } from "./../../../environment";
+import { placeYourBid } from "./../../../actions/job";
+
 
 export default ({ job }) => {
+
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
+
   const thmbnails = [];
   job.images.length &&
     job.images.map(item => {
@@ -36,11 +44,29 @@ export default ({ job }) => {
     slidesToScroll: 1
   };
 
+  const handleSubmit = (values) => {
+    const reqData = {
+      jobtitle: job.jobtitle,
+      description: values.description,
+      frequency: values.frequency,
+      job_id: job._id,
+      bid_amount: values.bid_amount,
+      job_seeker_id: job.job_seeker_id._id,
+      name: `${user.data.fname} ${user.data.lname}`
+    }
+    dispatch(placeYourBid(reqData, callback => {
+      if (callback) {
+        console.log('I am in callback');
+      }
+    }));
+  }
+
+
   const [imageIndex, setImageIndex] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
 
   return (
     <div className="job-detail-blc d-flex flex-column flex-fill">
-      <SignInModal />
       <Heading className="h3 text-center">Job Details</Heading>
       <div className="job-detail-inner d-flex flex-column flex-fill overflow-auto">
         <Row className="job-detail-rw row flex-shrink-0">
@@ -82,13 +108,22 @@ export default ({ job }) => {
               end_date={DaysBetween(job.jobEndDate)}
               job_seeker_id={job.job_seeker_id._id}
             />
-            {/* <div className="place-bid-rw text-center">
-              <Button color="secondary" className="place-bid-btn">
+            {user && user.loggedIn && (user.data._id != job.job_seeker_id._id) && (<div className="place-bid-rw text-center">
+              <Button color="secondary" className="place-bid-btn" onClick={() => setOpenModal(!openModal)}>
                 Place a Bid
               </Button>
-            </div> */}
+            </div>)}
           </Col>
         </Row>
+        <PlaceYourBidModal _isOpen={openModal}
+          _toggleModal={() => setOpenModal(!openModal)}
+          _modalType={"Place your bid"}
+          _handleSubmit={handleSubmit}
+          _frequency={job.frequency}
+        /* _handleForgotPassword={this.handleForgotPassword}
+        handleSocialLogin={this.handleSocialLogin}
+        handleSocialLoginFailure={this.handleSocialLoginFailure}  */
+        />
         {/* <div className="proposal-blc flex-shrink-0">
           <h4>PROPOSALS</h4>
           <Proposal />

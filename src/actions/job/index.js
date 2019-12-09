@@ -90,3 +90,28 @@ export const createNewJob = (params, callback) => {
     );
   };
 };
+
+/****** action creator for post bid for job ********/
+export const placeYourBid = (params, callback) => {
+  return (dispatch, getState) => {
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient.post(`${apiUrl}/bid/post_bid`, params, token).then(
+      response => {
+        if (response.status === 200) {
+          dispatch(is_fetching(false));
+          // dispatch(post_job_products(response.data));
+          toastAction(true, response.msg);
+          callback(true);
+        } else if (response.status === 401) {
+          callback(false);
+          console.log("errror with 401 : ");
+        } else {
+          dispatch(is_fetching(false));
+          callback(false);
+        }
+      }
+    );
+  };
+}

@@ -63,12 +63,12 @@ class PostNewJob extends Component {
       formData.append("jobStartDate", newStartDate);
       formData.append("jobEndDate", newEndDate);
       formData.append("frequency", jobData.frequency);
-      /*       this.props.createNewJob(formData, callback => {
-              if (callback) {
-                this.setState({ dataload: true });
-                this.props.history.push("/");
-              }
-            }); */
+      this.props.createNewJob(formData, callback => {
+        if (callback) {
+          this.setState({ dataload: true });
+          this.props.history.push("/");
+        }
+      });
     }
   }
 
