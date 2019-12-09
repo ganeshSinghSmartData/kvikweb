@@ -41,6 +41,7 @@ const UserProfile = props => {
       </Button>
       <Dropdown isOpen={dropdownOpen} toggle={toggle} className="user-dropdown">
         <DropdownToggle caret color="link">
+          <label className="mb-0">John Smith</label>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="81.309"
@@ -55,7 +56,7 @@ const UserProfile = props => {
             />
           </svg>
         </DropdownToggle>
-        {/* <DropdownMenu right>
+        <DropdownMenu right>
           <DropdownItem header>Profile</DropdownItem>
           <DropdownItem>View Profile</DropdownItem>
           <DropdownItem>Edit Profile</DropdownItem>
@@ -65,7 +66,7 @@ const UserProfile = props => {
           <DropdownItem>Foo Action</DropdownItem>
           <DropdownItem>Bar Action</DropdownItem>
           <DropdownItem>Quo Action</DropdownItem>
-        </DropdownMenu> */}
+        </DropdownMenu>
       </Dropdown>
     </div>
   );

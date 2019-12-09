@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import InputCell from "../../commonUi/input/inputCell";
 import DataLoader from '../../commonUi/loader/loader';
 import "./postJob.scss";
+import { set } from "date-fns/esm";
 
 export default ({
   _currentstage,
@@ -16,14 +17,14 @@ export default ({
   _handleJobUpdate
 }) => {
   const [images, setImages] = useState([]);
-  const [imageData, setImageData] = useState([]);
+  const [imageData, setImageData] = useState({});
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-  let files;
+  let files = {};
   const handleImageOnchange = event => {
     files = event.target.files;
-    setImageData(files);
+    setImageData({ ...imageData, ...files });
     const imagesData = Object.values(files).reduce((list, key) => {
       if (key && typeof key === "object") {
         let url = URL.createObjectURL(key);
@@ -31,8 +32,20 @@ export default ({
       }
       return list;
     }, []);
-    setImages(imagesData);
+    setImages([...images, ...imagesData]);
   };
+
+  const removeImage = index => {
+    images.splice(index, 1);
+    let updatedImageData = { ...imageData }
+    for (var key in updatedImageData) {
+      if (!Number(updatedImageData[key]) && (parseInt(key) === index)) {
+        delete updatedImageData[key];
+      }
+    }
+    setImageData(updatedImageData);
+    setImages(images);
+  }
 
   /********** Change class on steps ************/
   const getClass = step => {
@@ -195,7 +208,12 @@ export default ({
                   images.length > 0 &&
                   images.map((item, key) => {
                     return (
-                      <li key={key}>
+                      <li key={key} className="position-relative">
+                        <Button color="link" className="gallery-btn d-flex align-items-center justify-content-center" onClick={() => removeImage(key)}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
+                            <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
+                          </svg>
+                        </Button>
                         <img src={item} alt="Job Pic" />
                       </li>
                     );
@@ -205,6 +223,7 @@ export default ({
                     color="primary"
                     block
                     className="add-gallery-btn position-relative"
+                    type="button"
                   >
                     <Input
                       type="file"
@@ -239,15 +258,14 @@ export default ({
           <div className="post-job-btns text-center">
             {_currentstage === 1 && (
               <Link className="text-black" to={"/"}>
-                <Button color="link" className="btn-dark">
-                  CANCEL
-                </Button>
+                <Button color="link" className="btn-dark" type="button">CANCEL</Button>
               </Link>
             )}
             {_currentstage !== 1 && (
               <Button
                 color="link"
                 className="btn-dark"
+                type="button"
                 onClick={() => {
                   _handleStageChange(-1);
                 }}
@@ -256,20 +274,10 @@ export default ({
               </Button>
             )}
             {_currentstage !== 3 && (
-              <Button
-                type="submit"
-                color="secondary"
-              /* onClick={() => {
-              _handleStageChange(1);
-            }} */
-              >
-                NEXT
-              </Button>
+              <Button type="submit" color="secondary">NEXT</Button>
             )}
             {_currentstage === 3 && (
-              <Button color="secondary" type="submit">
-                POST NOW
-              </Button>
+              <Button color="secondary" type="submit">POST NOW</Button>
             )}
           </div>
         </LocalForm>

@@ -15,7 +15,7 @@ const Nav = props => {
       className={"d-flex align-items-center " + props.className}
       onClick={stopPropagationHandler}
     >
-      <ul className="d-flex align-items-center">
+      <ul className="d-flex align-items-center flex-wrap">
         <li>
           <Link className="btn btn-link" disabled={true} to={""}>
             Bids
@@ -48,10 +48,10 @@ const Nav = props => {
               Logout
             </Link>
           ) : (
-            <Link className="login-btn btn btn-info" to={"/login"}>
-              Login
+              <Link className="login-btn btn btn-info" to={"/login"}>
+                Login
             </Link>
-          )}
+            )}
         </li>
       </ul>
     </nav>

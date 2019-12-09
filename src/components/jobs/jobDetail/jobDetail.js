@@ -9,7 +9,7 @@ import {
   CarouselIndicators,
   CarouselCaption
 } from "reactstrap";
-// import Slider from "react-slick";
+import Slider from "react-slick";
 import Heading from "../../commonUi/heading/heading";
 import Paragraph from "../../commonUi/paragraph/paragraph";
 import RatingBlock from "../ratingBock/ratingBlock";
@@ -36,10 +36,10 @@ export default ({ job }) => {
     });
 
   const settings = {
-    dots: true,
-    infinite: true,
+    dots: false,
+    infinite: false,
     speed: 500,
-    slidesToShow: 1,
+    slidesToShow: 3,
     slidesToScroll: 1
   };
   const next = () => {
@@ -117,21 +117,21 @@ export default ({ job }) => {
               />
             </Carousel> */}
 
-            {/*
-            <Slider {...settings}>
-              {thmbnails.map((item, key) => (
-                <div key={key}>
-                  <img
-                    src={item.src}
-                    alt="Job Post User"
-                   onClick={key => {
-                      console.log("key : ", key);
-                      // setImageIndex(key);
-                    }}
-                  />
-                </div>
-              ))}
-            </Slider>*/}
+            <div className="d-flex justify-content-center">
+              <div className="job-slider-track-inner">
+                <Slider {...settings}>
+                  {thmbnails.map((item, key) => (
+                    <div key={key}>
+                      <img
+                        src={item.src}
+                        alt="Job Post User"
+                        onClick={() => setImageIndex(key)}
+                      />
+                    </div>
+                  ))}
+                </Slider>
+              </div>
+            </div>
           </Col>
           <Col md="8" className="job-detail-info">
             <div className="job-detail-hd">
