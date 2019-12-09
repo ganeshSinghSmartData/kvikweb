@@ -204,13 +204,13 @@ export default ({
                     color="primary"
                     block
                     className="add-gallery-btn position-relative"
+                    type="button"
                   >
                     <Input
                       type="file"
                       model=".images"
                       name="file"
                       multiple="multiple"
-                      type="button"
                       onChange={event => handleImageOnchange(event)}
                     />
                     <svg
@@ -239,15 +239,14 @@ export default ({
           <div className="post-job-btns text-center">
             {_currentstage === 1 && (
               <Link className="text-black" to={"/"}>
-                <Button color="link" className="btn-dark">
-                  CANCEL
-                </Button>
+                <Button color="link" className="btn-dark" type="button">CANCEL</Button>
               </Link>
             )}
             {_currentstage !== 1 && (
               <Button
                 color="link"
                 className="btn-dark"
+                type="button"
                 onClick={() => {
                   _handleStageChange(-1);
                 }}
@@ -256,20 +255,10 @@ export default ({
               </Button>
             )}
             {_currentstage !== 3 && (
-              <Button
-                type="submit"
-                color="secondary"
-              /* onClick={() => {
-              _handleStageChange(1);
-            }} */
-              >
-                NEXT
-              </Button>
+              <Button type="submit" color="secondary">NEXT</Button>
             )}
             {_currentstage === 3 && (
-              <Button color="secondary" type="submit">
-                POST NOW
-              </Button>
+              <Button color="secondary" type="submit">POST NOW</Button>
             )}
           </div>
         </LocalForm>
