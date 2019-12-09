@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import { LocalForm } from "react-redux-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
 import InputCell from "../../commonUi/input/inputCell";
+import DataLoader from '../../commonUi/loader/loader';
 import "./postJob.scss";
 
 export default ({
@@ -47,12 +47,7 @@ export default ({
 
   return (
     <div className="post-wrapper data-block ml-auto mr-auto position-relative">
-      <div className="dataLoader block position-absolute w-100 h-100 d-flex justify-content-center align-items-center">
-        <div className="d-flex flex-column justify-content-center align-items-center">
-          <span class="spinner-border text-primary" role="status" aria-hidden="true"></span>
-
-        </div>
-      </div>
+      <DataLoader />
       {/* Top Header Buttons */}
       <div className="post-job-nav d-flex justify-content-center">
         <ul className="d-flex">

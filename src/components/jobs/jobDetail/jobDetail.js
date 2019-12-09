@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button } from 'reactstrap';
 import {
   Row,
   Col,
@@ -153,11 +154,13 @@ export default ({ job }) => {
               end_date={DaysBetween(job.jobEndDate)}
               job_seeker_id={job.job_seeker_id._id}
             />
-            {/* <div className="place-bid-rw text-center">
+            {
+              /*<div className="place-bid-rw text-center">
               <Button color="secondary" className="place-bid-btn">
                 Place a Bid
               </Button>
-            </div> */}
+            </div>*/
+            }
           </Col>
         </Row>
         {/* <div className="proposal-blc flex-shrink-0">
