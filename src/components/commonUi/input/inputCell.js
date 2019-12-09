@@ -17,6 +17,8 @@ const InputCell = ({
   Placeholder,
   InputIcon,
   ClassName = "",
+  Disabled = false,
+  DefaultValue = "hourly",
   Errors
 }) => {
   let ErrorsObject = {};
@@ -149,6 +151,8 @@ const InputCell = ({
             placeholder={Placeholder}
             model={Model}
             className={"form-control custom-select"}
+            defaultValue={DefaultValue}
+            disabled={Disabled}
             errors={validation()}
           >
             {Name === "frequency" &&

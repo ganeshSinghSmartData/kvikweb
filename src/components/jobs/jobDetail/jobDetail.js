@@ -20,7 +20,7 @@ import { apiUrl } from "./../../../environment";
 import { placeYourBid } from "./../../../actions/job";
 
 
-export default ({ job }) => {
+export default ({ job, history }) => {
 
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
@@ -56,7 +56,8 @@ export default ({ job }) => {
     }
     dispatch(placeYourBid(reqData, callback => {
       if (callback) {
-        console.log('I am in callback');
+        setOpenModal(!openModal);
+        history.push("/");
       }
     }));
   }

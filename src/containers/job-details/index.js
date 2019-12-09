@@ -24,7 +24,7 @@ class JobDetails extends Component {
     return (
       <React.Fragment>
         {Object.keys(this.props.jobDetails).length && (
-          <JobDetail job={this.props.jobDetails}></JobDetail>
+          <JobDetail job={this.props.jobDetails} history={this.props.history}></JobDetail>
         )}
       </React.Fragment>
     );

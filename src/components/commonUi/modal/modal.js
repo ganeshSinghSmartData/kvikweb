@@ -220,6 +220,8 @@ const SignInModal = ({
                     Model=".frequency"
                     InputType="select"
                     Placeholder={"Frequency"}
+                    Disabled={true}
+                    DefaultValue={props._frequency}
                     Errors={{ required: "required" }}
                   />
                 </div>
