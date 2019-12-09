@@ -9,7 +9,8 @@ class PostNewJob extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      stage: 1
+      stage: 1,
+      dataload: false
     };
 
     this.handleJobPost = this.handleJobPost.bind(this);
@@ -24,6 +25,7 @@ class PostNewJob extends Component {
     if (currentstage !== 3) {
       this.handleStageChange(1);
     } else {
+      this.setState({ dataload: true });
       let formData = new FormData();
 
       for (var key in imageData) {
@@ -63,7 +65,8 @@ class PostNewJob extends Component {
       this.props.createNewJob(formData, callback => {
         if (callback) {
           console.log("Job Successfullt poseted : ", callback);
-          // this.props.history()
+          this.setState({ dataload: true });
+          this.props.history.push("/");
         }
       });
     }
@@ -83,6 +86,17 @@ class PostNewJob extends Component {
   render() {
     return (
       <React.Fragment>
+        {this.state.dataload && (
+          <div className="dataLoader block position-absolute w-100 h-100 d-flex justify-content-center align-items-center">
+            <div className="d-flex flex-column justify-content-center align-items-center">
+              <span
+                class="spinner-border text-primary"
+                role="status"
+                aria-hidden="true"
+              ></span>
+            </div>
+          </div>
+        )}
         <PostJob
           _currentstage={this.state.stage}
           _handleStageChange={this.handleStageChange}

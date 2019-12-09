@@ -47,7 +47,7 @@ export default ({
 
   return (
     <div className="post-wrapper data-block ml-auto mr-auto position-relative">
-      <DataLoader />
+      {/* <DataLoader /> */}
       {/* Top Header Buttons */}
       <div className="post-job-nav d-flex justify-content-center">
         <ul className="d-flex">
@@ -68,7 +68,11 @@ export default ({
           </li>
         </ul>
       </div>
-      <div className={`post-job-inner ${_currentstage === 3 ? 'gallery-block' : ''}`}>
+      <div
+        className={`post-job-inner ${
+          _currentstage === 3 ? "gallery-block" : ""
+          }`}
+      >
         <LocalForm
           onSubmit={values =>
             _handleJobPost(values, startDate, endDate, imageData, _currentstage)
@@ -256,8 +260,8 @@ export default ({
                 type="submit"
                 color="secondary"
               /* onClick={() => {
-                _handleStageChange(1);
-              }} */
+              _handleStageChange(1);
+            }} */
               >
                 NEXT
               </Button>

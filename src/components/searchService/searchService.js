@@ -35,7 +35,9 @@ const SearchService = () => {
                     placeholder="Search for a service"
                     className="border-0 flex-fill h-100"
                   />
-                  <Button color="primary">Search</Button>
+                  <Button color="primary" type="button">
+                    Search
+                  </Button>
                 </Form>
               </div>
               {loggedInUser && (
