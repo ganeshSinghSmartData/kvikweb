@@ -70,7 +70,7 @@ export default ({
       <div
         className={`post-job-inner ${
           _currentstage === 3 ? "gallery-block" : ""
-        }`}
+          }`}
       >
         <LocalForm
           onSubmit={values =>
@@ -210,6 +210,7 @@ export default ({
                       model=".images"
                       name="file"
                       multiple="multiple"
+                      type="button"
                       onChange={event => handleImageOnchange(event)}
                     />
                     <svg
@@ -258,9 +259,9 @@ export default ({
               <Button
                 type="submit"
                 color="secondary"
-                /* onClick={() => {
-                _handleStageChange(1);
-              }} */
+              /* onClick={() => {
+              _handleStageChange(1);
+            }} */
               >
                 NEXT
               </Button>
