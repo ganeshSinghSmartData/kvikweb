@@ -4,6 +4,7 @@ import { Control } from "react-redux-form";
 import { Link } from "react-router-dom";
 import { LocalForm } from "react-redux-form";
 import DatePicker from "react-datepicker";
+import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
 import InputCell from "../../commonUi/input/inputCell";
 import DataLoader from '../../commonUi/loader/loader';
@@ -19,11 +20,18 @@ export default ({
   const [images, setImages] = useState([]);
   const [imageData, setImageData] = useState({});
   const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-
+  const [endDate, setEndDate] = useState(new Date(moment(new Date(), "DD-MM-YYYY").add(7, 'days')));
   let files = {};
+
+  const handleOnInputClick = () => {
+    document.body.classList.add('datepicker')
+  }
+  const handleOnClickOutsideEvent = () => {
+    document.body.classList.remove("datepicker")
+  }
+
   const handleImageOnchange = event => {
-    files = event.target.files;
+    files = event;
     setImageData({ ...imageData, ...files });
     const imagesData = Object.values(files).reduce((list, key) => {
       if (key && typeof key === "object") {
@@ -57,6 +65,14 @@ export default ({
       return "link";
     }
   };
+
+  const onClickOutsideEvent = () => {
+    console.log('inside onClickOutsideEvent : ');
+  }
+
+  const onSelectEvent = () => {
+    console.log('inside onSelectEvent : ');
+  }
 
   return (
     <div className="post-wrapper data-block ml-auto mr-auto position-relative">
@@ -175,6 +191,8 @@ export default ({
                   onChange={date => setStartDate(date)}
                   timeInputLabel="Time:"
                   dateFormat="MM/dd/yyyy h:mm aa"
+                  onInputClick={() => handleOnInputClick()}
+                  onClickOutsideEvent={handleOnClickOutsideEvent()}
                   showTimeInput
                 />
               </div>
@@ -185,7 +203,10 @@ export default ({
                   onChange={date => setEndDate(date)}
                   timeInputLabel="Time:"
                   dateFormat="MM/dd/yyyy h:mm aa"
+                  onInputClick={() => handleOnInputClick()}
+                  onClickOutsideEvent={handleOnClickOutsideEvent()}
                   showTimeInput
+
                 />
               </div>
               <div className="col-md-4">
@@ -225,12 +246,15 @@ export default ({
                     className="add-gallery-btn position-relative"
                     type="button"
                   >
-                    <Input
-                      type="file"
-                      model=".images"
-                      name="file"
-                      multiple="multiple"
-                      onChange={event => handleImageOnchange(event)}
+                    <InputCell
+                      Name={"file"}
+                      Model=".images"
+                      InputType="file"
+                      Placeholder={"Image Upload"}
+                      Multiple="multiple"
+                      HandleImageOnchange={handleImageOnchange}
+                      // onChange={event => handleImageOnchange(event)}
+                      Errors={{ required: "required" }}
                     />
                     <svg
                       id="_x38__3_"
@@ -284,4 +308,4 @@ export default ({
       </div>
     </div>
   );
-};
+}; 

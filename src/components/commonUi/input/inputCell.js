@@ -18,7 +18,9 @@ const InputCell = ({
   InputIcon,
   ClassName = "",
   Disabled = false,
+  Multiple = "multiple",
   DefaultValue = "hourly",
+  HandleImageOnchange,
   Errors
 }) => {
   let ErrorsObject = {};
@@ -133,7 +135,7 @@ const InputCell = ({
             ) : null}
           </span>
         ) : null}
-        {InputType !== "select" && InputType !== "textarea" && (
+        {InputType !== "select" && InputType !== "textarea" && InputType !== "file" && (
           <Control.text
             type={InputType}
             name={Name}
@@ -184,6 +186,18 @@ const InputCell = ({
             className={"form-control"}
             errors={validation()}
           ></Control.textarea>
+        )}
+        {InputType === "file" && (
+          <Control.file
+            type={InputType}
+            name={Name}
+            placeholder={Placeholder}
+            model={Model}
+            multiple={Multiple}
+            onChange={event => HandleImageOnchange(event.target.files)}
+            className={"form-control"}
+            errors={validation()}
+          ></Control.file>
         )}
         <Error
           model={Model}

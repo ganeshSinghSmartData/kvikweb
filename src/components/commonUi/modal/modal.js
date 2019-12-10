@@ -73,7 +73,7 @@ const SignInModal = ({
                 {_modalType === "/register" && (
                   <React.Fragment>
                     <h2>
-                      Welcome <label className="d-block">Sign Up</label>
+                      <label className="d-block">Sign Up</label>
                     </h2>
                     <InputCell
                       Name={"fname"}
@@ -132,7 +132,7 @@ const SignInModal = ({
                 {_modalType === "/login" && (
                   <div>
                     <h2>
-                      Welcome Back, <label className="d-block">Login</label>
+                      <label className="d-block">Login</label>
                     </h2>
                     <InputCell
                       Name={"email"}

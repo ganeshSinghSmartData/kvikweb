@@ -26,49 +26,52 @@ class PostNewJob extends Component {
     if (currentstage !== 3) {
       this.handleStageChange(1);
     } else {
-      this.setState({ dataload: true });
-      let formData = new FormData();
-
-      for (var key in imageData) {
-        if (!Number(imageData[key])) {
-          formData.append("file", imageData[key]);
+      if (!Object.keys(imageData).length) {
+        this.setState({ dataload: false });
+      } else {
+        let formData = new FormData();
+        this.setState({ dataload: true });
+        for (var key in imageData) {
+          if (!Number(imageData[key])) {
+            formData.append("file", imageData[key]);
+          }
         }
+        const startdate = new Date(startDate);
+        const newStartDate =
+          startdate.getFullYear() +
+          "-" +
+          (startdate.getMonth() + 1) +
+          "-" +
+          startdate.getDate() +
+          " " +
+          startdate.toLocaleTimeString("en-US");
+        const enddate = new Date(endDate);
+        const newEndDate =
+          enddate.getFullYear() +
+          "-" +
+          (enddate.getMonth() + 1) +
+          "-" +
+          enddate.getDate() +
+          " " +
+          enddate.toLocaleTimeString("en-US");
+
+        formData.append("category", jobData.category);
+        formData.append("jobtitle", jobData.jobtitle);
+        formData.append("description", jobData.description);
+        formData.append("budget", jobData.budget);
+        formData.append("street", jobData.street);
+        formData.append("city", jobData.city);
+        formData.append("location", jobData.location);
+        formData.append("jobStartDate", newStartDate);
+        formData.append("jobEndDate", newEndDate);
+        formData.append("frequency", jobData.frequency);
+        this.props.createNewJob(formData, callback => {
+          if (callback) {
+            this.setState({ dataload: true });
+            this.props.history.push("/");
+          }
+        });
       }
-      const startdate = new Date(startDate);
-      const newStartDate =
-        startdate.getFullYear() +
-        "-" +
-        (startdate.getMonth() + 1) +
-        "-" +
-        startdate.getDate() +
-        " " +
-        startdate.toLocaleTimeString("en-US");
-      const enddate = new Date(endDate);
-      const newEndDate =
-        enddate.getFullYear() +
-        "-" +
-        (enddate.getMonth() + 1) +
-        "-" +
-        enddate.getDate() +
-        " " +
-        enddate.toLocaleTimeString("en-US");
-
-      formData.append("category", jobData.category);
-      formData.append("jobtitle", jobData.jobtitle);
-      formData.append("description", jobData.description);
-      formData.append("budget", jobData.budget);
-      formData.append("street", jobData.street);
-      formData.append("city", jobData.city);
-      formData.append("location", jobData.location);
-      formData.append("jobStartDate", newStartDate);
-      formData.append("jobEndDate", newEndDate);
-      formData.append("frequency", jobData.frequency);
-      this.props.createNewJob(formData, callback => {
-        if (callback) {
-          this.setState({ dataload: true });
-          this.props.history.push("/");
-        }
-      });
     }
   }
 
