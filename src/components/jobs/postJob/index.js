@@ -278,11 +278,15 @@ export default ({
             </div>
           )}
 
+          <div class="requied-msg-blc d-flex justify-content-center text-center">
+            <span>Please Upload! your Post-Job Images.</span>
+          </div>
+
           {/* Next, Save, Back and Cancel button */}
-          <div className="post-job-btns text-center">
+          <div className="post-job-btns text-center d-flex justify-content-center">
             {_currentstage === 1 && (
-              <Link className="text-black" to={"/"}>
-                <Button color="link" className="btn-dark" type="button">CANCEL</Button>
+              <Link className="text-black btn-dark cancel btn btn-link" to={"/"}>
+                CANCEL
               </Link>
             )}
             {_currentstage !== 1 && (
