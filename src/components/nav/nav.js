@@ -17,13 +17,13 @@ const Nav = props => {
     >
       <ul className="d-flex align-items-center flex-wrap">
         <li>
-          <Link className="btn btn-link" disabled={true} to={""}>
+          <Link className="btn btn-link" disabled={true} to={"/bid-list"}>
             Bids
           </Link>
         </li>
         <li>
-          <Link className="btn btn-link" disabled={true} to={""}>
-            Categories
+          <Link className="btn btn-link" disabled={true} to={"/job-list"}>
+            Jobs
           </Link>
         </li>
         <li>

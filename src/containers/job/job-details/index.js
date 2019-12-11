@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import JobDetail from "./../../components/jobs/jobDetail/jobDetail";
-import { getJobDetails } from "./../../actions/job";
+import JobDetail from "../../../components/jobs/jobDetail/jobDetail";
+import { getJobDetails } from "../../../actions/job";
 
 class JobDetails extends Component {
   constructor(props) {

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Row, Col } from "reactstrap";
 import Slider from "react-slick";
+
+
 import Heading from "../../commonUi/heading/heading";
 import Paragraph from "../../commonUi/paragraph/paragraph";
 import RatingBlock from "../ratingBock/ratingBlock";
@@ -20,7 +22,7 @@ import { apiUrl } from "./../../../environment";
 import { placeYourBid } from "./../../../actions/job";
 
 
-export default ({ job, history }) => {
+export default ({ job, history, path = "" }) => {
 
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
@@ -117,7 +119,7 @@ export default ({ job, history }) => {
               end_date={DaysBetween(job.jobEndDate)}
               job_seeker_id={job.job_seeker_id._id}
             />
-            {user && user.loggedIn && (user.data._id != job.job_seeker_id._id) && (<div className="place-bid-rw text-center">
+            {path !== "/job-proposal" && user && user.loggedIn && (user.data._id != job.job_seeker_id._id) && (<div className="place-bid-rw text-center">
               <Button color="secondary" className="place-bid-btn" onClick={() => setOpenModal(!openModal)}>
                 Place a Bid
               </Button>
@@ -130,12 +132,12 @@ export default ({ job, history }) => {
           _handleSubmit={handleSubmit}
           _frequency={job.frequency}
         />
-        {/* <div className="proposal-blc flex-shrink-0">
+        {path === "/job-proposal" && (<div className="proposal-blc flex-shrink-0">
           <h4>PROPOSALS</h4>
           <Proposal />
           <Proposal />
           <Proposal />
-        </div> */}
+        </div>)}
       </div>
     </div>
   );

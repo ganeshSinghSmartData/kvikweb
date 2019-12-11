@@ -13,27 +13,69 @@ import { pagination } from "../../utilities/constants";
 import { DaysBetween } from "./../../utilities/common";
 // import SpinnerOverlay from '../commonUi/spinner/spinnerOverlay/spinnerOverlay';
 import "./jobs.scss";
-import { getJobProduct, reset_job_products } from "./../../actions/job";
+import { getJobProduct, reset_job_products, getUserActiveJob, } from "./../../actions/job";
 smoothscroll.polyfill();
 
-const Job = () => {
+const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob }) => {
+
   const dispatch = useDispatch();
   const [listType, setlistType] = useState(false);
   let [page, setPage] = useState(pagination.page);
+  let [jobType, setJobType] = useState('active');
+
   const toggleListType = value => {
     setlistType(value);
   };
   let jobs = useSelector(state => state.job);
+  console.log('jobs :', jobs);
+  let products = [];
+  if (jobs && jobs.activeJobProduct.length) {
+    products = jobs.activeJobProduct;
+  }
+  if (jobType === "active") {
+    products = jobs.activeJobProduct;
+  }
+  if (jobType === "completed") {
+    products = jobs.completedJobProduct;
+  }
+  if (path !== "/job-list") {
+    products = jobs.jobProduct;
+  }
+
+  console.log('products: ', products.length);
 
   const showMoreProduct = page => {
     setPage(page);
-    dispatch(getJobProduct({ page: page }));
+    if (path !== "/job-list") {
+      dispatch(getJobProduct({ page: page }));
+    } else if (jobType === "active") {
+      _handleUserActiveJob({ page: page });
+    } else {
+      _handleUserCompletedJob({ page: page });
+    }
   };
 
   useEffect(() => {
-    dispatch(reset_job_products());
-    dispatch(getJobProduct({ page: page }));
+    if (path !== "/job-list") {
+      dispatch(reset_job_products());
+      dispatch(getJobProduct({ page: page }));
+    } else if (jobType === "active") {
+      _handleUserActiveJob({ page: page });
+    } else {
+      _handleUserCompletedJob({ page: page });
+    }
   }, []);
+
+  const activeJob = () => {
+    console.log('I am in user active job');
+    setJobType('active');
+  }
+
+  const completedJob = () => {
+    console.log('I am in user completed job');
+    setJobType('completed');
+  }
+
 
   return (
     <React.Fragment>
@@ -63,13 +105,21 @@ const Job = () => {
             <Sidebar />
           </Col>
           <Col className="job-rt-col">
-            <Heading className="text-primary h1">Welcome to Kvik</Heading>
-            <Paragraph>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Pellentesque leo ipsum, consequat a tellus pharetra, commodo
-              bibendum dui. In rhoncus lacus ut justo lacinia, id tempus ligula
-              convallis.
-            </Paragraph>
+            {path !== "/job-list" ? (
+              <React.Fragment>
+                <Heading className="text-primary h1">Welcome to Kvik</Heading>
+                <Paragraph>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Pellentesque leo ipsum, consequat a tellus pharetra, commodo
+                  bibendum dui. In rhoncus lacus ut justo lacinia, id tempus ligula
+                  convallis.
+                </Paragraph>
+              </React.Fragment>
+            ) : <div>
+                <Button color="primary" onClick={() => activeJob()} style={{ marginBottom: '1rem' }}>Active Jobs</Button>
+                <Button color="primary" onClick={() => completedJob()} style={{ marginBottom: '1rem' }}>Completed Jobs</Button>
+              </div>
+            }
             <div className="job-list-blc">
               <div className="job-list-heading d-flex">
                 {/* <h3 className="flex-fill">
@@ -121,16 +171,16 @@ const Job = () => {
               <Row
                 className={"job-listing " + (listType ? "job-list-row" : "")}
               >
-                {jobs &&
-                  jobs.jobProduct.map((item, key) => {
+                {products &&
+                  products.map((item, key) => {
                     return (
                       <Col lg="4" className="product-col" key={key}>
-                        <JobProduct product={item} listType={listType} />
+                        <JobProduct product={item} listType={listType} path={path} />
                       </Col>
                     );
                   })}
               </Row>
-              {jobs.jobProduct.length < jobs.count && (
+              {products.length < jobs.count && (
                 <Row className="joblist-more">
                   <Col className="d-flex justify-content-center">
                     <Button
@@ -139,12 +189,6 @@ const Job = () => {
                       onClick={() => showMoreProduct(++page)}
                     >
                       <span className="d-flex justify-content-center">
-                        {/* <span
-                          className="spinner-border spinner-border-sm"
-                          role="status"
-                          aria-hidden="true"
-                        ></span>
-                        Loading... */}
                       </span>
                       <span>SHOW MORE</span>
                     </Button>
