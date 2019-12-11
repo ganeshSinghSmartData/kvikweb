@@ -70,7 +70,7 @@ export const logout = (params = {}) => {
 export const getUserBid = params => {
   return (dispatch, getState) => {
     /* const {
-        data: { loginToken }
+        data: { token }
       } = getState().user; */
     // api/user_bid?skip=0&limit=10
     ApiClient.get(`${apiUrl}/api/user_bid`, params).then(response => {
@@ -89,7 +89,7 @@ export const getUserBid = params => {
 export const getUserDetails = user_id => {
   return (dispatch, getState) => {
     /* const {
-        data: { loginToken }
+        data: { token }
       } = getState().user; */
     ApiClient.get(`${apiUrl}/userDetails/${user_id}`, {}).then(response => {
       console.log('response: ', response);

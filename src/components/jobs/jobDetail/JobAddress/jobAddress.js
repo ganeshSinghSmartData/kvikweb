@@ -12,10 +12,10 @@ import { setTimeout } from "timers";
 const JobAddress = ({ end_date, job_seeker_id }) => {
   const [timeleft, seTimeleft] = useState(datetimeDifference(new Date(), new Date(end_date)));
   const dispatch = useDispatch();
-  setInterval(() => {
+  /* setInterval(() => {
     const time = datetimeDifference(new Date(), new Date(end_date));
     seTimeleft(time);
-  }, 1000);
+  }, 1000); */
 
   /*   let userDetails = useSelector(state => state.user.userDetails);
     if (!Object.keys(userDetails).length) {

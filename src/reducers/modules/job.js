@@ -10,6 +10,8 @@ import * as TYPE from "../../actions/constants";
 const initialState = {
   jobProduct: [],
   jobDetails: {},
+  activeJobProduct: [],
+  completedJobProduct: [],
   count: 0
 };
 
@@ -25,6 +27,17 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         jobDetails: action.data
+      };
+    case TYPE.GET_ACTIVE_JOB:
+      return {
+        ...state,
+        activeJobProduct: action.data
+      };
+
+    case TYPE.GET_COMPLETED_JOB:
+      return {
+        ...state,
+        completedJobProduct: action.data
       };
     case TYPE.POST_JOB_PRODUCTS:
       return state;

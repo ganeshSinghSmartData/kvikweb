@@ -9,7 +9,9 @@ import { apiUrl } from "./../../../environment";
 
 /********* Get time ago in string format *********/
 
-const JobProduct = ({ product, listType }) => {
+const JobProduct = ({ product, listType, path }) => {
+  console.log('path: ', path);
+
   const [timeleft, seTimeleft] = useState(datetimeDifference(new Date(), new Date(DaysBetween(product.jobEndDate))));
 
   setInterval(() => {
@@ -22,7 +24,7 @@ const JobProduct = ({ product, listType }) => {
     <div className={"job-wrapper " + (listType ? "d-flex flex-column" : "")}>
       <div className="job-pic text-center flex-shrink-0">
         {product.images && product.images.length && (
-          <Link className="text-black" to={`/job-details/${product._id}`}>
+          <Link className="text-black" to={(path === "/job-list") ? (`/job-proposal/${product._id}`) : (`/job-details/${product._id}`)}>
             <img
               src={`${apiUrl}/${product.images[0]["path"]}`}
               alt="Job image"

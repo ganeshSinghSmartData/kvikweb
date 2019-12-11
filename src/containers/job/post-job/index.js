@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import PostJob from "../../components/jobs/postJob";
-import Loader from "./../../components/Loader";
-import { createNewJob } from "./../../actions/job";
+import PostJob from "../../../components/jobs/postJob";
+import Loader from "./../../../components/Loader";
+import { createNewJob } from "./../../../actions/job";
 
 class PostNewJob extends Component {
   constructor(props) {

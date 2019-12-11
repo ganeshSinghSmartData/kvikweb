@@ -8,16 +8,19 @@ import { public_type, private_type } from "../utilities/constants";
 
 import HomePage from "../containers/home";
 import ProfilePage from "../containers/home";
-import JobDetails from "../containers/job-details";
-import PostNewJob from "../containers/post-job";
+import JobDetails from "../containers/job/job-details";
+import PostNewJob from "../containers/job/post-job";
+import BidList from "../containers/bid/bid-list";
+import JobProposal from "../containers/job/job-proposal";
+import JobList from "../containers/job/job-list";
 
 const Routers = store => {
   return (
     <Router>
       <Switch>
         <AppRoute
-          exact={true}
           path="/"
+          exact={true}
           component={HomePage}
           requireAuth={Authorization}
           layout={publicLayout}
@@ -26,8 +29,8 @@ const Routers = store => {
         />
 
         <AppRoute
-          exact={true}
           path="/login"
+          exact={true}
           component={HomePage}
           requireAuth={Authorization}
           layout={publicLayout}
@@ -35,8 +38,8 @@ const Routers = store => {
           type={public_type}
         />
         <AppRoute
-          exact={true}
           path="/register"
+          exact={true}
           component={HomePage}
           requireAuth={Authorization}
           layout={publicLayout}
@@ -45,8 +48,8 @@ const Routers = store => {
         />
 
         <AppRoute
-          exact={true}
           path="/profile"
+          exact={true}
           component={ProfilePage}
           requireAuth={Authorization}
           layout={publicLayout}
@@ -54,8 +57,8 @@ const Routers = store => {
           type={private_type}
         />
         <AppRoute
-          exact={true}
           path="/job-details/:job_id"
+          exact={true}
           component={JobDetails}
           requireAuth={Authorization}
           layout={publicLayout}
@@ -66,6 +69,33 @@ const Routers = store => {
           exact={true}
           path="/post-job"
           component={PostNewJob}
+          requireAuth={Authorization}
+          layout={publicLayout}
+          store={store}
+          type={private_type}
+        />
+        <AppRoute
+          path="/bid-list"
+          exact={true}
+          component={BidList}
+          requireAuth={Authorization}
+          layout={publicLayout}
+          store={store}
+          type={private_type}
+        />
+        <AppRoute
+          path="/job-list"
+          exact={true}
+          component={JobList}
+          requireAuth={Authorization}
+          layout={publicLayout}
+          store={store}
+          type={private_type}
+        />
+        <AppRoute
+          path="/job-proposal/:job_id"
+          exact={true}
+          component={JobProposal}
           requireAuth={Authorization}
           layout={publicLayout}
           store={store}
