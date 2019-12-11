@@ -27,7 +27,7 @@ const JobProduct = ({ product, listType, path }) => {
           <Link className="text-black" to={(path === "/job-list") ? (`/job-proposal/${product._id}`) : (`/job-details/${product._id}`)}>
             <img
               src={`${apiUrl}/${product.images[0]["path"]}`}
-              alt="Job image"
+              alt="Job"
             />
           </Link>
         )}

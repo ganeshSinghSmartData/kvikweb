@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal, ModalHeader, ModalBody, Button } from "reactstrap";
-import { LocalForm, Control } from "react-redux-form";
+import { LocalForm } from "react-redux-form";
 import { Link } from "react-router-dom";
 
 import Checkbox from "../checkbox/checkbox";
