@@ -12,6 +12,7 @@ import Paragraph from "../../components/commonUi/paragraph/paragraph";
 import { pagination } from "../../utilities/constants";
 import { DaysBetween } from "./../../utilities/common";
 // import SpinnerOverlay from '../commonUi/spinner/spinnerOverlay/spinnerOverlay';
+import NoData from '../commonUi/noData/noData';
 import "./jobs.scss";
 import { getJobProduct, reset_job_products, getUserActiveJob, } from "./../../actions/job";
 smoothscroll.polyfill();
@@ -30,23 +31,22 @@ const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob, _handle
   let bids = useSelector(state => state.bid);
 
   let products = [];
-  if (jobs && jobs.activeJobProduct.length) {
-    products = jobs.activeJobProduct;
-  }
-  if (jobType === "active") {
-    products = jobs.activeJobProduct;
-  }
-  if (jobType === "completed") {
-    products = jobs.completedJobProduct;
-  }
   if (path === "") {
     products = jobs.jobProduct;
-  }
-  if (bidType === "accepted") {
-    products = bids.activeBid;
-  }
-  if (bidType === "not-accepted") {
-    products = bids.completedBid;
+  } else if (path === "/job-list") {
+    if (jobType === "active") {
+      products = jobs.activeJobProduct;
+    }
+    if (jobType === "completed") {
+      products = jobs.completedJobProduct;
+    }
+  } else {
+    if (bidType === "accepted") {
+      products = bids.activeBid;
+    }
+    if (bidType === "not-accepted") {
+      products = bids.completedBid;
+    }
   }
 
   const showMoreProduct = page => {
@@ -99,7 +99,7 @@ const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob, _handle
             <Sidebar />
           </Col>
           <Col className="job-rt-col">
-            {path === "" ? (
+            {path === "" &&
               <React.Fragment>
                 <Heading className="text-primary h1">Welcome to Kvik</Heading>
                 <Paragraph>
@@ -109,16 +109,18 @@ const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob, _handle
                   convallis.
                 </Paragraph>
               </React.Fragment>
-            ) : <div>
-                <Button color="primary" onClick={() => { path === "/job-list" ? setJobType('active') : setBidType('accepted') }} style={{ marginBottom: '1rem' }}>{path === "/job-list" ? 'Active Jobs' : 'Accepted'}</Button>
-                <Button color="primary" onClick={() => { path === "/job-list" ? setJobType('completed') : setBidType('not-accepted') }} style={{ marginBottom: '1rem' }}>{path === "/job-list" ? 'Completed Jobs' : 'Not-Accepted'}</Button>
-              </div>
             }
-            <div className="job-list-blc">
+
+            <div className="job-list-blc m-0">
               <div className="job-list-heading d-flex">
-                {/* <h3 className="flex-fill">
-                  Jobs in vicinity of your locations: {jobs.count}
-                </h3> */}
+                {path !== "" &&
+                  <div className="job-list-tab">
+                    {/* <Button color="primary" onClick={() => { path === "/job-list" ? setJobType('active') : setBidType('accepted') }} style={{ marginBottom: '1rem' }}>{path === "/job-list" ? 'Active Jobs' : 'Accepted'}</Button>
+                    <Button color="primary" onClick={() => { path === "/job-list" ? setJobType('completed') : setBidType('not-accepted') }} style={{ marginBottom: '1rem' }}>{path === "/job-list" ? 'Completed Jobs' : 'Not-Accepted'}</Button> */}
+                    <button class={`btn ${jobType === 'active' ? 'btn-primary' : ''}`} onClick={() => { path === "/job-list" ? setJobType('active') : setBidType('accepted') }}>Active Jobs</button>
+                    <button class={`btn ${jobType === 'completed' ? 'btn-primary' : ''}`} onClick={() => { path === "/job-list" ? setJobType('completed') : setBidType('not-accepted') }}>Completed Jobs</button>
+                  </div>
+                }
                 <div className="job-list-icon d-flex ml-auto">
                   <Button
                     color="link"
@@ -165,6 +167,7 @@ const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob, _handle
               <Row
                 className={"job-listing " + (listType ? "job-list-row" : "")}
               >
+                {/* <NoData /> */}
                 {products &&
                   products.map((item, key) => {
                     return (

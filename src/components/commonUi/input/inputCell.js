@@ -1,5 +1,5 @@
 import React from "react";
-import { FormGroup, Label } from "reactstrap";
+import { FormGroup } from "reactstrap";
 import { Control } from "react-redux-form";
 import Match from "../../../utilities/validation";
 import Error from "./../error";

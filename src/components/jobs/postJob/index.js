@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Input, Button } from "reactstrap";
-import { Control } from "react-redux-form";
+import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { LocalForm } from "react-redux-form";
 import DatePicker from "react-datepicker";

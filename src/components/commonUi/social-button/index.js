@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form } from "reactstrap";
+import { Button } from "reactstrap";
 import SocialLogin from "react-social-login";
 
 class SocialButton extends React.Component {
