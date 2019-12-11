@@ -235,11 +235,11 @@ const SignInModal = ({
         </ModalBody>
       </Modal>
 
-      {/* <Modal isOpen={modal} toggle={toggle} size="lg"
+      {/* <Modal isOpen={true} size="lg"
         className={"d-flex flex-column align-items-center   justify-content-center bid-modal secondary-font-family"}>
         <ModalHeader>
           <span>Modal title</span>
-          <Button color="link" className="close-btn btn2" onClick={toggle}>
+          <Button color="link" className="close-btn btn2">
             <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
               <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
             </svg>
@@ -253,39 +253,24 @@ const SignInModal = ({
             <form>
               <div className="row bid-desc-frm">
                 <div className="col-md-6">
-                  <InputCell Name={"amount1"}
-                    Placeholder={"amount"}
-                    Model=".amount1"
-                    InputType={"text"}
-                    className="input-line-blc"
-                    Errors={{ required: "required" }}
-                  />
-                </div>
-                <div className="col-md-6">
-                  <InputCell Name={"amount2"}
-                    Placeholder={"amount"}
-                    Model=".amount2"
-                    InputType={"text"}
-                    className="input-line-blc"
-                    Errors={{ required: "required" }}
-                  />
+
                 </div>
               </div>
-              <div className="bid-frm-btns text-center">
-                <Button color="link" className="btn-dark">REJECT</Button>
+              <div className="bid-frm-btns d-flex justify-content-center">
+                <Button color="link" className="btn-dark cancel">REJECT</Button>
                 <Button color="secondary">SEND</Button>
               </div>
             </form>
           </div>
         </ModalBody>
-      </Modal>
-                */}
+      </Modal> */}
 
-      {/* 
-      <Modal isOpen={modal} toggle={toggle} size="lg" className={"d-flex flex-column align-items-center justify-content-center bid-modal secondary-font-family"}>
+
+
+      {/* <Modal isOpen={true} size="lg" className={"d-flex flex-column align-items-center justify-content-center bid-modal secondary-font-family"}>
         <ModalHeader>
           <span>Bid Details</span>
-          <Button color="link" className="close-btn btn2" onClick={toggle}>
+          <Button color="link" className="close-btn btn2">
             <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
               <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
             </svg>
@@ -309,8 +294,8 @@ const SignInModal = ({
                   $ 650.00
                 </div>
               </div>
-              <div className="bid-frm-btns text-center">
-                <Button color="link" className="btn-dark">REJECT</Button>
+              <div className="bid-frm-btns d-flex justify-content-center">
+                <Button color="link" className="btn-dark cancel">REJECT</Button>
                 <Button color="secondary">SEND</Button>
               </div>
             </div>
@@ -319,11 +304,11 @@ const SignInModal = ({
       </Modal> */}
 
 
-      {/*
-        <Modal isOpen={modal} toggle={toggle} size="lg" className={"d-flex flex-column align-items-center justify-content-center confirm-modal secondary-font-family"}>
+
+      {/* <Modal isOpen={true} size="lg" className={"d-flex flex-column align-items-center justify-content-center confirm-modal secondary-font-family"}>
         <ModalHeader>
           <span>Confirmation</span>
-          <Button color="link" className="close-btn btn2" onClick={toggle}>
+          <Button color="link" className="close-btn btn2">
             <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
               <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
             </svg>
@@ -339,12 +324,12 @@ const SignInModal = ({
             </div>
           </div>
         </ModalBody>
-      </Modal>
-        */}
+      </Modal> */}
 
-      {/* <Modal isOpen={modal} toggle={toggle} size="lg" className={"d-flex flex-column align-items-center justify-content-center confirm-modal bidder-completion secondary-font-family"}>
+
+      {/* <Modal isOpen={true} size="lg" className={"d-flex flex-column align-items-center justify-content-center confirm-modal bidder-completion secondary-font-family"}>
         <ModalHeader className="border-0">
-          <Button color="link" className="close-btn btn2" onClick={toggle}>
+          <Button color="link" className="close-btn btn2">
             <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
               <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
             </svg>
@@ -367,11 +352,11 @@ const SignInModal = ({
         </ModalBody>
       </Modal> */}
 
-      {/*
-      <Modal isOpen={modal} toggle={toggle} size="lg" className={"d-flex flex-column align-items-center justify-content-center bid-modal secondary-font-family"}>
+
+      {/* <Modal isOpen={true} size="lg" className={"d-flex flex-column align-items-center justify-content-center bid-modal secondary-font-family"}>
         <ModalHeader>
           <span>Payment Completed</span>
-          <Button color="link" className="close-btn btn2" onClick={toggle}>
+          <Button color="link" className="close-btn btn2">
             <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
               <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
             </svg>
@@ -402,12 +387,12 @@ const SignInModal = ({
             </div>
           </div>
         </ModalBody>
-      </Modal>
-      */}
+      </Modal> */}
 
-      {/* <Modal isOpen={modal} toggle={toggle} size="lg" className={"d-flex flex-column align-items-center justify-content-center payment-modal secondary-font-family text-center"}>
+
+      {/* <Modal isOpen={true} size="lg" className={"d-flex flex-column align-items-center justify-content-center payment-modal secondary-font-family text-center"}>
         <ModalHeader className="border-0">
-          <Button color="link" className="close-btn btn2" onClick={toggle}>
+          <Button color="link" className="close-btn btn2">
             <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
               <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
             </svg>
