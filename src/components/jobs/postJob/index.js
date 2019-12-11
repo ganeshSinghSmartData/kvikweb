@@ -15,13 +15,15 @@ export default ({
   _currentstage,
   _handleStageChange,
   _handleJobPost,
-  _handleJobUpdate
+  _handleJobUpdate,
+  _imageValidator
 }) => {
   const [images, setImages] = useState([]);
   const [imageData, setImageData] = useState({});
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date(moment(new Date(), "DD-MM-YYYY").add(7, 'days')));
   let files = {};
+  // console.log('imageData: ', Object.keys(imageData).length, Object.keys(images).length);
 
   const handleOnInputClick = () => {
     document.body.classList.add('datepicker')
@@ -145,8 +147,8 @@ export default ({
                   Name={"budget"}
                   Placeholder={"Budget"}
                   Model=".budget"
-                  InputType={"number"}
-                  Errors={{ required: "required" }}
+                  InputType={"text"}
+                  Errors={{ required: "required", invalidNumber: "invalidNumber" }}
                 />
               </div>
             </div>
@@ -180,8 +182,8 @@ export default ({
                   Name={"postalCode"}
                   Placeholder={"Postal Code"}
                   Model=".location"
-                  InputType={"number"}
-                  Errors={{ required: "required" }}
+                  InputType={"text"}
+                  Errors={{ required: "required", invalidNumber: "invalidNumber" }}
                 />
               </div>
               <div className="col-md-4">
@@ -252,9 +254,8 @@ export default ({
                       InputType="file"
                       Placeholder={"Image Upload"}
                       Multiple="multiple"
+                      Errors={{ required: "" }}
                       HandleImageOnchange={handleImageOnchange}
-                      // onChange={event => handleImageOnchange(event)}
-                      Errors={{ required: "required" }}
                     />
                     <svg
                       id="_x38__3_"
@@ -277,10 +278,9 @@ export default ({
               </ul>
             </div>
           )}
-
-          <div class="requied-msg-blc d-flex justify-content-center text-center">
+          {(Object.keys(images).length === 0 && _imageValidator) && (<div className="requied-msg-blc d-flex justify-content-center text-center">
             <span>Please Upload! your Post-Job Images.</span>
-          </div>
+          </div>)}
 
           {/* Next, Save, Back and Cancel button */}
           <div className="post-job-btns text-center d-flex justify-content-center">

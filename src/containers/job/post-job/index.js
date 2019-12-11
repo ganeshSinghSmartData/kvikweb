@@ -10,8 +10,9 @@ class PostNewJob extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      stage: 1,
-      dataload: false
+      stage: 3,
+      dataload: false,
+      imageValidator: false
     };
 
     this.handleJobPost = this.handleJobPost.bind(this);
@@ -27,10 +28,10 @@ class PostNewJob extends Component {
       this.handleStageChange(1);
     } else {
       if (!Object.keys(imageData).length) {
-        this.setState({ dataload: false });
+        this.setState({ dataload: false, imageValidator: true });
       } else {
         let formData = new FormData();
-        this.setState({ dataload: true });
+        this.setState({ dataload: true, imageValidator: false });
         for (var key in imageData) {
           if (!Number(imageData[key])) {
             formData.append("file", imageData[key]);
@@ -77,7 +78,6 @@ class PostNewJob extends Component {
 
   //   Handling Job Update
   handleJobUpdate(jobData) {
-    console.log("jobData : ", jobData);
     // this.props.createNewJob(jobData);
   }
 
@@ -95,6 +95,7 @@ class PostNewJob extends Component {
           _handleStageChange={this.handleStageChange}
           _handleJobPost={this.handleJobPost}
           _handleJobUpdate={this.handleJobUpdate}
+          _imageValidator={this.state.imageValidator}
         />
       </React.Fragment>
     );

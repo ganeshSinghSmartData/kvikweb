@@ -6,6 +6,7 @@ import Error from "./../error";
 import {
   invalidEmail,
   invalidPass,
+  invalidNumber,
   required
 } from "./../../../utilities/message";
 
@@ -39,6 +40,11 @@ const InputCell = ({
       errors = { ...errors, invalidPass: val => !Match.validatePassword(val) };
       ErrorsObject = { invalidPass };
     }
+    if (Errors["invalidNumber"] === "invalidNumber") {
+      errors = { ...errors, invalidNumber: val => !Match.validateNumbers(val) };
+      ErrorsObject = { invalidNumber };
+    }
+
     return errors;
   };
 

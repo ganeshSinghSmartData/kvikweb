@@ -15,21 +15,18 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case TYPE.GET_JOB_PRODUCTS:
+        case TYPE.GET_ACTIVE_BID:
             return {
                 ...state,
-                jobProduct: [...state.jobProduct, ...action.data.joblisting],
-                count: action.data.count
+                activeBid: action.data,
+                count: 10
             };
-        case TYPE.GET_JOB_DETAILS:
+        case TYPE.GET_COMPLETED_BID:
             return {
                 ...state,
-                jobDetails: action.data
+                completedBid: action.data,
+                count: 10
             };
-        case TYPE.POST_JOB_PRODUCTS:
-            return state;
-        case TYPE.RESET_JOB_PRODUCTS:
-            return { ...state, jobProduct: [] };
         default:
             return state;
     }

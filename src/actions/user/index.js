@@ -92,8 +92,6 @@ export const getUserDetails = user_id => {
         data: { token }
       } = getState().user; */
     ApiClient.get(`${apiUrl}/userDetails/${user_id}`, {}).then(response => {
-      console.log('response: ', response);
-
       if (response.status === 200) {
         dispatch(get_user_details(response));
       } else if (response.status === 401) {

@@ -10,8 +10,6 @@ import { apiUrl } from "./../../../environment";
 /********* Get time ago in string format *********/
 
 const JobProduct = ({ product, listType, path }) => {
-  console.log('path: ', path);
-
   const [timeleft, seTimeleft] = useState(datetimeDifference(new Date(), new Date(DaysBetween(product.jobEndDate))));
 
   setInterval(() => {

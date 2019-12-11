@@ -16,18 +16,19 @@ import "./jobs.scss";
 import { getJobProduct, reset_job_products, getUserActiveJob, } from "./../../actions/job";
 smoothscroll.polyfill();
 
-const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob }) => {
-
+const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob, _handleUserAcceptedBid, _handleUserNotAcceptedBid }) => {
   const dispatch = useDispatch();
   const [listType, setlistType] = useState(false);
   let [page, setPage] = useState(pagination.page);
   let [jobType, setJobType] = useState('active');
+  let [bidType, setBidType] = useState('accepted');
 
   const toggleListType = value => {
     setlistType(value);
   };
   let jobs = useSelector(state => state.job);
-  console.log('jobs :', jobs);
+  let bids = useSelector(state => state.bid);
+
   let products = [];
   if (jobs && jobs.activeJobProduct.length) {
     products = jobs.activeJobProduct;
@@ -38,11 +39,15 @@ const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob }) => {
   if (jobType === "completed") {
     products = jobs.completedJobProduct;
   }
-  if (path !== "/job-list") {
+  if (path === "") {
     products = jobs.jobProduct;
   }
-
-  console.log('products: ', products.length);
+  if (bidType === "accepted") {
+    products = bids.activeBid;
+  }
+  if (bidType === "not-accepted") {
+    products = bids.completedBid;
+  }
 
   const showMoreProduct = page => {
     setPage(page);
@@ -65,17 +70,6 @@ const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob }) => {
       _handleUserCompletedJob({ page: page });
     }
   }, []);
-
-  const activeJob = () => {
-    console.log('I am in user active job');
-    setJobType('active');
-  }
-
-  const completedJob = () => {
-    console.log('I am in user completed job');
-    setJobType('completed');
-  }
-
 
   return (
     <React.Fragment>
@@ -105,7 +99,7 @@ const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob }) => {
             <Sidebar />
           </Col>
           <Col className="job-rt-col">
-            {path !== "/job-list" ? (
+            {path === "" ? (
               <React.Fragment>
                 <Heading className="text-primary h1">Welcome to Kvik</Heading>
                 <Paragraph>
@@ -116,8 +110,8 @@ const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob }) => {
                 </Paragraph>
               </React.Fragment>
             ) : <div>
-                <Button color="primary" onClick={() => activeJob()} style={{ marginBottom: '1rem' }}>Active Jobs</Button>
-                <Button color="primary" onClick={() => completedJob()} style={{ marginBottom: '1rem' }}>Completed Jobs</Button>
+                <Button color="primary" onClick={() => { path === "/job-list" ? setJobType('active') : setBidType('accepted') }} style={{ marginBottom: '1rem' }}>{path === "/job-list" ? 'Active Jobs' : 'Accepted'}</Button>
+                <Button color="primary" onClick={() => { path === "/job-list" ? setJobType('completed') : setBidType('not-accepted') }} style={{ marginBottom: '1rem' }}>{path === "/job-list" ? 'Completed Jobs' : 'Not-Accepted'}</Button>
               </div>
             }
             <div className="job-list-blc">
@@ -175,7 +169,7 @@ const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob }) => {
                   products.map((item, key) => {
                     return (
                       <Col lg="4" className="product-col" key={key}>
-                        <JobProduct product={item} listType={listType} path={path} />
+                        <JobProduct product={path === '/bid-list' ? item.job_id : item} listType={listType} path={path} />
                       </Col>
                     );
                   })}
@@ -199,7 +193,7 @@ const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob }) => {
           </Col>
         </Row>
       </section>
-    </React.Fragment>
+    </React.Fragment >
   );
 };
 export default Job;

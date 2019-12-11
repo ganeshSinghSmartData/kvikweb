@@ -57,10 +57,10 @@ export const getUserCompletedBid = ({
             token
         ).then(response => {
             if (response.status === 200) {
-                dispatch(get_completed_bid(response));
+                dispatch(get_completed_bid(response.data));
             } else if (response.status === 401) {
                 console.log("errror with 401 : ");
-                // toastErrorAction(dispatch, response.message);
+                toastErrorAction(dispatch, response.msg);
             } else {
             }
         });
@@ -80,15 +80,16 @@ export const getUserActiveBid = ({
         const {
             data: { token }
         } = getState().user;
+
         ApiClient.get(
             `${apiUrl}/api/user_active_bid?lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${pagination.limit}&search=${search}`,
             {}, token
         ).then(response => {
             if (response.status === 200) {
-                dispatch(get_active_bid(response));
+                dispatch(get_active_bid(response.data));
             } else if (response.status === 401) {
                 console.log("errror with 401 : ");
-                // toastErrorAction(dispatch, response.message);
+                toastErrorAction(dispatch, response.msg);
             } else {
             }
         });

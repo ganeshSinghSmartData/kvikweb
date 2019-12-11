@@ -122,7 +122,6 @@ export const getUserActiveJob = ({
     const {
       data: { token }
     } = getState().user;
-    console.log('token: ', token);
 
     ApiClient.get(
       `${apiUrl}/api/user_active_job?lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${pagination.limit}&search=${search}`,
@@ -130,7 +129,6 @@ export const getUserActiveJob = ({
     ).then(response => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
-        console.log('response: ', response);
         dispatch(get_active_job(response.data));
       } else if (response.status === 401) {
         console.log("errror with 401 : ");
