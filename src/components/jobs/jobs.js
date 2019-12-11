@@ -117,8 +117,8 @@ const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob, _handle
                   <div className="job-list-tab">
                     {/* <Button color="primary" onClick={() => { path === "/job-list" ? setJobType('active') : setBidType('accepted') }} style={{ marginBottom: '1rem' }}>{path === "/job-list" ? 'Active Jobs' : 'Accepted'}</Button>
                     <Button color="primary" onClick={() => { path === "/job-list" ? setJobType('completed') : setBidType('not-accepted') }} style={{ marginBottom: '1rem' }}>{path === "/job-list" ? 'Completed Jobs' : 'Not-Accepted'}</Button> */}
-                    <button class={`btn ${jobType === 'active' ? 'btn-primary' : ''}`} onClick={() => { path === "/job-list" ? setJobType('active') : setBidType('accepted') }}>Active Jobs</button>
-                    <button class={`btn ${jobType === 'completed' ? 'btn-primary' : ''}`} onClick={() => { path === "/job-list" ? setJobType('completed') : setBidType('not-accepted') }}>Completed Jobs</button>
+                    <button className={`btn ${jobType === 'active' ? 'btn-primary' : ''}`} onClick={() => { path === "/job-list" ? setJobType('active') : setBidType('accepted') }}>Active Jobs</button>
+                    <button className={`btn ${jobType === 'completed' ? 'btn-primary' : ''}`} onClick={() => { path === "/job-list" ? setJobType('completed') : setBidType('not-accepted') }}>Completed Jobs</button>
                   </div>
                 }
                 <div className="job-list-icon d-flex ml-auto">
@@ -167,7 +167,7 @@ const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob, _handle
               <Row
                 className={"job-listing " + (listType ? "job-list-row" : "")}
               >
-                {/* <NoData /> */}
+                {products && products.length === 0 && (<NoData />)}
                 {products &&
                   products.map((item, key) => {
                     return (
@@ -177,16 +177,11 @@ const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob, _handle
                     );
                   })}
               </Row>
-              {products.length < jobs.count && (
+              {products && products.length !== 0 && (products.length < jobs.count) && (
                 <Row className="joblist-more">
                   <Col className="d-flex justify-content-center">
-                    <Button
-                      color="secondary"
-                      className="data-loader-btn"
-                      onClick={() => showMoreProduct(++page)}
-                    >
-                      <span className="d-flex justify-content-center">
-                      </span>
+                    <Button color="secondary" className="data-loader-btn" onClick={() => showMoreProduct(++page)}>
+                      <span className="d-flex justify-content-center"></span>
                       <span>SHOW MORE</span>
                     </Button>
                   </Col>

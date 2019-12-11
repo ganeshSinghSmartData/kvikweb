@@ -8,7 +8,7 @@ export const bid_list = data => ({ type: TYPE.BID_LIST, data });
 export const bid_details = data => ({ type: TYPE.BID_DETAILS, data });
 export const get_active_bid = data => ({ type: TYPE.GET_ACTIVE_BID, data });
 export const get_completed_bid = data => ({ type: TYPE.GET_COMPLETED_BID, data });
-
+export const user_job_details = data => ({ type: TYPE.USER_JOB_DETAILS, data });
 
 /****** action creator for register users ********/
 export const getBidList = (params, callback) => {
@@ -95,3 +95,24 @@ export const getUserActiveBid = ({
         });
     };
 }
+
+
+/****** action creator for get user bid details ********/
+export const getUserJobDetails = (params) => {
+    return (dispatch, getState) => {
+        const {
+            data: { token }
+        } = getState().user;
+
+        ApiClient.get(`${apiUrl}/bid/user_job_detail`, params, token).then(response => {
+            if (response.status === 200) {
+                dispatch(user_job_details(response.data));
+            } else if (response.status === 401) {
+                console.log("errror with 401 : ");
+                toastErrorAction(dispatch, response.msg);
+            } else {
+            }
+        });
+    };
+}
+

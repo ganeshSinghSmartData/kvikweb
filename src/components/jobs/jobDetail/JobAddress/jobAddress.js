@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button } from "reactstrap";
-import { useDispatch, useSelector } from "react-redux";
 import UserImage from "../userImage/userImage";
 import RatingBlock from "../../ratingBock/ratingBlock";
 import datetimeDifference from "datetime-difference";
@@ -11,26 +10,19 @@ import { setTimeout } from "timers";
 
 const JobAddress = ({ end_date, job_seeker_id }) => {
   const [timeleft, seTimeleft] = useState(datetimeDifference(new Date(), new Date(end_date)));
-  const dispatch = useDispatch();
+
   /* setInterval(() => {
     const time = datetimeDifference(new Date(), new Date(end_date));
     seTimeleft(time);
   }, 1000); */
 
-  /*   let userDetails = useSelector(state => state.user.userDetails);
-    if (!Object.keys(userDetails).length) {
-      if (job_seeker_id) {
-        dispatch(getUserDetails(job_seeker_id));
-      }
-    } */
   return (
     <div className="job-address d-flex">
       <UserImage />
       <div className="job-user-info flex-fill">
         <div className="job-user-rw d-flex flex-wrap">
           <div className="job-user-l">
-            <h4>
-              Rapha Conrad
+            <h4>{`${job_seeker_id['fname']} ${job_seeker_id['lname']}`}
               <span className="d-block">Service Seeker</span>
             </h4>
           </div>
@@ -42,7 +34,7 @@ const JobAddress = ({ end_date, job_seeker_id }) => {
           </div>
         </div>
         <ul>
-          <li className="d-flex">
+          {job_seeker_id['address'] && (<li className="d-flex">
             <span className="svg-secondary-100 flex-shrink-0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +54,8 @@ const JobAddress = ({ end_date, job_seeker_id }) => {
             </span>
             <p>101, abc point, 7Hull Place, London, E14 6HS, UK</p>
           </li>
-          <li className="d-flex">
+          )}
+          {job_seeker_id['date'] && (<li className="d-flex">
             <span className="svg-secondary-100 flex-shrink-0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +72,8 @@ const JobAddress = ({ end_date, job_seeker_id }) => {
             </span>
             <p>14 Sep 2019</p>
           </li>
-          <li className="d-flex">
+          )}
+          {job_seeker_id['phone'] && (<li className="d-flex">
             <span className="svg-secondary-100 flex-shrink-0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -119,7 +113,7 @@ const JobAddress = ({ end_date, job_seeker_id }) => {
               </svg>
             </span>
             <p>+911234567891</p>
-          </li>
+          </li>)}
           <li className="d-flex">
             <span className="svg-secondary-100 flex-shrink-0">
               <svg

@@ -2,7 +2,7 @@ import React from 'react';
 import './noData.scss';
 const NoData = () => {
   return (
-    <div class="no-data-found d-flex justify-content-center align-items-center flex-fill">
+    <div className="no-data-found d-flex justify-content-center align-items-center flex-fill">
       <span>
         <span>
           <svg xmlns="http://www.w3.org/2000/svg" width="512.208" height="512" viewBox="0 0 512.208 512">

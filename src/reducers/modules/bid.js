@@ -10,7 +10,8 @@ import * as TYPE from "../../actions/constants";
 const initialState = {
     list: [],
     activeBid: [],
-    completedBid: []
+    completedBid: [],
+    userJobDetails: {}
 };
 
 export default function reducer(state = initialState, action) {
@@ -26,6 +27,10 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 completedBid: action.data,
                 count: 10
+            };
+        case TYPE.USER_JOB_DETAILS:
+            return {
+                ...state, userJobDetails: action.data
             };
         default:
             return state;

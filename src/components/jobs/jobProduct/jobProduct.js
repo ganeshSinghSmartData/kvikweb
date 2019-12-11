@@ -23,23 +23,12 @@ const JobProduct = ({ product, listType, path }) => {
       <div className="job-pic text-center flex-shrink-0">
         {product.images && product.images.length && (
           <Link className="text-black" to={(path === "/job-list") ? (`/job-proposal/${product._id}`) : (`/job-details/${product._id}`)}>
-            <img
-              src={`${apiUrl}/${product.images[0]["path"]}`}
-              alt="Job"
-            />
+            <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />
           </Link>
         )}
       </div>
-      <div
-        className={
-          "job-inner " + (listType ? "d-flex flex-column flex-fill" : "")
-        }
-      >
-        <div
-          className={
-            "job-title d-flex flex-wrap " + (listType ? "flex-column" : "")
-          }
-        >
+      <div className={"job-inner " + (listType ? "d-flex flex-column flex-fill" : "")}>
+        <div className={"job-title d-flex flex-wrap " + (listType ? "flex-column" : "")}>
           <label className={"flex-fill m-0 " + (listType ? "order-2" : "")}>
             {product.jobtitle || ""}
           </label>

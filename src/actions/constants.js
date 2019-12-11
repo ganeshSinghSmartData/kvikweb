@@ -20,6 +20,7 @@ export const BID_LIST = "BID_LIST";
 export const BID_DETAILS = "BID_DETAILS";
 export const GET_ACTIVE_BID = "GET_ACTIVE_BID";
 export const GET_COMPLETED_BID = "GET_COMPLETED_BID";
+export const USER_JOB_DETAILS = "USER_JOB_DETAILS";
 
 
 /************ FILE *************/

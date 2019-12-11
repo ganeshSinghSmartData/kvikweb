@@ -11,8 +11,6 @@ import JobAddress from "./JobAddress/jobAddress";
 import Proposal from "./proposal/proposal";
 import PlaceYourBidModal from "../../commonUi/modal/modal";
 
-
-
 import "./jobDetail.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -20,12 +18,26 @@ import "slick-carousel/slick/slick-theme.css";
 import { StringToDate, DaysBetween } from "./../../../utilities/common";
 import { apiUrl } from "./../../../environment";
 import { placeYourBid } from "./../../../actions/job";
+import { getUserJobDetails } from "./../../../actions/bid";
 
 
 export default ({ job, history, path = "" }) => {
 
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
+  const userJobDetails = useSelector(state => state.bid.userJobDetails);
+
+  console.log('userJobDetails: ', userJobDetails);
+
+  if (path === "/job-proposal") {
+    /*     dispatch(getUserJobDetails({ jobId: job._id }, callback => {
+          if (callback) {
+            setOpenModal(!openModal);
+            history.push("/");
+          }
+        })); */
+  }
+
 
   const thmbnails = [];
   job.images.length &&
@@ -117,7 +129,7 @@ export default ({ job, history, path = "" }) => {
             </div>
             <JobAddress
               end_date={DaysBetween(job.jobEndDate)}
-              job_seeker_id={job.job_seeker_id._id}
+              job_seeker_id={job.job_seeker_id}
             />
             {path !== "/job-proposal" && user && user.loggedIn && (user.data._id != job.job_seeker_id._id) && (<div className="place-bid-rw text-center">
               <Button color="secondary" className="place-bid-btn" onClick={() => setOpenModal(!openModal)}>
@@ -132,12 +144,12 @@ export default ({ job, history, path = "" }) => {
           _handleSubmit={handleSubmit}
           _frequency={job.frequency}
         />
-        {path === "/job-proposal" && (<div className="proposal-blc flex-shrink-0">
-          <h4>PROPOSALS</h4>
-          <Proposal />
-          <Proposal />
-          <Proposal />
-        </div>)}
+        {(path === "/job-proposal" && userJobDetails && userJobDetails.bidersLIstingcheck.length !== 0) && (
+          <div className="proposal-blc flex-shrink-0">
+            <h4>PROPOSALS</h4>
+            <Proposal />
+          </div>
+        )}
       </div>
     </div>
   );
