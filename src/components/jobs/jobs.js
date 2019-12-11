@@ -12,6 +12,7 @@ import Paragraph from "../../components/commonUi/paragraph/paragraph";
 import { pagination } from "../../utilities/constants";
 import { DaysBetween } from "./../../utilities/common";
 // import SpinnerOverlay from '../commonUi/spinner/spinnerOverlay/spinnerOverlay';
+import NoData from '../commonUi/noData/noData';
 import "./jobs.scss";
 import { getJobProduct, reset_job_products, getUserActiveJob, } from "./../../actions/job";
 smoothscroll.polyfill();
@@ -115,16 +116,20 @@ const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob }) => {
                   convallis.
                 </Paragraph>
               </React.Fragment>
-            ) : <div>
-                <Button color="primary" onClick={() => activeJob()} style={{ marginBottom: '1rem' }}>Active Jobs</Button>
-                <Button color="primary" onClick={() => completedJob()} style={{ marginBottom: '1rem' }}>Completed Jobs</Button>
-              </div>
+            ) : null
             }
-            <div className="job-list-blc">
+
+            <div className="job-list-blc m-0">
               <div className="job-list-heading d-flex">
                 {/* <h3 className="flex-fill">
                   Jobs in vicinity of your locations: {jobs.count}
                 </h3> */}
+                {path == "/job-list" ?
+                  <div className="job-list-tab">
+                    <button class={`btn ${jobType === 'active' ? 'btn-primary' : ''}`} onClick={() => activeJob()}>Active Jobs</button>
+                    <button class={`btn ${jobType === 'completed' ? 'btn-primary' : ''}`} onClick={() => completedJob()}>Completed Jobs</button>
+                  </div>
+                  : null}
                 <div className="job-list-icon d-flex ml-auto">
                   <Button
                     color="link"
@@ -171,6 +176,7 @@ const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob }) => {
               <Row
                 className={"job-listing " + (listType ? "job-list-row" : "")}
               >
+                {/* <NoData /> */}
                 {products &&
                   products.map((item, key) => {
                     return (
