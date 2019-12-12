@@ -1,16 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import UserImage from "../userImage/userImage";
 import RatingBlock from "../../ratingBock/ratingBlock";
 
 import "./proposal.scss";
 import { DaysBetween } from "../../../../utilities/common";
+import AcceptProposalModal from "../../../commonUi/modal/modal";
 
 const Proposal = ({ props }) => {
+  const [openModal, setOpenModal] = useState(false);
+
   let daysfrom = new Date() - new Date(DaysBetween(props.created_at));
   daysfrom = parseInt(daysfrom / (1000 * 3600 * 24));
 
+  const handleAccept = value => {
+    console.log("Here i am in accept : ", value);
+    setOpenModal(false);
+  };
+  const hadleReject = value => {
+    console.log("Here i am in reject : ", value);
+    setOpenModal(false);
+  };
+
   return (
-    <div className="proposal-rw d-flex">
+    <div className="proposal-rw d-flex" onClick={() => setOpenModal(true)}>
       <div className="proposal-col-l">
         <UserImage />
       </div>
@@ -23,6 +35,14 @@ const Proposal = ({ props }) => {
         <h3 className="text-primary">${props.bid_amount}</h3>
         {/* <RatingBlock /> */}
       </div>
+      <AcceptProposalModal
+        _isOpen={openModal}
+        _toggleModal={() => setOpenModal(false)}
+        _modalType={"Bid Details"}
+        _handleAccept={handleAccept}
+        _hadleReject={hadleReject}
+        _propsDetails={{ ...props, daysfrom: daysfrom }}
+      />
     </div>
   );
 };

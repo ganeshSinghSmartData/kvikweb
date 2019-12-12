@@ -10,10 +10,9 @@ import { pagination } from "../../utilities/constants";
 import { getJobProduct } from "../../actions/job";
 
 const SearchService = props => {
-  const user = useSelector(state => state.user);
+  const loggedInUser = useSelector(state => state.user.loggedIn);
   const dispatch = useDispatch();
   const pathname = props.history.location.pathname;
-  console.log("props: ", props.match.path);
 
   const _handleSearch = searchKey => {
     if (pathname === "/") {
@@ -70,7 +69,7 @@ const SearchService = props => {
                   </Button>
                 </LocalForm>
               </div>
-              {user.loggedIn && (
+              {loggedInUser && (
                 <Link className="text-black" to={"/post-job"}>
                   <Button className="post-job-btn btn-block">Post a Job</Button>
                 </Link>
