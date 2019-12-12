@@ -17,12 +17,19 @@ const JobProduct = ({ product, listType, path }) => {
     seTimeleft(time);
   }, 1000 * 60);
 
+  let pathname = "/job-details/";
+  if (path === "/job-list") {
+    pathname = "/job-proposal/";
+  }
+  if (path === "/bid-list") {
+    pathname = "/bid-details/";
+  }
 
   return (
     <div className={"job-wrapper " + (listType ? "d-flex flex-column" : "")}>
       <div className="job-pic text-center flex-shrink-0">
         {product.images && product.images.length && (
-          <Link className="text-black" to={(path === "/job-list") ? (`/job-proposal/${product._id}`) : (`/job-details/${product._id}`)}>
+          <Link className="text-black" to={`${pathname}${product._id}`}>
             <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />
           </Link>
         )}
@@ -72,7 +79,7 @@ const JobProduct = ({ product, listType, path }) => {
           </label>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

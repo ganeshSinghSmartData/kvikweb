@@ -95,9 +95,9 @@ const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob, _handle
         {/* <UserProfileDetail /> */}
         {/* <PostJob /> */}
         <Row className="d-flex flex-nowrap position-relative">
-          <Col className="sidebar-col d-flex flex-column">
+          {path === "" && (<Col className="sidebar-col d-flex flex-column">
             <Sidebar />
-          </Col>
+          </Col>)}
           <Col className="job-rt-col">
             {path === "" &&
               <React.Fragment>

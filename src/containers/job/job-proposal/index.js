@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import JobDetail from "./../../../components/jobs/jobDetail/jobDetail";
-import { getJobDetails } from "./../../../actions/job";
+import { getUserJobDetails } from "../../../actions/bid";
 
 class JobProposal extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ class JobProposal extends Component {
     componentDidMount() {
         const params = this.props.match.params.job_id;
         if (params) {
-            this.props.getJobDetails(params);
+            this.props.getUserJobDetails({ jobId: params });
         }
     }
 
@@ -26,8 +26,8 @@ class JobProposal extends Component {
         }
         return (
             <React.Fragment>
-                {Object.keys(this.props.jobDetails).length && (
-                    <JobDetail job={this.props.jobDetails} history={this.props.history} path={pathname}></JobDetail>
+                {Object.keys(this.props.userJobDetails).length && (
+                    <JobDetail job={this.props.userJobDetails} history={this.props.history} path={pathname}></JobDetail>
                 )}
             </React.Fragment>
         );
@@ -35,12 +35,11 @@ class JobProposal extends Component {
 }
 
 const mapStateToProps = state => ({
-    jobs: state.job.jobProduct,
-    jobDetails: state.job.jobDetails
+    userJobDetails: state.bid.userJobDetails
 });
 
 const mapDispatchToProps = dispatch => ({
-    getJobDetails: bindActionCreators(getJobDetails, dispatch)
+    getUserJobDetails: bindActionCreators(getUserJobDetails, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(JobProposal);

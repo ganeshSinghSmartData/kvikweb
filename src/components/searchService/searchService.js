@@ -9,13 +9,14 @@ import "./searchService.scss";
 import { pagination } from "../../utilities/constants";
 import { getJobProduct } from "../../actions/job";
 
-const SearchService = (props) => {
-  const loggedInUser = useSelector(state => state.user.loggedIn);
+const SearchService = props => {
+  const user = useSelector(state => state.user);
   const dispatch = useDispatch();
   const pathname = props.history.location.pathname;
+  console.log("props: ", props.match.path);
 
-  const _handleSearch = (searchKey) => {
-    if (pathname === '/') {
+  const _handleSearch = searchKey => {
+    if (pathname === "/") {
       dispatch(getJobProduct({ page: pagination.page, search: searchKey }));
     }
     /* if (pathname === '/') {
@@ -30,7 +31,7 @@ const SearchService = (props) => {
     if (pathname === '/') {
       dispatch(getJobProduct({ page: pagination.page, search: searchKey }));
     } */
-  }
+  };
   return (
     <div className="src-service-blc d-flex flex-column flex-fill">
       <Container className="d-flex flex-column flex-fill">
@@ -38,7 +39,10 @@ const SearchService = (props) => {
           <Col className="d-flex flex-fill">
             <div className="src-service-blc d-flex flex-fill m-auto justify-content-center">
               <div className="src-service d-flex">
-                <LocalForm onSubmit={values => _handleSearch(values)} className="d-flex flex-fill">
+                <LocalForm
+                  onSubmit={values => _handleSearch(values)}
+                  className="d-flex flex-fill"
+                >
                   <span className="d-flex align-items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -59,14 +63,14 @@ const SearchService = (props) => {
                     name="search"
                     model=".search"
                     placeholder="Search for a service"
-                    className="border-0 flex-fill h-100"
+                    className="border-0 flex-fill h-100 form-control"
                   />
                   <Button color="primary" type="submit">
                     Search
                   </Button>
                 </LocalForm>
               </div>
-              {loggedInUser && (
+              {user.loggedIn && (
                 <Link className="text-black" to={"/post-job"}>
                   <Button className="post-job-btn btn-block">Post a Job</Button>
                 </Link>
@@ -75,7 +79,7 @@ const SearchService = (props) => {
           </Col>
         </Row>
       </Container>
-    </div >
+    </div>
   );
 };
 

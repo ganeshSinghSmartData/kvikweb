@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Button, Row, Col } from "reactstrap";
 import Slider from "react-slick";
 
-
 import Heading from "../../commonUi/heading/heading";
 import Paragraph from "../../commonUi/paragraph/paragraph";
 import RatingBlock from "../ratingBock/ratingBlock";
@@ -20,25 +19,10 @@ import { apiUrl } from "./../../../environment";
 import { placeYourBid } from "./../../../actions/job";
 import { getUserJobDetails } from "./../../../actions/bid";
 
-
-export default ({ job, history, path = "" }) => {
-
-  const dispatch = useDispatch();
+export default function JobDetail({ job, history, path = "" }) {
   const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
   const userJobDetails = useSelector(state => state.bid.userJobDetails);
-
-  console.log('userJobDetails: ', userJobDetails);
-
-  if (path === "/job-proposal") {
-    /*     dispatch(getUserJobDetails({ jobId: job._id }, callback => {
-          if (callback) {
-            setOpenModal(!openModal);
-            history.push("/");
-          }
-        })); */
-  }
-
-
   const thmbnails = [];
   job.images.length &&
     job.images.map(item => {
@@ -58,7 +42,7 @@ export default ({ job, history, path = "" }) => {
     slidesToScroll: 1
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = values => {
     const reqData = {
       jobtitle: job.jobtitle,
       description: values.description,
@@ -67,15 +51,16 @@ export default ({ job, history, path = "" }) => {
       bid_amount: values.bid_amount,
       job_seeker_id: job.job_seeker_id._id,
       name: `${user.data.fname} ${user.data.lname}`
-    }
-    dispatch(placeYourBid(reqData, callback => {
-      if (callback) {
-        setOpenModal(!openModal);
-        history.push("/");
-      }
-    }));
-  }
-
+    };
+    dispatch(
+      placeYourBid(reqData, callback => {
+        if (callback) {
+          setOpenModal(!openModal);
+          history.push("/");
+        }
+      })
+    );
+  };
 
   const [imageIndex, setImageIndex] = useState(0);
   const [openModal, setOpenModal] = useState(false);
@@ -131,26 +116,42 @@ export default ({ job, history, path = "" }) => {
               end_date={DaysBetween(job.jobEndDate)}
               job_seeker_id={job.job_seeker_id}
             />
-            {path !== "/job-proposal" && user && user.loggedIn && (user.data._id != job.job_seeker_id._id) && (<div className="place-bid-rw text-center">
-              <Button color="secondary" className="place-bid-btn" onClick={() => setOpenModal(!openModal)}>
-                Place a Bid
-              </Button>
-            </div>)}
+            {path !== "/bid-details" &&
+              path !== "/job-proposal" &&
+              user &&
+              user.loggedIn &&
+              user.data._id != job.job_seeker_id._id && (
+                <div className="place-bid-rw text-center">
+                  <Button
+                    color="secondary"
+                    className="place-bid-btn"
+                    onClick={() => setOpenModal(!openModal)}
+                  >
+                    Place a Bid
+                  </Button>
+                </div>
+              )}
           </Col>
         </Row>
-        <PlaceYourBidModal _isOpen={openModal}
+        <PlaceYourBidModal
+          _isOpen={openModal}
           _toggleModal={() => setOpenModal(!openModal)}
           _modalType={"Place your bid"}
           _handleSubmit={handleSubmit}
           _frequency={job.frequency}
         />
-        {(path === "/job-proposal" && userJobDetails && userJobDetails.bidersLIstingcheck.length !== 0) && (
-          <div className="proposal-blc flex-shrink-0">
-            <h4>PROPOSALS</h4>
-            <Proposal />
-          </div>
-        )}
+        {path === "/job-proposal" &&
+          userJobDetails &&
+          userJobDetails.bidersLIstingcheck.length !== 0 && (
+            <div className="proposal-blc flex-shrink-0">
+              <h4>PROPOSALS</h4>
+
+              {userJobDetails.bidersLIstingcheck.map((item, key) => {
+                return <Proposal props={item} key={key} />;
+              })}
+            </div>
+          )}
       </div>
     </div>
   );
-};
+}

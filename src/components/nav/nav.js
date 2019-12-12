@@ -16,16 +16,20 @@ const Nav = props => {
       onClick={stopPropagationHandler}
     >
       <ul className="d-flex align-items-center flex-wrap">
-        <li>
-          <Link className="btn btn-link" disabled={true} to={"/bid-list"}>
-            Bids
-          </Link>
-        </li>
-        <li>
-          <Link className="btn btn-link" disabled={true} to={"/job-list"}>
-            Jobs
-          </Link>
-        </li>
+        {user.loggedIn && (
+          <li>
+            <Link className="btn btn-link" disabled={true} to={"/bid-list"}>
+              Bids
+            </Link>
+          </li>
+        )}
+        {user.loggedIn && (
+          <li>
+            <Link className="btn btn-link" disabled={true} to={"/job-list"}>
+              Jobs
+            </Link>
+          </li>
+        )}
         <li>
           <Link className="btn btn-link" disabled={true} to={""}>
             Help
@@ -48,10 +52,10 @@ const Nav = props => {
               Logout
             </Link>
           ) : (
-              <Link className="login-btn btn btn-info" to={"/login"}>
-                Login
+            <Link className="login-btn btn btn-info" to={"/login"}>
+              Login
             </Link>
-            )}
+          )}
         </li>
       </ul>
     </nav>

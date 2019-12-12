@@ -8,9 +8,7 @@ import { getJobDetails } from "../../../actions/job";
 class JobDetails extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-
-    // this.toggleModal = this.toggleModal.bind(this);
+    this.state = { pathname: "" };
   }
 
   componentDidMount() {
@@ -18,13 +16,20 @@ class JobDetails extends Component {
     if (params) {
       this.props.getJobDetails(params);
     }
+    if (this.props.match.path.search("/job-proposal") !== -1) {
+      this.setState({ pathname: "/job-proposal" });
+    }
+    if (this.props.match.path.search("/bid-details") !== -1) {
+      this.setState({ pathname: "/bid-details" });
+    }
   }
+
 
   render() {
     return (
       <React.Fragment>
         {Object.keys(this.props.jobDetails).length && (
-          <JobDetail job={this.props.jobDetails} history={this.props.history}></JobDetail>
+          <JobDetail job={this.props.jobDetails} history={this.props.history} path={this.state.pathname}></JobDetail>
         )}
       </React.Fragment>
     );
