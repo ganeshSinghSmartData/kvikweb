@@ -26,7 +26,7 @@ const Proposal = ({ props }) => {
       <div className="proposal-col-l">
         <UserImage />
       </div>
-      <div className="proposal-col-m">
+      <div className="proposal-col-m flex-fill">
         <h5>{`${props.job_provider_id.fname} ${props.job_provider_id.lname}`}</h5>
         <p>{props.description}</p>
       </div>
