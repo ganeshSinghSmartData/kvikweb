@@ -207,8 +207,10 @@
     overflow: auto;
     box-shadow: 0 0 13px #0000008c;
     transform: translateX(-100%);
+    background-color: #fff;
     .sidebar {
       border-radius: 0;
+      padding-bottom: 17px;
     }
   }
   .sidebar-col.active {
@@ -216,7 +218,6 @@
   }
   .sidebar-toogle-btn {
     display: none;
-    top: 255px;
     left: 0px;
     width: 50px;
     z-index: 4;
