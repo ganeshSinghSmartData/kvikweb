@@ -59,7 +59,7 @@ const SearchService = (props) => {
                     name="search"
                     model=".search"
                     placeholder="Search for a service"
-                    className="border-0 flex-fill h-100"
+                    className="border-0 flex-fill h-100 form-control"
                   />
                   <Button color="primary" type="submit">
                     Search

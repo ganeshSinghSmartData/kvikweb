@@ -13,6 +13,7 @@ import { pagination } from "../../utilities/constants";
 import { DaysBetween } from "./../../utilities/common";
 // import SpinnerOverlay from '../commonUi/spinner/spinnerOverlay/spinnerOverlay';
 import NoData from '../commonUi/noData/noData';
+import EmailVerify from '../emailVerify';
 import "./jobs.scss";
 import { getJobProduct, reset_job_products, getUserActiveJob, } from "./../../actions/job";
 smoothscroll.polyfill();
@@ -73,6 +74,7 @@ const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob, _handle
 
   return (
     <React.Fragment>
+      {/* <EmailVerify /> */}
       {/* <SpinnerOverlay className="position-fixed" /> */}
       <section className="d-flex flex-column position-relative">
         <Button className="sidebar-toogle-btn text-right position-fixed rounded-left d-md-none flex-shrink-0">
