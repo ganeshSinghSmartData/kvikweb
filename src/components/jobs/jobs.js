@@ -6,13 +6,10 @@ import JobProduct from "./jobProduct/jobProduct";
 import Sidebar from "../sidebar/sidebar";
 import PostJob from "./postJob";
 import BidderProfile from "./bidderProfile/bidderProfile";
-import UserProfileDetail from "../jobs/userProfileDetail/userProfileDetail";
 import Heading from "../../components/commonUi/heading/heading";
 import Paragraph from "../../components/commonUi/paragraph/paragraph";
 import { pagination } from "../../utilities/constants";
-import { DaysBetween } from "./../../utilities/common";
 // import SpinnerOverlay from '../commonUi/spinner/spinnerOverlay/spinnerOverlay';
-import EmailVerify from '../emailVerify';
 import NoData from "../commonUi/noData/noData";
 import "./jobs.scss";
 import {
@@ -84,7 +81,6 @@ const Job = ({
 
   return (
     <React.Fragment>
-      {/* <EmailVerify /> */}
       {/* <SpinnerOverlay className="position-fixed" /> */}
       <section className="d-flex flex-column position-relative">
         <Button className="sidebar-toogle-btn text-right position-fixed rounded-left d-md-none flex-shrink-0">
@@ -104,7 +100,6 @@ const Job = ({
           </svg>
         </Button>
         {/* <BidderProfile /> */}
-        {/* <UserProfileDetail /> */}
         {/* <PostJob /> */}
         <Row className="d-flex flex-nowrap position-relative">
           {path === "" && (
@@ -134,7 +129,7 @@ const Job = ({
                     <button
                       className={`btn ${
                         jobType === "active" ? "btn-primary" : ""
-                        }`}
+                      }`}
                       onClick={() => {
                         path === "/job-list"
                           ? setJobType("active")
@@ -146,7 +141,7 @@ const Job = ({
                     <button
                       className={`btn ${
                         jobType === "completed" ? "btn-primary" : ""
-                        }`}
+                      }`}
                       onClick={() => {
                         path === "/job-list"
                           ? setJobType("completed")

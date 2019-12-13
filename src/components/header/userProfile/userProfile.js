@@ -7,6 +7,7 @@ import {
   DropdownItem,
   Button
 } from "reactstrap";
+import { Link } from "react-router-dom";
 import "./userProfile.scss";
 const UserProfile = props => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -61,17 +62,21 @@ const UserProfile = props => {
             />
           </svg>
         </DropdownToggle>
-        {/*         <DropdownMenu right>
+        <DropdownMenu right>
           <DropdownItem header>Profile</DropdownItem>
-          <DropdownItem>View Profile</DropdownItem>
-          <DropdownItem>Edit Profile</DropdownItem>
-          <DropdownItem divider />
+          <Link className="dropdown-item" to={"/profile"}>
+            View Profile
+          </Link>
+          <Link className="dropdown-item" to="/edit-profile">
+            Edit Profile
+          </Link>
+          {/* <DropdownItem divider />
           <DropdownItem disabled>Action (disabled)</DropdownItem>
           <DropdownItem divider />
           <DropdownItem>Foo Action</DropdownItem>
           <DropdownItem>Bar Action</DropdownItem>
-          <DropdownItem>Quo Action</DropdownItem>
-        </DropdownMenu> */}
+          <DropdownItem>Quo Action</DropdownItem> */}
+        </DropdownMenu>
       </Dropdown>
     </div>
   );
