@@ -14,8 +14,8 @@ export const StringToDate = value => {
   );
 };
 
-export const DaysBetween = (startDate, endDate) => {
-  const newdate = new Date(Number(startDate));
+export const DaysBetween = (myDate) => {
+  const newdate = new Date(Number(myDate));
   return newdate.toString();
 };
 

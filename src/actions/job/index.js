@@ -41,7 +41,7 @@ export const getJobProduct = ({
 };
 
 /****** action creator for get jobs ********/
-export const getJobDetails = job_id => {
+export const getJobDetails = (job_id) => {
   return (dispatch, getState) => {
     /* const {
       data: { token }

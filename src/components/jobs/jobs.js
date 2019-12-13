@@ -12,18 +12,28 @@ import Paragraph from "../../components/commonUi/paragraph/paragraph";
 import { pagination } from "../../utilities/constants";
 import { DaysBetween } from "./../../utilities/common";
 // import SpinnerOverlay from '../commonUi/spinner/spinnerOverlay/spinnerOverlay';
-import NoData from '../commonUi/noData/noData';
 import EmailVerify from '../emailVerify';
+import NoData from "../commonUi/noData/noData";
 import "./jobs.scss";
-import { getJobProduct, reset_job_products, getUserActiveJob, } from "./../../actions/job";
+import {
+  getJobProduct,
+  reset_job_products,
+  getUserActiveJob
+} from "./../../actions/job";
 smoothscroll.polyfill();
 
-const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob, _handleUserAcceptedBid, _handleUserNotAcceptedBid }) => {
+const Job = ({
+  path = "",
+  _handleUserActiveJob,
+  _handleUserCompletedJob,
+  _handleUserAcceptedBid,
+  _handleUserNotAcceptedBid
+}) => {
   const dispatch = useDispatch();
   const [listType, setlistType] = useState(false);
   let [page, setPage] = useState(pagination.page);
-  let [jobType, setJobType] = useState('active');
-  let [bidType, setBidType] = useState('accepted');
+  let [jobType, setJobType] = useState("active");
+  let [bidType, setBidType] = useState("accepted");
 
   const toggleListType = value => {
     setlistType(value);
@@ -97,32 +107,56 @@ const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob, _handle
         {/* <UserProfileDetail /> */}
         {/* <PostJob /> */}
         <Row className="d-flex flex-nowrap position-relative">
-          <Col className="sidebar-col d-flex flex-column">
-            <Sidebar />
-          </Col>
+          {path === "" && (
+            <Col className="sidebar-col d-flex flex-column">
+              <Sidebar />
+            </Col>
+          )}
           <Col className="job-rt-col">
-            {path === "" &&
+            {path === "" && (
               <React.Fragment>
                 <Heading className="text-primary h1">Welcome to Kvik</Heading>
                 <Paragraph>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                   Pellentesque leo ipsum, consequat a tellus pharetra, commodo
-                  bibendum dui. In rhoncus lacus ut justo lacinia, id tempus ligula
-                  convallis.
+                  bibendum dui. In rhoncus lacus ut justo lacinia, id tempus
+                  ligula convallis.
                 </Paragraph>
               </React.Fragment>
-            }
+            )}
 
             <div className="job-list-blc m-0">
               <div className="job-list-heading d-flex">
-                {path !== "" &&
+                {path !== "" && (
                   <div className="job-list-tab">
                     {/* <Button color="primary" onClick={() => { path === "/job-list" ? setJobType('active') : setBidType('accepted') }} style={{ marginBottom: '1rem' }}>{path === "/job-list" ? 'Active Jobs' : 'Accepted'}</Button>
                     <Button color="primary" onClick={() => { path === "/job-list" ? setJobType('completed') : setBidType('not-accepted') }} style={{ marginBottom: '1rem' }}>{path === "/job-list" ? 'Completed Jobs' : 'Not-Accepted'}</Button> */}
-                    <button className={`btn ${jobType === 'active' ? 'btn-primary' : ''}`} onClick={() => { path === "/job-list" ? setJobType('active') : setBidType('accepted') }}>Active Jobs</button>
-                    <button className={`btn ${jobType === 'completed' ? 'btn-primary' : ''}`} onClick={() => { path === "/job-list" ? setJobType('completed') : setBidType('not-accepted') }}>Completed Jobs</button>
+                    <button
+                      className={`btn ${
+                        jobType === "active" ? "btn-primary" : ""
+                        }`}
+                      onClick={() => {
+                        path === "/job-list"
+                          ? setJobType("active")
+                          : setBidType("accepted");
+                      }}
+                    >
+                      Active Jobs
+                    </button>
+                    <button
+                      className={`btn ${
+                        jobType === "completed" ? "btn-primary" : ""
+                        }`}
+                      onClick={() => {
+                        path === "/job-list"
+                          ? setJobType("completed")
+                          : setBidType("not-accepted");
+                      }}
+                    >
+                      Completed Jobs
+                    </button>
                   </div>
-                }
+                )}
                 <div className="job-list-icon d-flex ml-auto">
                   <Button
                     color="link"
@@ -169,31 +203,41 @@ const Job = ({ path = "", _handleUserActiveJob, _handleUserCompletedJob, _handle
               <Row
                 className={"job-listing " + (listType ? "job-list-row" : "")}
               >
-                {products && products.length === 0 && (<NoData />)}
+                {products && products.length === 0 && <NoData />}
                 {products &&
                   products.map((item, key) => {
                     return (
                       <Col lg="4" className="product-col" key={key}>
-                        <JobProduct product={path === '/bid-list' ? item.job_id : item} listType={listType} path={path} />
+                        <JobProduct
+                          product={path === "/bid-list" ? item.job_id : item}
+                          listType={listType}
+                          path={path}
+                        />
                       </Col>
                     );
                   })}
               </Row>
-              {products && products.length !== 0 && (products.length < jobs.count) && (
-                <Row className="joblist-more">
-                  <Col className="d-flex justify-content-center">
-                    <Button color="secondary" className="data-loader-btn" onClick={() => showMoreProduct(++page)}>
-                      <span className="d-flex justify-content-center"></span>
-                      <span>SHOW MORE</span>
-                    </Button>
-                  </Col>
-                </Row>
-              )}
+              {products &&
+                products.length !== 0 &&
+                products.length < jobs.count && (
+                  <Row className="joblist-more">
+                    <Col className="d-flex justify-content-center">
+                      <Button
+                        color="secondary"
+                        className="data-loader-btn"
+                        onClick={() => showMoreProduct(++page)}
+                      >
+                        <span className="d-flex justify-content-center"></span>
+                        <span>SHOW MORE</span>
+                      </Button>
+                    </Col>
+                  </Row>
+                )}
             </div>
           </Col>
         </Row>
       </section>
-    </React.Fragment >
+    </React.Fragment>
   );
 };
 export default Job;

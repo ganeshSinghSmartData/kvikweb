@@ -106,6 +106,7 @@ export const getUserJobDetails = (params) => {
 
         ApiClient.get(`${apiUrl}/bid/user_job_detail`, params, token).then(response => {
             if (response.status === 200) {
+                console.log('response.data: ', response.data);
                 dispatch(user_job_details(response.data));
             } else if (response.status === 401) {
                 console.log("errror with 401 : ");

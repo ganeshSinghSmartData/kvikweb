@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import {
   Dropdown,
   DropdownToggle,
@@ -44,7 +44,9 @@ const UserProfile = props => {
       </Button>
       <Dropdown isOpen={dropdownOpen} toggle={toggle} className="user-dropdown">
         <DropdownToggle caret color="link">
-          {user.loggedIn && (<label className="mb-0">{`${user.data.fname} ${user.data.lname}`}</label>)}
+          {user.loggedIn && (
+            <label className="mb-0">{`${user.data.fname} ${user.data.lname}`}</label>
+          )}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="81.309"
