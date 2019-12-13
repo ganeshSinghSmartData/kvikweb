@@ -9,9 +9,15 @@ export const is_search = status => ({ type: TYPE.IS_STATUS, status });
 export const get_job_products = data => ({ type: TYPE.GET_JOB_PRODUCTS, data });
 export const reset_job_products = () => ({ type: TYPE.RESET_JOB_PRODUCTS });
 export const get_job_details = data => ({ type: TYPE.GET_JOB_DETAILS, data });
-export const post_job_products = data => ({ type: TYPE.POST_JOB_PRODUCTS, data });
+export const post_job_products = data => ({
+  type: TYPE.POST_JOB_PRODUCTS,
+  data
+});
 export const get_active_job = data => ({ type: TYPE.GET_ACTIVE_JOB, data });
-export const get_completed_job = data => ({ type: TYPE.GET_COMPLETED_JOB, data });
+export const get_completed_job = data => ({
+  type: TYPE.GET_COMPLETED_JOB,
+  data
+});
 
 /****** action creator for get jobs ********/
 export const getJobProduct = ({
@@ -41,7 +47,7 @@ export const getJobProduct = ({
 };
 
 /****** action creator for get jobs ********/
-export const getJobDetails = (job_id) => {
+export const getJobDetails = job_id => {
   return (dispatch, getState) => {
     /* const {
       data: { token }
@@ -90,24 +96,22 @@ export const placeYourBid = (params, callback) => {
     const {
       data: { token }
     } = getState().user;
-    ApiClient.post(`${apiUrl}/bid/post_bid`, params, token).then(
-      response => {
-        if (response.status === 200) {
-          dispatch(is_fetching(false));
-          // dispatch(post_job_products(response.data));
-          toastAction(true, response.msg);
-          callback(true);
-        } else if (response.status === 401) {
-          callback(false);
-          console.log("errror with 401 : ");
-        } else {
-          dispatch(is_fetching(false));
-          callback(false);
-        }
+    ApiClient.post(`${apiUrl}/bid/post_bid`, params, token).then(response => {
+      if (response.status === 200) {
+        dispatch(is_fetching(false));
+        // dispatch(post_job_products(response.data));
+        toastAction(true, response.msg);
+        callback(true);
+      } else if (response.status === 401) {
+        callback(false);
+        console.log("errror with 401 : ");
+      } else {
+        dispatch(is_fetching(false));
+        callback(false);
       }
-    );
+    });
   };
-}
+};
 
 /****** action creator for list users active job ********/
 export const getUserActiveJob = ({
@@ -125,7 +129,8 @@ export const getUserActiveJob = ({
 
     ApiClient.get(
       `${apiUrl}/api/user_active_job?lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${pagination.limit}&search=${search}`,
-      {}, token
+      {},
+      token
     ).then(response => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
@@ -138,7 +143,7 @@ export const getUserActiveJob = ({
       }
     });
   };
-}
+};
 
 /****** action creator for list users cpmpleted job ********/
 export const getUserCompletedJob = ({
@@ -155,7 +160,8 @@ export const getUserCompletedJob = ({
     } = getState().user;
     ApiClient.get(
       `${apiUrl}/api/user_completed_job?lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${pagination.limit}&search=${search}`,
-      {}, token
+      {},
+      token
     ).then(response => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
@@ -168,4 +174,4 @@ export const getUserCompletedJob = ({
       }
     });
   };
-}
+};

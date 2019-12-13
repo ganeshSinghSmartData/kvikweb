@@ -14,6 +14,10 @@ export const update_user_details = data => ({
   type: TYPE.UPDATE_USER_DETAILS,
   data
 });
+export const update_user_profile = data => ({
+  type: TYPE.UPDATE_USER_PROFILE,
+  data
+});
 
 /****** action creator for register users ********/
 export const registerUser = (params, callback) => {
@@ -116,7 +120,6 @@ export const updateUserDetails = (params, callback) => {
       data: { token }
     } = getState().user;
     ApiClient.put(`${apiUrl}/updateUser`, params, token).then(response => {
-      console.log("response while updattinnuser : ", response);
       if (response.status === 200) {
         callback(true);
         dispatch(update_user_details(response.data));
@@ -127,5 +130,30 @@ export const updateUserDetails = (params, callback) => {
         dispatch(is_fetching(false));
       }
     });
+  };
+};
+
+/****** action creator for upload user profile picture ********/
+export const uploadUserImage = (params, callback) => {
+  console.log("params  : ", params);
+
+  return (dispatch, getState) => {
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient._postFormData(`${apiUrl}/imageUpload`, params, token).then(
+      response => {
+        console.log("response while uploadUserImage : ", response);
+        if (response.status === 200) {
+          callback(true);
+          dispatch(update_user_details(response.data));
+        } else if (response.status === 401) {
+          callback(false);
+          toastErrorAction(dispatch, response.msg);
+        } else {
+          dispatch(is_fetching(false));
+        }
+      }
+    );
   };
 };

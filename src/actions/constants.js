@@ -15,6 +15,7 @@ export const LOGOUT_USERS = "LOGOUT_USERS";
 export const USER_BID_LISTING = "USER_BID_LISTING";
 export const GET_USER_DETAILS = "GET_USER_DETAILS";
 export const UPDATE_USER_DETAILS = "UPDATE_USER_DETAILS";
+export const UPDATE_USER_PROFILE = "UPDATE_USER_PROFILE";
 
 /************Bid*********************/
 export const BID_LIST = "BID_LIST";

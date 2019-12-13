@@ -1,13 +1,19 @@
 import React from "react";
 import { Button } from "reactstrap";
 import "./userImage.scss";
-const UserImage = props => {
+const UserImage = ({ image, handleImageUpload }) => {
+  console.log("image: ", image);
+
   return (
     <div className="job-user rounded-circle border-secondary-200 d-flex align-items-center justify-content-center flex-shrink-0 position-relative">
-      {/* <div class="update-cell position-absolute w-100 h-100">
-        <span class="update-cell-inner position-absolute w-100 h-100 d-flex align-items-center justify-content-center">
-          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-          <span class="d-flex justify-content-center align-items-center udpate-image-btn position-absolute rounded-circle ">
+      <div className="update-cell position-absolute w-100 h-100">
+        <span className="update-cell-inner position-absolute w-100 h-100 d-flex align-items-center justify-content-center">
+          <span
+            className="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          <span className="d-flex justify-content-center align-items-center udpate-image-btn position-absolute rounded-circle ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="19.446"
@@ -22,9 +28,13 @@ const UserImage = props => {
               />
             </svg>
           </span>
-          <input class="position-absolute w-100 h-100" type="file" />
+          <input
+            className="position-absolute w-100 h-100"
+            type="file"
+            onChange={event => handleImageUpload(event.target.files)}
+          />
         </span>
-      </div> */}
+      </div>
       <Button color="link" className="p-0 rounded-circle" disabled>
         <img
           className="rounded-circle"

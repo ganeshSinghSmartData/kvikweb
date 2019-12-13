@@ -15,6 +15,7 @@ const UserProfile = ({
   user,
   loading,
   history,
+  handleImageUpload,
   handleSubmit,
   attachDispatch
 }) => {
@@ -32,7 +33,10 @@ const UserProfile = ({
                   getDispatch={dispatch => attachDispatch(dispatch)}
                 >
                   {path ? (
-                    <JobAddress job_seeker_id={user} />
+                    <JobAddress
+                      job_seeker_id={user}
+                      handleImageUpload={handleImageUpload}
+                    />
                   ) : (
                     <>
                       <div
@@ -40,7 +44,10 @@ const UserProfile = ({
                           !path ? "editMode" : ""
                         }`}
                       >
-                        <UserImage />
+                        <UserImage
+                          image={user.image}
+                          handleImageUpload={handleImageUpload}
+                        />
                         <Loader loading={loading} />
                         <div className="job-user-info flex-fill">
                           <div className="edit-profile-blc">
