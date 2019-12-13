@@ -8,8 +8,6 @@ import "./jobAddress.scss";
 import { setTimeout } from "timers";
 
 const JobAddress = ({ end_date = false, job_seeker_id }) => {
-  console.log("job_seeker_id: ", job_seeker_id);
-
   let [timeleft, seTimeleft] = useState(
     datetimeDifference(new Date(), new Date(end_date))
   );
@@ -39,7 +37,7 @@ const JobAddress = ({ end_date = false, job_seeker_id }) => {
           </div> */}
           </div>
           <ul>
-            {!job_seeker_id["address"] && (
+            {job_seeker_id["city"] && (
               <li className="d-flex">
                 <span className="svg-secondary-100 flex-shrink-0">
                   <svg
@@ -58,7 +56,7 @@ const JobAddress = ({ end_date = false, job_seeker_id }) => {
                     </g>
                   </svg>
                 </span>
-                <p>101, abc point, 7Hull Place, London, E14 6HS, UK</p>
+                <p>{`${job_seeker_id["city"]}, ${job_seeker_id["zip_code"]}`}</p>
               </li>
             )}
             {job_seeker_id["email"] && (

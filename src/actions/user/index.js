@@ -10,6 +10,10 @@ export const login_users = data => ({ type: TYPE.LOGIN_USERS, data });
 export const logout_users = data => ({ type: TYPE.LOGOUT_USERS, data });
 export const user_bid_listing = data => ({ type: TYPE.USER_BID_LISTING, data });
 export const get_user_details = data => ({ type: TYPE.GET_USER_DETAILS, data });
+export const update_user_details = data => ({
+  type: TYPE.UPDATE_USER_DETAILS,
+  data
+});
 
 /****** action creator for register users ********/
 export const registerUser = (params, callback) => {
@@ -102,5 +106,26 @@ export const getUserDetails = user_id => {
         }
       }
     );
+  };
+};
+
+/****** action creator for update users details ********/
+export const updateUserDetails = (params, callback) => {
+  return (dispatch, getState) => {
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient.put(`${apiUrl}/updateUser`, params, token).then(response => {
+      console.log("response while updattinnuser : ", response);
+      if (response.status === 200) {
+        callback(true);
+        dispatch(update_user_details(response.data));
+      } else if (response.status === 401) {
+        callback(false);
+        toastErrorAction(dispatch, response.msg);
+      } else {
+        dispatch(is_fetching(false));
+      }
+    });
   };
 };

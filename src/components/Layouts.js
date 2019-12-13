@@ -20,13 +20,10 @@ export const PublicLayout = props => {
   const wrapperRef = useRef(null);
   const [scrollVisible, setscrollVisible] = useState(false);
   const scrollCheck = () => {
-    console.log('scrolling')
     let scrollTopCheck = wrapperRef.current.scrollTop;
     if (scrollTopCheck > 300) {
-      console.log('greater than 300')
       setscrollVisible(true);
     } else {
-      console.log('less than 300')
       setscrollVisible(false);
     }
   };
@@ -39,15 +36,23 @@ export const PublicLayout = props => {
       <Header />
       {(props.children.props.match.path === "/" ||
         props.children.props.match.path === "/post-job") && (
-          <Banner path={props.children} />
-        )}
-      <div className="wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto" ref={wrapperRef} onScroll={scrollCheck}>
+        <Banner path={props.children} />
+      )}
+      <div
+        className="wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto"
+        ref={wrapperRef}
+        onScroll={scrollCheck}
+      >
         <Container className="d-flex flex-column flex-shrink-0 mb-50 position-relative">
           {props.children}
-          <button type="button"
-            className={"btn scroll-tp-btn rounded-circle position-fixed " + (scrollVisible ? 'on' : '')}
-            onClick={scrollTopFunction}>
-
+          <button
+            type="button"
+            className={
+              "btn scroll-tp-btn rounded-circle position-fixed " +
+              (scrollVisible ? "on" : "")
+            }
+            onClick={scrollTopFunction}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="31.49"

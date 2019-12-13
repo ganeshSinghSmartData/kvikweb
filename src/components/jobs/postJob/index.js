@@ -6,7 +6,6 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import InputCell from "../../commonUi/input/inputCell";
-import DataLoader from "../../commonUi/loader/loader";
 import "./postJob.scss";
 import { set } from "date-fns/esm";
 
