@@ -59,12 +59,17 @@ const UserProfile = ({ path, user, _handleSubmit }) => {
                         className="input-line-blc"
                         Errors={{ required: "required" }}
                       />
-                      <Button color="secondary" type="button">
-                        Cancel
-                      </Button>
-                      <Button color="secondary" type="submit">
-                        Submit
-                      </Button>
+                      <div className="post-job-btns text-center d-flex justify-content-center">
+                        <Button
+                          color="text-black btn-dark cancel btn btn-link"
+                          type="button"
+                        >
+                          Cancel
+                        </Button>
+                        <Button color="secondary" type="submit">
+                          Submit
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 )}
