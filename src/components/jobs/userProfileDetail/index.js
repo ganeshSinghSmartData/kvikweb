@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Label } from "reactstrap";
 import { Link } from "react-router-dom";
 import { LocalForm } from "react-redux-form";
@@ -8,7 +8,7 @@ import InputCell from "../../commonUi/input/inputCell";
 import UserImage from "../jobDetail/userImage/userImage";
 import "./userProfileDetail.scss";
 const UserProfile = ({ path, user, _handleSubmit }) => {
-  console.log("user: ", path);
+  const [cardType, setCardType] = useState();
 
   return (
     <div className="data-page user-profl-blc">
@@ -16,51 +16,59 @@ const UserProfile = ({ path, user, _handleSubmit }) => {
         <div className="user-profl-col flex-fill">
           <div className="user-profl-rw d-flex">
             <div className="user-profl-l flex-fill">
-              {path ? (
-                <JobAddress job_seeker_id={user} />
-              ) : (
-                <div className="job-address d-flex">
-                  <LocalForm onSubmit={values => _handleSubmit(values)}>
+              <LocalForm onSubmit={values => _handleSubmit(values)}>
+                {path ? (
+                  <JobAddress job_seeker_id={user} />
+                ) : (
+                  <div className="job-address d-flex">
                     <UserImage />
-                    <Label>Address</Label>
-                    <InputCell
-                      Name={"address"}
-                      Placeholder={"Card Number"}
-                      Model=".address"
-                      InputType={"text"}
-                      className="input-line-blc"
-                      Errors={{ required: "required" }}
-                    />
-                    <Label>Email</Label>
-                    <InputCell
-                      Name={"email"}
-                      Placeholder={"Card Number"}
-                      Model=".email"
-                      InputType={"text"}
-                      className="input-line-blc"
-                      Errors={{ required: "required" }}
-                    />
-                    <Label>Phone</Label>
-                    <InputCell
-                      Name={"phone"}
-                      Placeholder={"Card Number"}
-                      Model=".phone"
-                      InputType={"text"}
-                      className="input-line-blc"
-                      Errors={{ required: "required" }}
-                    />
-                    <Label>About Me </Label>
-                    <InputCell
-                      Name={"aboutme"}
-                      Placeholder={"Card Number"}
-                      Model=".aboutme"
-                      InputType={"textarea"}
-                      className="input-line-blc"
-                      Errors={{ required: "required" }}
-                    />
-                  </LocalForm>
-                </div>
-              )}
+                    <div className="job-user-info flex-fill">
+                      <Label>Address</Label>
+                      <InputCell
+                        Name={"address"}
+                        Placeholder={"Card Number"}
+                        Model=".address"
+                        InputType={"text"}
+                        className="input-line-blc"
+                        Errors={{ required: "required" }}
+                      />
+                      <Label>Email</Label>
+                      <InputCell
+                        Name={"email"}
+                        Placeholder={"Card Number"}
+                        Model=".email"
+                        InputType={"text"}
+                        className="input-line-blc"
+                        Errors={{ required: "required" }}
+                      />
+                      <Label>Phone</Label>
+                      <InputCell
+                        Name={"phone"}
+                        Placeholder={"Card Number"}
+                        Model=".phone"
+                        InputType={"text"}
+                        className="input-line-blc"
+                        Errors={{ required: "required" }}
+                      />
+                      <Label>About Me </Label>
+                      <InputCell
+                        Name={"aboutme"}
+                        Placeholder={"Card Number"}
+                        Model=".aboutme"
+                        InputType={"textarea"}
+                        className="input-line-blc"
+                        Errors={{ required: "required" }}
+                      />
+                      <Button color="secondary" type="button">
+                        Cancel
+                      </Button>
+                      <Button color="secondary" type="submit">
+                        Submit
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </LocalForm>
             </div>
             {path && (
               <div className="user-profl-edit flex-shrink-0">
@@ -87,8 +95,9 @@ const UserProfile = ({ path, user, _handleSubmit }) => {
               </div>
             )}
           </div>
-          <UserInfo handleSsubmit={_handleSubmit} />
+          {path && <UserInfo handleSsubmit={_handleSubmit} />}
         </div>
+
         <div className="user-profl-col-r">
           <h2>Add Card</h2>
           <div className="user-cards-rw">
