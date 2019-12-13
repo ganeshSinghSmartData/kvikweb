@@ -20,8 +20,6 @@ const SignInModal = ({
   _handleForgotPassword,
   ...props
 }) => {
-  console.log("props: ", props);
-
   let customClass = "";
   if (_modalType === "/register" || _modalType === "/login") {
     customClass = "signup";

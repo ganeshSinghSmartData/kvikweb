@@ -6,13 +6,14 @@ import JobProduct from "./jobProduct/jobProduct";
 import Sidebar from "../sidebar/sidebar";
 import PostJob from "./postJob";
 import BidderProfile from "./bidderProfile/bidderProfile";
-import UserProfileDetail from "../jobs/userProfileDetail/userProfileDetail";
+import UserProfileDetail from "./userProfileDetail";
 import Heading from "../../components/commonUi/heading/heading";
 import Paragraph from "../../components/commonUi/paragraph/paragraph";
 import { pagination } from "../../utilities/constants";
 import { DaysBetween } from "./../../utilities/common";
 // import SpinnerOverlay from '../commonUi/spinner/spinnerOverlay/spinnerOverlay';
 import NoData from "../commonUi/noData/noData";
+import EmailVerify from "../emailVerify";
 import "./jobs.scss";
 import {
   getJobProduct,
@@ -83,6 +84,7 @@ const Job = ({
 
   return (
     <React.Fragment>
+      {/* <EmailVerify /> */}
       {/* <SpinnerOverlay className="position-fixed" /> */}
       <section className="d-flex flex-column position-relative">
         <Button className="sidebar-toogle-btn text-right position-fixed rounded-left d-md-none flex-shrink-0">

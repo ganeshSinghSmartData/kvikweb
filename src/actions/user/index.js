@@ -88,17 +88,19 @@ export const getUserBid = params => {
 /****** action creator for login users jobs ********/
 export const getUserDetails = user_id => {
   return (dispatch, getState) => {
-    /* const {
-        data: { token }
-      } = getState().user; */
-    ApiClient.get(`${apiUrl}/userDetails/${user_id}`, {}).then(response => {
-      if (response.status === 200) {
-        dispatch(get_user_details(response));
-      } else if (response.status === 401) {
-        toastErrorAction(dispatch, response.message);
-      } else {
-        dispatch(is_fetching(false));
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient.get(`${apiUrl}/userDetails/${user_id}`, {}, token).then(
+      response => {
+        if (response.status === 200) {
+          dispatch(get_user_details(response.data));
+        } else if (response.status === 401) {
+          toastErrorAction(dispatch, response.msg);
+        } else {
+          dispatch(is_fetching(false));
+        }
       }
-    });
+    );
   };
 };

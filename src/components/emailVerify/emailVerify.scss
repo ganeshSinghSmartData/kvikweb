@@ -1,0 +1,69 @@
+@import "../../assets/css/variables";
+.verify-email-container {
+  flex: 1 1;
+  align-items: center;
+  justify-content: center;
+}
+.verify-email-wrapper {
+  max-width: 550px;
+  width: 100%;
+  table {
+    width: 100%;
+    margin: 0 auto;
+    background-color: #fff;
+    border-collapse: collapse;
+    border-spacing: 0;
+    .head-row {
+      td {
+        background-color: $primary-dark;
+        color: #fff;
+      }
+      .tag-line {
+        font-size: 18px;
+        font-weight: 500;
+      }
+    }
+    .head-row td,
+    .mid-row td,
+    .bottom-row > td {
+      padding: 20px;
+    }
+
+    .bottom-row {
+      table {
+        background: none;
+      }
+      .social-row {
+        a {
+          margin: 0 4px 0 0;
+        }
+        img {
+          border: 2px solid #fff;
+        }
+      }
+    }
+    .mid-row-data {
+      min-height: 250px;
+      p {
+        font-size: 16px;
+        font-weight: 400;
+        margin-bottom: 25px;
+      }
+    }
+    .bottom-row {
+      a {
+        color: #fff;
+      }
+      > td {
+        background-color: $primary-dark;
+        color: #fff;
+      }
+    }
+    .success-icon-row {
+      margin: 0 0 20px 0;
+      svg {
+        width: 70px;
+      }
+    }
+  }
+}
