@@ -64,11 +64,11 @@ const UserProfile = props => {
         </DropdownToggle>
         <DropdownMenu right>
           <DropdownItem header>Profile</DropdownItem>
-          <Link className="btn btn-link" to={"/profile"}>
-            <DropdownItem>View Profile</DropdownItem>
+          <Link className="dropdown-item" to={"/profile"}>
+            View Profile
           </Link>
-          <Link className="btn btn-link" to="/edit-profile">
-            <DropdownItem>Edit Profile</DropdownItem>
+          <Link className="dropdown-item" to="/edit-profile">
+            Edit Profile
           </Link>
           {/* <DropdownItem divider />
           <DropdownItem disabled>Action (disabled)</DropdownItem>

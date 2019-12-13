@@ -20,58 +20,67 @@ const UserProfile = ({ path, user, _handleSubmit }) => {
                 {path ? (
                   <JobAddress job_seeker_id={user} />
                 ) : (
-                  <div className="job-address d-flex">
-                    <UserImage />
-                    <div className="job-user-info flex-fill">
-                      <Label>Address</Label>
-                      <InputCell
-                        Name={"address"}
-                        Placeholder={"Card Number"}
-                        Model=".address"
-                        InputType={"text"}
-                        className="input-line-blc"
-                        Errors={{ required: "required" }}
-                      />
-                      <Label>Email</Label>
-                      <InputCell
-                        Name={"email"}
-                        Placeholder={"Card Number"}
-                        Model=".email"
-                        InputType={"text"}
-                        className="input-line-blc"
-                        Errors={{ required: "required" }}
-                      />
-                      <Label>Phone</Label>
-                      <InputCell
-                        Name={"phone"}
-                        Placeholder={"Card Number"}
-                        Model=".phone"
-                        InputType={"text"}
-                        className="input-line-blc"
-                        Errors={{ required: "required" }}
-                      />
-                      <Label>About Me </Label>
-                      <InputCell
-                        Name={"aboutme"}
-                        Placeholder={"Card Number"}
-                        Model=".aboutme"
-                        InputType={"textarea"}
-                        className="input-line-blc"
-                        Errors={{ required: "required" }}
-                      />
-                      <div className="post-job-btns text-center d-flex justify-content-center">
-                        <Button
-                          color="text-black btn-dark cancel btn btn-link"
-                          type="button"
-                        >
-                          Cancel
-                        </Button>
-                        <Button color="secondary" type="submit">
-                          Submit
-                        </Button>
+                  <>
+                    <div
+                      className={`job-address peace d-flex ${
+                        !path ? "editMode" : ""
+                      }`}
+                    >
+                      <UserImage />
+                      <div className="job-user-info flex-fill">
+                        <div className="edit-profile-blc">
+                          <Label>Address</Label>
+                          <InputCell
+                            Name={"address"}
+                            Placeholder={"Card Number"}
+                            Model=".address"
+                            InputType={"text"}
+                            className="input-line-blc"
+                            Errors={{ required: "required" }}
+                          />
+                          <Label>Email</Label>
+                          <InputCell
+                            Name={"email"}
+                            Placeholder={"Card Number"}
+                            Model=".email"
+                            InputType={"text"}
+                            className="input-line-blc"
+                            Errors={{ required: "required" }}
+                          />
+                          <Label>Phone</Label>
+                          <InputCell
+                            Name={"phone"}
+                            Placeholder={"Card Number"}
+                            Model=".phone"
+                            InputType={"text"}
+                            className="input-line-blc"
+                            Errors={{ required: "required" }}
+                          />
+                          <Label>About Me </Label>
+                          <InputCell
+                            Name={"aboutme"}
+                            Placeholder={"Card Number"}
+                            Model=".aboutme"
+                            InputType={"textarea"}
+                            className="input-line-blc"
+                            Errors={{ required: "required" }}
+                          />
+                        </div>
+                        <div className="edit-profile-btns">
+                          <Button color="secondary" type="submit">
+                            Submit
+                          </Button>
+                          <Button
+                            color="link"
+                            className="btn-dark cancel"
+                            type="button"
+                          >
+                            Cancel
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </>
                 )}
               </LocalForm>
             </div>
@@ -180,7 +189,7 @@ const UserProfile = ({ path, user, _handleSubmit }) => {
                     Placeholder={"Card Number"}
                     Model=".cardnumber1"
                     InputType={"text"}
-                    className="input-line-blc"
+                    ClassName="input-line-blc"
                     Errors={{ required: "required" }}
                   />
                 </li>
@@ -191,7 +200,7 @@ const UserProfile = ({ path, user, _handleSubmit }) => {
                     Placeholder={"Card Number"}
                     Model=".cardnumber2"
                     InputType={"text"}
-                    className="input-line-blc"
+                    ClassName="input-line-blc"
                     Errors={{ required: "required" }}
                   />
                 </li>
@@ -202,7 +211,7 @@ const UserProfile = ({ path, user, _handleSubmit }) => {
                     Placeholder={"Card Number"}
                     Model=".cardnumber3"
                     InputType={"text"}
-                    className="input-line-blc"
+                    ClassName="input-line-blc"
                     Errors={{ required: "required" }}
                   />
                 </li>
@@ -216,7 +225,6 @@ const UserProfile = ({ path, user, _handleSubmit }) => {
             <div className="user-cards">
               <span className="d-block">
                 <svg
-                  id="credit-card"
                   xmlns="http://www.w3.org/2000/svg"
                   width="59.434"
                   height="39.623"
@@ -230,83 +238,85 @@ const UserProfile = ({ path, user, _handleSubmit }) => {
                       y2="1"
                       gradientUnits="objectBoundingBox"
                     >
-                      {/*                       <stop offset="0" stop-color="#fd752e" />
-                      <stop offset="1" stop-color="#ffbf2b" /> */}
+                      <stop offset="0" stop-color="#fd752e" />
+                      <stop offset="1" stop-color="#ffbf2b" />
                     </linearGradient>
                   </defs>
-                  <g
-                    id="Group_8031"
-                    data-name="Group 8031"
-                    transform="translate(0 0)"
-                  >
-                    <g id="Group_8030" data-name="Group 8030">
-                      <path
-                        id="Path_3493"
-                        data-name="Path 3493"
-                        d="M53.243,85.333H6.191A6.2,6.2,0,0,0,0,91.524v27.241a6.2,6.2,0,0,0,6.191,6.191H53.243a6.2,6.2,0,0,0,6.191-6.191V91.524A6.2,6.2,0,0,0,53.243,85.333Zm3.715,33.432a3.719,3.719,0,0,1-3.715,3.715H6.191a3.719,3.719,0,0,1-3.715-3.715V91.524a3.719,3.719,0,0,1,3.715-3.715H53.243a3.719,3.719,0,0,1,3.715,3.715v27.24Z"
-                        transform="translate(0 -85.333)"
-                        fill="url(#linear-gradient)"
-                      />
+                  <g id="credit-card" transform="translate(0 0)">
+                    <g
+                      id="Group_8031"
+                      data-name="Group 8031"
+                      transform="translate(0 0)"
+                    >
+                      <g id="Group_8030" data-name="Group 8030">
+                        <path
+                          id="Path_3493"
+                          data-name="Path 3493"
+                          d="M53.243,85.333H6.191A6.2,6.2,0,0,0,0,91.524v27.241a6.2,6.2,0,0,0,6.191,6.191H53.243a6.2,6.2,0,0,0,6.191-6.191V91.524A6.2,6.2,0,0,0,53.243,85.333Zm3.715,33.432a3.719,3.719,0,0,1-3.715,3.715H6.191a3.719,3.719,0,0,1-3.715-3.715V91.524a3.719,3.719,0,0,1,3.715-3.715H53.243a3.719,3.719,0,0,1,3.715,3.715v27.24Z"
+                          transform="translate(0 -85.333)"
+                          fill="url(#linear-gradient)"
+                        />
+                      </g>
                     </g>
-                  </g>
-                  <g
-                    id="Group_8033"
-                    data-name="Group 8033"
-                    transform="translate(0 7.429)"
-                  >
-                    <g id="Group_8032" data-name="Group 8032">
-                      <path
-                        id="Path_3494"
-                        data-name="Path 3494"
-                        d="M58.2,149.333H1.238A1.239,1.239,0,0,0,0,150.571V158a1.239,1.239,0,0,0,1.238,1.238H58.2A1.239,1.239,0,0,0,59.434,158v-7.429A1.239,1.239,0,0,0,58.2,149.333Zm-1.238,7.429H2.476v-4.953H56.957v4.953Z"
-                        transform="translate(0 -149.333)"
-                        fill="url(#linear-gradient)"
-                      />
+                    <g
+                      id="Group_8033"
+                      data-name="Group 8033"
+                      transform="translate(0 7.429)"
+                    >
+                      <g id="Group_8032" data-name="Group 8032">
+                        <path
+                          id="Path_3494"
+                          data-name="Path 3494"
+                          d="M58.2,149.333H1.238A1.239,1.239,0,0,0,0,150.571V158a1.239,1.239,0,0,0,1.238,1.238H58.2A1.239,1.239,0,0,0,59.434,158v-7.429A1.239,1.239,0,0,0,58.2,149.333Zm-1.238,7.429H2.476v-4.953H56.957v4.953Z"
+                          transform="translate(0 -149.333)"
+                          fill="url(#linear-gradient)"
+                        />
+                      </g>
                     </g>
-                  </g>
-                  <g
-                    id="Group_8035"
-                    data-name="Group 8035"
-                    transform="translate(7.429 24.764)"
-                  >
-                    <g id="Group_8034" data-name="Group 8034">
-                      <path
-                        id="Path_3495"
-                        data-name="Path 3495"
-                        d="M80.1,298.667H65.238a1.238,1.238,0,1,0,0,2.476H80.1a1.238,1.238,0,1,0,0-2.476Z"
-                        transform="translate(-64 -298.667)"
-                        fill="url(#linear-gradient)"
-                      />
+                    <g
+                      id="Group_8035"
+                      data-name="Group 8035"
+                      transform="translate(7.429 24.764)"
+                    >
+                      <g id="Group_8034" data-name="Group 8034">
+                        <path
+                          id="Path_3495"
+                          data-name="Path 3495"
+                          d="M80.1,298.667H65.238a1.238,1.238,0,1,0,0,2.476H80.1a1.238,1.238,0,1,0,0-2.476Z"
+                          transform="translate(-64 -298.667)"
+                          fill="url(#linear-gradient)"
+                        />
+                      </g>
                     </g>
-                  </g>
-                  <g
-                    id="Group_8037"
-                    data-name="Group 8037"
-                    transform="translate(7.429 29.717)"
-                  >
-                    <g id="Group_8036" data-name="Group 8036">
-                      <path
-                        id="Path_3496"
-                        data-name="Path 3496"
-                        d="M80.1,341.333H65.238a1.238,1.238,0,0,0,0,2.477H80.1a1.238,1.238,0,0,0,0-2.477Z"
-                        transform="translate(-64 -341.333)"
-                        fill="url(#linear-gradient)"
-                      />
+                    <g
+                      id="Group_8037"
+                      data-name="Group 8037"
+                      transform="translate(7.429 29.717)"
+                    >
+                      <g id="Group_8036" data-name="Group 8036">
+                        <path
+                          id="Path_3496"
+                          data-name="Path 3496"
+                          d="M80.1,341.333H65.238a1.238,1.238,0,0,0,0,2.477H80.1a1.238,1.238,0,0,0,0-2.477Z"
+                          transform="translate(-64 -341.333)"
+                          fill="url(#linear-gradient)"
+                        />
+                      </g>
                     </g>
-                  </g>
-                  <g
-                    id="Group_8039"
-                    data-name="Group 8039"
-                    transform="translate(42.099 22.288)"
-                  >
-                    <g id="Group_8038" data-name="Group 8038">
-                      <path
-                        id="Path_3497"
-                        data-name="Path 3497"
-                        d="M368.858,277.333h-2.476a3.719,3.719,0,0,0-3.715,3.715v2.476a3.719,3.719,0,0,0,3.715,3.715h2.476a3.719,3.719,0,0,0,3.715-3.715v-2.476A3.719,3.719,0,0,0,368.858,277.333Zm1.238,6.191a1.239,1.239,0,0,1-1.238,1.238h-2.476a1.239,1.239,0,0,1-1.238-1.238v-2.476a1.239,1.239,0,0,1,1.238-1.238h2.476a1.239,1.239,0,0,1,1.238,1.238Z"
-                        transform="translate(-362.667 -277.333)"
-                        fill="url(#linear-gradient)"
-                      />
+                    <g
+                      id="Group_8039"
+                      data-name="Group 8039"
+                      transform="translate(42.099 22.288)"
+                    >
+                      <g id="Group_8038" data-name="Group 8038">
+                        <path
+                          id="Path_3497"
+                          data-name="Path 3497"
+                          d="M368.858,277.333h-2.476a3.719,3.719,0,0,0-3.715,3.715v2.476a3.719,3.719,0,0,0,3.715,3.715h2.476a3.719,3.719,0,0,0,3.715-3.715v-2.476A3.719,3.719,0,0,0,368.858,277.333Zm1.238,6.191a1.239,1.239,0,0,1-1.238,1.238h-2.476a1.239,1.239,0,0,1-1.238-1.238v-2.476a1.239,1.239,0,0,1,1.238-1.238h2.476a1.239,1.239,0,0,1,1.238,1.238Z"
+                          transform="translate(-362.667 -277.333)"
+                          fill="url(#linear-gradient)"
+                        />
+                      </g>
                     </g>
                   </g>
                 </svg>
@@ -318,7 +328,6 @@ const UserProfile = ({ path, user, _handleSubmit }) => {
             <div className="user-cards">
               <span className="d-block">
                 <svg
-                  id="credit-card"
                   xmlns="http://www.w3.org/2000/svg"
                   width="59.434"
                   height="39.623"
@@ -332,83 +341,85 @@ const UserProfile = ({ path, user, _handleSubmit }) => {
                       y2="1"
                       gradientUnits="objectBoundingBox"
                     >
-                      {/*       <stop offset="0" stop-color="#fd752e" />
-                      <stop offset="1" stop-color="#ffbf2b" /> */}
+                      <stop offset="0" stop-color="#fd752e" />
+                      <stop offset="1" stop-color="#ffbf2b" />
                     </linearGradient>
                   </defs>
-                  <g
-                    id="Group_8031"
-                    data-name="Group 8031"
-                    transform="translate(0 0)"
-                  >
-                    <g id="Group_8030" data-name="Group 8030">
-                      <path
-                        id="Path_3493"
-                        data-name="Path 3493"
-                        d="M53.243,85.333H6.191A6.2,6.2,0,0,0,0,91.524v27.241a6.2,6.2,0,0,0,6.191,6.191H53.243a6.2,6.2,0,0,0,6.191-6.191V91.524A6.2,6.2,0,0,0,53.243,85.333Zm3.715,33.432a3.719,3.719,0,0,1-3.715,3.715H6.191a3.719,3.719,0,0,1-3.715-3.715V91.524a3.719,3.719,0,0,1,3.715-3.715H53.243a3.719,3.719,0,0,1,3.715,3.715v27.24Z"
-                        transform="translate(0 -85.333)"
-                        fill="url(#linear-gradient)"
-                      />
+                  <g id="credit-card" transform="translate(0 0)">
+                    <g
+                      id="Group_8031"
+                      data-name="Group 8031"
+                      transform="translate(0 0)"
+                    >
+                      <g id="Group_8030" data-name="Group 8030">
+                        <path
+                          id="Path_3493"
+                          data-name="Path 3493"
+                          d="M53.243,85.333H6.191A6.2,6.2,0,0,0,0,91.524v27.241a6.2,6.2,0,0,0,6.191,6.191H53.243a6.2,6.2,0,0,0,6.191-6.191V91.524A6.2,6.2,0,0,0,53.243,85.333Zm3.715,33.432a3.719,3.719,0,0,1-3.715,3.715H6.191a3.719,3.719,0,0,1-3.715-3.715V91.524a3.719,3.719,0,0,1,3.715-3.715H53.243a3.719,3.719,0,0,1,3.715,3.715v27.24Z"
+                          transform="translate(0 -85.333)"
+                          fill="url(#linear-gradient)"
+                        />
+                      </g>
                     </g>
-                  </g>
-                  <g
-                    id="Group_8033"
-                    data-name="Group 8033"
-                    transform="translate(0 7.429)"
-                  >
-                    <g id="Group_8032" data-name="Group 8032">
-                      <path
-                        id="Path_3494"
-                        data-name="Path 3494"
-                        d="M58.2,149.333H1.238A1.239,1.239,0,0,0,0,150.571V158a1.239,1.239,0,0,0,1.238,1.238H58.2A1.239,1.239,0,0,0,59.434,158v-7.429A1.239,1.239,0,0,0,58.2,149.333Zm-1.238,7.429H2.476v-4.953H56.957v4.953Z"
-                        transform="translate(0 -149.333)"
-                        fill="url(#linear-gradient)"
-                      />
+                    <g
+                      id="Group_8033"
+                      data-name="Group 8033"
+                      transform="translate(0 7.429)"
+                    >
+                      <g id="Group_8032" data-name="Group 8032">
+                        <path
+                          id="Path_3494"
+                          data-name="Path 3494"
+                          d="M58.2,149.333H1.238A1.239,1.239,0,0,0,0,150.571V158a1.239,1.239,0,0,0,1.238,1.238H58.2A1.239,1.239,0,0,0,59.434,158v-7.429A1.239,1.239,0,0,0,58.2,149.333Zm-1.238,7.429H2.476v-4.953H56.957v4.953Z"
+                          transform="translate(0 -149.333)"
+                          fill="url(#linear-gradient)"
+                        />
+                      </g>
                     </g>
-                  </g>
-                  <g
-                    id="Group_8035"
-                    data-name="Group 8035"
-                    transform="translate(7.429 24.764)"
-                  >
-                    <g id="Group_8034" data-name="Group 8034">
-                      <path
-                        id="Path_3495"
-                        data-name="Path 3495"
-                        d="M80.1,298.667H65.238a1.238,1.238,0,1,0,0,2.476H80.1a1.238,1.238,0,1,0,0-2.476Z"
-                        transform="translate(-64 -298.667)"
-                        fill="url(#linear-gradient)"
-                      />
+                    <g
+                      id="Group_8035"
+                      data-name="Group 8035"
+                      transform="translate(7.429 24.764)"
+                    >
+                      <g id="Group_8034" data-name="Group 8034">
+                        <path
+                          id="Path_3495"
+                          data-name="Path 3495"
+                          d="M80.1,298.667H65.238a1.238,1.238,0,1,0,0,2.476H80.1a1.238,1.238,0,1,0,0-2.476Z"
+                          transform="translate(-64 -298.667)"
+                          fill="url(#linear-gradient)"
+                        />
+                      </g>
                     </g>
-                  </g>
-                  <g
-                    id="Group_8037"
-                    data-name="Group 8037"
-                    transform="translate(7.429 29.717)"
-                  >
-                    <g id="Group_8036" data-name="Group 8036">
-                      <path
-                        id="Path_3496"
-                        data-name="Path 3496"
-                        d="M80.1,341.333H65.238a1.238,1.238,0,0,0,0,2.477H80.1a1.238,1.238,0,0,0,0-2.477Z"
-                        transform="translate(-64 -341.333)"
-                        fill="url(#linear-gradient)"
-                      />
+                    <g
+                      id="Group_8037"
+                      data-name="Group 8037"
+                      transform="translate(7.429 29.717)"
+                    >
+                      <g id="Group_8036" data-name="Group 8036">
+                        <path
+                          id="Path_3496"
+                          data-name="Path 3496"
+                          d="M80.1,341.333H65.238a1.238,1.238,0,0,0,0,2.477H80.1a1.238,1.238,0,0,0,0-2.477Z"
+                          transform="translate(-64 -341.333)"
+                          fill="url(#linear-gradient)"
+                        />
+                      </g>
                     </g>
-                  </g>
-                  <g
-                    id="Group_8039"
-                    data-name="Group 8039"
-                    transform="translate(42.099 22.288)"
-                  >
-                    <g id="Group_8038" data-name="Group 8038">
-                      <path
-                        id="Path_3497"
-                        data-name="Path 3497"
-                        d="M368.858,277.333h-2.476a3.719,3.719,0,0,0-3.715,3.715v2.476a3.719,3.719,0,0,0,3.715,3.715h2.476a3.719,3.719,0,0,0,3.715-3.715v-2.476A3.719,3.719,0,0,0,368.858,277.333Zm1.238,6.191a1.239,1.239,0,0,1-1.238,1.238h-2.476a1.239,1.239,0,0,1-1.238-1.238v-2.476a1.239,1.239,0,0,1,1.238-1.238h2.476a1.239,1.239,0,0,1,1.238,1.238Z"
-                        transform="translate(-362.667 -277.333)"
-                        fill="url(#linear-gradient)"
-                      />
+                    <g
+                      id="Group_8039"
+                      data-name="Group 8039"
+                      transform="translate(42.099 22.288)"
+                    >
+                      <g id="Group_8038" data-name="Group 8038">
+                        <path
+                          id="Path_3497"
+                          data-name="Path 3497"
+                          d="M368.858,277.333h-2.476a3.719,3.719,0,0,0-3.715,3.715v2.476a3.719,3.719,0,0,0,3.715,3.715h2.476a3.719,3.719,0,0,0,3.715-3.715v-2.476A3.719,3.719,0,0,0,368.858,277.333Zm1.238,6.191a1.239,1.239,0,0,1-1.238,1.238h-2.476a1.239,1.239,0,0,1-1.238-1.238v-2.476a1.239,1.239,0,0,1,1.238-1.238h2.476a1.239,1.239,0,0,1,1.238,1.238Z"
+                          transform="translate(-362.667 -277.333)"
+                          fill="url(#linear-gradient)"
+                        />
+                      </g>
                     </g>
                   </g>
                 </svg>
