@@ -16,6 +16,8 @@ let scroll = Scroll.animateScroll;
 
 /*************** Public Layout ***************/
 export const publicLayout = props => {
+  console.log("props: ", props.children.props.match.path);
+
   window.scrollTo(0, 0);
   /*   const wrapperRef = useRef(null);
   const [scrollVisible, setscrollVisible] = useState(false);
@@ -34,7 +36,10 @@ export const publicLayout = props => {
   return (
     <div className="main-wrapper d-flex flex-column flex-fill">
       <Header />
-      <Banner path={props.children} />
+      {(props.children.props.match.path === "/" ||
+        props.children.props.match.path === "/post-job") && (
+        <Banner path={props.children} />
+      )}
       <div className="wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto">
         <Container className="d-flex flex-column flex-shrink-0 mb-50 position-relative">
           {props.children}
