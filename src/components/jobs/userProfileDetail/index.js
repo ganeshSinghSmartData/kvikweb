@@ -8,12 +8,11 @@ import JobAddress from "../jobDetail/JobAddress/jobAddress";
 import UserInfo from "../bidderProfile/userInfo/userInfo";
 import InputCell from "../../commonUi/input/inputCell";
 import UserImage from "../jobDetail/userImage/userImage";
-import Loader from "../../../components/Loader";
+// import Loader from "../../../components/Loader";
 import "./userProfileDetail.scss";
 const UserProfile = ({
   path,
   user,
-  loading,
   history,
   handleImageUpload,
   handleSubmit,
@@ -36,6 +35,7 @@ const UserProfile = ({
                     <JobAddress
                       job_seeker_id={user}
                       handleImageUpload={handleImageUpload}
+                      editimage={true}
                     />
                   ) : (
                     <>
@@ -47,8 +47,8 @@ const UserProfile = ({
                         <UserImage
                           image={user.image}
                           handleImageUpload={handleImageUpload}
+                          edit={true}
                         />
-                        <Loader loading={loading} />
                         <div className="job-user-info flex-fill">
                           <div className="edit-profile-blc">
                             <Label className="input-title">Email</Label>
@@ -299,7 +299,7 @@ const UserProfile = ({
                 </div>
               </LocalForm>
             </div>
-            <div className="user-cards-rw">
+            {/* <div className="user-cards-rw">
               <div className="user-cards">
                 <span className="d-block">
                   <svg
@@ -316,8 +316,8 @@ const UserProfile = ({
                         y2="1"
                         gradientUnits="objectBoundingBox"
                       >
-                        {/* <stop offset="0" stop-color="#fd752e" />
-                        <stop offset="1" stop-color="#ffbf2b" /> */}
+                        <stop offset="0" stop-color="#fd752e" />
+                        <stop offset="1" stop-color="#ffbf2b" />
                       </linearGradient>
                     </defs>
                     <g id="credit-card" transform="translate(0 0)">
@@ -419,8 +419,8 @@ const UserProfile = ({
                         y2="1"
                         gradientUnits="objectBoundingBox"
                       >
-                        {/* <stop offset="0" stop-color="#fd752e" />
-                        <stop offset="1" stop-color="#ffbf2b" /> */}
+                        <stop offset="0" stop-color="#fd752e" />
+                        <stop offset="1" stop-color="#ffbf2b" />
                       </linearGradient>
                     </defs>
                     <g id="credit-card" transform="translate(0 0)">
@@ -504,7 +504,7 @@ const UserProfile = ({
                 </span>
                 <label>Credit Card</label>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

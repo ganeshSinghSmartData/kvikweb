@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import smoothscroll from "smoothscroll-polyfill";
 import JobProduct from "./jobProduct/jobProduct";
 import Sidebar from "../sidebar/sidebar";
-import PostJob from "./postJob";
 import BidderProfile from "./bidderProfile/bidderProfile";
 import Heading from "../../components/commonUi/heading/heading";
 import Paragraph from "../../components/commonUi/paragraph/paragraph";
@@ -30,7 +29,7 @@ const Job = ({
   const [listType, setlistType] = useState(false);
   let [page, setPage] = useState(pagination.page);
   let [jobType, setJobType] = useState("active");
-  let [bidType, setBidType] = useState("accepted");
+  // let [bidType, setBidType] = useState("accepted");
 
   const toggleListType = value => {
     setlistType(value);
@@ -39,32 +38,55 @@ const Job = ({
   let bids = useSelector(state => state.bid);
 
   let products = [];
-  if (path === "") {
-    products = jobs.jobProduct;
-  } else if (path === "/job-list") {
+  let count = 0;
+  let active = "Active";
+  let complete = "Complete";
+
+  if (path === "/job-list") {
+    active = `${active} Job`;
+    complete = `${complete} Job`;
     if (jobType === "active") {
       products = jobs.activeJobProduct;
+      count = jobs.activeJobsCount;
     }
     if (jobType === "completed") {
       products = jobs.completedJobProduct;
+      count = jobs.completedJobsCount;
+    }
+  } else if (path === "/bid-list") {
+    active = `${active} Bid`;
+    complete = `${complete} Bid`;
+    if (jobType === "active") {
+      products = bids.activeBid;
+      count = bids.activeBidsCount;
+    }
+    if (jobType === "completed") {
+      products = bids.completedBid;
+      count = bids.completedBidsCount;
     }
   } else {
-    if (bidType === "accepted") {
-      products = bids.activeBid;
-    }
-    if (bidType === "not-accepted") {
-      products = bids.completedBid;
-    }
+    products = jobs.jobProduct;
+    count = jobs.count;
   }
 
   const showMoreProduct = page => {
     setPage(page);
-    if (path !== "/job-list") {
-      dispatch(getJobProduct({ page: page }));
-    } else if (jobType === "active") {
-      _handleUserActiveJob({ page: page });
+    if (path === "/job-list") {
+      if (jobType === "active") {
+        _handleUserActiveJob({ page: page });
+      }
+      if (jobType === "completed") {
+        _handleUserCompletedJob({ page: page });
+      }
+    } else if (path === "/bid-list") {
+      if (jobType === "active") {
+        _handleUserAcceptedBid({ page: page });
+      }
+      if (jobType === "completed") {
+        _handleUserNotAcceptedBid({ page: page });
+      }
     } else {
-      _handleUserCompletedJob({ page: page });
+      dispatch(getJobProduct({ page: page }));
     }
   };
 
@@ -72,10 +94,6 @@ const Job = ({
     if (path !== "/job-list") {
       dispatch(reset_job_products());
       dispatch(getJobProduct({ page: page }));
-    } else if (jobType === "active") {
-      _handleUserActiveJob({ page: page });
-    } else {
-      _handleUserCompletedJob({ page: page });
     }
   }, []);
 
@@ -100,7 +118,6 @@ const Job = ({
           </svg>
         </Button>
         {/* <BidderProfile /> */}
-        {/* <PostJob /> */}
         <Row className="d-flex flex-nowrap position-relative">
           {path === "" && (
             <Col className="sidebar-col d-flex flex-column">
@@ -131,24 +148,20 @@ const Job = ({
                         jobType === "active" ? "btn-primary" : ""
                       }`}
                       onClick={() => {
-                        path === "/job-list"
-                          ? setJobType("active")
-                          : setBidType("accepted");
+                        setJobType("active");
                       }}
                     >
-                      Active Jobs
+                      {active}
                     </button>
                     <button
                       className={`btn ${
                         jobType === "completed" ? "btn-primary" : ""
                       }`}
                       onClick={() => {
-                        path === "/job-list"
-                          ? setJobType("completed")
-                          : setBidType("not-accepted");
+                        setJobType("completed");
                       }}
                     >
-                      Completed Jobs
+                      {complete}
                     </button>
                   </div>
                 )}
@@ -201,10 +214,14 @@ const Job = ({
                 {products && products.length === 0 && <NoData />}
                 {products &&
                   products.map((item, key) => {
+                    let prodItem = { ...item };
+                    if (path === "/bid-list") {
+                      prodItem = { ...item.job_id, status: item.status };
+                    }
                     return (
                       <Col lg="4" className="product-col" key={key}>
                         <JobProduct
-                          product={path === "/bid-list" ? item.job_id : item}
+                          product={prodItem}
                           listType={listType}
                           path={path}
                         />
@@ -212,22 +229,20 @@ const Job = ({
                     );
                   })}
               </Row>
-              {products &&
-                products.length !== 0 &&
-                products.length < jobs.count && (
-                  <Row className="joblist-more">
-                    <Col className="d-flex justify-content-center">
-                      <Button
-                        color="secondary"
-                        className="data-loader-btn"
-                        onClick={() => showMoreProduct(++page)}
-                      >
-                        <span className="d-flex justify-content-center"></span>
-                        <span>SHOW MORE</span>
-                      </Button>
-                    </Col>
-                  </Row>
-                )}
+              {products && products.length !== 0 && products.length < count && (
+                <Row className="joblist-more">
+                  <Col className="d-flex justify-content-center">
+                    <Button
+                      color="secondary"
+                      className="data-loader-btn"
+                      onClick={() => showMoreProduct(++page)}
+                    >
+                      <span className="d-flex justify-content-center"></span>
+                      <span>SHOW MORE</span>
+                    </Button>
+                  </Col>
+                </Row>
+              )}
             </div>
           </Col>
         </Row>

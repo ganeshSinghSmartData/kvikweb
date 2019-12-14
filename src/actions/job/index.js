@@ -8,6 +8,8 @@ export const is_fetching = status => ({ type: TYPE.IS_FETCHING, status });
 export const is_search = status => ({ type: TYPE.IS_STATUS, status });
 export const get_job_products = data => ({ type: TYPE.GET_JOB_PRODUCTS, data });
 export const reset_job_products = () => ({ type: TYPE.RESET_JOB_PRODUCTS });
+export const reset_active_job = () => ({ type: TYPE.RESET_ACTIVE_JOB });
+export const reset_completed_job = () => ({ type: TYPE.RESET_COMPLETED_JOB });
 export const get_job_details = data => ({ type: TYPE.GET_JOB_DETAILS, data });
 export const post_job_products = data => ({
   type: TYPE.POST_JOB_PRODUCTS,
@@ -126,7 +128,6 @@ export const getUserActiveJob = ({
     const {
       data: { token }
     } = getState().user;
-
     ApiClient.get(
       `${apiUrl}/api/user_active_job?lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${pagination.limit}&search=${search}`,
       {},
@@ -134,7 +135,7 @@ export const getUserActiveJob = ({
     ).then(response => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
-        dispatch(get_active_job(response.data));
+        dispatch(get_active_job(response));
       } else if (response.status === 401) {
         console.log("errror with 401 : ");
         // toastErrorAction(dispatch, response.message);
@@ -165,7 +166,7 @@ export const getUserCompletedJob = ({
     ).then(response => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
-        dispatch(get_completed_job(response.data));
+        dispatch(get_completed_job(response));
       } else if (response.status === 401) {
         console.log("errror with 401 : ");
         // toastErrorAction(dispatch, response.message);

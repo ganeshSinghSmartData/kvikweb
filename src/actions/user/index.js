@@ -54,6 +54,28 @@ export const loginUser = (params, callback) => {
   };
 };
 
+/****** action creator for verify users email ********/
+export const verifyEmail = (params, callback) => {
+  return dispatch => {
+    ApiClient.get(
+      `${apiUrl}/verifyEmail/${params.userId}/${params.otp}`,
+      params
+    ).then(response => {
+      if (response.status === 200) {
+        toastAction(true, response.msg);
+        if (response.msg === "Already verified") {
+          callback(false);
+        }
+      } else if (response.status === 404) {
+        toastErrorAction(dispatch, response.msg);
+      } else {
+        callback(response.msg);
+        dispatch(is_fetching(false));
+      }
+    });
+  };
+};
+
 /****** action creator for logout ********/
 export const logout = (params = {}) => {
   return (dispatch, getState) => {
@@ -135,15 +157,12 @@ export const updateUserDetails = (params, callback) => {
 
 /****** action creator for upload user profile picture ********/
 export const uploadUserImage = (params, callback) => {
-  console.log("params  : ", params);
-
   return (dispatch, getState) => {
     const {
       data: { token }
     } = getState().user;
     ApiClient._postFormData(`${apiUrl}/imageUpload`, params, token).then(
       response => {
-        console.log("response while uploadUserImage : ", response);
         if (response.status === 200) {
           callback(true);
           dispatch(update_user_details(response.data));

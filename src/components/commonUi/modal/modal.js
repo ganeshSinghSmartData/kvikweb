@@ -56,28 +56,28 @@ const SignInModal = ({
             </svg>
           </Button>
         ) : (
-            <ModalHeader>
-              <span>{_modalType}</span>
-              <Button
-                color="link"
-                className="close-btn btn2"
-                onClick={_toggleModal}
+          <ModalHeader>
+            <span>{_modalType}</span>
+            <Button
+              color="link"
+              className="close-btn btn2"
+              onClick={_toggleModal}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="357"
+                height="357"
+                viewBox="0 0 357 357"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="357"
-                  height="357"
-                  viewBox="0 0 357 357"
-                >
-                  <path
-                    id="Forma_1"
-                    data-name="Forma 1"
-                    d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
-                  />
-                </svg>
-              </Button>
-            </ModalHeader>
-          )}
+                <path
+                  id="Forma_1"
+                  data-name="Forma 1"
+                  d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                />
+              </svg>
+            </Button>
+          </ModalHeader>
+        )}
         <ModalBody
           className={
             "overflow-auto " +
@@ -185,8 +185,7 @@ const SignInModal = ({
                         ClassName="input-icon-cell"
                         InputIcon={true}
                         Errors={{
-                          required: "required",
-                          invalidEmail: "invalidEmail"
+                          required: "required"
                         }}
                       />
                       <InputCell
@@ -197,12 +196,11 @@ const SignInModal = ({
                         ClassName="input-icon-cell"
                         InputIcon={true}
                         Errors={{
-                          required: "required",
-                          invalidPass: "invalidPass"
+                          required: "required"
                         }}
                       />
                       <div className="signup-agree d-flex align-items-start">
-                        <label className="d-flex align-items-start">
+                        {/* <label className="d-flex align-items-start">
                           <Checkbox /> Remember me
                         </label>
                         <Button
@@ -212,7 +210,7 @@ const SignInModal = ({
                           onClick={_handleForgotPassword("")}
                         >
                           Forgot Password?
-                        </Button>
+                        </Button> */}
                       </div>
                       <div className="text-center">
                         <Button type="submit" size="lg" className="signup">
@@ -303,13 +301,13 @@ const SignInModal = ({
                   <Button
                     color="link"
                     className="btn-dark cancel"
-                    onClick={() => props._hadleReject("reject")}
+                    onClick={() => props._hadleReject(props._propsDetails)}
                   >
                     REJECT
                   </Button>
                   <Button
                     color="secondary"
-                    onClick={() => props._handleAccept("accept")}
+                    onClick={() => props._handleAccept(props._propsDetails)}
                   >
                     ACCEPT
                   </Button>

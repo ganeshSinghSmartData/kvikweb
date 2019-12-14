@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+
 import UserProfile from "../../../components/jobs/userProfileDetail";
+import Loader from "../../../components/commonUi/loader/loader";
 
 import {
   getUserDetails,
@@ -14,7 +16,8 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false
+      loading: false,
+      uploading: false
     };
     this._handleSubmit = this._handleSubmit.bind(this);
     this._attachDispatch = this._attachDispatch.bind(this);
@@ -30,20 +33,14 @@ class Profile extends Component {
   }
 
   _handleImageUpload = file => {
-    console.log("file: ", file[0]);
+    this.setState({ uploading: true });
     let formData = new FormData();
     formData.append("images", file[0]);
     this.props.uploadUserImage(formData, callback => {
       if (callback) {
-        console.log("ImAGED succesfully updated");
+        this.setState({ uploading: true });
       }
     });
-    /* for (var key in file) {
-      if (!Number(file[key])) {
-        console.log("file[key]: ", file[key]);
-        
-      }
-    } */
   };
 
   _handleSubmit = params => {
@@ -52,6 +49,8 @@ class Profile extends Component {
       if (callback) {
         this.setState({ loading: false });
         this.props.history.push("/profile");
+      } else {
+        this.setState({ loading: false });
       }
     });
   };
@@ -59,6 +58,7 @@ class Profile extends Component {
   render() {
     return (
       <React.Fragment>
+        {this.state.loading && <Loader loading={this.state.loading} />}
         <UserProfile
           path={this.props.match.path === "/edit-profile" ? false : true}
           user={this.props.user.userDetails}

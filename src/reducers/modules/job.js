@@ -12,7 +12,9 @@ const initialState = {
   jobDetails: {},
   activeJobProduct: [],
   completedJobProduct: [],
-  count: 0
+  count: 0,
+  activeJobsCount: 0,
+  completedJobsCount: 0
 };
 
 export default function reducer(state = initialState, action) {
@@ -31,18 +33,27 @@ export default function reducer(state = initialState, action) {
     case TYPE.GET_ACTIVE_JOB:
       return {
         ...state,
-        activeJobProduct: action.data
+        activeJobProduct: [...state.activeJobProduct, ...action.data.data],
+        activeJobsCount: action.data.count
       };
 
     case TYPE.GET_COMPLETED_JOB:
       return {
         ...state,
-        completedJobProduct: action.data
+        completedJobProduct: [
+          ...state.completedJobProduct,
+          ...action.data.data
+        ],
+        completedJobsCount: action.data.count
       };
     case TYPE.POST_JOB_PRODUCTS:
       return state;
     case TYPE.RESET_JOB_PRODUCTS:
       return { ...state, jobProduct: [] };
+    case TYPE.RESET_ACTIVE_JOB:
+      return { ...state, activeJobProduct: [] };
+    case TYPE.RESET_COMPLETED_JOB:
+      return { ...state, completedJobProduct: [] };
     default:
       return state;
   }

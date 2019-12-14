@@ -1,8 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
+
 import "./emailVerify.scss";
+import { verifyEmail } from "../../actions/user";
+
 const EmailVerify = () => {
+  const dispatch = useDispatch();
+  const [verified, setVerified] = useState(false);
+  const [userId, setUserId] = useState();
+
+  const { location } = useSelector(state => state.router);
+  let params = location.pathname.split("/");
+
+  useEffect(() => {
+    if (params && params.length) {
+      dispatch(
+        verifyEmail({ userId: params[2], otp: params[3] }, callback => {
+          if (callback) {
+            setVerified(callback);
+          } else {
+          }
+        })
+      );
+    }
+  }, []);
+
   return (
     <section className="verify-email-wrapper">
       <table>
@@ -28,7 +52,7 @@ const EmailVerify = () => {
                         />
                       </svg>
                     </td>
-                    <td className="tag-line">kviktask Market place</td>
+                    <td className="tag-line">Kvi Task Marketplace</td>
                   </tr>
                 </tbody>
               </table>
@@ -67,10 +91,13 @@ const EmailVerify = () => {
                               />
                             </svg>
                           </div>
-                          <p>
-                            Your Email Has been <strong>Successfully!!</strong>{" "}
-                            Verified.
-                          </p>
+                          {verified && (
+                            <p>
+                              Your Email Has been{" "}
+                              <strong>Successfully!!</strong> Verified.
+                            </p>
+                          )}
+                          {!verified && <p>Already Verified.</p>}
                           <Link
                             className="login-btn btn btn-info"
                             to={"/login"}
@@ -105,41 +132,43 @@ const EmailVerify = () => {
                     </td>
                     <td>
                       <table>
-                        <tr className="social-row">
-                          <td>
-                            <a href="#">
-                              <img
-                                className="rounded-circle"
-                                src={require("../../assets/images/email-template/twitter.svg")}
-                                alt=""
-                                width="25"
-                                height="25"
-                              />
-                            </a>
-                          </td>
-                          <td>
-                            <a href="#">
-                              <img
-                                className="rounded-circle"
-                                src={require("../../assets/images/email-template/facebook.svg")}
-                                alt=""
-                                width="25"
-                                height="25"
-                              />
-                            </a>
-                          </td>
-                          <td>
-                            <a href="#">
-                              <img
-                                className="rounded-circle"
-                                src={require("../../assets/images/email-template/youtube.svg")}
-                                alt=""
-                                width="25"
-                                height="25"
-                              />
-                            </a>
-                          </td>
-                        </tr>
+                        <tbody>
+                          <tr className="social-row">
+                            <td>
+                              <a href="#">
+                                <img
+                                  className="rounded-circle"
+                                  src={require("../../assets/images/email-template/twitter.svg")}
+                                  alt=""
+                                  width="25"
+                                  height="25"
+                                />
+                              </a>
+                            </td>
+                            <td>
+                              <a href="#">
+                                <img
+                                  className="rounded-circle"
+                                  src={require("../../assets/images/email-template/facebook.svg")}
+                                  alt=""
+                                  width="25"
+                                  height="25"
+                                />
+                              </a>
+                            </td>
+                            <td>
+                              <a href="#">
+                                <img
+                                  className="rounded-circle"
+                                  src={require("../../assets/images/email-template/youtube.svg")}
+                                  alt=""
+                                  width="25"
+                                  height="25"
+                                />
+                              </a>
+                            </td>
+                          </tr>
+                        </tbody>
                       </table>
                     </td>
                   </tr>

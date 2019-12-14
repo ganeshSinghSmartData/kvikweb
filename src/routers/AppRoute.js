@@ -8,11 +8,7 @@
 
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import {
-  public_type,
-  private_type,
-  profile_path
-} from "../utilities/constants";
+import { public_type, private_type } from "../utilities/constants";
 
 const AppRoute = ({
   component: Component,

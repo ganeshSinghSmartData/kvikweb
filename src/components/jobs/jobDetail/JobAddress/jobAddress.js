@@ -7,7 +7,12 @@ import datetimeDifference from "datetime-difference";
 import "./jobAddress.scss";
 import { setTimeout } from "timers";
 
-const JobAddress = ({ end_date = false, job_seeker_id, handleImageUpload }) => {
+const JobAddress = ({
+  end_date = false,
+  job_seeker_id,
+  handleImageUpload,
+  editimage = false
+}) => {
   let [timeleft, seTimeleft] = useState(
     datetimeDifference(new Date(), new Date(end_date))
   );
@@ -22,6 +27,7 @@ const JobAddress = ({ end_date = false, job_seeker_id, handleImageUpload }) => {
       <UserImage
         image={job_seeker_id.image}
         handleImageUpload={handleImageUpload}
+        edit={editimage}
       />
       {job_seeker_id && (
         <div className="job-user-info flex-fill">

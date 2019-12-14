@@ -23,8 +23,6 @@ export default ({
     new Date(moment(new Date(), "DD-MM-YYYY").add(7, "days"))
   );
   let files = {};
-  // console.log('imageData: ', Object.keys(imageData).length, Object.keys(images).length);
-
   const handleOnInputClick = () => {
     document.body.classList.add("datepicker");
   };
