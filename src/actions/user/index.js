@@ -10,6 +10,14 @@ export const login_users = data => ({ type: TYPE.LOGIN_USERS, data });
 export const logout_users = data => ({ type: TYPE.LOGOUT_USERS, data });
 export const user_bid_listing = data => ({ type: TYPE.USER_BID_LISTING, data });
 export const get_user_details = data => ({ type: TYPE.GET_USER_DETAILS, data });
+export const update_user_details = data => ({
+  type: TYPE.UPDATE_USER_DETAILS,
+  data
+});
+export const update_user_profile = data => ({
+  type: TYPE.UPDATE_USER_PROFILE,
+  data
+});
 
 /****** action creator for register users ********/
 export const registerUser = (params, callback) => {
@@ -46,6 +54,28 @@ export const loginUser = (params, callback) => {
   };
 };
 
+/****** action creator for verify users email ********/
+export const verifyEmail = (params, callback) => {
+  return dispatch => {
+    ApiClient.get(
+      `${apiUrl}/verifyEmail/${params.userId}/${params.otp}`,
+      params
+    ).then(response => {
+      if (response.status === 200) {
+        toastAction(true, response.msg);
+        if (response.msg === "Already verified") {
+          callback(false);
+        }
+      } else if (response.status === 404) {
+        toastErrorAction(dispatch, response.msg);
+      } else {
+        callback(response.msg);
+        dispatch(is_fetching(false));
+      }
+    });
+  };
+};
+
 /****** action creator for logout ********/
 export const logout = (params = {}) => {
   return (dispatch, getState) => {
@@ -70,7 +100,7 @@ export const logout = (params = {}) => {
 export const getUserBid = params => {
   return (dispatch, getState) => {
     /* const {
-        data: { loginToken }
+        data: { token }
       } = getState().user; */
     // api/user_bid?skip=0&limit=10
     ApiClient.get(`${apiUrl}/api/user_bid`, params).then(response => {
@@ -88,17 +118,61 @@ export const getUserBid = params => {
 /****** action creator for login users jobs ********/
 export const getUserDetails = user_id => {
   return (dispatch, getState) => {
-    /* const {
-        data: { loginToken }
-      } = getState().user; */
-    ApiClient.get(`${apiUrl}/userDetails/${user_id}`, {}).then(response => {
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient.get(`${apiUrl}/userDetails/${user_id}`, {}, token).then(
+      response => {
+        if (response.status === 200) {
+          dispatch(get_user_details(response.data));
+        } else if (response.status === 401) {
+          toastErrorAction(dispatch, response.msg);
+        } else {
+          dispatch(is_fetching(false));
+        }
+      }
+    );
+  };
+};
+
+/****** action creator for update users details ********/
+export const updateUserDetails = (params, callback) => {
+  return (dispatch, getState) => {
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient.put(`${apiUrl}/updateUser`, params, token).then(response => {
       if (response.status === 200) {
-        dispatch(get_user_details(response));
+        callback(true);
+        dispatch(update_user_details(response.data));
       } else if (response.status === 401) {
-        toastErrorAction(dispatch, response.message);
+        callback(false);
+        toastErrorAction(dispatch, response.msg);
       } else {
         dispatch(is_fetching(false));
       }
     });
+  };
+};
+
+/****** action creator for upload user profile picture ********/
+export const uploadUserImage = (params, callback) => {
+  return (dispatch, getState) => {
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient._postFormData(`${apiUrl}/imageUpload`, params, token).then(
+      response => {
+        if (response.status === 200) {
+          callback(true);
+          dispatch(update_user_details(response.data));
+        } else if (response.status === 401) {
+          callback(false);
+          toastErrorAction(dispatch, response.msg);
+        } else {
+          dispatch(is_fetching(false));
+        }
+      }
+    );
   };
 };

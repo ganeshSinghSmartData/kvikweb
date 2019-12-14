@@ -91,6 +91,12 @@
     flex-direction: column;
     align-items: center;
   }
+  .job-address.editMode {
+    align-items: initial;
+    .job-user {
+      align-self: center;
+    }
+  }
   .job-user-info {
     padding-left: 0;
   }

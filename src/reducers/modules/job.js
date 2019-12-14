@@ -10,7 +10,11 @@ import * as TYPE from "../../actions/constants";
 const initialState = {
   jobProduct: [],
   jobDetails: {},
-  count: 0
+  activeJobProduct: [],
+  completedJobProduct: [],
+  count: 0,
+  activeJobsCount: 0,
+  completedJobsCount: 0
 };
 
 export default function reducer(state = initialState, action) {
@@ -26,10 +30,30 @@ export default function reducer(state = initialState, action) {
         ...state,
         jobDetails: action.data
       };
+    case TYPE.GET_ACTIVE_JOB:
+      return {
+        ...state,
+        activeJobProduct: [...state.activeJobProduct, ...action.data.data],
+        activeJobsCount: action.data.count
+      };
+
+    case TYPE.GET_COMPLETED_JOB:
+      return {
+        ...state,
+        completedJobProduct: [
+          ...state.completedJobProduct,
+          ...action.data.data
+        ],
+        completedJobsCount: action.data.count
+      };
     case TYPE.POST_JOB_PRODUCTS:
       return state;
     case TYPE.RESET_JOB_PRODUCTS:
       return { ...state, jobProduct: [] };
+    case TYPE.RESET_ACTIVE_JOB:
+      return { ...state, activeJobProduct: [] };
+    case TYPE.RESET_COMPLETED_JOB:
+      return { ...state, completedJobProduct: [] };
     default:
       return state;
   }

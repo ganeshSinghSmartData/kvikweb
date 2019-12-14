@@ -18,23 +18,17 @@ import { ClipLoader } from "react-spinners";
 import PropTypes from "prop-types";
 
 const ReactLoader = ({ loading }) => {
-  const override = css`
-    display: block;
-    margin: 0 auto;
-    border-color: #b8d433;
-  `;
   return (
     loading && (
       <React.Fragment>
-        <div className="loader-outer"> </div>
-        <div className="sweet-loading">
-          <ClipLoader
-            css={override}
-            sizeUnit={"px"}
-            size={150}
-            color={"#B8D433"}
-            loading={loading}
-          />
+        <div className="dataLoader block position-absolute w-100 h-100 d-flex justify-content-center align-items-center">
+          <div className="d-flex flex-column justify-content-center align-items-center">
+            <span
+              className="spinner-border text-primary"
+              role="status"
+              aria-hidden="true"
+            ></span>
+          </div>
         </div>
       </React.Fragment>
     )

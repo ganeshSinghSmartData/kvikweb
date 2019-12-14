@@ -4,35 +4,97 @@ import { useDispatch, useSelector } from "react-redux";
 import smoothscroll from "smoothscroll-polyfill";
 import JobProduct from "./jobProduct/jobProduct";
 import Sidebar from "../sidebar/sidebar";
-import PostJob from "./postJob";
 import BidderProfile from "./bidderProfile/bidderProfile";
-import UserProfileDetail from "../jobs/userProfileDetail/userProfileDetail";
 import Heading from "../../components/commonUi/heading/heading";
 import Paragraph from "../../components/commonUi/paragraph/paragraph";
 import { pagination } from "../../utilities/constants";
-import { DaysBetween } from "./../../utilities/common";
 // import SpinnerOverlay from '../commonUi/spinner/spinnerOverlay/spinnerOverlay';
+import NoData from "../commonUi/noData/noData";
 import "./jobs.scss";
-import { getJobProduct, reset_job_products } from "./../../actions/job";
+import {
+  getJobProduct,
+  reset_job_products,
+  getUserActiveJob
+} from "./../../actions/job";
 smoothscroll.polyfill();
 
-const Job = () => {
+const Job = ({
+  path = "",
+  _handleUserActiveJob,
+  _handleUserCompletedJob,
+  _handleUserAcceptedBid,
+  _handleUserNotAcceptedBid
+}) => {
   const dispatch = useDispatch();
   const [listType, setlistType] = useState(false);
   let [page, setPage] = useState(pagination.page);
+  let [jobType, setJobType] = useState("active");
+  // let [bidType, setBidType] = useState("accepted");
+
   const toggleListType = value => {
     setlistType(value);
   };
   let jobs = useSelector(state => state.job);
+  let bids = useSelector(state => state.bid);
+
+  let products = [];
+  let count = 0;
+  let active = "Active";
+  let complete = "Complete";
+
+  if (path === "/job-list") {
+    active = `${active} Job`;
+    complete = `${complete} Job`;
+    if (jobType === "active") {
+      products = jobs.activeJobProduct;
+      count = jobs.activeJobsCount;
+    }
+    if (jobType === "completed") {
+      products = jobs.completedJobProduct;
+      count = jobs.completedJobsCount;
+    }
+  } else if (path === "/bid-list") {
+    active = `${active} Bid`;
+    complete = `${complete} Bid`;
+    if (jobType === "active") {
+      products = bids.activeBid;
+      count = bids.activeBidsCount;
+    }
+    if (jobType === "completed") {
+      products = bids.completedBid;
+      count = bids.completedBidsCount;
+    }
+  } else {
+    products = jobs.jobProduct;
+    count = jobs.count;
+  }
 
   const showMoreProduct = page => {
     setPage(page);
-    dispatch(getJobProduct({ page: page }));
+    if (path === "/job-list") {
+      if (jobType === "active") {
+        _handleUserActiveJob({ page: page });
+      }
+      if (jobType === "completed") {
+        _handleUserCompletedJob({ page: page });
+      }
+    } else if (path === "/bid-list") {
+      if (jobType === "active") {
+        _handleUserAcceptedBid({ page: page });
+      }
+      if (jobType === "completed") {
+        _handleUserNotAcceptedBid({ page: page });
+      }
+    } else {
+      dispatch(getJobProduct({ page: page }));
+    }
   };
 
   useEffect(() => {
-    dispatch(reset_job_products());
-    dispatch(getJobProduct({ page: page }));
+    if (path !== "/job-list") {
+      dispatch(reset_job_products());
+      dispatch(getJobProduct({ page: page }));
+    }
   }, []);
 
   return (
@@ -56,25 +118,53 @@ const Job = () => {
           </svg>
         </Button>
         {/* <BidderProfile /> */}
-        {/* <UserProfileDetail /> */}
-        {/* <PostJob /> */}
         <Row className="d-flex flex-nowrap position-relative">
-          <Col className="sidebar-col d-flex flex-column">
-            <Sidebar />
-          </Col>
+          {path === "" && (
+            <Col className="sidebar-col d-flex flex-column">
+              <Sidebar />
+            </Col>
+          )}
           <Col className="job-rt-col">
-            <Heading className="text-primary h1">Welcome to Kvik</Heading>
-            <Paragraph>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Pellentesque leo ipsum, consequat a tellus pharetra, commodo
-              bibendum dui. In rhoncus lacus ut justo lacinia, id tempus ligula
-              convallis.
-            </Paragraph>
-            <div className="job-list-blc">
+            {path === "" && (
+              <React.Fragment>
+                <Heading className="text-primary h1">Welcome to Kvik</Heading>
+                <Paragraph>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Pellentesque leo ipsum, consequat a tellus pharetra, commodo
+                  bibendum dui. In rhoncus lacus ut justo lacinia, id tempus
+                  ligula convallis.
+                </Paragraph>
+              </React.Fragment>
+            )}
+
+            <div className="job-list-blc m-0">
               <div className="job-list-heading d-flex">
-                {/* <h3 className="flex-fill">
-                  Jobs in vicinity of your locations: {jobs.count}
-                </h3> */}
+                {path !== "" && (
+                  <div className="job-list-tab">
+                    {/* <Button color="primary" onClick={() => { path === "/job-list" ? setJobType('active') : setBidType('accepted') }} style={{ marginBottom: '1rem' }}>{path === "/job-list" ? 'Active Jobs' : 'Accepted'}</Button>
+                    <Button color="primary" onClick={() => { path === "/job-list" ? setJobType('completed') : setBidType('not-accepted') }} style={{ marginBottom: '1rem' }}>{path === "/job-list" ? 'Completed Jobs' : 'Not-Accepted'}</Button> */}
+                    <button
+                      className={`btn ${
+                        jobType === "active" ? "btn-primary" : ""
+                      }`}
+                      onClick={() => {
+                        setJobType("active");
+                      }}
+                    >
+                      {active}
+                    </button>
+                    <button
+                      className={`btn ${
+                        jobType === "completed" ? "btn-primary" : ""
+                      }`}
+                      onClick={() => {
+                        setJobType("completed");
+                      }}
+                    >
+                      {complete}
+                    </button>
+                  </div>
+                )}
                 <div className="job-list-icon d-flex ml-auto">
                   <Button
                     color="link"
@@ -121,16 +211,25 @@ const Job = () => {
               <Row
                 className={"job-listing " + (listType ? "job-list-row" : "")}
               >
-                {jobs &&
-                  jobs.jobProduct.map((item, key) => {
+                {products && products.length === 0 && <NoData />}
+                {products &&
+                  products.map((item, key) => {
+                    let prodItem = { ...item };
+                    if (path === "/bid-list") {
+                      prodItem = { ...item.job_id, status: item.status };
+                    }
                     return (
                       <Col lg="4" className="product-col" key={key}>
-                        <JobProduct product={item} listType={listType} />
+                        <JobProduct
+                          product={prodItem}
+                          listType={listType}
+                          path={path}
+                        />
                       </Col>
                     );
                   })}
               </Row>
-              {jobs.jobProduct.length < jobs.count && (
+              {products && products.length !== 0 && products.length < count && (
                 <Row className="joblist-more">
                   <Col className="d-flex justify-content-center">
                     <Button
@@ -138,14 +237,7 @@ const Job = () => {
                       className="data-loader-btn"
                       onClick={() => showMoreProduct(++page)}
                     >
-                      <span className="d-flex justify-content-center">
-                        {/* <span
-                          className="spinner-border spinner-border-sm"
-                          role="status"
-                          aria-hidden="true"
-                        ></span>
-                        Loading... */}
-                      </span>
+                      <span className="d-flex justify-content-center"></span>
                       <span>SHOW MORE</span>
                     </Button>
                   </Col>

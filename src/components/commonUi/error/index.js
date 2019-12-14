@@ -4,6 +4,7 @@ import { Errors } from "react-redux-form";
 import {
   invalidEmail,
   invalidPass,
+  invalidNumber,
   required
 } from "./../../../utilities/message";
 
@@ -16,6 +17,7 @@ const errors = ({ model, errors }) => {
       messages={{
         required,
         invalidEmail,
+        invalidNumber,
         invalidPass,
         ...errors
       }}

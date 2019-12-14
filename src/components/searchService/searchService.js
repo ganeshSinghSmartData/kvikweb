@@ -1,11 +1,36 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import "./searchService.scss";
-import { Container, Row, Col, Form, Input, Button } from "reactstrap";
+import { withRouter } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
+import { LocalForm, Control } from "react-redux-form";
 import { Link } from "react-router-dom";
+import { Container, Row, Col, Button } from "reactstrap";
 
-const SearchService = () => {
+import "./searchService.scss";
+import { pagination } from "../../utilities/constants";
+import { getJobProduct } from "../../actions/job";
+
+const SearchService = props => {
   const loggedInUser = useSelector(state => state.user.loggedIn);
+  const dispatch = useDispatch();
+  const pathname = props.history.location.pathname;
+
+  const _handleSearch = searchKey => {
+    if (pathname === "/") {
+      dispatch(getJobProduct({ page: pagination.page, search: searchKey }));
+    }
+    /* if (pathname === '/') {
+      dispatch(getJobProduct({ page: pagination.page, search: searchKey }));
+    }
+    if (pathname === '/') {
+      dispatch(getJobProduct({ page: pagination.page, search: searchKey }));
+    }
+    if (pathname === '/') {
+      dispatch(getJobProduct({ page: pagination.page, search: searchKey }));
+    }
+    if (pathname === '/') {
+      dispatch(getJobProduct({ page: pagination.page, search: searchKey }));
+    } */
+  };
   return (
     <div className="src-service-blc d-flex flex-column flex-fill">
       <Container className="d-flex flex-column flex-fill">
@@ -13,7 +38,10 @@ const SearchService = () => {
           <Col className="d-flex flex-fill">
             <div className="src-service-blc d-flex flex-fill m-auto justify-content-center">
               <div className="src-service d-flex">
-                <Form className="d-flex flex-fill">
+                <LocalForm
+                  onSubmit={values => _handleSearch(values)}
+                  className="d-flex flex-fill"
+                >
                   <span className="d-flex align-items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -29,16 +57,17 @@ const SearchService = () => {
                       />
                     </svg>
                   </span>
-                  <Input
+                  <Control.text
                     type="search"
                     name="search"
+                    model=".search"
                     placeholder="Search for a service"
-                    className="border-0 flex-fill h-100"
+                    className="border-0 flex-fill h-100 form-control"
                   />
-                  <Button color="primary" type="button">
+                  <Button color="primary" type="submit">
                     Search
                   </Button>
-                </Form>
+                </LocalForm>
               </div>
               {loggedInUser && (
                 <Link className="text-black" to={"/post-job"}>
@@ -53,4 +82,4 @@ const SearchService = () => {
   );
 };
 
-export default SearchService;
+export default withRouter(SearchService);

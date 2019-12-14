@@ -1,31 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import datetimeDifference from "datetime-difference";
 
 import "./jobProduct.scss";
-import { StringToDate } from "./../../../utilities/common";
-// import CountDown from "../../../utilities/countDown";
-
+import { StringToDate, DaysBetween } from "./../../../utilities/common";
 import { apiUrl } from "./../../../environment";
 
 /********* Get time ago in string format *********/
 
-const JobProduct = ({ product, listType }) => {
-  const timeleft = datetimeDifference(
-    new Date(),
-    new Date(Number(product.jobEndDate))
+const JobProduct = ({ product, listType, path }) => {
+  const [timeleft, seTimeleft] = useState(
+    datetimeDifference(new Date(), new Date(DaysBetween(product.jobEndDate)))
   );
+
+  var intervalId = setInterval(() => {
+    const time = datetimeDifference(
+      new Date(),
+      new Date(DaysBetween(product.jobEndDate))
+    );
+    seTimeleft(time);
+  }, 1000 * 60);
+
+  useEffect(() => {
+    return () => {
+      clearInterval(intervalId);
+    };
+  });
+
+  let pathname = "/job-details/";
+  if (path === "/job-list") {
+    pathname = "/job-proposal/";
+  }
+  if (path === "/bid-list") {
+    pathname = "/bid-details/";
+  }
 
   return (
     <div className={"job-wrapper " + (listType ? "d-flex flex-column" : "")}>
       <div className="job-pic text-center flex-shrink-0">
         {product.images && product.images.length && (
-          <Link className="text-black" to={`/job-details/${product._id}`}>
-            <img
-              src={`${apiUrl}/${product.images[0]["path"]}`}
-              alt="Job image"
-            />
+          <Link className="text-black" to={`${pathname}${product._id}`}>
+            <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />
           </Link>
         )}
       </div>
@@ -64,7 +80,9 @@ const JobProduct = ({ product, listType }) => {
               </g>
             </svg>
           </span>
-          <label className="mb-0">{product.location}, {product.city}</label>
+          <label className="mb-0">
+            {product.location}, {product.city}
+          </label>
         </div>
         {listType ? (
           <div className="job-desc">

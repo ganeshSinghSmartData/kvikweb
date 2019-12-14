@@ -1,29 +1,38 @@
 import React, { useState } from "react";
-import { Input, Button } from "reactstrap";
-import { Control } from "react-redux-form";
+import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { LocalForm } from "react-redux-form";
 import DatePicker from "react-datepicker";
+import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
-
 import InputCell from "../../commonUi/input/inputCell";
 import "./postJob.scss";
+import { set } from "date-fns/esm";
 
 export default ({
   _currentstage,
   _handleStageChange,
   _handleJobPost,
-  _handleJobUpdate
+  _handleJobUpdate,
+  _imageValidator
 }) => {
   const [images, setImages] = useState([]);
-  const [imageData, setImageData] = useState([]);
+  const [imageData, setImageData] = useState({});
   const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(
+    new Date(moment(new Date(), "DD-MM-YYYY").add(7, "days"))
+  );
+  let files = {};
+  const handleOnInputClick = () => {
+    document.body.classList.add("datepicker");
+  };
+  const handleOnClickOutsideEvent = () => {
+    document.body.classList.remove("datepicker");
+  };
 
-  let files;
   const handleImageOnchange = event => {
-    files = event.target.files;
-    setImageData(files);
+    files = event;
+    setImageData({ ...imageData, ...files });
     const imagesData = Object.values(files).reduce((list, key) => {
       if (key && typeof key === "object") {
         let url = URL.createObjectURL(key);
@@ -31,7 +40,19 @@ export default ({
       }
       return list;
     }, []);
-    setImages(imagesData);
+    setImages([...images, ...imagesData]);
+  };
+
+  const removeImage = index => {
+    images.splice(index, 1);
+    let updatedImageData = { ...imageData };
+    for (var key in updatedImageData) {
+      if (!Number(updatedImageData[key]) && parseInt(key) === index) {
+        delete updatedImageData[key];
+      }
+    }
+    setImageData(updatedImageData);
+    setImages(images);
   };
 
   /********** Change class on steps ************/
@@ -45,8 +66,17 @@ export default ({
     }
   };
 
+  const onClickOutsideEvent = () => {
+    console.log("inside onClickOutsideEvent : ");
+  };
+
+  const onSelectEvent = () => {
+    console.log("inside onSelectEvent : ");
+  };
+
   return (
     <div className="post-wrapper data-block ml-auto mr-auto position-relative">
+      {/* <DataLoader /> */}
       {/* Top Header Buttons */}
       <div className="post-job-nav d-flex justify-content-center">
         <ul className="d-flex">
@@ -70,7 +100,7 @@ export default ({
       <div
         className={`post-job-inner ${
           _currentstage === 3 ? "gallery-block" : ""
-          }`}
+        }`}
       >
         <LocalForm
           onSubmit={values =>
@@ -115,8 +145,11 @@ export default ({
                   Name={"budget"}
                   Placeholder={"Budget"}
                   Model=".budget"
-                  InputType={"number"}
-                  Errors={{ required: "required" }}
+                  InputType={"text"}
+                  Errors={{
+                    required: "required",
+                    invalidNumber: "invalidNumber"
+                  }}
                 />
               </div>
             </div>
@@ -150,8 +183,11 @@ export default ({
                   Name={"postalCode"}
                   Placeholder={"Postal Code"}
                   Model=".location"
-                  InputType={"number"}
-                  Errors={{ required: "required" }}
+                  InputType={"text"}
+                  Errors={{
+                    required: "required",
+                    invalidNumber: "invalidNumber"
+                  }}
                 />
               </div>
               <div className="col-md-4">
@@ -161,6 +197,8 @@ export default ({
                   onChange={date => setStartDate(date)}
                   timeInputLabel="Time:"
                   dateFormat="MM/dd/yyyy h:mm aa"
+                  onInputClick={() => handleOnInputClick()}
+                  onClickOutsideEvent={handleOnClickOutsideEvent()}
                   showTimeInput
                 />
               </div>
@@ -171,6 +209,8 @@ export default ({
                   onChange={date => setEndDate(date)}
                   timeInputLabel="Time:"
                   dateFormat="MM/dd/yyyy h:mm aa"
+                  onInputClick={() => handleOnInputClick()}
+                  onClickOutsideEvent={handleOnClickOutsideEvent()}
                   showTimeInput
                 />
               </div>
@@ -194,7 +234,25 @@ export default ({
                   images.length > 0 &&
                   images.map((item, key) => {
                     return (
-                      <li key={key}>
+                      <li key={key} className="position-relative">
+                        <Button
+                          color="link"
+                          className="gallery-btn d-flex align-items-center justify-content-center"
+                          onClick={() => removeImage(key)}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="357"
+                            height="357"
+                            viewBox="0 0 357 357"
+                          >
+                            <path
+                              id="Forma_1"
+                              data-name="Forma 1"
+                              d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                            />
+                          </svg>
+                        </Button>
                         <img src={item} alt="Job Pic" />
                       </li>
                     );
@@ -206,12 +264,14 @@ export default ({
                     className="add-gallery-btn position-relative"
                     type="button"
                   >
-                    <Input
-                      type="file"
-                      model=".images"
-                      name="file"
-                      multiple="multiple"
-                      onChange={event => handleImageOnchange(event)}
+                    <InputCell
+                      Name={"file"}
+                      Model=".images"
+                      InputType="file"
+                      Placeholder={"Image Upload"}
+                      Multiple="multiple"
+                      Errors={{ required: "" }}
+                      HandleImageOnchange={handleImageOnchange}
                     />
                     <svg
                       id="_x38__3_"
@@ -234,12 +294,20 @@ export default ({
               </ul>
             </div>
           )}
+          {Object.keys(images).length === 0 && _imageValidator && (
+            <div className="requied-msg-blc d-flex justify-content-center text-center">
+              <span>Please Upload! your Post-Job Images.</span>
+            </div>
+          )}
 
           {/* Next, Save, Back and Cancel button */}
-          <div className="post-job-btns text-center">
+          <div className="post-job-btns text-center d-flex justify-content-center">
             {_currentstage === 1 && (
-              <Link className="text-black" to={"/"}>
-                <Button color="link" className="btn-dark" type="button">CANCEL</Button>
+              <Link
+                className="text-black btn-dark cancel btn btn-link"
+                to={"/"}
+              >
+                CANCEL
               </Link>
             )}
             {_currentstage !== 1 && (
@@ -255,10 +323,14 @@ export default ({
               </Button>
             )}
             {_currentstage !== 3 && (
-              <Button type="submit" color="secondary">NEXT</Button>
+              <Button type="submit" color="secondary">
+                NEXT
+              </Button>
             )}
             {_currentstage === 3 && (
-              <Button color="secondary" type="submit">POST NOW</Button>
+              <Button color="secondary" type="submit">
+                POST NOW
+              </Button>
             )}
           </div>
         </LocalForm>

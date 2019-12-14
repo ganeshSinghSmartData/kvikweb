@@ -1,11 +1,12 @@
 import React from "react";
-import { FormGroup, Label } from "reactstrap";
+import { FormGroup } from "reactstrap";
 import { Control } from "react-redux-form";
 import Match from "../../../utilities/validation";
 import Error from "./../error";
 import {
   invalidEmail,
   invalidPass,
+  invalidNumber,
   required
 } from "./../../../utilities/message";
 
@@ -17,6 +18,10 @@ const InputCell = ({
   Placeholder,
   InputIcon,
   ClassName = "",
+  Disabled = false,
+  Multiple = "multiple",
+  DefaultValue = "hourly",
+  HandleImageOnchange,
   Errors
 }) => {
   let ErrorsObject = {};
@@ -35,6 +40,11 @@ const InputCell = ({
       errors = { ...errors, invalidPass: val => !Match.validatePassword(val) };
       ErrorsObject = { invalidPass };
     }
+    if (Errors["invalidNumber"] === "invalidNumber") {
+      errors = { ...errors, invalidNumber: val => !Match.validateNumbers(val) };
+      ErrorsObject = { invalidNumber };
+    }
+
     return errors;
   };
 
@@ -131,16 +141,19 @@ const InputCell = ({
             ) : null}
           </span>
         ) : null}
-        {InputType !== "select" && InputType !== "textarea" && (
-          <Control.text
-            type={InputType}
-            name={Name}
-            placeholder={Placeholder}
-            model={Model}
-            className={"form-control"}
-            errors={validation()}
-          />
-        )}
+        {InputType !== "select" &&
+          InputType !== "textarea" &&
+          InputType !== "file" && (
+            <Control.text
+              type={InputType}
+              name={Name}
+              placeholder={Placeholder}
+              disabled={Disabled}
+              model={Model}
+              className={"form-control"}
+              errors={validation()}
+            />
+          )}
 
         {InputType === "select" && (
           <Control.select
@@ -149,6 +162,8 @@ const InputCell = ({
             placeholder={Placeholder}
             model={Model}
             className={"form-control custom-select"}
+            defaultValue={DefaultValue}
+            disabled={Disabled}
             errors={validation()}
           >
             {Name === "frequency" &&
@@ -180,6 +195,18 @@ const InputCell = ({
             className={"form-control"}
             errors={validation()}
           ></Control.textarea>
+        )}
+        {InputType === "file" && (
+          <Control.file
+            type={InputType}
+            name={Name}
+            placeholder={Placeholder}
+            model={Model}
+            multiple={Multiple}
+            onChange={event => HandleImageOnchange(event.target.files)}
+            className={"form-control"}
+            errors={validation()}
+          ></Control.file>
         )}
         <Error
           model={Model}

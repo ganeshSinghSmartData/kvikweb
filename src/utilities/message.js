@@ -7,6 +7,8 @@
 const Message = {
   requiredField: field => `Please enter ${field}!`,
   required: "This field is required. ",
+  invalidNumber: "Please enter valid number.",
+  fileRequired: "Please Upload! your Post-Job Images.",
   emptyField: "This field is required.",
   success: "Success!",
   error: "Error!",

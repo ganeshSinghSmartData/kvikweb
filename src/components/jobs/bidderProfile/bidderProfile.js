@@ -23,9 +23,7 @@ const BidderProfile = () => {
         <div className="data-page bidder-profl-blc position-relative">
           <div className="bidder-profl-blc-rw">
             <div className="bidder-profl-rw d-flex">
-              <div className="bidder-profl-l">
-                <JobAddress />
-              </div>
+              <div className="bidder-profl-l">{/* <JobAddress /> */}</div>
               <div className="bidder-profl-r ml-auto d-flex flex-column">
                 <div className="profile-bar ml-auto">
                   <span className="profile-percentage">95%</span>

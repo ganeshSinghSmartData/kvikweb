@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import {
   Dropdown,
   DropdownToggle,
@@ -6,9 +7,21 @@ import {
   DropdownItem,
   Button
 } from "reactstrap";
+import { Link } from "react-router-dom";
+
 import "./userProfile.scss";
+import { DummyUserImage } from "../../../utilities/constants";
+import { apiUrl } from "./../../../environment";
+
 const UserProfile = props => {
+  let imagepath = DummyUserImage;
+  if (props.image && props.image.length) {
+    imagepath = `${apiUrl}/${props.image[0].original}`;
+  }
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const user = useSelector(state => state.user);
+
   const toggle = () => setDropdownOpen(prevState => !prevState);
   return (
     <div
@@ -35,12 +48,15 @@ const UserProfile = props => {
       <Button color="link" className="user-pic p-0 rounded-circle">
         <img
           className="rounded-circle w-100 h-100"
-          src={require("../../../assets/images/user-profile.jpg")}
+          src={imagepath}
           alt="User Profile"
         />
       </Button>
       <Dropdown isOpen={dropdownOpen} toggle={toggle} className="user-dropdown">
         <DropdownToggle caret color="link">
+          {user.loggedIn && (
+            <label className="mb-0">{`${user.data.fname} ${user.data.lname}`}</label>
+          )}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="81.309"
@@ -55,17 +71,21 @@ const UserProfile = props => {
             />
           </svg>
         </DropdownToggle>
-        {/* <DropdownMenu right>
+        <DropdownMenu right>
           <DropdownItem header>Profile</DropdownItem>
-          <DropdownItem>View Profile</DropdownItem>
-          <DropdownItem>Edit Profile</DropdownItem>
-          <DropdownItem divider />
+          <Link className="dropdown-item" to={"/profile"}>
+            View Profile
+          </Link>
+          {/* <Link className="dropdown-item" to="/edit-profile">
+            Edit Profile
+          </Link> */}
+          {/* <DropdownItem divider />
           <DropdownItem disabled>Action (disabled)</DropdownItem>
           <DropdownItem divider />
           <DropdownItem>Foo Action</DropdownItem>
           <DropdownItem>Bar Action</DropdownItem>
-          <DropdownItem>Quo Action</DropdownItem>
-        </DropdownMenu> */}
+          <DropdownItem>Quo Action</DropdownItem> */}
+        </DropdownMenu>
       </Dropdown>
     </div>
   );

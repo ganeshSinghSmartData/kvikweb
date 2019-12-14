@@ -15,22 +15,26 @@ const Nav = props => {
       className={"d-flex align-items-center " + props.className}
       onClick={stopPropagationHandler}
     >
-      <ul className="d-flex align-items-center">
-        <li>
-          <Link className="btn btn-link" disabled={true} to={""}>
-            Bids
-          </Link>
-        </li>
-        <li>
-          <Link className="btn btn-link" disabled={true} to={""}>
-            Categories
-          </Link>
-        </li>
-        <li>
+      <ul className="d-flex align-items-center flex-wrap">
+        {user.loggedIn && (
+          <li>
+            <Link className="btn btn-link" disabled={true} to={"/bid-list"}>
+              Bids
+            </Link>
+          </li>
+        )}
+        {user.loggedIn && (
+          <li>
+            <Link className="btn btn-link" disabled={true} to={"/job-list"}>
+              Jobs
+            </Link>
+          </li>
+        )}
+        {/*         <li>
           <Link className="btn btn-link" disabled={true} to={""}>
             Help
           </Link>
-        </li>
+        </li> */}
         {!user.loggedIn && (
           <li>
             <Link className="btn btn-link" to={"/register"}>
