@@ -1,10 +1,13 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   CardElement,
   injectStripe,
   StripeProvider,
   Elements,
 } from 'react-stripe-elements';
+import { Button, Label } from "reactstrap";
+import UserPayment from '../components/jobs/userProfileDetail/userPayment';
+import { LocalForm } from "react-redux-form";
 
 // You can customize your Elements to give it the look and feel of your site.
 const createOptions = () => {
@@ -32,16 +35,16 @@ class _CardForm extends Component {
     errorMessage: '',
   };
 
-  handleChange = ({error}) => {
+  handleChange = ({ error }) => {
     if (error) {
-      this.setState({errorMessage: error.message});
+      this.setState({ errorMessage: error.message });
     }
   };
 
   handleSubmit = (evt) => {
     evt.preventDefault();
     if (this.props.stripe) {
-      const token=this.props.stripe.createToken().then(this.props.handleResult);
+      const token = this.props.stripe.createToken().then(this.props.handleResult);
       console.log(token);
       // this.props.stripe.createToken().then(this.props.handleResult);
     } else {
@@ -54,18 +57,19 @@ class _CardForm extends Component {
       <div className="CardDemo payment-cardDemo">
         <form onSubmit={this.handleSubmit.bind(this)}>
           <label>
-            <h2>Card details</h2>
             <CardElement
               onChange={this.handleChange}
               {...createOptions()}
             />
+            {/* <UserPayment></UserPayment> */}
           </label>
           <div className="error" role="alert">
             {this.state.errorMessage}
           </div>
-        <div className="payment-com-btn">
-        <button>Add Card</button>
-        </div>
+
+          <div className="card-detail-btn text-center">
+            <Button color="secondary">Make Payment</Button>
+          </div>
         </form>
       </div>
     );
@@ -77,7 +81,7 @@ const CardForm = injectStripe(_CardForm);
 export default class CardDemo extends Component {
   render() {
     return (
-      <StripeProvider apiKey="pk_test_SRoR6VJO3S4M6XzIxkwi8vko00Rp3jGmeA">
+      <StripeProvider apiKey="pk_test_DwzVvw7dIyntcsbXh6OsNVS200eXzmTfcz">
         <Elements>
           <CardForm handleResult={this.props.handleResult} />
         </Elements>

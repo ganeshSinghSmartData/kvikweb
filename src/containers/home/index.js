@@ -5,6 +5,9 @@ import { bindActionCreators } from "redux";
 import Job from "./../../components/jobs/jobs";
 import SignInModal from "./../../components/commonUi/modal/modal";
 import { registerUser, loginUser } from "./../../actions/user";
+import { socketUrl } from '../../environment';
+import SocketClient from '../../config/socket';
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -26,12 +29,14 @@ class Home extends Component {
     if (values.lname || values.fname) {
       this.props.registerUser(values, callback => {
         if (callback) {
+          SocketClient.init(socketUrl, callback.token, this.props.dispatch);
           this.toggleModal();
         }
       });
     } else {
       this.props.loginUser(values, callback => {
         if (callback) {
+          SocketClient.init(socketUrl, callback.token, this.props.dispatch);
           this.toggleModal();
         }
       });

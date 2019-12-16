@@ -7,10 +7,12 @@ import UserInfo from "../bidderProfile/userInfo/userInfo";
 import InputCell from "../../commonUi/input/inputCell";
 import UserImage from "../jobDetail/userImage/userImage";
 import "./userProfileDetail.scss";
-import UserPayment from './userPayment';
+import StripeCard from '../../../config/stripe';
+import { AddCard } from '../../../actions/user';
+import UserPayment from "./userPayment";
 
 const UserProfile = ({ path, user, _handleSubmit }) => {
-  const [cardType, setCardType] = useState();
+
 
   return (
     <div className="data-page user-profl-blc">

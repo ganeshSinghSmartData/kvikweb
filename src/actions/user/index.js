@@ -104,3 +104,23 @@ export const getUserDetails = user_id => {
     );
   };
 };
+
+/****** action creator for add card ********/
+export const AddCard = (params = {}) => {
+  return (dispatch, getState) => {
+    dispatch(is_fetching(true));
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient.post(`${apiUrl}/payment/saveCardByToken`, params, token).then(response => {
+      if (response.status === 200) {
+        toastAction(true, "Card successfully saved");
+        dispatch(is_fetching(false));
+      } else {
+        dispatch(is_fetching(false));
+        toastAction(false, response.msg);
+      }
+    });
+  };
+};
+

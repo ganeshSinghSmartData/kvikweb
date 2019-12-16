@@ -6,9 +6,10 @@
  */
 
 const local = {
-  apiUrl: "http://172.24.4.129:3000"
-  /*   socketUrl: "http://172.24.5.111:3000",
-  file: "http://172.24.5.111:3000/api",
+  apiUrl: "http://172.24.4.127:4599",
+  socketUrl: "http://172.24.4.127:4599",
+  stripeKey: "pk_test_DwzVvw7dIyntcsbXh6OsNVS200eXzmTfcz",
+  /*file: "http://172.24.5.111:3000/api",
   JWT: {
     key: "jetx-services",
     algo: "HS512"

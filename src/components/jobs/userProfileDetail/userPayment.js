@@ -1,18 +1,23 @@
 import React, { useState } from "react";
-import { Button, Label } from "reactstrap";
-import { Link } from "react-router-dom";
-import { LocalForm } from "react-redux-form";
-import JobAddress from "../jobDetail/JobAddress/jobAddress";
-import UserInfo from "../bidderProfile/userInfo/userInfo";
-import InputCell from "../../commonUi/input/inputCell";
-import UserImage from "../jobDetail/userImage/userImage";
+import StripeCard from '../../../config/stripe';
+import { AddCard } from '../../../actions/user';
+import { useSelector, useDispatch } from 'react-redux';
+import { stripeKey } from '../../../environment';
 
-const UserPayment = ({ path, user, _handleSubmit }) => {
+const UserPayment = () => {
     const [cardType, setCardType] = useState();
+    const dispatch = useDispatch();
+
+    const handleResult = (val) => {
+
+        dispatch(AddCard({ token: val.token.id, type: "debit" }, res => {
+            if (res) {
+                console.log('sd');
+            }
+        }));
+    }
 
     return (
-
-
         <div className="user-profl-col-r">
             <h2>Add Card</h2>
             <div className="user-cards-rw">
@@ -81,46 +86,52 @@ const UserPayment = ({ path, user, _handleSubmit }) => {
             </div>
             <div className="user-cards-rw card-detail">
                 <h2>Type your card details</h2>
-                <LocalForm>
-                    <ul className="card-detail-item">
-                        <li>
-                            <Label>Card Number</Label>
-                            <InputCell
-                                Name={"cardnumber1"}
-                                Placeholder={"Card Number"}
-                                Model=".cardnumber1"
-                                InputType={"text"}
-                                className="input-line-blc"
-                                Errors={{ required: "required" }}
-                            />
-                        </li>
-                        <li>
-                            <Label>Card Number</Label>
-                            <InputCell
-                                Name={"cardnumber2"}
-                                Placeholder={"Card Number"}
-                                Model=".cardnumber2"
-                                InputType={"text"}
-                                className="input-line-blc"
-                                Errors={{ required: "required" }}
-                            />
-                        </li>
-                        <li>
-                            <Label>Card Number</Label>
-                            <InputCell
-                                Name={"cardnumber3"}
-                                Placeholder={"Card Number"}
-                                Model=".cardnumber3"
-                                InputType={"text"}
-                                className="input-line-blc"
-                                Errors={{ required: "required" }}
-                            />
-                        </li>
-                    </ul>
-                    <div className="card-detail-btn text-center">
-                        <Button color="secondary">Make Payment</Button>
-                    </div>
-                </LocalForm>
+                {/* <ul className="card-detail-item">
+            <li>
+                <Label>Card Number</Label>
+                <InputCell
+                    Name={"number"}
+                    Placeholder={"Card Number"}
+                    Model=".number"
+                    maxlength={16}
+                    InputType={"text"}
+                    className="input-line-blc"
+                    Errors={{ required: "required" }}
+                />
+            </li>
+            <li>
+                <Label>CVC</Label>
+                <InputCell
+                    Name={"cvc"}
+                    Placeholder={"Card CVC"}
+                    Model=".cvc"
+                    InputType={"text"}
+                    className="input-line-blc"
+                    Errors={{ required: "required" }}
+                />
+            </li>
+            <li>
+                <Label>Expiry Date</Label>
+                <InputCell
+                    Name={"Expiry Month"}
+                    Placeholder={"Expiry month"}
+                    Model=".exp_month"
+                    InputType={"text"}
+                    className="input-line-blc"
+                    Errors={{ required: "required" }}
+                />
+                <InputCell
+                    Name={"Expiry Year"}
+                    Placeholder={"Expiry year"}
+                    Model=".exp_year"
+                    InputType={"text"}
+                    className="input-line-blc"
+                    Errors={{ required: "required" }}
+                />
+            </li>
+        </ul> */}
+
+                <StripeCard handleResult={handleResult} />
             </div>
             <div className="user-cards-rw">
                 <div className="user-cards">
@@ -327,6 +338,8 @@ const UserPayment = ({ path, user, _handleSubmit }) => {
                 </div>
             </div>
         </div>
+
+
     );
 };
 

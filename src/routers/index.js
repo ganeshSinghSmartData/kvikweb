@@ -9,7 +9,7 @@ import {
 import AppRoute from "./AppRoute";
 import { Authorization } from "../authorization";
 import { public_type, private_type } from "../utilities/constants";
-
+import { User } from '../authorization';
 import HomePage from "../containers/home";
 import JobDetails from "../containers/job/job-details";
 import PostNewJob from "../containers/job/post-job";
@@ -18,8 +18,14 @@ import JobProposal from "../containers/job/job-proposal";
 import JobList from "../containers/job/job-list";
 import VerifyEmail from "../components/emailVerify";
 import Profile from "../containers/user/profile";
+import { socketUrl } from '../environment';
+import SocketClient from '../config/socket';
 
 const Routers = store => {
+  const res = User(store);
+  if (res && res.loggedIn) {
+    SocketClient.init(socketUrl, res.data.token, store.dispatch);
+  }
   return (
     <Router>
       <Switch>
