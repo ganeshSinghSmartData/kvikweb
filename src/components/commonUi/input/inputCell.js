@@ -9,6 +9,7 @@ import {
   invalidNumber,
   required
 } from "./../../../utilities/message";
+import { CategoryItems, FrequencyItem } from "./../../../utilities/constants";
 
 import "./inputCell.scss";
 const InputCell = ({
@@ -47,20 +48,6 @@ const InputCell = ({
 
     return errors;
   };
-
-  const categoryItems = [
-    { label: "Gardening", value: "gardening" },
-    { label: "Painting", value: "painting" },
-    { label: "Help Moving", value: "help moving" },
-    { label: "Home Design", value: "home design" },
-    { label: "Laundry Service", value: "laundry service" }
-  ];
-
-  const frequencyItem = [
-    { label: "Hourly", value: "hourly" },
-    { label: "Weekly", value: "weekly" },
-    { label: "Monthly", value: "monthly" }
-  ];
 
   return (
     <FormGroup>
@@ -167,8 +154,8 @@ const InputCell = ({
             errors={validation()}
           >
             {Name === "frequency" &&
-              frequencyItem &&
-              frequencyItem.map((item, key) => {
+              FrequencyItem &&
+              FrequencyItem.map((item, key) => {
                 return (
                   <option key={key} value={item.value}>
                     {item.label}
@@ -176,8 +163,8 @@ const InputCell = ({
                 );
               })}
             {Name === "category" &&
-              categoryItems &&
-              categoryItems.map((item, key) => {
+              CategoryItems &&
+              CategoryItems.map((item, key) => {
                 return (
                   <option key={key} value={item.value}>
                     {item.label}

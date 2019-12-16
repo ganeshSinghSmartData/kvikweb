@@ -19,7 +19,12 @@ import { JobStatus } from "../../../utilities/constants";
 import { apiUrl } from "./../../../environment";
 import { placeYourBid } from "./../../../actions/job";
 
-export default function JobDetail({ job, history, path = "" }) {
+export default function JobDetail({
+  job,
+  history,
+  path = "",
+  _markJobComplete
+}) {
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
@@ -106,6 +111,23 @@ export default function JobDetail({ job, history, path = "" }) {
                 <label className="job-detail-amnt flex-shrink-0">
                   $ {job.budget}
                 </label>
+                {path === "/job-proposal" && (
+                  <div className="mark-btn mt-auto">
+                    <Button
+                      color="secondary"
+                      block
+                      onClick={() =>
+                        _markJobComplete(
+                          job._id,
+                          job.job_seeker_id._id,
+                          user.data._id
+                        )
+                      }
+                    >
+                      Mark as Done
+                    </Button>
+                  </div>
+                )}
               </div>
               <p className="m-0">Created {StringToDate(job.created_at)}</p>
             </div>

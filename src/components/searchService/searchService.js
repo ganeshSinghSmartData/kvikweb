@@ -69,11 +69,12 @@ const SearchService = props => {
                   </Button>
                 </LocalForm>
               </div>
-              {loggedInUser && (
-                <Link className="text-black" to={"/post-job"}>
-                  <Button className="post-job-btn btn-block">Post a Job</Button>
-                </Link>
-              )}
+              <Link
+                className="text-black"
+                to={loggedInUser ? "/post-job" : "/login"}
+              >
+                <Button className="post-job-btn btn-block">Post a Job</Button>
+              </Link>
             </div>
           </Col>
         </Row>

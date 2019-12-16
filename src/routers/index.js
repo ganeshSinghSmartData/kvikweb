@@ -18,6 +18,7 @@ import JobProposal from "../containers/job/job-proposal";
 import JobList from "../containers/job/job-list";
 import VerifyEmail from "../components/emailVerify";
 import Profile from "../containers/user/profile";
+import BidderProfile from "../containers/bid/bidder-profile";
 
 const Routers = store => {
   return (
@@ -32,7 +33,6 @@ const Routers = store => {
           store={store}
           type={public_type}
         />
-
         <AppRoute
           path="/login"
           exact={true}
@@ -127,6 +127,15 @@ const Routers = store => {
           path="/edit-profile"
           exact={true}
           component={Profile}
+          requireAuth={Authorization}
+          layout={PublicLayout}
+          store={store}
+          type={private_type}
+        />
+        <AppRoute
+          path="/bidder-profile/:user_id"
+          exact={true}
+          component={BidderProfile}
           requireAuth={Authorization}
           layout={PublicLayout}
           store={store}

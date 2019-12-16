@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import smoothscroll from "smoothscroll-polyfill";
 import JobProduct from "./jobProduct/jobProduct";
 import Sidebar from "../sidebar/sidebar";
-import BidderProfile from "./bidderProfile/bidderProfile";
 import Heading from "../../components/commonUi/heading/heading";
 import Paragraph from "../../components/commonUi/paragraph/paragraph";
 import { pagination } from "../../utilities/constants";
@@ -117,7 +116,6 @@ const Job = ({
             />
           </svg>
         </Button>
-        {/* <BidderProfile /> */}
         <Row className="d-flex flex-nowrap position-relative">
           {path === "" && (
             <Col className="sidebar-col d-flex flex-column">
