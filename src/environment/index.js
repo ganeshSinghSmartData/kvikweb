@@ -40,5 +40,5 @@ if (process.env.REACT_APP_ENV === "prod") {
 } else if (process.env.REACT_APP_ENV === "dev") {
   module.exports = staging;
 } else {
-  module.exports = staging;
+  module.exports = local;
 }
