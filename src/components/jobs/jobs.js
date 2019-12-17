@@ -125,7 +125,9 @@ const Job = ({
           <Col className="job-rt-col">
             {path === "" && (
               <React.Fragment>
-                <Heading className="text-primary h1">Welcome to Kvik</Heading>
+                <Heading className="text-primary h1">
+                  Welcome to QvikTask
+                </Heading>
                 <Paragraph>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                   Pellentesque leo ipsum, consequat a tellus pharetra, commodo

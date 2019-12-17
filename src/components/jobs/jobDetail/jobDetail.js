@@ -17,15 +17,19 @@ import "slick-carousel/slick/slick-theme.css";
 import { StringToDate, DaysBetween } from "./../../../utilities/common";
 import { JobStatus } from "../../../utilities/constants";
 import { apiUrl } from "./../../../environment";
-import { placeYourBid } from "./../../../actions/job";
+import { placeYourBid, reset_job_details } from "./../../../actions/job";
 
 export default function JobDetail({
-  job,
+  job = {},
   history,
   path = "",
   _markJobComplete
 }) {
+  const [imageIndex, setImageIndex] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
+
   const user = useSelector(state => state.user);
+  const { jobDetails } = useSelector(state => state.job);
   const dispatch = useDispatch();
 
   const thmbnails = [];
@@ -67,9 +71,6 @@ export default function JobDetail({
       })
     );
   };
-
-  const [imageIndex, setImageIndex] = useState(0);
-  const [openModal, setOpenModal] = useState(false);
 
   return (
     <div className="job-detail-blc d-flex flex-column flex-fill">
