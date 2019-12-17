@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import datetimeDifference from "datetime-difference";
-
+import Spinner from '../../commonUi/spinner/spinner';
 import "./jobProduct.scss";
 import { StringToDate, DaysBetween } from "./../../../utilities/common";
 import { apiUrl } from "./../../../environment";
@@ -38,9 +38,10 @@ const JobProduct = ({ product, listType, path }) => {
 
   return (
     <div className={"job-wrapper " + (listType ? "d-flex flex-column" : "")}>
-      <div className="job-pic text-center flex-shrink-0">
+      <div className="job-pic text-center flex-shrink-0 d-flex position-relative">
         {product.images && product.images.length && (
-          <Link className="text-black" to={`${pathname}${product._id}`}>
+          <Link className="text-black flex-fill" to={`${pathname}${product._id}`}>
+            {/* <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" /> */}
             <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />
           </Link>
         )}

@@ -24,20 +24,20 @@ const Sidebar = () => {
         <div className="sidebar-list-blc">
           <Collapse isOpen={isCategory}>
             <ul>
-              <li className="active-sub-list">
-                <h4 className="d-flex"><label className="flex-fill m-0">Gardening</label></h4>
+              <li>
+                <label className="flex-fill m-0">Gardening</label>
               </li>
               <li>
-                <h4 className="d-flex"><label className="flex-fill m-0">Painting</label></h4>
+                <label className="flex-fill m-0">Painting</label>
               </li>
               <li>
-                <h4 className="d-flex"><label className="flex-fill m-0">Help Moving</label></h4>
+                <label className="flex-fill m-0">Help Moving</label>
               </li>
               <li>
-                <h4 className="d-flex"><label className="flex-fill m-0">Home Design</label></h4>
+                <label className="flex-fill m-0">Home Design</label>
               </li>
               <li>
-                <h4 className="d-flex"><label className="flex-fill m-0">Laundry Service</label></h4>
+                <label className="flex-fill m-0">Laundry Service</label>
               </li>
             </ul>
           </Collapse>
@@ -52,7 +52,6 @@ const Sidebar = () => {
         </h3>
         <Collapse isOpen={isFilter}>
           <div className="sidebar-list-blc">
-            <FilterBlock />
             <div className="filter-row postal-rw">
               <h5 className="d-flex postal-head">
                 <label className="flex-fill m-0 text-primary">
@@ -61,6 +60,7 @@ const Sidebar = () => {
               </h5>
               <Input type="text" name="postal-code" id="exampleEmail" placeholder="Enter Postal Code" />
             </div>
+            <FilterBlock />
             <FilterBlock budgetFilter={true} />
           </div>
         </Collapse>

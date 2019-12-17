@@ -19,6 +19,7 @@
     "react-router-hash-link": "^1.2.2",
     "react-scripts": "3.2.0",
     "react-scroll": "^1.7.14",
+    "react-select-search": "^0.10.1",
     "react-slick": "^0.25.2",
     "react-social-login": "^3.4.6",
     "react-spinners": "^0.6.1",
