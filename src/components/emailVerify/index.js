@@ -99,7 +99,7 @@ const EmailVerify = () => {
                           )}
                           {!verified && <p>Already Verified.</p>}
                           <Link
-                            className="login-btn btn btn-info"
+                            className="btn btn-secondary"
                             to={"/login"}
                           >
                             Please visit Login Page

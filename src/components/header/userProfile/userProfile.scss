@@ -25,6 +25,9 @@
     object-fit: cover;
   }
 }
+.user-pic:disabled {
+  opacity: 1;
+}
 .user-dropdown {
   .btn.dropdown-toggle {
     padding-right: 20px;

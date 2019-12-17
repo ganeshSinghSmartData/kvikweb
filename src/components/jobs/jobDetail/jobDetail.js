@@ -9,7 +9,7 @@ import RatingBlock from "../ratingBock/ratingBlock";
 import JobAddress from "./JobAddress/jobAddress";
 import Proposal from "./proposal/proposal";
 import PlaceYourBidModal from "../../commonUi/modal/modal";
-
+import Breadcrumb from '../../commonUi/breadcrumb/breadcrumb';
 import "./jobDetail.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -74,7 +74,8 @@ export default function JobDetail({
 
   return (
     <div className="job-detail-blc d-flex flex-column flex-fill">
-      <Heading className="h3 text-center">Job Details</Heading>
+      <Breadcrumb />
+      <h2 className="text-center">Job Details</h2>
       <div className="job-detail-inner d-flex flex-column flex-fill overflow-auto">
         <Row className="job-detail-rw row flex-shrink-0">
           <Col md="4" className="job-detail-pic-col">
@@ -104,6 +105,18 @@ export default function JobDetail({
           </Col>
           <Col md="8" className="job-detail-info">
             <div className="job-detail-hd">
+              {path === "/bid-details" && (
+                <div className="bid_status_blc">
+                  <span className="bid_status d-flex justify-content-center">
+                    <span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="48.02" height="96.044" viewBox="0 0 48.02 96.044">
+                        <path id="Op_component_1" data-name="Op component 1" d="M116.471,317.189l-17.687-8.844a4.923,4.923,0,0,1-2.745-4.426,8,8,0,1,1,16.006,0h16.006a24.011,24.011,0,0,0-16.006-22.538V271.9H96.039v9.476a24.011,24.011,0,0,0-16.007,22.538,20.867,20.867,0,0,0,11.581,18.745l17.687,8.844a4.923,4.923,0,0,1,2.745,4.426,8,8,0,1,1-16.006,0H80.033a24.011,24.011,0,0,0,16.007,22.538v9.476h16.006v-9.476a24.011,24.011,0,0,0,16.006-22.538A20.867,20.867,0,0,0,116.471,317.189Z" transform="translate(-80.033 -271.904)" />
+                      </svg>
+                    </span>
+                    {JobStatus[job.status]}
+                  </span>
+                </div>
+              )}
               <div className="job-detail-hd-rw job-detail-hd-rw d-flex align-items-start">
                 <div className="job-detail-hd-col d-flex flex-fill">
                   <h3 className="text-primary">{job.jobtitle}</h3>
@@ -140,9 +153,7 @@ export default function JobDetail({
               end_date={DaysBetween(job.jobEndDate)}
               job_seeker_id={job.job_seeker_id}
             />
-            {path === "/bid-details" && (
-              <Heading className="bid_status">{JobStatus[job.status]}</Heading>
-            )}
+
 
             {path !== "/bid-details" &&
               path !== "/job-proposal" &&

@@ -45,7 +45,7 @@ const UserProfile = props => {
           />
         </svg>
       </Button>
-      <Button color="link" className="user-pic p-0 rounded-circle">
+      <Button color="link" className="user-pic p-0 rounded-circle" disabled>
         <img
           className="rounded-circle w-100 h-100"
           src={imagepath}
