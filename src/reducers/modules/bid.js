@@ -34,8 +34,11 @@ export default function reducer(state = initialState, action) {
         userJobDetails: action.data
       };
     case TYPE.RESET_USER_JOB_DETAILS:
-      console.log(" I am going to delete the user job detaukls");
-
+      return {
+        ...state,
+        userJobDetails: {}
+      };
+    case TYPE.APPROVED_BID_WORK:
       return {
         ...state,
         userJobDetails: {}

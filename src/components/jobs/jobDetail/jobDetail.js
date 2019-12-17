@@ -24,18 +24,18 @@ export default function JobDetail({
   job = {},
   history,
   path = "",
-  _markJobComplete
+  _markJobComplete,
+  _startJob,
+  _endJob
 }) {
   const [imageIndex, setImageIndex] = useState(0);
   const [openModal, setOpenModal] = useState(false);
+  const [imageLoad, setImageLoad] = useState(false);
 
   const user = useSelector(state => state.user);
-  // const { jobDetails } = useSelector(state => state.job);
   const dispatch = useDispatch();
 
   const thmbnails = [];
-  console.log("job: ", job);
-
   job.images.length &&
     job.images.map(item => {
       const obj = {
@@ -73,6 +73,40 @@ export default function JobDetail({
       })
     );
   };
+  const handleImageOnLoadStart = () => {
+    console.log(" I am in hanlde onload change");
+    setImageLoad(true);
+  };
+
+  const handleImageOnLoadedCature = () => {
+    console.log("Inside handleImageOnLoadedCature : ");
+    setImageLoad(false);
+  };
+
+  let classname = "";
+  const setJobStatus = status => {
+    switch (status) {
+      case "not_started":
+        return (classname = "status-secondary");
+      case "not_accepted":
+        return (classname = "status-primary");
+      case "expired":
+        return (classname = "status-danger");
+      case "rejected":
+        return (classname = "status-danger");
+      case "approved":
+        return (classname = "status-success");
+      case "accepted":
+        return (classname = "status-primary");
+      case "completed":
+        return (classname = "status-success");
+      case "in_progress":
+        return (classname = "status-primary");
+      default:
+        return (classname = "status-secondary");
+    }
+  };
+  setJobStatus(job.status);
 
   return (
     <div className="job-detail-blc d-flex flex-column flex-fill">
@@ -82,10 +116,14 @@ export default function JobDetail({
         <Row className="job-detail-rw row flex-shrink-0">
           <Col md="4" className="job-detail-pic-col">
             <div className="job-detail-pic position-relative">
-              {/* <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" /> */}
+              {imageLoad && (
+                <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" />
+              )}
               {apiUrl && (
                 <img
                   src={`${apiUrl}/${job.images[imageIndex]["original"]}`}
+                  /* onLoadStart={handleImageOnLoadStart()}
+                  onLoadedDataCapture={handleImageOnLoadedCature()} */
                   alt="Job Post User"
                 />
               )}
@@ -111,7 +149,9 @@ export default function JobDetail({
               <div className="job-detail-hd">
                 {path === "/bid-details" && (
                   <div className="bid_status_blc">
-                    <span className="bid_status d-flex justify-content-center align-items-center status-secondary">
+                    <span
+                      className={`bid_status d-flex justify-content-center align-items-center ${classname}`}
+                    >
                       <span className="rounded-circle d-flex justify-content-center align-items-center">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -143,7 +183,7 @@ export default function JobDetail({
                   >
                     $ {job.budget}
                   </label>
-                  {path === "/job-proposal" && (
+                  {path === "/job-proposal" && job.status === "completed" && (
                     <div className="mark-dn-cell d-flex">
                       <Button
                         color="secondary"
@@ -168,8 +208,26 @@ export default function JobDetail({
                 <Paragraph>{job.description}</Paragraph>
               </div>
               <div className="bid-status-btns">
-                <Button color="primary">Job Started</Button>
-                <Button color="secondary">Job End</Button>
+                {job.status === "bid_accepted" && (
+                  <Button
+                    color="primary"
+                    onClick={() =>
+                      _startJob(job._id, job.job_seeker_id._id, user.data._id)
+                    }
+                  >
+                    Job Started
+                  </Button>
+                )}
+                {job.status === "completed" && (
+                  <Button
+                    color="secondary"
+                    onClick={() =>
+                      _endJob(job._id, job.job_seeker_id._id, user.data._id)
+                    }
+                  >
+                    Job End
+                  </Button>
+                )}
               </div>
             </div>
             <JobAddress

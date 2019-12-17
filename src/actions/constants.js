@@ -24,6 +24,9 @@ export const GET_ACTIVE_BID = "GET_ACTIVE_BID";
 export const GET_COMPLETED_BID = "GET_COMPLETED_BID";
 export const USER_JOB_DETAILS = "USER_JOB_DETAILS";
 export const RESET_USER_JOB_DETAILS = "RESET_USER_JOB_DETAILS";
+export const APPROVED_BID_WORK = "APPROVED_BID_WORK";
+export const START_BID_WORK = "START_BID_WORK";
+export const END_BID_WORK = "END_BID_WORK";
 
 /************ FILE *************/
 

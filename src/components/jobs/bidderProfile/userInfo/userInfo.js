@@ -1,8 +1,6 @@
 import React from "react";
 import "./userInfo.scss";
 const UserInfo = ({ description }) => {
-  console.log("description;", description);
-
   return (
     <div className="bidder-profl-rw bidder-profile-desc bidder-profile-l-padd">
       <h3>About Me</h3>

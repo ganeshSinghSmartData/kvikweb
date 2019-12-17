@@ -60,7 +60,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getUserJobDetails: bindActionCreators(getUserJobDetails, dispatch),
-  approvedBidWork: bindActionCreators({ approvedBidWork, dispatch })
+  approvedBidWork: bindActionCreators(approvedBidWork, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(JobProposal);

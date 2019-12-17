@@ -9,9 +9,10 @@ import UserInfo from "./userInfo/userInfo";
 import { getUserDetails } from "./../../../actions/user";
 import "./bidderProfile.scss";
 
-const BidderProfile = ({ user_id }) => {
+const BidderProfile = ({ user_id, review }) => {
   const dispatch = useDispatch();
   const biderDetails = useSelector(state => state.user.userDetails);
+
   useEffect(() => {
     if (user_id) {
       dispatch(getUserDetails(user_id));
@@ -78,7 +79,12 @@ const BidderProfile = ({ user_id }) => {
           </div>
           <div className="bidder-profl-blc-rw bidder-review">
             <h2>REVIEWS</h2>
-            {/* <Proposal /> */}
+
+            {review.length !== 0 &&
+              review.map((item, key) => {
+                return <Proposal props={item} key={key} />;
+              })}
+            {review.length === 0 && <h6>No review found.</h6>}
           </div>
 
           <Button

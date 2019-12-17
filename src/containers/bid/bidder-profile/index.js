@@ -3,17 +3,27 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import Bidder from "../../../components/jobs/bidderProfile";
-import { pagination } from "../../..//utilities/constants";
+import { getBidderReview } from "../../../actions/bid";
 
 class BidderProfile extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { review: [] };
     this.handleUserActiveJob = this.handleUserActiveJob.bind(this);
     this.handleUserCompletedJob = this.handleUserCompletedJob.bind(this);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    if (this.props.match.params.user_id) {
+      this.props.getBidderReview(this.props.match.params.user_id, callback => {
+        if (callback) {
+          this.setState({ review: callback });
+        } else {
+          this.setState({ review: [] });
+        }
+      });
+    }
+  }
 
   handleUserActiveJob(page) {
     // this.props.reset_active_job();
@@ -28,7 +38,10 @@ class BidderProfile extends Component {
   render() {
     return (
       <React.Fragment>
-        <Bidder user_id={this.props.match.params.user_id}></Bidder>
+        <Bidder
+          user_id={this.props.match.params.user_id}
+          review={this.state.review}
+        ></Bidder>
       </React.Fragment>
     );
   }
@@ -39,7 +52,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  //   getUserActiveJob: bindActionCreators(getUserActiveJob, dispatch)
+  getBidderReview: bindActionCreators(getBidderReview, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BidderProfile);

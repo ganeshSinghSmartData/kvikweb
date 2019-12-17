@@ -1,8 +1,8 @@
 import React from "react";
 import "./spinner.scss";
-const Spinner = () => {
+const Spinner = ({ className = "" }) => {
   return (
-    <div className="spinner-blc">
+    <div className={`spinner-blc ${className}`}>
       <div className="spinner-border text-primary" role="status">
         <span className="sr-only">Loading...</span>
       </div>

@@ -24,6 +24,10 @@ export const reset_job_details = data => ({
   type: TYPE.RESET_JOB_DETAILS,
   data
 });
+export const approved_bid_work = data => ({
+  type: TYPE.APPROVED_BID_WORK,
+  data
+});
 
 /****** action creator for get jobs ********/
 export const getJobProduct = ({
@@ -192,7 +196,7 @@ export const approvedBidWork = (params, callback) => {
         if (response.status === 200) {
           dispatch(is_fetching(false));
           callback(true);
-          dispatch(get_completed_job(response));
+          // dispatch(get_completed_job(response));
         } else if (response.status === 401) {
           console.log("errror with 401 : ");
           callback(false);

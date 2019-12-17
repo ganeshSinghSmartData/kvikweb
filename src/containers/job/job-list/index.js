@@ -16,9 +16,11 @@ import SpinnerOverlay from "../../../components/commonUi/spinner/spinnerOverlay/
 class JobList extends Component {
   constructor(props) {
     super(props);
-    this.state = { loading: false };
+    this.state = { loading: true };
     this.handleUserActiveJob = this.handleUserActiveJob.bind(this);
     this.handleUserCompletedJob = this.handleUserCompletedJob.bind(this);
+    this.startJob = this.startJob.bind(this);
+    this.endJob = this.endJob.bind(this);
   }
 
   componentDidMount() {
@@ -50,6 +52,14 @@ class JobList extends Component {
     });
   }
 
+  startJob(jobId, jobSeekerId, userId) {
+    console.log(" I am herer in start job");
+  }
+
+  endJob(jobId, jobSeekerId, userId) {
+    console.log(" I am herer in end job");
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -60,6 +70,8 @@ class JobList extends Component {
             path={this.props.match.path}
             _handleUserActiveJob={page => this.handleUserActiveJob(page)}
             _handleUserCompletedJob={page => this.handleUserCompletedJob(page)}
+            _startJob={this.startJob}
+            _endJob={this.endJob}
           />
         )}
       </React.Fragment>

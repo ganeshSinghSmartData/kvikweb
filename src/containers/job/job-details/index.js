@@ -46,8 +46,6 @@ class JobDetails extends Component {
         jobDetails = this.props.userJobDetails;
       }
     }
-    console.log("jobDetails ai m going to send: ", jobDetails);
-
     return (
       <React.Fragment>
         {Object.keys(jobDetails).length ? (
