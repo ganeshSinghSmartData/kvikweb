@@ -2,9 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
+import SpinnerOverlay from "../../../components/commonUi/spinner/spinnerOverlay/spinnerOverlay";
 import JobDetail from "../../../components/jobs/jobDetail/jobDetail";
-import { getJobDetails } from "../../../actions/job";
-import { getUserJobDetails } from "../../../actions/bid";
+import { getJobDetails, reset_job_details } from "../../../actions/job";
+import {
+  getUserJobDetails,
+  reset_user_job_details
+} from "../../../actions/bid";
+import "./../../../components/jobs/jobDetail/jobDetail.scss";
 
 class JobDetails extends Component {
   constructor(props) {
@@ -26,6 +31,11 @@ class JobDetails extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.reset_user_job_details();
+    this.props.reset_job_details();
+  }
+
   render() {
     let jobDetails = {};
     if (Object.keys(this.props.jobDetails).length) {
@@ -36,14 +46,18 @@ class JobDetails extends Component {
         jobDetails = this.props.userJobDetails;
       }
     }
+    console.log("jobDetails ai m going to send: ", jobDetails);
+
     return (
       <React.Fragment>
-        {Object.keys(jobDetails).length && (
+        {Object.keys(jobDetails).length ? (
           <JobDetail
             job={jobDetails}
             history={this.props.history}
             path={this.state.pathname}
           ></JobDetail>
+        ) : (
+          <SpinnerOverlay className="position-fixed" />
         )}
       </React.Fragment>
     );
@@ -58,7 +72,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getJobDetails: bindActionCreators(getJobDetails, dispatch),
-  getUserJobDetails: bindActionCreators(getUserJobDetails, dispatch)
+  getUserJobDetails: bindActionCreators(getUserJobDetails, dispatch),
+  reset_job_details: bindActionCreators(reset_job_details, dispatch),
+  reset_user_job_details: bindActionCreators(reset_user_job_details, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(JobDetails);

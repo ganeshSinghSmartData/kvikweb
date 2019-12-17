@@ -7,8 +7,9 @@ import Sidebar from "../sidebar/sidebar";
 import Heading from "../../components/commonUi/heading/heading";
 import Paragraph from "../../components/commonUi/paragraph/paragraph";
 import { pagination } from "../../utilities/constants";
-// import SpinnerOverlay from '../commonUi/spinner/spinnerOverlay/spinnerOverlay';
+import SpinnerOverlay from "../commonUi/spinner/spinnerOverlay/spinnerOverlay";
 import NoData from "../commonUi/noData/noData";
+import DataLoader from "../commonUi/loader/loader";
 import "./jobs.scss";
 import {
   getJobProduct,
@@ -21,8 +22,8 @@ const Job = ({
   path = "",
   _handleUserActiveJob,
   _handleUserCompletedJob,
-  _handleUserAcceptedBid,
-  _handleUserNotAcceptedBid
+  _handleUserActiveBid,
+  _handleUserCompletedBid
 }) => {
   const dispatch = useDispatch();
   const [listType, setlistType] = useState(false);
@@ -79,10 +80,10 @@ const Job = ({
       }
     } else if (path === "/bid-list") {
       if (jobType === "active") {
-        _handleUserAcceptedBid({ page: page });
+        _handleUserActiveBid({ page: page });
       }
       if (jobType === "completed") {
-        _handleUserNotAcceptedBid({ page: page });
+        _handleUserCompletedBid({ page: page });
       }
     } else {
       dispatch(getJobProduct({ page: page }));

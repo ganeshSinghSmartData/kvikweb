@@ -5,7 +5,6 @@ import { LocalForm } from "react-redux-form";
 import DatePicker from "react-datepicker";
 import SelectSearch from "react-select-search";
 import moment from "moment";
-import { set } from "date-fns/esm";
 import "react-datepicker/dist/react-datepicker.css";
 
 import InputCell from "../../commonUi/input/inputCell";
@@ -80,8 +79,6 @@ export default ({
 
   return (
     <div className="post-wrapper data-block ml-auto mr-auto position-relative">
-      {/* <DataLoader /> */}
-      {/* Top Header Buttons */}
       <div className="post-job-nav d-flex justify-content-center">
         <ul className="d-flex">
           <li className={getClass(1)}>

@@ -3,7 +3,6 @@ import ApiClient from "../../api-client";
 import { apiUrl } from "../../environment";
 import { toastAction, toastErrorAction } from "../toast-actions";
 import { pagination } from "../../utilities/constants";
-import { callbackify } from "util";
 
 export const is_fetching = status => ({ type: TYPE.IS_FETCHING, status });
 export const is_search = status => ({ type: TYPE.IS_STATUS, status });
@@ -19,6 +18,10 @@ export const post_job_products = data => ({
 export const get_active_job = data => ({ type: TYPE.GET_ACTIVE_JOB, data });
 export const get_completed_job = data => ({
   type: TYPE.GET_COMPLETED_JOB,
+  data
+});
+export const reset_job_details = data => ({
+  type: TYPE.RESET_JOB_DETAILS,
   data
 });
 
@@ -117,13 +120,10 @@ export const placeYourBid = (params, callback) => {
 };
 
 /****** action creator for list users active job ********/
-export const getUserActiveJob = ({
-  page,
-  search = "",
-  long = "",
-  lat = "",
-  category = ""
-}) => {
+export const getUserActiveJob = (
+  { page, search = "", long = "", lat = "", category = "" },
+  callback
+) => {
   return (dispatch, getState) => {
     const skip = (page - 1) * pagination.limit;
     const {
@@ -137,10 +137,13 @@ export const getUserActiveJob = ({
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(get_active_job(response));
+        callback(true);
       } else if (response.status === 401) {
         console.log("errror with 401 : ");
+        callback(false);
         // toastErrorAction(dispatch, response.message);
       } else {
+        callback(false);
         dispatch(is_fetching(false));
       }
     });
@@ -148,13 +151,10 @@ export const getUserActiveJob = ({
 };
 
 /****** action creator for list users cpmpleted job ********/
-export const getUserCompletedJob = ({
-  page,
-  search = "",
-  long = "",
-  lat = "",
-  category = ""
-}) => {
+export const getUserCompletedJob = (
+  { page, search = "", long = "", lat = "", category = "" },
+  callback
+) => {
   return (dispatch, getState) => {
     const skip = (page - 1) * pagination.limit;
     const {
@@ -168,11 +168,14 @@ export const getUserCompletedJob = ({
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(get_completed_job(response));
+        callback(true);
       } else if (response.status === 401) {
         console.log("errror with 401 : ");
         // toastErrorAction(dispatch, response.message);
+        callback(false);
       } else {
         dispatch(is_fetching(false));
+        callback(false);
       }
     });
   };

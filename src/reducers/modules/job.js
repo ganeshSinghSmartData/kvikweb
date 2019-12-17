@@ -54,6 +54,8 @@ export default function reducer(state = initialState, action) {
       return { ...state, activeJobProduct: [] };
     case TYPE.RESET_COMPLETED_JOB:
       return { ...state, completedJobProduct: [] };
+    case TYPE.RESET_JOB_DETAILS:
+      return { ...state, jobDetails: {} };
     default:
       return state;
   }

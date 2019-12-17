@@ -12,6 +12,9 @@ export const get_completed_bid = data => ({
   data
 });
 export const user_job_details = data => ({ type: TYPE.USER_JOB_DETAILS, data });
+export const reset_user_job_details = () => ({
+  type: TYPE.RESET_USER_JOB_DETAILS
+});
 
 /****** action creator for register users ********/
 export const getBidList = (params, callback) => {
@@ -19,9 +22,11 @@ export const getBidList = (params, callback) => {
     ApiClient.post(`${apiUrl}/register`, params).then(response => {
       if (response.status === 200) {
         dispatch(bid_list(response));
+        callback(true);
       } else {
         console.log("errror with 401 : ", response);
         toastErrorAction(dispatch, response.msg);
+        callback(false);
       }
     });
   };
@@ -33,22 +38,21 @@ export const getUserBidDetails = (params, callback) => {
     ApiClient.post(`${apiUrl}/bid/user_job_detail`, params).then(response => {
       if (response.status === 200) {
         dispatch(bid_details(response));
+        callback(true);
       } else {
         console.log("errror with 401 : ", response);
         toastErrorAction(dispatch, response.msg);
+        callback(false);
       }
     });
   };
 };
 
 /****** action creator for list users cpmpleted bid ********/
-export const getUserCompletedBid = ({
-  page,
-  search = "",
-  long = "",
-  lat = "",
-  category = ""
-}) => {
+export const getUserCompletedBid = (
+  { page, search = "", long = "", lat = "", category = "" },
+  callback
+) => {
   return (dispatch, getState) => {
     const skip = (page - 1) * pagination.limit;
     const {
@@ -60,24 +64,24 @@ export const getUserCompletedBid = ({
       token
     ).then(response => {
       if (response.status === 200) {
+        callback(true);
         dispatch(get_completed_bid(response.data));
       } else if (response.status === 401) {
         console.log("errror with 401 : ");
         toastErrorAction(dispatch, response.msg);
+        callback(false);
       } else {
+        callback(false);
       }
     });
   };
 };
 
 /****** action creator for list users active bid ********/
-export const getUserActiveBid = ({
-  page,
-  search = "",
-  long = "",
-  lat = "",
-  category = ""
-}) => {
+export const getUserActiveBid = (
+  { page, search = "", long = "", lat = "", category = "" },
+  callback
+) => {
   return (dispatch, getState) => {
     const skip = (page - 1) * pagination.limit;
     const {
@@ -91,10 +95,14 @@ export const getUserActiveBid = ({
     ).then(response => {
       if (response.status === 200) {
         dispatch(get_active_bid(response.data));
+        console.log("Call Attempt");
+        callback(true);
       } else if (response.status === 401) {
         console.log("errror with 401 : ");
         toastErrorAction(dispatch, response.msg);
+        callback(false);
       } else {
+        callback(false);
       }
     });
   };

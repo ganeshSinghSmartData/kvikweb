@@ -5,6 +5,7 @@ import { bindActionCreators } from "redux";
 import Job from "./../../components/jobs/jobs";
 import SignInModal from "./../../components/commonUi/modal/modal";
 import { registerUser, loginUser } from "./../../actions/user";
+import SpinnerOverlay from "../../components/commonUi/spinner/spinnerOverlay/spinnerOverlay";
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -16,7 +17,7 @@ class Home extends Component {
     this.handleForgotPassword = this.handleForgotPassword.bind(this);
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   toggleModal() {
     this.props.history.push("/");
@@ -54,7 +55,8 @@ class Home extends Component {
     const path = this.props.location.pathname;
     return (
       <React.Fragment>
-        <Job />
+        {true ? <Job /> : <SpinnerOverlay className="position-fixed" />}
+
         <div>
           <SignInModal
             _isOpen={path === "/register" || path === "/login"}
