@@ -110,10 +110,34 @@
   }
 }
 
+.bid_status_blc {
+  margin: 20px 0 0;
+}
 .bid_status {
-  font-size: small;
-  color: red;
-  padding-top: 30px;
+  display: inline-block;
+  border: 1px solid #ffffff;
+  border-radius: -8px;
+  padding: 4px 10px 4px 10px;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: l;
+  justify-content: center;
+  width: 100%;
+  background: #ffebeb;
+  margin-bottom: 25px;
+  span {
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    background: $danger;
+    border-radius: 50%;
+  }
+  svg {
+    width: 10px;
+    height: auto;
+    fill: white;
+  }
 }
 
 @media (max-width: 767px) {
