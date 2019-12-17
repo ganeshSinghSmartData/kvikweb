@@ -1,11 +1,7 @@
 /*********** Routes for applications **************/
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import {
-  PublicLayout,
-  privateLayout,
-  commonLayout
-} from "../components/Layouts";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { PublicLayout, commonLayout } from "../components/Layouts";
 import AppRoute from "./AppRoute";
 import { Authorization } from "../authorization";
 import { public_type, private_type } from "../utilities/constants";

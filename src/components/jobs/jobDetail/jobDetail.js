@@ -3,9 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Button, Row, Col } from "reactstrap";
 import Slider from "react-slick";
 
-import Heading from "../../commonUi/heading/heading";
 import Paragraph from "../../commonUi/paragraph/paragraph";
-import RatingBlock from "../ratingBock/ratingBlock";
 import JobAddress from "./JobAddress/jobAddress";
 import Proposal from "./proposal/proposal";
 import PlaceYourBidModal from "../../commonUi/modal/modal";
@@ -200,7 +198,9 @@ export default function JobDetail({
                     </div>
                   )}
                 </div>
-                <p className="m-0">bidding ends in: {StringToDate(job.created_at)}</p>
+                <p className="m-0">
+                  bidding ends in: {StringToDate(job.created_at)}
+                </p>
               </div>
 
               <div className="job-detail-desc">

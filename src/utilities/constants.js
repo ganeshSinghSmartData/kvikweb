@@ -35,8 +35,7 @@ export const JobStatus = {
   accepted: "Bid has been accepted",
   completed: "Bid has been completed",
   not_accepted: "Bid not accepted",
-  in_progress: "Bid is in progress",
-  completed: "Bid has been completed"
+  in_progress: "Bid is in progress"
 };
 
 export const CategoryItems = [

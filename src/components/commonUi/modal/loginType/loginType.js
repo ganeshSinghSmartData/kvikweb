@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./loginType.scss";
-import SocialButton from "../../social-button";
+// import SocialButton from "../../social-button";
 const LoginType = props => {
   return (
     <div className="login-type login-type text-center">

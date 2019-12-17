@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { Button } from "reactstrap";
 
 import "./emailVerify.scss";
 import { verifyEmail } from "../../actions/user";
@@ -9,7 +8,6 @@ import { verifyEmail } from "../../actions/user";
 const EmailVerify = () => {
   const dispatch = useDispatch();
   const [verified, setVerified] = useState(false);
-  const [userId, setUserId] = useState();
 
   const { location } = useSelector(state => state.router);
   let params = location.pathname.split("/");
@@ -98,10 +96,7 @@ const EmailVerify = () => {
                             </p>
                           )}
                           {!verified && <p>Already Verified.</p>}
-                          <Link
-                            className="btn btn-secondary"
-                            to={"/login"}
-                          >
+                          <Link className="btn btn-secondary" to={"/login"}>
                             Please visit Login Page
                           </Link>
                         </div>

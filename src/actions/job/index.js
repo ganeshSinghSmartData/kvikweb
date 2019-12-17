@@ -1,7 +1,7 @@
 import * as TYPE from "../constants";
 import ApiClient from "../../api-client";
 import { apiUrl } from "../../environment";
-import { toastAction, toastErrorAction } from "../toast-actions";
+import { toastAction } from "../toast-actions";
 import { pagination } from "../../utilities/constants";
 
 export const is_fetching = status => ({ type: TYPE.IS_FETCHING, status });

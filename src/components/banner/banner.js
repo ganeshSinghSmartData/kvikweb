@@ -3,9 +3,6 @@ import "./banner.scss";
 import SearchService from "../searchService/searchService";
 const Banner = path => {
   const location = path.path.props.location.pathname;
-  const proposal = location.includes("/job-proposal");
-  const details = location.includes("/job-details");
-  const bid = location.includes("/bid-details");
   // !bid && !proposal && !details &&
 
   return (
