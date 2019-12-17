@@ -38,3 +38,17 @@ export const JobStatus = {
   in_progress: "Bid is in progress",
   completed: "Bid has been completed"
 };
+
+export const CategoryItems = [
+  { name: "Gardening", value: "gardening" },
+  { name: "Painting", value: "painting" },
+  { name: "Help Moving", value: "help moving" },
+  { name: "Home Design", value: "home design" },
+  { name: "Laundry Service", value: "laundry service" }
+];
+
+export const FrequencyItem = [
+  { label: "One-time", value: "one-time" },
+  { label: "Weekly", value: "weekly" },
+  { label: "Monthly", value: "monthly" }
+];

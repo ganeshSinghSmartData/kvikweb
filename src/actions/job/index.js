@@ -3,6 +3,7 @@ import ApiClient from "../../api-client";
 import { apiUrl } from "../../environment";
 import { toastAction, toastErrorAction } from "../toast-actions";
 import { pagination } from "../../utilities/constants";
+import { callbackify } from "util";
 
 export const is_fetching = status => ({ type: TYPE.IS_FETCHING, status });
 export const is_search = status => ({ type: TYPE.IS_STATUS, status });
@@ -174,5 +175,29 @@ export const getUserCompletedJob = ({
         dispatch(is_fetching(false));
       }
     });
+  };
+};
+
+/****** action creator for list users cpmpleted job ********/
+export const approvedBidWork = (params, callback) => {
+  return (dispatch, getState) => {
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient.post(`${apiUrl}/bid/approved_bid_work`, params, token).then(
+      response => {
+        if (response.status === 200) {
+          dispatch(is_fetching(false));
+          callback(true);
+          dispatch(get_completed_job(response));
+        } else if (response.status === 401) {
+          console.log("errror with 401 : ");
+          callback(false);
+          // toastErrorAction(dispatch, response.message);
+        } else {
+          dispatch(is_fetching(false));
+        }
+      }
+    );
   };
 };

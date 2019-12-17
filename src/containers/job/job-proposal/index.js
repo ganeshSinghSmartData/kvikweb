@@ -4,12 +4,13 @@ import { bindActionCreators } from "redux";
 
 import JobDetail from "./../../../components/jobs/jobDetail/jobDetail";
 import { getUserJobDetails } from "../../../actions/bid";
+import { approvedBidWork } from "../../../actions/job";
 
 class JobProposal extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    // this.toggleModal = this.toggleModal.bind(this);
+    this.markJobComplete = this.markJobComplete.bind(this);
   }
 
   componentDidMount() {
@@ -18,6 +19,20 @@ class JobProposal extends Component {
       this.props.getUserJobDetails({ jobId: params });
     }
   }
+
+  markJobComplete = (jobId, jobSeekerId, userId) => {
+    const reqData = {
+      job_seeker_id: userId,
+      job_provider_id: jobSeekerId,
+      job_id: jobId
+    };
+    console.log("i am in completen job : ", reqData);
+    this.props.approvedBidWork(reqData, callback => {
+      if (callback) {
+        console.log(" I am in calback : ", callback);
+      }
+    });
+  };
 
   render() {
     let pathname = "";
@@ -31,6 +46,7 @@ class JobProposal extends Component {
             job={this.props.userJobDetails}
             history={this.props.history}
             path={pathname}
+            _markJobComplete={this.markJobComplete}
           ></JobDetail>
         )}
       </React.Fragment>
@@ -43,7 +59,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUserJobDetails: bindActionCreators(getUserJobDetails, dispatch)
+  getUserJobDetails: bindActionCreators(getUserJobDetails, dispatch),
+  approvedBidWork: bindActionCreators({ approvedBidWork, dispatch })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(JobProposal);

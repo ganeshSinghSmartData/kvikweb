@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Button } from "reactstrap";
-import UserImage from "../userImage/userImage";
-import RatingBlock from "../../ratingBock/ratingBlock";
 import datetimeDifference from "datetime-difference";
+import { Link } from "react-router-dom";
+
+import RatingBlock from "../../ratingBock/ratingBlock";
+import UserImage from "../userImage/userImage";
 
 import "./jobAddress.scss";
 import { setTimeout } from "timers";
@@ -38,12 +40,12 @@ const JobAddress = ({
                 {/* <span className="d-block">Service Seeker</span> */}
               </h4>
             </div>
-            {/* <div className="job-user-r">
-            <RatingBlock />
-            <Button color="link" className="view-review-btn p-0">
-              View Reviews
-            </Button>
-          </div> */}
+            <div className="job-user-r">
+              <RatingBlock rating={job_seeker_id.average_rating} />
+              {/* <Button color="link" className="view-review-btn p-0">
+                View Reviews
+              </Button> */}
+            </div>
           </div>
           <ul>
             {job_seeker_id["city"] && (

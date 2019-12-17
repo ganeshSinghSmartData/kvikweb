@@ -1,11 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Button } from "reactstrap";
+
 import JobAddress from "../jobDetail/JobAddress/jobAddress";
 import Proposal from "../jobDetail/proposal/proposal";
 import Chat from "./chat/chat";
-import UserInfo from "../../jobs/bidderProfile/userInfo/userInfo";
+import UserInfo from "./userInfo/userInfo";
+import { getUserDetails } from "./../../../actions/user";
 import "./bidderProfile.scss";
-const BidderProfile = () => {
+
+const BidderProfile = ({ user_id }) => {
+  const dispatch = useDispatch();
+  const biderDetails = useSelector(state => state.user.userDetails);
+  useEffect(() => {
+    if (user_id) {
+      dispatch(getUserDetails(user_id));
+    }
+  }, []);
   const [chatVisible, setchatVisible] = useState(false);
   const chatToggle = () => {
     setchatVisible(!chatVisible);
@@ -23,7 +34,9 @@ const BidderProfile = () => {
         <div className="data-page bidder-profl-blc position-relative">
           <div className="bidder-profl-blc-rw">
             <div className="bidder-profl-rw d-flex">
-              <div className="bidder-profl-l">{/* <JobAddress /> */}</div>
+              <div className="bidder-profl-l">
+                <JobAddress job_seeker_id={biderDetails} />
+              </div>
               <div className="bidder-profl-r ml-auto d-flex flex-column">
                 <div className="profile-bar ml-auto">
                   <span className="profile-percentage">95%</span>
@@ -38,34 +51,34 @@ const BidderProfile = () => {
                     Profile Completion
                   </span>
                 </div>
-                <div className="mark-btn mt-auto">
+                {/* <div className="mark-btn mt-auto">
                   <Button color="secondary" block>
                     Mark as Done
                   </Button>
-                </div>
+                </div> */}
               </div>
             </div>
-            <UserInfo />
+            <UserInfo description={biderDetails.about} />
             <div className="bidder-profl-rw bidder-profile-l-padd bidder-profile-list">
               <ul className="d-flex flex-wrap">
                 <li>
-                  <h3>43</h3>
+                  <h3>{biderDetails.total_jobs}</h3>
                   <label>Jobs</label>
                 </li>
                 <li>
-                  <h3>$31k+</h3>
+                  <h3>${biderDetails.total_earnings}k</h3>
                   <label>Total Earnings</label>
                 </li>
-                <li>
+                {/* <li>
                   <h3>1,500</h3>
                   <label>Hours Worked</label>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
           <div className="bidder-profl-blc-rw bidder-review">
             <h2>REVIEWS</h2>
-            <Proposal />
+            {/* <Proposal /> */}
           </div>
 
           <Button

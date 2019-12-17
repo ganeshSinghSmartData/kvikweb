@@ -3,16 +3,20 @@ import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { LocalForm } from "react-redux-form";
 import DatePicker from "react-datepicker";
+import SelectSearch from "react-select-search";
 import moment from "moment";
+import { set } from "date-fns/esm";
 import "react-datepicker/dist/react-datepicker.css";
+
 import InputCell from "../../commonUi/input/inputCell";
 import "./postJob.scss";
-import { set } from "date-fns/esm";
+import { CategoryItems, FrequencyItem } from "./../../../utilities/constants";
 
 export default ({
   _currentstage,
   _handleStageChange,
   _handleJobPost,
+  _handleCategoryOnchange,
   _handleJobUpdate,
   _imageValidator
 }) => {
@@ -112,12 +116,21 @@ export default ({
             <div className="row flex-wrap post-job-form">
               <div className="col-md-6">
                 <label className="input-title">Select Category</label>
-                <InputCell
+                {/* <InputCell
                   Name={"category"}
                   Model=".category"
                   InputType="select"
                   Errors={{ required: "required" }}
-                ></InputCell>
+                ></InputCell> */}
+                <SelectSearch
+                  options={CategoryItems}
+                  className={"select-search-box"}
+                  value={CategoryItems[0].value}
+                  name="category"
+                  onMount={category => _handleCategoryOnchange(category)}
+                  onChange={category => _handleCategoryOnchange(category)}
+                  placeholder="Category"
+                />
               </div>
               <div className="col-md-6">
                 <label className="input-title">Job Title</label>
@@ -147,7 +160,6 @@ export default ({
                   Model=".budget"
                   InputType={"text"}
                   Errors={{
-                    required: "required",
                     invalidNumber: "invalidNumber"
                   }}
                 />
@@ -194,7 +206,17 @@ export default ({
                 <label className="input-title">Start Date</label>
                 <DatePicker
                   selected={startDate}
-                  onChange={date => setStartDate(date)}
+                  onChange={date => {
+                    return (
+                      setStartDate(date),
+                      setEndDate(
+                        new Date(
+                          moment(new Date(date), "DD-MM-YYYY").add(7, "days")
+                        )
+                      )
+                    );
+                  }}
+                  minDate={new Date()}
                   timeInputLabel="Time:"
                   dateFormat="MM/dd/yyyy h:mm aa"
                   onInputClick={() => handleOnInputClick()}
@@ -203,11 +225,12 @@ export default ({
                 />
               </div>
               <div className="col-md-4">
-                <label className="input-title">End Date</label>
+                <label className="input-title">Bid deadline date</label>
                 <DatePicker
                   selected={endDate}
                   onChange={date => setEndDate(date)}
                   timeInputLabel="Time:"
+                  minDate={startDate}
                   dateFormat="MM/dd/yyyy h:mm aa"
                   onInputClick={() => handleOnInputClick()}
                   onClickOutsideEvent={handleOnClickOutsideEvent()}

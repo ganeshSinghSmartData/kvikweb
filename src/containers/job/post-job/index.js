@@ -18,9 +18,15 @@ class PostNewJob extends Component {
     this.handleJobPost = this.handleJobPost.bind(this);
     this.handleJobUpdate = this.handleJobUpdate.bind(this);
     this.handleStageChange = this.handleStageChange.bind(this);
+    this.handleCategoryOnchange = this.handleCategoryOnchange.bind(this);
   }
 
   componentDidMount() {}
+
+  //   Handling Category change
+  handleCategoryOnchange(category) {
+    console.log(" I am in category on change : ", category);
+  }
 
   //   Handling Job Ppost
   handleJobPost(jobData, startDate, endDate, imageData, currentstage) {
@@ -95,6 +101,7 @@ class PostNewJob extends Component {
           _handleStageChange={this.handleStageChange}
           _handleJobPost={this.handleJobPost}
           _handleJobUpdate={this.handleJobUpdate}
+          _handleCategoryOnchange={this.handleCategoryOnchange}
           _imageValidator={this.state.imageValidator}
         />
       </React.Fragment>
