@@ -11,6 +11,7 @@ const initialState = {
   data: {},
   userBids: [],
   userDetails: {},
+  cards: [],
   loggedIn: false
 };
 
@@ -31,6 +32,8 @@ export default function reducer(state = initialState, action) {
       return { ...state, userBids: action.data };
     case TYPE.GET_USER_DETAILS:
       return { ...state, userDetails: action.data };
+    case TYPE.USER_CARDS:
+      return { ...state, cards: action.data };
     default:
       return state;
   }

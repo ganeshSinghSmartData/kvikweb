@@ -10,6 +10,7 @@ export const login_users = data => ({ type: TYPE.LOGIN_USERS, data });
 export const logout_users = data => ({ type: TYPE.LOGOUT_USERS, data });
 export const user_bid_listing = data => ({ type: TYPE.USER_BID_LISTING, data });
 export const get_user_details = data => ({ type: TYPE.GET_USER_DETAILS, data });
+export const user_cards = data => ({ type: TYPE.USER_CARDS, data });
 
 /****** action creator for register users ********/
 export const registerUser = (params, callback) => {
@@ -106,7 +107,7 @@ export const getUserDetails = user_id => {
 };
 
 /****** action creator for add card ********/
-export const AddCard = (params = {}) => {
+export const AddCard = (params = {}, callback) => {
   return (dispatch, getState) => {
     dispatch(is_fetching(true));
     const {
@@ -115,6 +116,27 @@ export const AddCard = (params = {}) => {
     ApiClient.post(`${apiUrl}/payment/saveCardByToken`, params, token).then(response => {
       if (response.status === 200) {
         toastAction(true, "Card successfully saved");
+        dispatch(is_fetching(false));
+        callback(true);
+      } else {
+        dispatch(is_fetching(false));
+        toastAction(false, response.msg);
+        callback(false);
+      }
+    });
+  };
+};
+
+/****** action creator for add card ********/
+export const GetCards = (params = {}) => {
+  return (dispatch, getState) => {
+    dispatch(is_fetching(true));
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient.get(`${apiUrl}/payment/getUserSavedCards`, {}, token).then(response => {
+      if (response.status === 200) {
+        dispatch(user_cards(response.cards));
         dispatch(is_fetching(false));
       } else {
         dispatch(is_fetching(false));
