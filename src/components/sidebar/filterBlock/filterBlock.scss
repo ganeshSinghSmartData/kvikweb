@@ -1,8 +1,17 @@
+@import "../../../assets/css/variables";
 .sidebar-list-blc {
   h5 {
     span {
       font-size: 12px;
     }
+  }
+  ul {
+    > li {
+      padding: 6px 0;
+    }
+  }
+  button {
+    color: $dark-default;
   }
 }
 .filter-row {

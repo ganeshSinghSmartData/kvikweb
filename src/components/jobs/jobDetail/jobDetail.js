@@ -144,7 +144,7 @@ export default function JobDetail({
                     </div>
                   )}
                 </div>
-                <p className="m-0">Created {StringToDate(job.created_at)}</p>
+                <p className="m-0">bidding ends in: {StringToDate(job.created_at)}</p>
               </div>
 
               <div className="job-detail-desc">
@@ -174,6 +174,7 @@ export default function JobDetail({
               user.data._id != job.job_seeker_id._id && (
                 <div className="place-bid-rw text-center">
                   <Button
+                    size="lg"
                     color="secondary"
                     className="place-bid-btn"
                     onClick={() => setOpenModal(!openModal)}

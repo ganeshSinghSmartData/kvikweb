@@ -154,31 +154,38 @@ const JobAddress = ({
               </li>
             )}
             {end_date && (
-              <li className="d-flex">
-                <span className="svg-secondary-100 flex-shrink-0">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="23.003"
-                    height="23.003"
-                    viewBox="0 0 23.003 23.003"
-                  >
-                    <path
-                      id="Forma_1"
-                      data-name="Forma 1"
-                      d="M0,11.5A11.5,11.5,0,1,1,11.5,23,11.514,11.514,0,0,1,0,11.5Zm2.447,0A9.054,9.054,0,1,0,11.5,2.446,9.065,9.065,0,0,0,2.445,11.5Zm8.933,1.539a.947.947,0,0,1-.947-.947V4.93a.947.947,0,0,1,1.894,0v6.215h5.168a.947.947,0,1,1,0,1.894Z"
-                      transform="translate(0.002 0.002)"
-                    />
-                  </svg>
-                </span>
-                <p>
-                  <label>{`${timeleft.days} Days`}</label>
-                  <label>{`${timeleft.hours} Hours`}</label>
-                  <label>{`${timeleft.minutes} Mins`}</label>
-                  <label>{`${timeleft.seconds} Secs`}</label>
-                </p>
+              <li className="job-start-blc">
+                <h4>Jobs starts in:</h4>
+                <div className="d-flex job-start-rw">
+                  <span className="svg-secondary-100 flex-shrink-0">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="23.003"
+                      height="23.003"
+                      viewBox="0 0 23.003 23.003"
+                    >
+                      <path
+                        id="Forma_1"
+                        data-name="Forma 1"
+                        d="M0,11.5A11.5,11.5,0,1,1,11.5,23,11.514,11.514,0,0,1,0,11.5Zm2.447,0A9.054,9.054,0,1,0,11.5,2.446,9.065,9.065,0,0,0,2.445,11.5Zm8.933,1.539a.947.947,0,0,1-.947-.947V4.93a.947.947,0,0,1,1.894,0v6.215h5.168a.947.947,0,1,1,0,1.894Z"
+                        transform="translate(0.002 0.002)"
+                      />
+                    </svg>
+                  </span>
+                  <p>
+                    <label>{`${timeleft.days} Days`}</label>
+                    <label>{`${timeleft.hours} Hours`}</label>
+                    <label>{`${timeleft.minutes} Mins`}</label>
+                    <label>{`${timeleft.seconds} Secs`}</label>
+                  </p>
+                </div>
               </li>
             )}
           </ul>
+          <div className="profile-label">
+            <h4>Sant Sandhu
+            </h4>
+          </div>
         </div>
       )}
     </div>

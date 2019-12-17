@@ -290,15 +290,16 @@ const SignInModal = ({
               </div>
               <div className="bid-detail-r">
                 <div className="bid-detail-rw">
-                  <Link
-                    className="btn btn-link"
-                    to={`/bidder-profile/${props._propsDetails.job_provider_id._id}`}
-                  >
-                    <h2>
+
+                  <h2>
+                    <Link className="user-detail-link"
+                      to={`/bidder-profile/${props._propsDetails.job_provider_id._id}`}
+                    >
                       {`${props._propsDetails.job_provider_id.fname} ${props._propsDetails.job_provider_id.lname}`}
-                      <span>{props._propsDetails.daysfrom} Day Ago</span>
-                    </h2>
-                  </Link>
+                    </Link>
+                    <span>{props._propsDetails.daysfrom} Day Ago</span>
+                  </h2>
+
                   <p>{props._propsDetails.description}</p>
                   <div className="bid-price">
                     $ {props._propsDetails.bid_amount}
