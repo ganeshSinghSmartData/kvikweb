@@ -9,6 +9,7 @@ import LoginType from "./loginType/loginType";
 import InputCell from "./../input/inputCell";
 import RatingBlock from "../../jobs/ratingBock/ratingBlock";
 import UserImage from "../../jobs/jobDetail/userImage/userImage";
+import Spinner from '../../commonUi/spinner/spinner';
 
 import "./modal.scss";
 
@@ -36,6 +37,7 @@ const SignInModal = ({
           customClass
         }
       >
+        {/* <Spinner className="position-absolute w-100 h-100 d-flex justify-content-center align-items-center with-overlay" /> */}
         {_modalType === "/register" || _modalType === "/login" ? (
           <Button
             color="link"
@@ -56,28 +58,28 @@ const SignInModal = ({
             </svg>
           </Button>
         ) : (
-          <ModalHeader>
-            <span>{_modalType}</span>
-            <Button
-              color="link"
-              className="close-btn btn2"
-              onClick={_toggleModal}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="357"
-                height="357"
-                viewBox="0 0 357 357"
+            <ModalHeader>
+              <span>{_modalType}</span>
+              <Button
+                color="link"
+                className="close-btn btn2"
+                onClick={_toggleModal}
               >
-                <path
-                  id="Forma_1"
-                  data-name="Forma 1"
-                  d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
-                />
-              </svg>
-            </Button>
-          </ModalHeader>
-        )}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="357"
+                  height="357"
+                  viewBox="0 0 357 357"
+                >
+                  <path
+                    id="Forma_1"
+                    data-name="Forma 1"
+                    d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                  />
+                </svg>
+              </Button>
+            </ModalHeader>
+          )}
         <ModalBody
           className={
             "overflow-auto " +
