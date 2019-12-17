@@ -215,6 +215,13 @@
         }
       }
       .bid-detail-r {
+        .user-detail-link {
+          color: $dark-default;
+          text-decoration: none;
+          &:hover {
+            color: $secondary-100;
+          }
+        }
         .bid-detail-rw h2 {
           font-size: 18px;
           color: #000;

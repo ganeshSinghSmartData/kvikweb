@@ -34,16 +34,16 @@ export const PublicLayout = props => {
   return (
     <div className="main-wrapper d-flex flex-column flex-fill">
       <Header />
-      {(props.children.props.match.path === "/" ||
-        props.children.props.match.path === "/post-job") && (
-          <Banner path={props.children} />
-        )}
       <div
         className="wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto"
         ref={wrapperRef}
         onScroll={scrollCheck}
       >
-        <Container className="d-flex flex-column flex-shrink-0 mb-50 position-relative">
+        {(props.children.props.match.path === "/" ||
+          props.children.props.match.path === "/post-job") && (
+            <Banner path={props.children} />
+          )}
+        <Container className="d-flex flex-column flex-shrink-0 mb-50 position-relative pt-30">
           {props.children}
           <button
             type="button"
