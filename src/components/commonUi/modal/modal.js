@@ -37,7 +37,7 @@ const SignInModal = ({
           customClass
         }
       >
-        {/* <Spinner className="position-absolute w-100 h-100 d-flex justify-content-center align-items-center with-overlay" /> */}
+        {/* <Spinner className="position-absolute w-100 h-100 d-flex justify-content-center align-items-center with-overlay overlay-opacity" /> */}
         {_modalType === "/register" || _modalType === "/login" ? (
           <Button
             color="link"
@@ -290,9 +290,9 @@ const SignInModal = ({
               </div>
               <div className="bid-detail-r">
                 <div className="bid-detail-rw">
-
                   <h2>
-                    <Link className="user-detail-link"
+                    <Link
+                      className="user-detail-link"
                       to={`/bidder-profile/${props._propsDetails.job_provider_id._id}`}
                     >
                       {`${props._propsDetails.job_provider_id.fname} ${props._propsDetails.job_provider_id.lname}`}
