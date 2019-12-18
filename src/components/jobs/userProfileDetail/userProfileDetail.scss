@@ -166,14 +166,23 @@
   }
 }
 
-.StripeElement{
-  background-color: white
+.StripeElement {
+  background-color: white;
 }
-.StripeElement > iframe,.StripeElement > div{
+.StripeElement > iframe,
+.StripeElement > div {
   width: 100%;
-  display: unset!important;
+  display: unset !important;
 }
-.CardDemo label {width: 300px;color: black;margin-top:10px}
-.error{
-  color:red;
+.CardDemo label {
+  width: 300px;
+  color: black;
+  margin-top: 10px;
+}
+.error {
+  color: red;
+}
+
+.hidden {
+  display: none !important;
 }

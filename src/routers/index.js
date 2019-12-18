@@ -111,7 +111,7 @@ const Routers = store => {
         />
         <AppRoute
           path="/verify-email/:user_id/:otp"
-          exact={true}
+          exact
           component={VerifyEmail}
           requireAuth={Authorization}
           layout={commonLayout}
@@ -120,16 +120,7 @@ const Routers = store => {
         />
         <AppRoute
           path="/profile"
-          exact={true}
-          component={Profile}
-          requireAuth={Authorization}
-          layout={PublicLayout}
-          store={store}
-          type={private_type}
-        />
-        <AppRoute
-          path="/edit-profile"
-          exact={true}
+          exact
           component={Profile}
           requireAuth={Authorization}
           layout={PublicLayout}
@@ -138,7 +129,7 @@ const Routers = store => {
         />
         <AppRoute
           path="/bidder-profile/:user_id"
-          exact={true}
+          exact
           component={BidderProfile}
           requireAuth={Authorization}
           layout={PublicLayout}

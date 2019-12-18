@@ -38,6 +38,8 @@ export default function reducer(state = initialState, action) {
       return { ...state, userDetails: action.data };
     case TYPE.UPDATE_USER_PROFILE:
       return { ...state };
+    case TYPE.UPDATE_USER_IMAGE:
+      return { ...state, data: { ...state.data, image: action.data.image } };
     default:
       return state;
   }

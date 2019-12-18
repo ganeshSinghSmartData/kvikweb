@@ -19,6 +19,7 @@ const SignInModal = ({
   _modalType,
   _handleSubmit,
   _handleForgotPassword,
+  _loading = false,
   ...props
 }) => {
   let customClass = "";
@@ -37,7 +38,9 @@ const SignInModal = ({
           customClass
         }
       >
-        {/* <Spinner className="position-absolute w-100 h-100 d-flex justify-content-center align-items-center with-overlay overlay-opacity" /> */}
+        {_loading && (
+          <Spinner className="position-absolute w-100 h-100 d-flex justify-content-center align-items-center with-overlay overlay-opacity" />
+        )}
         {_modalType === "/register" || _modalType === "/login" ? (
           <Button
             color="link"

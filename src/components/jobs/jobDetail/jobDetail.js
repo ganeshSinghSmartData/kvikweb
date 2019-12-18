@@ -29,6 +29,7 @@ export default function JobDetail({
   const [imageIndex, setImageIndex] = useState(0);
   const [openModal, setOpenModal] = useState(false);
   const [imageLoad, setImageLoad] = useState(false);
+  const [isModalLoading, setModalLoading] = useState(false);
 
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
@@ -53,6 +54,7 @@ export default function JobDetail({
   };
 
   const handleSubmit = values => {
+    setModalLoading(true);
     const reqData = {
       jobtitle: job.jobtitle,
       description: values.description,
@@ -65,8 +67,12 @@ export default function JobDetail({
     dispatch(
       placeYourBid(reqData, callback => {
         if (callback) {
+          setModalLoading(false);
           setOpenModal(!openModal);
           history.push("/");
+        } else {
+          setOpenModal(!openModal);
+          setModalLoading(false);
         }
       })
     );
@@ -259,6 +265,7 @@ export default function JobDetail({
           _modalType={"Place your bid"}
           _handleSubmit={handleSubmit}
           _frequency={job.frequency}
+          _loading={isModalLoading}
         />
         {path === "/job-proposal" &&
           job &&

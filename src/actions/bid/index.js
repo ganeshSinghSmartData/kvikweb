@@ -158,7 +158,7 @@ export const getBidderReview = (bidder_id, callback) => {
 };
 
 /****** action creator for reject the bid ********/
-export const rejectBid = params => {
+export const rejectBid = (params, callback) => {
   return (dispatch, getState) => {
     const {
       data: { token }
@@ -166,8 +166,10 @@ export const rejectBid = params => {
     ApiClient.put(`${apiUrl}/bid/reject_bid`, params, token).then(response => {
       if (response.status === 200) {
         toastAction(true, response.msg);
+        callback(true);
         // dispatch(reject_bid(response.data));
       } else if (response.status === 401) {
+        callback(false);
         console.log("errror with 401 : ");
         toastErrorAction(dispatch, response.msg);
       } else {
@@ -178,7 +180,7 @@ export const rejectBid = params => {
 };
 
 /****** action creator for get accept the bid ********/
-export const acceptBid = params => {
+export const acceptBid = (params, callback) => {
   return (dispatch, getState) => {
     const {
       data: { token }
@@ -186,10 +188,12 @@ export const acceptBid = params => {
     ApiClient.put(`${apiUrl}/bid/accept_bid`, params, token).then(response => {
       if (response.status === 200) {
         toastAction(true, response.msg);
+        callback(true);
         // dispatch(accept_bid(response.data));
       } else if (response.status === 402) {
         console.log("errror with 401 : ");
         toastAction(false, response.msg);
+        callback(false);
       } else {
         console.log("Un certain error");
       }

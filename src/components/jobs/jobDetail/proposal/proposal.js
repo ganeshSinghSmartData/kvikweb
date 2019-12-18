@@ -20,11 +20,13 @@ const Proposal = ({ props, jobId, history }) => {
   }
 
   const [openModal, setOpenModal] = useState(false);
+  const [isModalLoading, setModalLoading] = useState(false);
 
   let daysfrom = new Date() - new Date(DaysBetween(props.created_at));
   daysfrom = parseInt(daysfrom / (1000 * 3600 * 24));
 
   const handleAccept = value => {
+    setModalLoading(true);
     const reqData = {
       job_provider_id: value.job_provider_id._id,
       job_id: jobId,
@@ -39,16 +41,36 @@ const Proposal = ({ props, jobId, history }) => {
         }
       }
     };
-    dispatch(acceptBid(reqData));
-    setOpenModal(false);
-    history.push("/job-list");
+    dispatch(
+      acceptBid(reqData, callback => {
+        if (callback) {
+          setOpenModal(false);
+          history.push("/job-list");
+          setModalLoading(false);
+        } else {
+          setOpenModal(false);
+          setModalLoading(false);
+        }
+      })
+    );
   };
   const hadleReject = value => {
+    setModalLoading(true);
     dispatch(
-      rejectBid({ job_provider_id: value.job_provider_id._id, job_id: jobId })
+      rejectBid(
+        { job_provider_id: value.job_provider_id._id, job_id: jobId },
+        callback => {
+          if (callback) {
+            history.push("/job-list");
+            setOpenModal(false);
+            setModalLoading(false);
+          } else {
+            setOpenModal(false);
+            setModalLoading(false);
+          }
+        }
+      )
     );
-    history.push("/job-list");
-    setOpenModal(false);
   };
 
   return (
@@ -72,6 +94,7 @@ const Proposal = ({ props, jobId, history }) => {
         _handleAccept={handleAccept}
         _hadleReject={hadleReject}
         _propsDetails={{ ...props, daysfrom: daysfrom }}
+        _loading={isModalLoading}
       />
     </div>
   );

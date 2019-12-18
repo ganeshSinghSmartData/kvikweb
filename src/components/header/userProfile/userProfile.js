@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Dropdown,
   DropdownToggle,
@@ -7,6 +7,7 @@ import {
   DropdownItem,
   Button
 } from "reactstrap";
+import { logout } from "../../../actions/user";
 import { Link } from "react-router-dom";
 
 import "./userProfile.scss";
@@ -14,13 +15,15 @@ import { DummyUserImage } from "../../../utilities/constants";
 import { apiUrl } from "./../../../environment";
 
 const UserProfile = props => {
+  const dispatch = useDispatch();
+  const { user } = useSelector(state => state);
+
   let imagepath = DummyUserImage;
   if (props.image && props.image.length) {
     imagepath = `${apiUrl}/${props.image[0].original}`;
   }
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const user = useSelector(state => state.user);
 
   const toggle = () => setDropdownOpen(prevState => !prevState);
   return (
@@ -72,13 +75,31 @@ const UserProfile = props => {
           </svg>
         </DropdownToggle>
         <DropdownMenu right>
-          <DropdownItem header>Profile</DropdownItem>
-          <Link className="dropdown-item" to={"/profile"}>
-            View Profile
+          <DropdownItem header>General</DropdownItem>
+          <Link className="dropdown-item" to={"/"}>
+            Setting
           </Link>
-          {/* <Link className="dropdown-item" to="/edit-profile">
-            Edit Profile
-          </Link> */}
+          <Link className="dropdown-item" to={"/bid-list"}>
+            Bids
+          </Link>
+          <Link className="dropdown-item" to={"/job-list"}>
+            Jobs
+          </Link>
+          <Link className="dropdown-item" to={""}>
+            Metrics
+          </Link>
+          <DropdownItem header>Profile</DropdownItem>
+          <Link className="dropdown-item" to="/profile">
+            My Profile
+          </Link>
+          <Link
+            className="dropdown-item"
+            to={""}
+            onClick={() => dispatch(logout())}
+          >
+            Logout
+          </Link>
+
           {/* <DropdownItem divider />
           <DropdownItem disabled>Action (disabled)</DropdownItem>
           <DropdownItem divider />

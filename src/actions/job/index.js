@@ -35,7 +35,7 @@ export const getJobProduct = ({
   search = "",
   long = "",
   lat = "",
-  category = ""
+  category = []
 }) => {
   return (dispatch, getState) => {
     const skip = (page - 1) * pagination.limit;
@@ -112,9 +112,9 @@ export const placeYourBid = (params, callback) => {
         // dispatch(post_job_products(response.data));
         toastAction(true, response.msg);
         callback(true);
-      } else if (response.status === 401) {
+      } else if (response.status === 402) {
         callback(false);
-        console.log("errror with 401 : ");
+        toastAction(false, response.msg);
       } else {
         dispatch(is_fetching(false));
         callback(false);

@@ -7,13 +7,10 @@ import Logo from "../commonUi/logo/logo";
 import "./header.scss";
 const Header = () => {
   const { user } = useSelector(state => state);
+
   let imagepath = "";
-  if (
-    user.userDetails &&
-    user.userDetails.image &&
-    user.userDetails.image.length
-  ) {
-    imagepath = user.userDetails.image;
+  if (user.data && user.data.image && user.data.image.length) {
+    imagepath = user.data.image;
   }
 
   const [navVisible, setnavVisible] = useState(false);
