@@ -1,11 +1,10 @@
 import React from 'react';
 import { Button, Input } from 'reactstrap';
 import './chat.scss';
+
 const Chat = (props) => {
   const chatHide = () => {
-    console.log('click')
     props.chatHideCallback(false)
-    console.log('props.chatToggle', props.chatToggle)
   }
   return (
     <div className={`chat-block ${props.chatToggle ? 'on' : ''}`}>

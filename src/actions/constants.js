@@ -42,3 +42,12 @@ export const RESET_ACTIVE_JOB = "RESET_ACTIVE_JOB";
 export const RESET_COMPLETED_JOB = "RESET_COMPLETED_JOB";
 export const GET_ACTIVE_JOB = "GET_ACTIVE_JOB";
 export const GET_COMPLETED_JOB = "GET_COMPLETED_JOB";
+
+/*************MESSAGES*********************************/
+export const MESSAGES_LIST = 'MESSAGES_LIST';
+export const SEND_MESSAGE = 'SEND_MESSAGE';
+export const GET_MESSAGE = 'GET_MESSAGE';
+
+/*************CARDS*********************************/
+export const USER_CARDS = 'USER_CARDS';
+
