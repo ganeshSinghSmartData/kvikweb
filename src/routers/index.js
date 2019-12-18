@@ -17,6 +17,8 @@ import BidList from "../containers/bid/bid-list";
 import JobProposal from "../containers/job/job-proposal";
 import JobList from "../containers/job/job-list";
 import VerifyEmail from "../components/emailVerify";
+import ChatUsers from "../components/jobs/bidderProfile/chat/chat-users";
+import Chat from "../components/jobs/bidderProfile/chat/chat";
 import Profile from "../containers/user/profile";
 import { socketUrl } from '../environment';
 import SocketClient from '../config/socket';
@@ -133,6 +135,24 @@ const Routers = store => {
           path="/edit-profile"
           exact={true}
           component={Profile}
+          requireAuth={Authorization}
+          layout={publicLayout}
+          store={store}
+          type={private_type}
+        />
+        <AppRoute
+          path="/chat-users"
+          exact={true}
+          component={ChatUsers}
+          requireAuth={Authorization}
+          layout={publicLayout}
+          store={store}
+          type={private_type}
+        />
+        <AppRoute
+          path="/chat"
+          exact={true}
+          component={Chat}
           requireAuth={Authorization}
           layout={publicLayout}
           store={store}
