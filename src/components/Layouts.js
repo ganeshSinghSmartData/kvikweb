@@ -15,9 +15,9 @@ import Footer from "./footer/footer";
 let scroll = Scroll.animateScroll;
 
 /*************** Public Layout ***************/
-export const publicLayout = props => {
+export const PublicLayout = props => {
   window.scrollTo(0, 0);
-  /*   const wrapperRef = useRef(null);
+  const wrapperRef = useRef(null);
   const [scrollVisible, setscrollVisible] = useState(false);
   const scrollCheck = () => {
     let scrollTopCheck = wrapperRef.current.scrollTop;
@@ -26,10 +26,10 @@ export const publicLayout = props => {
     } else {
       setscrollVisible(false);
     }
-  }; */
+  };
   const scrollTopFunction = () => {
     window.scrollTo(0, 0);
-    // wrapperRef.current.scroll({ top: 0, left: 0, behavior: "smooth" });
+    wrapperRef.current.scroll({ top: 0, left: 0, behavior: "smooth" });
   };
   return (
     <div className="main-wrapper d-flex flex-column flex-fill">
@@ -38,12 +38,20 @@ export const publicLayout = props => {
         props.children.props.match.path === "/post-job") && (
         <Banner path={props.children} />
       )}
-      <div className="wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto">
+      <div
+        className="wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto"
+        ref={wrapperRef}
+        onScroll={scrollCheck}
+      >
         <Container className="d-flex flex-column flex-shrink-0 mb-50 position-relative">
           {props.children}
           <button
             type="button"
-            className={"btn scroll-tp-btn rounded-circle position-absolute"}
+            className={
+              "btn scroll-tp-btn rounded-circle position-fixed " +
+              (scrollVisible ? "on" : "")
+            }
+            onClick={scrollTopFunction}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

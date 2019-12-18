@@ -7,9 +7,12 @@ import datetimeDifference from "datetime-difference";
 import "./jobAddress.scss";
 import { setTimeout } from "timers";
 
-const JobAddress = ({ end_date = false, job_seeker_id }) => {
-  console.log("job_seeker_id: ", job_seeker_id);
-
+const JobAddress = ({
+  end_date = false,
+  job_seeker_id,
+  handleImageUpload,
+  editimage = false
+}) => {
   let [timeleft, seTimeleft] = useState(
     datetimeDifference(new Date(), new Date(end_date))
   );
@@ -21,7 +24,11 @@ const JobAddress = ({ end_date = false, job_seeker_id }) => {
 
   return (
     <div className="job-address d-flex">
-      <UserImage />
+      <UserImage
+        image={job_seeker_id.image}
+        handleImageUpload={handleImageUpload}
+        edit={editimage}
+      />
       {job_seeker_id && (
         <div className="job-user-info flex-fill">
           <div className="job-user-rw d-flex flex-wrap">
@@ -39,7 +46,7 @@ const JobAddress = ({ end_date = false, job_seeker_id }) => {
           </div> */}
           </div>
           <ul>
-            {!job_seeker_id["address"] && (
+            {job_seeker_id["city"] && (
               <li className="d-flex">
                 <span className="svg-secondary-100 flex-shrink-0">
                   <svg
@@ -58,7 +65,7 @@ const JobAddress = ({ end_date = false, job_seeker_id }) => {
                     </g>
                   </svg>
                 </span>
-                <p>101, abc point, 7Hull Place, London, E14 6HS, UK</p>
+                <p>{`${job_seeker_id["city"]}, ${job_seeker_id["zip_code"]}`}</p>
               </li>
             )}
             {job_seeker_id["email"] && (

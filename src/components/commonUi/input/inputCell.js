@@ -141,16 +141,19 @@ const InputCell = ({
             ) : null}
           </span>
         ) : null}
-        {InputType !== "select" && InputType !== "textarea" && InputType !== "file" && (
-          <Control.text
-            type={InputType}
-            name={Name}
-            placeholder={Placeholder}
-            model={Model}
-            className={"form-control"}
-            errors={validation()}
-          />
-        )}
+        {InputType !== "select" &&
+          InputType !== "textarea" &&
+          InputType !== "file" && (
+            <Control.text
+              type={InputType}
+              name={Name}
+              placeholder={Placeholder}
+              disabled={Disabled}
+              model={Model}
+              className={"form-control"}
+              errors={validation()}
+            />
+          )}
 
         {InputType === "select" && (
           <Control.select

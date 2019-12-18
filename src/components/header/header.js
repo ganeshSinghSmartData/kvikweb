@@ -7,6 +7,14 @@ import Logo from "../commonUi/logo/logo";
 import "./header.scss";
 const Header = () => {
   const { user } = useSelector(state => state);
+  let imagepath = "";
+  if (
+    user.userDetails &&
+    user.userDetails.image &&
+    user.userDetails.image.length
+  ) {
+    imagepath = user.userDetails.image;
+  }
 
   const [navVisible, setnavVisible] = useState(false);
   const navToggle = e => {
@@ -41,7 +49,7 @@ const Header = () => {
                   "d-sm-none d-md-block nav " + (navVisible ? "active" : "")
                 }
               />
-              {user.loggedIn && <UserProfile />}
+              {user.loggedIn && <UserProfile image={imagepath} />}
               <Button
                 color="link"
                 className={

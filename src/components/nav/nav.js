@@ -30,11 +30,11 @@ const Nav = props => {
             </Link>
           </li>
         )}
-        <li>
+        {/*         <li>
           <Link className="btn btn-link" disabled={true} to={""}>
             Help
           </Link>
-        </li>
+        </li> */}
         {!user.loggedIn && (
           <li>
             <Link className="btn btn-link" to={"/register"}>

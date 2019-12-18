@@ -6,7 +6,6 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import InputCell from "../../commonUi/input/inputCell";
-import DataLoader from "../../commonUi/loader/loader";
 import "./postJob.scss";
 import { set } from "date-fns/esm";
 
@@ -24,8 +23,6 @@ export default ({
     new Date(moment(new Date(), "DD-MM-YYYY").add(7, "days"))
   );
   let files = {};
-  // console.log('imageData: ', Object.keys(imageData).length, Object.keys(images).length);
-
   const handleOnInputClick = () => {
     document.body.classList.add("datepicker");
   };

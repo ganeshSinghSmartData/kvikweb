@@ -15,15 +15,16 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import { StringToDate, DaysBetween } from "./../../../utilities/common";
+import { JobStatus } from "../../../utilities/constants";
 import { apiUrl } from "./../../../environment";
 import { placeYourBid } from "./../../../actions/job";
-import { getUserJobDetails } from "./../../../actions/bid";
 
 export default function JobDetail({ job, history, path = "" }) {
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
-  const userJobDetails = useSelector(state => state.bid.userJobDetails);
+
   const thmbnails = [];
+
   job.images.length &&
     job.images.map(item => {
       const obj = {
@@ -116,6 +117,10 @@ export default function JobDetail({ job, history, path = "" }) {
               end_date={DaysBetween(job.jobEndDate)}
               job_seeker_id={job.job_seeker_id}
             />
+            {path === "/bid-details" && (
+              <Heading className="bid_status">{JobStatus[job.status]}</Heading>
+            )}
+
             {path !== "/bid-details" &&
               path !== "/job-proposal" &&
               user &&
@@ -141,13 +146,20 @@ export default function JobDetail({ job, history, path = "" }) {
           _frequency={job.frequency}
         />
         {path === "/job-proposal" &&
-          userJobDetails &&
-          userJobDetails.bidersLIstingcheck.length !== 0 && (
+          job &&
+          job.bidersLIstingcheck.length !== 0 && (
             <div className="proposal-blc flex-shrink-0">
               <h4>PROPOSALS</h4>
 
-              {userJobDetails.bidersLIstingcheck.map((item, key) => {
-                return <Proposal props={item} key={key} />;
+              {job.bidersLIstingcheck.map((item, key) => {
+                return (
+                  <Proposal
+                    props={item}
+                    key={key}
+                    jobId={job._id}
+                    history={history}
+                  />
+                );
               })}
             </div>
           )}

@@ -14,6 +14,8 @@ export const LOGIN_USERS = "LOGIN_USERS";
 export const LOGOUT_USERS = "LOGOUT_USERS";
 export const USER_BID_LISTING = "USER_BID_LISTING";
 export const GET_USER_DETAILS = "GET_USER_DETAILS";
+export const UPDATE_USER_DETAILS = "UPDATE_USER_DETAILS";
+export const UPDATE_USER_PROFILE = "UPDATE_USER_PROFILE";
 
 /************Bid*********************/
 export const BID_LIST = "BID_LIST";
@@ -21,7 +23,6 @@ export const BID_DETAILS = "BID_DETAILS";
 export const GET_ACTIVE_BID = "GET_ACTIVE_BID";
 export const GET_COMPLETED_BID = "GET_COMPLETED_BID";
 export const USER_JOB_DETAILS = "USER_JOB_DETAILS";
-
 
 /************ FILE *************/
 
@@ -32,6 +33,8 @@ export const GET_JOB_PRODUCTS = "GET_JOB_PRODUCTS";
 export const GET_JOB_DETAILS = "GET_JOB_DETAILS";
 export const POST_JOB_PRODUCTS = "POST_JOB_PRODUCTS";
 export const RESET_JOB_PRODUCTS = "RESET_JOB_PRODUCTS";
+export const RESET_ACTIVE_JOB = "RESET_ACTIVE_JOB";
+export const RESET_COMPLETED_JOB = "RESET_COMPLETED_JOB";
 export const GET_ACTIVE_JOB = "GET_ACTIVE_JOB";
 export const GET_COMPLETED_JOB = "GET_COMPLETED_JOB";
 

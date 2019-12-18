@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 
 import JobDetail from "../../../components/jobs/jobDetail/jobDetail";
 import { getJobDetails } from "../../../actions/job";
+import { getUserJobDetails } from "../../../actions/bid";
 
 class JobDetails extends Component {
   constructor(props) {
@@ -14,22 +15,35 @@ class JobDetails extends Component {
   componentDidMount() {
     const params = this.props.match.params.job_id;
     if (params) {
-      this.props.getJobDetails(params);
-    }
-    if (this.props.match.path.search("/job-proposal") !== -1) {
-      this.setState({ pathname: "/job-proposal" });
-    }
-    if (this.props.match.path.search("/bid-details") !== -1) {
-      this.setState({ pathname: "/bid-details" });
+      if (this.props.match.path.includes("/job-details")) {
+        this.props.getJobDetails(params);
+        this.setState({ pathname: "/job-details" });
+      }
+      if (this.props.match.path.includes("/bid-details")) {
+        this.props.getUserJobDetails({ jobId: params });
+        this.setState({ pathname: "/bid-details" });
+      }
     }
   }
 
-
   render() {
+    let jobDetails = {};
+    if (Object.keys(this.props.jobDetails).length) {
+      jobDetails = this.props.jobDetails;
+    }
+    if (this.props.match.path.includes("/bid-details")) {
+      if (Object.keys(this.props.userJobDetails).length) {
+        jobDetails = this.props.userJobDetails;
+      }
+    }
     return (
       <React.Fragment>
-        {Object.keys(this.props.jobDetails).length && (
-          <JobDetail job={this.props.jobDetails} history={this.props.history} path={this.state.pathname}></JobDetail>
+        {Object.keys(jobDetails).length && (
+          <JobDetail
+            job={jobDetails}
+            history={this.props.history}
+            path={this.state.pathname}
+          ></JobDetail>
         )}
       </React.Fragment>
     );
@@ -38,11 +52,13 @@ class JobDetails extends Component {
 
 const mapStateToProps = state => ({
   jobs: state.job.jobProduct,
-  jobDetails: state.job.jobDetails
+  jobDetails: state.job.jobDetails,
+  userJobDetails: state.bid.userJobDetails
 });
 
 const mapDispatchToProps = dispatch => ({
-  getJobDetails: bindActionCreators(getJobDetails, dispatch)
+  getJobDetails: bindActionCreators(getJobDetails, dispatch),
+  getUserJobDetails: bindActionCreators(getUserJobDetails, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(JobDetails);

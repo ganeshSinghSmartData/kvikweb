@@ -8,8 +8,17 @@ import {
   Button
 } from "reactstrap";
 import { Link } from "react-router-dom";
+
 import "./userProfile.scss";
+import { DummyUserImage } from "../../../utilities/constants";
+import { apiUrl } from "./../../../environment";
+
 const UserProfile = props => {
+  let imagepath = DummyUserImage;
+  if (props.image && props.image.length) {
+    imagepath = `${apiUrl}/${props.image[0].original}`;
+  }
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const user = useSelector(state => state.user);
 
@@ -39,7 +48,7 @@ const UserProfile = props => {
       <Button color="link" className="user-pic p-0 rounded-circle">
         <img
           className="rounded-circle w-100 h-100"
-          src={require("../../../assets/images/user-profile.jpg")}
+          src={imagepath}
           alt="User Profile"
         />
       </Button>
@@ -64,12 +73,12 @@ const UserProfile = props => {
         </DropdownToggle>
         <DropdownMenu right>
           <DropdownItem header>Profile</DropdownItem>
-          <Link className="btn btn-link" to={"/profile"}>
-            <DropdownItem>View Profile</DropdownItem>
+          <Link className="dropdown-item" to={"/profile"}>
+            View Profile
           </Link>
-          <Link className="btn btn-link" to="/edit-profile">
-            <DropdownItem>Edit Profile</DropdownItem>
-          </Link>
+          {/* <Link className="dropdown-item" to="/edit-profile">
+            Edit Profile
+          </Link> */}
           {/* <DropdownItem divider />
           <DropdownItem disabled>Action (disabled)</DropdownItem>
           <DropdownItem divider />

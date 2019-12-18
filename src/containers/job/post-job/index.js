@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import PostJob from "../../../components/jobs/postJob";
-import Loader from "./../../../components/Loader";
+import Loader from "../../../components/commonUi/loader/loader";
 import { createNewJob } from "./../../../actions/job";
 
 class PostNewJob extends Component {
@@ -20,7 +20,7 @@ class PostNewJob extends Component {
     this.handleStageChange = this.handleStageChange.bind(this);
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   //   Handling Job Ppost
   handleJobPost(jobData, startDate, endDate, imageData, currentstage) {

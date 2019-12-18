@@ -18,11 +18,6 @@ import { ClipLoader } from "react-spinners";
 import PropTypes from "prop-types";
 
 const ReactLoader = ({ loading }) => {
-  const override = css`
-    display: block;
-    margin: 0 auto;
-    border-color: #b8d433;
-  `;
   return (
     loading && (
       <React.Fragment>

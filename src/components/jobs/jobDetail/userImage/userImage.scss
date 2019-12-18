@@ -1,3 +1,4 @@
+@import "../../../../assets/css/variables";
 .job-user {
   width: 64px;
   height: 64px;
@@ -9,5 +10,25 @@
   }
   .btn:disabled {
     opacity: 1;
+  }
+  .update-cell-inner {
+    input {
+      opacity: 0;
+      cursor: pointer;
+    }
+  }
+  .udpate-image-btn {
+    bottom: 0;
+    right: 4px;
+    width: 22px;
+    height: 22px;
+    background: $secondary-200;
+    svg {
+      width: 11px;
+      fill: white;
+      path {
+        fill: white;
+      }
+    }
   }
 }

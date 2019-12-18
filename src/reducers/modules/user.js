@@ -34,6 +34,10 @@ export default function reducer(state = initialState, action) {
       return { ...state, userDetails: action.data };
     case TYPE.USER_CARDS:
       return { ...state, cards: action.data };
+    case TYPE.UPDATE_USER_DETAILS:
+      return { ...state, userDetails: action.data };
+    case TYPE.UPDATE_USER_PROFILE:
+      return { ...state };
     default:
       return state;
   }

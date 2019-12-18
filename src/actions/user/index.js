@@ -11,6 +11,14 @@ export const logout_users = data => ({ type: TYPE.LOGOUT_USERS, data });
 export const user_bid_listing = data => ({ type: TYPE.USER_BID_LISTING, data });
 export const get_user_details = data => ({ type: TYPE.GET_USER_DETAILS, data });
 export const user_cards = data => ({ type: TYPE.USER_CARDS, data });
+export const update_user_details = data => ({
+  type: TYPE.UPDATE_USER_DETAILS,
+  data
+});
+export const update_user_profile = data => ({
+  type: TYPE.UPDATE_USER_PROFILE,
+  data
+});
 
 /****** action creator for register users ********/
 export const registerUser = (params, callback) => {
@@ -41,6 +49,28 @@ export const loginUser = (params, callback) => {
       } else if (response.status === 404) {
         toastErrorAction(dispatch, response.msg);
       } else {
+        dispatch(is_fetching(false));
+      }
+    });
+  };
+};
+
+/****** action creator for verify users email ********/
+export const verifyEmail = (params, callback) => {
+  return dispatch => {
+    ApiClient.get(
+      `${apiUrl}/verifyEmail/${params.userId}/${params.otp}`,
+      params
+    ).then(response => {
+      if (response.status === 200) {
+        toastAction(true, response.msg);
+        if (response.msg === "Already verified") {
+          callback(false);
+        }
+      } else if (response.status === 404) {
+        toastErrorAction(dispatch, response.msg);
+      } else {
+        callback(response.msg);
         dispatch(is_fetching(false));
       }
     });
@@ -127,6 +157,27 @@ export const AddCard = (params = {}, callback) => {
   };
 };
 
+/****** action creator for update users details ********/
+export const updateUserDetails = (params, callback) => {
+  return (dispatch, getState) => {
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient.put(`${apiUrl}/updateUser`, params, token).then(response => {
+      if (response.status === 200) {
+        callback(true);
+        dispatch(update_user_details(response.data));
+      } else if (response.status === 401) {
+        callback(false);
+        toastErrorAction(dispatch, response.msg);
+      } else {
+        dispatch(is_fetching(false));
+      }
+    });
+  }
+};
+
+
 /****** action creator for add card ********/
 export const GetCards = (params = {}) => {
   return (dispatch, getState) => {
@@ -146,3 +197,24 @@ export const GetCards = (params = {}) => {
   };
 };
 
+/****** action creator for upload user profile picture ********/
+export const uploadUserImage = (params, callback) => {
+  return (dispatch, getState) => {
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient._postFormData(`${apiUrl}/imageUpload`, params, token).then(
+      response => {
+        if (response.status === 200) {
+          callback(true);
+          dispatch(update_user_details(response.data));
+        } else if (response.status === 401) {
+          callback(false);
+          toastErrorAction(dispatch, response.msg);
+        } else {
+          dispatch(is_fetching(false));
+        }
+      }
+    );
+  };
+};

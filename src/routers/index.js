@@ -2,7 +2,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import {
-  publicLayout,
+  PublicLayout,
   privateLayout,
   commonLayout
 } from "../components/Layouts";
@@ -36,7 +36,7 @@ const Routers = store => {
           exact={true}
           component={HomePage}
           requireAuth={Authorization}
-          layout={publicLayout}
+          layout={PublicLayout}
           store={store}
           type={public_type}
         />
@@ -46,7 +46,7 @@ const Routers = store => {
           exact={true}
           component={HomePage}
           requireAuth={Authorization}
-          layout={publicLayout}
+          layout={PublicLayout}
           store={store}
           type={public_type}
         />
@@ -55,7 +55,7 @@ const Routers = store => {
           exact={true}
           component={HomePage}
           requireAuth={Authorization}
-          layout={publicLayout}
+          layout={PublicLayout}
           store={store}
           type={public_type}
         />
@@ -64,7 +64,7 @@ const Routers = store => {
           exact={true}
           component={JobDetails}
           requireAuth={Authorization}
-          layout={publicLayout}
+          layout={PublicLayout}
           store={store}
           type={public_type}
         />
@@ -73,7 +73,7 @@ const Routers = store => {
           path="/post-job"
           component={PostNewJob}
           requireAuth={Authorization}
-          layout={publicLayout}
+          layout={PublicLayout}
           store={store}
           type={private_type}
         />
@@ -82,7 +82,7 @@ const Routers = store => {
           exact={true}
           component={BidList}
           requireAuth={Authorization}
-          layout={publicLayout}
+          layout={PublicLayout}
           store={store}
           type={private_type}
         />
@@ -91,7 +91,7 @@ const Routers = store => {
           exact={true}
           component={JobDetails}
           requireAuth={Authorization}
-          layout={publicLayout}
+          layout={PublicLayout}
           store={store}
           type={public_type}
         />
@@ -100,7 +100,7 @@ const Routers = store => {
           exact={true}
           component={JobList}
           requireAuth={Authorization}
-          layout={publicLayout}
+          layout={PublicLayout}
           store={store}
           type={private_type}
         />
@@ -109,7 +109,7 @@ const Routers = store => {
           exact={true}
           component={JobProposal}
           requireAuth={Authorization}
-          layout={publicLayout}
+          layout={PublicLayout}
           store={store}
           type={private_type}
         />
@@ -127,7 +127,7 @@ const Routers = store => {
           exact={true}
           component={Profile}
           requireAuth={Authorization}
-          layout={publicLayout}
+          layout={PublicLayout}
           store={store}
           type={private_type}
         />
@@ -136,7 +136,7 @@ const Routers = store => {
           exact={true}
           component={Profile}
           requireAuth={Authorization}
-          layout={publicLayout}
+          layout={PublicLayout}
           store={store}
           type={private_type}
         />
@@ -145,7 +145,7 @@ const Routers = store => {
           exact={true}
           component={ChatUsers}
           requireAuth={Authorization}
-          layout={publicLayout}
+          layout={PublicLayout}
           store={store}
           type={private_type}
         />
@@ -154,7 +154,7 @@ const Routers = store => {
           exact={true}
           component={Chat}
           requireAuth={Authorization}
-          layout={publicLayout}
+          layout={PublicLayout}
           store={store}
           type={private_type}
         />

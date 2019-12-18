@@ -185,8 +185,7 @@ const SignInModal = ({
                         ClassName="input-icon-cell"
                         InputIcon={true}
                         Errors={{
-                          required: "required",
-                          invalidEmail: "invalidEmail"
+                          required: "required"
                         }}
                       />
                       <InputCell
@@ -197,12 +196,11 @@ const SignInModal = ({
                         ClassName="input-icon-cell"
                         InputIcon={true}
                         Errors={{
-                          required: "required",
-                          invalidPass: "invalidPass"
+                          required: "required"
                         }}
                       />
                       <div className="signup-agree d-flex align-items-start">
-                        <label className="d-flex align-items-start">
+                        {/* <label className="d-flex align-items-start">
                           <Checkbox /> Remember me
                         </label>
                         <Button
@@ -212,7 +210,7 @@ const SignInModal = ({
                           onClick={_handleForgotPassword("")}
                         >
                           Forgot Password?
-                        </Button>
+                        </Button> */}
                       </div>
                       <div className="text-center">
                         <Button type="submit" size="lg" className="signup">
@@ -303,13 +301,13 @@ const SignInModal = ({
                   <Button
                     color="link"
                     className="btn-dark cancel"
-                    onClick={() => props._hadleReject("reject")}
+                    onClick={() => props._hadleReject(props._propsDetails)}
                   >
                     REJECT
                   </Button>
                   <Button
                     color="secondary"
-                    onClick={() => props._handleAccept("accept")}
+                    onClick={() => props._handleAccept(props._propsDetails)}
                   >
                     ACCEPT
                   </Button>
