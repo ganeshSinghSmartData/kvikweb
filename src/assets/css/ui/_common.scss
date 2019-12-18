@@ -50,8 +50,10 @@ body {
   max-width: 1200px;
 }
 .wrapper-inner {
-  @media (max-width: 767px) {
-    padding-top: 15px;
+  > div {
+    @media (max-width: 767px) {
+      padding-top: 15px !important;
+    }
   }
 }
 

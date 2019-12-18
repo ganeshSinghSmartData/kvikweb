@@ -15,7 +15,62 @@
     height: 18px;
     fill: #fff;
   }
+  &:after {
+    border: none;
+  }
+  .badge {
+    font-weight: 400;
+    right: 10px;
+    top: 3px;
+    padding: 3px;
+  }
 }
+.user-list-dropdown {
+  width: 235px;
+  left: -15px !important;
+  .dropdown-item {
+    border-bottom: 1px solid #efeeee;
+    white-space: normal;
+    span {
+      margin: 0 7px 0 0;
+      width: 35px;
+      height: 35px;
+      background-color: #ddd;
+      img {
+        width: 35px;
+        height: 35px;
+      }
+    }
+    &:last-child {
+      border-bottom: none;
+    }
+    &:focus {
+      outline: none;
+    }
+    &:active {
+      .user-label {
+        color: #fff;
+        label {
+          color: #fff;
+        }
+      }
+    }
+  }
+  .user-label {
+    font-size: 14px;
+    color: #222;
+    label {
+      font-size: 11px;
+      color: #777;
+      padding-left: 10px;
+      margin-top: 3px;
+    }
+  }
+  .user-list-scroll {
+    max-height: 300px;
+  }
+}
+
 .user-pic {
   width: 40px;
   height: 40px;

@@ -47,7 +47,7 @@ const JobAddress = ({
               </Button> */}
             </div>
           </div>
-          <ul>
+          {/* <ul>
             {job_seeker_id["city"] && (
               <li className="d-flex">
                 <span className="svg-secondary-100 flex-shrink-0">
@@ -181,7 +181,7 @@ const JobAddress = ({
                 </div>
               </li>
             )}
-          </ul>
+          </ul> */}
           <div className="profile-label">
             <h4>Sant Sandhu
             </h4>
