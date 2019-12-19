@@ -26,7 +26,7 @@ const UserProfile = props => {
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [userListOpen, setuserListOpen] = useState(false);
-  const user = useSelector(state => state.user);
+  // const user = useSelector(state => state.user);
 
   const toggle = () => setDropdownOpen(prevState => !prevState);
   const userListtoggle = () => setuserListOpen(prevState => !prevState);
@@ -60,6 +60,7 @@ const UserProfile = props => {
         </DropdownToggle>
         <DropdownMenu right className="user-list-dropdown">
           <DropdownItem header>User Message List</DropdownItem>
+          <DropdownItem divider />
           <div className="user-list-scroll overflow-auto">
             <DropdownItem className="d-flex align-items-center">
               <span className="rounded-circle flex-shrink-0">
@@ -157,8 +158,9 @@ const UserProfile = props => {
             />
           </svg>
         </DropdownToggle>
-        <DropdownMenu right>
+        <DropdownMenu right className="overflow-auto">
           <DropdownItem header>General</DropdownItem>
+          <DropdownItem divider />
           <Link className="dropdown-item" to={"/"}>
             Setting
           </Link>
@@ -172,6 +174,7 @@ const UserProfile = props => {
             Metrics
           </Link>
           <DropdownItem header>Profile</DropdownItem>
+          <DropdownItem divider />
           <Link className="dropdown-item" to="/profile">
             My Profile
           </Link>

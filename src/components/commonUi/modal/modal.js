@@ -108,7 +108,7 @@ const SignInModal = ({
                     />
                   </svg>
                 </span>
-                <h3 className="text-center position-relative">
+                <h3 className="text-center position-relative mb0">
                   Welcome to
                   <span className="d-block">
                     <Logo className="signup-logo" />
