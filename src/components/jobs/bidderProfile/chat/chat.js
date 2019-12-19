@@ -8,6 +8,7 @@ import SocketClient from "../../../../config/socket";
 import { SEND_MESSAGE, GET_MESSAGE } from '../../../../actions/constants';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { css } from 'glamor';
+import moment from 'moment';
 
 const ROOT_CSS = css({
   height: 400,
@@ -19,15 +20,17 @@ const Chat = (props) => {
   const [message, setMessage] = useState('');
   const user = useSelector(state => state.user);
   const messages = useSelector(state => state.messages);
+  const [message_count, setMessageCount] = useState(0);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (props.Id) {
+    if (message_count === 0) {
       SocketClient.eventHandler(GET_MESSAGE, { user_id: props.Id });
       dispatch(messages_list({ id: props.Id, limit: 10, skip: 0 }));
+      setMessageCount(1);
     }
-  }, []);
+  });
 
   /*********************** Handle message input ************************************** */
   const onHandleChange = (e) => {
@@ -71,12 +74,12 @@ const Chat = (props) => {
                         {val.message}
                       </p>
                       <span className="d-block chat-time">
-                        09:20PM
-            </span>
+                        {moment(val.createdAt).format('LT')}
+                      </span>
                     </div>
                   </div>
                   :
-                  <div className="chat-row rt justify-content-end">
+                  <div className="chat-row rt">
                     <div className="chat-txt user">
                       <p>
                         {val.message}

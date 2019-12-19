@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import * as TYPE from '../actions/constants';
-import { get_message } from '../actions/messages';
+import { get_message, messages_count } from '../actions/messages';
 
 class SocketClient {
 
@@ -64,6 +64,7 @@ class SocketClient {
         this.socket.on(`${data.user_id}-get_message`, (res) => {
           console.log(res);
           this.dispatch(get_message(res));
+          this.dispatch(messages_count());
         });
         break;
     }

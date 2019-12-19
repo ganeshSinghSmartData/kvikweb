@@ -20,6 +20,8 @@ export default function reducer(state = initialState, action) {
         case TYPE.GET_MESSAGE:
             state.data.push(action.data);
             return state;
+        case TYPE.MESSAGE_COUNT:
+            return { ...state, count: action.data.count };
         case TYPE.LOGOUT_USERS:
             return initialState;
         default:

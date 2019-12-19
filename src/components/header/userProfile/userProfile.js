@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Dropdown,
@@ -14,10 +14,26 @@ import { Link } from "react-router-dom";
 import "./userProfile.scss";
 import { DummyUserImage } from "../../../utilities/constants";
 import { apiUrl } from "./../../../environment";
+import { messages_count, message_count } from '../../../actions/messages';
 
 const UserProfile = props => {
   const dispatch = useDispatch();
   const { user } = useSelector(state => state);
+  const messages = useSelector(state => state.messages);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (count === 0) {
+      dispatch(messages_count());
+      setCount(1);
+    }
+  });
+
+
+  const setMessageCount = () => {
+    const data = { count: 0 };
+    dispatch(message_count(data));
+  }
 
   let imagepath = DummyUserImage;
   if (props.image && props.image.length) {
@@ -36,13 +52,15 @@ const UserProfile = props => {
         props.className
       }
     >
-      <Dropdown isOpen={userListOpen} toggle={userListtoggle}>
+      <Dropdown onClick={() => setMessageCount()} isOpen={userListOpen} toggle={userListtoggle}>
         <DropdownToggle
           caret
           className="user-mail position-relative"
           color="link"
         >
-          <Badge className="position-absolute badge-danger">10</Badge>
+          {messages && messages.count > 0 &&
+            <Badge className="position-absolute badge-danger">{messages.count}</Badge>
+          }
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="146"
