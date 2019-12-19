@@ -9,6 +9,7 @@ import user from "./modules/user";
 import home from "./modules/home";
 import job from "./modules/job";
 import bid from "./modules/bid";
+import messages from "./modules/messages";
 
 const history = createBrowserHistory();
 
@@ -25,5 +26,6 @@ export default persistCombineReducers(userPersistConfig, {
   user,
   home,
   job,
-  bid
+  bid,
+  messages
 });

@@ -31,6 +31,9 @@
     }
   }
   .chat-inner {
+    overflow-y: auto;
+    overflow-x: hidden!important;
+    height: 185px;
     padding: 29px 49px;
     .chat-row {
       display: flex;

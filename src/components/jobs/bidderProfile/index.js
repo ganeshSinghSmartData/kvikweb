@@ -111,6 +111,7 @@ const BidderProfile = ({ user_id, review }) => {
             </svg>
           </Button>
           <Chat
+            Id={biderDetails._id}
             chatToggle={chatVisible}
             chatHideCallback={value => chatHideCallback(value)}
           />

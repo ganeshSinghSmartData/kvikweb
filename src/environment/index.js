@@ -6,7 +6,8 @@
  */
 
 const local = {
-  apiUrl: "http://172.24.4.68:3000"
+  apiUrl: "http://172.24.4.68:3000",
+  socketUrl: "http://172.24.4.68:3000"
 };
 
 const staging = {
