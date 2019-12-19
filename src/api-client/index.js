@@ -104,12 +104,10 @@ class ApiClient {
         });
     });
   }
-  /*************** Form-Data Method ***********/
+  /*************** Form-Data Method without file for Create ***********/
   static _postFormData(url, params, token = null) {
     setAuthorizationToken(axios, token);
     return new Promise(function(fulfill, reject) {
-      // var body = new FormData();
-      // body.append("file", params);
       axios
         .post(url, params, {
           ...config,
@@ -128,7 +126,33 @@ class ApiClient {
         });
     });
   }
-  /*************** Form-Data Method ***********/
+
+  /*************** Form-Data Method for Update ***********/
+  static _putFormData(url, params, token = null) {
+    setAuthorizationToken(axios, token);
+    return new Promise(function(fulfill, reject) {
+      // var body = new FormData();
+      // body.append("file", params);
+      axios
+        .put(url, params, {
+          ...config,
+          ...{ headers: { "Content-Type": "multipart/form-data" } }
+        })
+
+        .then(function(response) {
+          fulfill(response.data);
+        })
+        .catch(function(error) {
+          if (error && error.response) {
+            fulfill(error.response.data);
+          } else {
+            reject(error);
+          }
+        });
+    });
+  }
+
+  /*************** Form-Data with file Method ***********/
   static postFormData(url, params, token = null) {
     setAuthorizationToken(axios, token);
     return new Promise(function(fulfill, reject) {

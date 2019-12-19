@@ -1,7 +1,7 @@
 /*
  * @file: index.js
  * @description: It Contain environment variables.
- * @date: 04.07.2018
+ * @date: 05.12.2019
  * @author: smartData
  */
 

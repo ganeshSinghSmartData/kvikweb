@@ -1,9 +1,8 @@
-import io from 'socket.io-client';
-import * as TYPE from '../actions/constants';
+import io from "socket.io-client";
+import * as TYPE from "../actions/constants";
 // import { get_message } from '../actions/messages';
 
 class SocketClient {
-
   constructor() {
     this.socket = null;
     this.dispatch = null;
@@ -22,13 +21,13 @@ class SocketClient {
     // this.authentication(TOKEN);
 
     /*********** event for socket connect ******************** */
-    this.socket.on('connect', (res) => {
-      console.log('connect');
+    this.socket.on("connect", res => {
+      // console.log('connect');
     });
 
     /*********** event for socket disconnect ******************** */
-    this.socket.on('disconnect', (res) => {
-      console.log('disconnect');
+    this.socket.on("disconnect", res => {
+      // console.log('disconnect');
     });
 
     /************** event of get messages******* *****************/
@@ -36,28 +35,28 @@ class SocketClient {
 
     //   this.dispatch(get_message(res));
     // });
-  }
+  };
 
   /*********** user authentication before socket connection ******* */
-  authentication = (token) => {
-    this.socket.emit('authenticate', { token }, (error, res) => {
-      console.log(error, res, 'authenticate', this.socket);
+  authentication = token => {
+    this.socket.emit("authenticate", { token }, (error, res) => {
+      // console.log(error, res, "authenticate", this.socket);
     });
-  }
+  };
 
   /*********** Handler for emitting events ******* */
   eventHandler = (type, data) => {
     switch (type) {
       case TYPE.LOGOUT_USERS:
         if (this.socket) {
-          this.socket.emit('disconnect');
+          this.socket.emit("disconnect");
         }
         break;
       case TYPE.SEND_MESSAGE:
-        this.socket.emit('send_message', data);
+        this.socket.emit("send_message", data);
         break;
     }
-  }
+  };
 }
 
 export default new SocketClient();

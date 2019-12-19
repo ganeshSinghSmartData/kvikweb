@@ -74,6 +74,15 @@ const Routers = store => {
           type={private_type}
         />
         <AppRoute
+          exact={true}
+          path="/edit-job/:job_id"
+          component={PostNewJob}
+          requireAuth={Authorization}
+          layout={PublicLayout}
+          store={store}
+          type={private_type}
+        />
+        <AppRoute
           path="/bid-list"
           exact={true}
           component={BidList}

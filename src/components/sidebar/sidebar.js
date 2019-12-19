@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import { Button, Input } from "reactstrap";
 import { Collapse } from "reactstrap";
+import InputRange from "react-input-range";
+import "react-input-range/lib/css/index.css";
+
+// onChangeComplete
 
 import FilterBlock from "../sidebar/filterBlock/filterBlock";
 import { CategoryItems } from "../../utilities/constants";
 import "./sidebar.scss";
 
-const Sidebar = ({ _handleCategory, _handlePostalCode }) => {
+const Sidebar = ({
+  _handleCategory,
+  _handlePostalCode,
+  _handleDistance,
+  _handleBudget
+}) => {
   const [isCategory, setIsCategory] = useState(true);
   const [isFilter, setIsFilter] = useState(true);
   const [toggleCheck, setToggleCheck] = useState(false);
@@ -99,17 +108,17 @@ const Sidebar = ({ _handleCategory, _handlePostalCode }) => {
                   Postal Code
                 </label>
               </h5>
-              <Input
-                type="text"
-                name="postal-code"
-                id="exampleEmail"
-                placeholder="Enter Postal Code"
-                // pattern="/^[0-9\b]+$/"
-                onChange={event => _handlePostalCode(event.target.value)}
-              />
             </div>
-            <FilterBlock />
-            <FilterBlock budgetFilter={true} />
+            <FilterBlock
+              handleBudgetRange={val => _handleBudget(val)}
+              handleDistanceRange={val => _handleDistance(val)}
+              budgetFilter={false}
+            />
+            <FilterBlock
+              handleBudgetRange={val => _handleBudget(val)}
+              handleDistanceRange={val => _handleDistance(val)}
+              budgetFilter={true}
+            />
           </div>
         </Collapse>
       </div>

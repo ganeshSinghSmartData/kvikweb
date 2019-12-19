@@ -25,6 +25,8 @@ const Job = ({
   const [listType, setlistType] = useState(false);
   const [selectedCategory, setCategory] = useState([]);
   const [postalCode, setPostalCode] = useState("");
+  const [distance, setDistance] = useState("");
+  const [budget, setBudget] = useState("");
   let [page, setPage] = useState(pagination.page);
   let [jobType, setJobType] = useState("active");
 
@@ -118,6 +120,14 @@ const Job = ({
     setPostalCode(value);
   };
 
+  const handleBudget = value => {
+    setBudget(value);
+  };
+
+  const handleDistance = value => {
+    setDistance(value);
+  };
+
   useEffect(() => {
     if (path !== "/job-list") {
       const reqData = {
@@ -158,6 +168,8 @@ const Job = ({
               <Sidebar
                 _handleCategory={handleCategory}
                 _handlePostalCode={handlePostalCode}
+                _handleDistance={handleDistance}
+                _handleBudget={handleBudget}
               />
             </Col>
           )}
