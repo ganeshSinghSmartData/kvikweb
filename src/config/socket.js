@@ -1,6 +1,6 @@
 import io from "socket.io-client";
 import * as TYPE from "../actions/constants";
-// import { get_message } from '../actions/messages';
+import { get_message, messages_count } from "../actions/messages";
 
 class SocketClient {
   constructor() {
@@ -53,7 +53,18 @@ class SocketClient {
         }
         break;
       case TYPE.SEND_MESSAGE:
-        this.socket.emit("send_message", data);
+        this.socket.emit(`${data.senderId}-send_message`, {
+          recieverId: data.recieverId, // message reciever
+          senderId: data.senderId, // your id
+          type: "text", // text/image
+          message: data.message
+        });
+      case TYPE.GET_MESSAGE:
+        this.socket.on(`${data.user_id}-get_message`, res => {
+          console.log(res);
+          this.dispatch(get_message(res));
+          this.dispatch(messages_count());
+        });
         break;
     }
   };

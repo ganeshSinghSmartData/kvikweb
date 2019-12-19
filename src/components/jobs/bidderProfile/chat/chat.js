@@ -1,8 +1,52 @@
-import React from 'react';
-import { Button, Input } from 'reactstrap';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Button, Input, FormGroup } from 'reactstrap';
 import './chat.scss';
+import { messages_list } from '../../../../actions/messages';
+import { LocalForm, Control } from 'react-redux-form';
+import SocketClient from "../../../../config/socket";
+import { SEND_MESSAGE, GET_MESSAGE } from '../../../../actions/constants';
+import ScrollToBottom from 'react-scroll-to-bottom';
+import { css } from 'glamor';
+import moment from 'moment';
+
+const ROOT_CSS = css({
+  height: 400,
+  width: 800
+});
+
 
 const Chat = (props) => {
+  const [message, setMessage] = useState('');
+  const user = useSelector(state => state.user);
+  const messages = useSelector(state => state.messages);
+  const [message_count, setMessageCount] = useState(0);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (message_count === 0) {
+      SocketClient.eventHandler(GET_MESSAGE, { user_id: props.Id });
+      dispatch(messages_list({ id: props.Id, limit: 10, skip: 0 }));
+      setMessageCount(1);
+    }
+  });
+
+  /*********************** Handle message input ************************************** */
+  const onHandleChange = (e) => {
+    setMessage(e.target.value);
+  }
+
+  /*********************** Handle message send ************************************** */
+  const handleMessage = (val) => {
+    console.log(message, val.message);
+    SocketClient.eventHandler(SEND_MESSAGE, { message: message, recieverId: props.Id, senderId: user.data._id });
+    setMessage('');
+
+    dispatch(messages_list({ id: props.Id, limit: 10, skip: 0 }));
+  };
+
+
   const chatHide = () => {
     props.chatHideCallback(false)
   }
@@ -19,27 +63,38 @@ const Chat = (props) => {
         </Button>
       </div>
       <div className="chat-inner overflow-auto">
-        <div className="chat-row">
-          <div className="chat-txt admin">
-            <p>
-              Lorem ipsum dolor sit ameti
-            </p>
-            <span className="d-block chat-time">
-              09:20PM
-          </span>
-          </div>
-        </div>
-        <div className="chat-row rt justify-content-end">
-          <div className="chat-txt user">
-            <p>
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor.
-            </p>
-            <span className="d-block chat-time">
-              09:20PM
-          </span>
-          </div>
-        </div>
-        <div className="chat-history-rw d-flex justify-content-center position-relative">
+        <ScrollToBottom className={ROOT_CSS}>
+          {messages && messages.data.length > 0 && messages.data.map((val, index) => {
+            return (
+              <React.Fragment>
+                {val.senderId === user.data._id ?
+                  <div className="chat-row">
+                    <div className="chat-txt admin">
+                      <p>
+                        {val.message}
+                      </p>
+                      <span className="d-block chat-time">
+                        {moment(val.createdAt).format('LT')}
+                      </span>
+                    </div>
+                  </div>
+                  :
+                  <div className="chat-row rt">
+                    <div className="chat-txt user">
+                      <p>
+                        {val.message}
+                      </p>
+                      <span className="d-block chat-time">
+                        09:20PM
+            </span>
+                    </div>
+                  </div>
+                }
+              </React.Fragment>
+            );
+          })}
+        </ScrollToBottom>
+        {/* <div className="chat-history-rw d-flex justify-content-center position-relative">
           <label className="mb-0 position-relative">
             Today
           </label>
@@ -53,33 +108,46 @@ const Chat = (props) => {
               09:20PM
           </span>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="chat-foot d-flex">
-        <div className="chat-foot-l flex-fill">
-          <Input
-            type="text"
-            name="text"
-            placeholder="Write Message..."
-          />
-        </div>
-        <div className="chat-foot-r">
-          <Button color="link" className="rounded-circle p-0 attach-btn svg-seconary-100-hover position-relative">
-            <Input
-              type="file"
-              name="file"
-              className="position-absolute"
-            />
-            <svg xmlns="http://www.w3.org/2000/svg" width="36.307" height="36.696" viewBox="0 0 36.307 36.696">
-              <path id="attachment" d="M6.79,27.1a6.8,6.8,0,0,1-4.806-11.6L16.04,1.449a5.034,5.034,0,0,1,7.269.213,5.033,5.033,0,0,1,.213,7.269L10.317,22.136a3.182,3.182,0,1,1-4.5-4.5l8.945-8.945a.772.772,0,0,1,1.092,1.092L6.909,18.728a1.637,1.637,0,0,0,2.315,2.315L22.43,7.838a3.526,3.526,0,0,0-.213-5.084,3.525,3.525,0,0,0-5.084-.213L3.076,16.6A5.252,5.252,0,0,0,10.5,24.025L24.56,9.968a.772.772,0,1,1,1.092,1.092L11.6,25.117A6.749,6.749,0,0,1,6.79,27.1Z" transform="matrix(0.848, -0.53, 0.53, 0.848, 0, 13.713)" fill="#757575" />
-            </svg>
-          </Button>
-          <Button color="secondary" className="rounded-circle p-0">
-            <svg id="arrow" xmlns="http://www.w3.org/2000/svg" width="21.939" height="18.855" viewBox="0 0 21.939 18.855">
-              <path id="Path_3272" data-name="Path 3272" d="M33.566,50.443l-8.153-8.153a1.274,1.274,0,1,0-1.8,1.8l5.979,5.979H13.274a1.274,1.274,0,0,0,0,2.548H29.589L23.611,58.6a1.274,1.274,0,0,0,1.8,1.8l8.153-8.153A1.274,1.274,0,0,0,33.566,50.443Z" transform="translate(-12 -41.916)" fill="#fff" />
-            </svg>
-          </Button>
-        </div>
+        <LocalForm
+          model="messages"
+          onSubmit={(values) => handleMessage(values)}
+        >
+          <div className="chat-foot-l flex-fill">
+
+            <FormGroup>
+              <Control.text
+                model=".message"
+                className="form-control"
+                onChange={(e) => onHandleChange(e)}
+                type="text"
+                value={message}
+                placeholder="Write Message..."
+              />
+            </FormGroup>
+
+
+          </div>
+          <div className="chat-foot-r">
+            <Button color="link" className="rounded-circle p-0 attach-btn svg-seconary-100-hover position-relative">
+              <Input
+                type="file"
+                name="file"
+                className="position-absolute"
+              />
+              <svg xmlns="http://www.w3.org/2000/svg" width="36.307" height="36.696" viewBox="0 0 36.307 36.696">
+                <path id="attachment" d="M6.79,27.1a6.8,6.8,0,0,1-4.806-11.6L16.04,1.449a5.034,5.034,0,0,1,7.269.213,5.033,5.033,0,0,1,.213,7.269L10.317,22.136a3.182,3.182,0,1,1-4.5-4.5l8.945-8.945a.772.772,0,0,1,1.092,1.092L6.909,18.728a1.637,1.637,0,0,0,2.315,2.315L22.43,7.838a3.526,3.526,0,0,0-.213-5.084,3.525,3.525,0,0,0-5.084-.213L3.076,16.6A5.252,5.252,0,0,0,10.5,24.025L24.56,9.968a.772.772,0,1,1,1.092,1.092L11.6,25.117A6.749,6.749,0,0,1,6.79,27.1Z" transform="matrix(0.848, -0.53, 0.53, 0.848, 0, 13.713)" fill="#757575" />
+              </svg>
+            </Button>
+            <Button type="submit" color="secondary" className="rounded-circle p-0">
+              <svg id="arrow" xmlns="http://www.w3.org/2000/svg" width="21.939" height="18.855" viewBox="0 0 21.939 18.855">
+                <path id="Path_3272" data-name="Path 3272" d="M33.566,50.443l-8.153-8.153a1.274,1.274,0,1,0-1.8,1.8l5.979,5.979H13.274a1.274,1.274,0,0,0,0,2.548H29.589L23.611,58.6a1.274,1.274,0,0,0,1.8,1.8l8.153-8.153A1.274,1.274,0,0,0,33.566,50.443Z" transform="translate(-12 -41.916)" fill="#fff" />
+              </svg>
+            </Button>
+          </div>
+        </LocalForm>
       </div>
     </div>
   );
