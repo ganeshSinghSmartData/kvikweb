@@ -47,7 +47,7 @@ const JobAddress = ({
               </Button> */}
             </div>
           </div>
-          {/* <ul>
+          <ul>
             {job_seeker_id["city"] && (
               <li className="d-flex">
                 <span className="svg-secondary-100 flex-shrink-0">
@@ -155,7 +155,6 @@ const JobAddress = ({
             )}
             {end_date && (
               <li className="job-start-blc">
-                <h4>Jobs starts in:</h4>
                 <div className="d-flex job-start-rw">
                   <span className="svg-secondary-100 flex-shrink-0">
                     <svg
@@ -181,11 +180,7 @@ const JobAddress = ({
                 </div>
               </li>
             )}
-          </ul> */}
-          <div className="profile-label">
-            <h4>Sant Sandhu
-            </h4>
-          </div>
+          </ul>
         </div>
       )}
     </div>

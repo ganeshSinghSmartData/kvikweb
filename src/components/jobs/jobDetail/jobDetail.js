@@ -21,6 +21,7 @@ import { placeYourBid } from "./../../../actions/job";
 import Spinner from "../../commonUi/spinner/spinner";
 import { CategoryItems } from "../../../utilities/constants";
 import InputCell from "../../commonUi/input/inputCell";
+import RatingBlock from "../../jobs/ratingBock/ratingBlock";
 
 export default function JobDetail({
   job = {},
@@ -189,38 +190,43 @@ export default function JobDetail({
                     </span>
                   </div>
                 )}
-                <div className="job-detail-hd-rw job-detail-hd-rw d-flex align-items-start flex-wrap">
-                  <div className="job-detail-hd-col d-flex flex-fill">
+                <div className="job-detail-hd-rw d-flex flex-wrap">
+                  <div className="job-detail-hd-col d-flex flex-fill flex-wrap">
                     <h3 className="text-primary">{job.jobtitle}</h3>
                     {/* <RatingBlock /> */}
+                    <p className="m-0 w-100">
+                      bidding ends in: {StringToDate(job.created_at)}
+                    </p>
                   </div>
-                  <label
-                    className={`job-detail-amnt flex-shrink-0 ${
-                      path === "/job-proposal" ? "margin" : ""
-                      }`}
-                  >
-                    $ {job.budget}
-                  </label>
-                  {path === "/job-proposal" && job.status === "completed" && (
-                    <div className="mark-dn-cell d-flex">
-                      <Button
-                        color="secondary"
-                        onClick={() =>
-                          _markJobComplete(
-                            job._id,
-                            job.job_seeker_id._id,
-                            user.data._id
-                          )
-                        }
-                      >
-                        Mark as Done
+                  <div className="job-detail-col-rt d-flex">
+                    <label
+                      className={`job-detail-amnt flex-shrink-0 ${
+                        path === "/job-proposal" ? "margin" : ""
+                        }`}
+                    >
+                      $ {job.budget}
+                    </label>
+                    {path === "/job-proposal" && job.status === "completed" && (
+                      <div className="mark-dn-cell">
+                        <Button
+                          color="secondary"
+                          onClick={() =>
+                            _markJobComplete(
+                              job._id,
+                              job.job_seeker_id._id,
+                              user.data._id
+                            )
+                          }
+                        >
+                          Mark as Done
                       </Button>
-                    </div>
-                  )}
+                      </div>
+                    )}
+                  </div>
+
+
                 </div>
-                <p className="m-0">
-                  bidding ends in: {StringToDate(job.created_at)}
-                </p>
+
               </div>
               <div className="job-desc-list">
                 <ul className="d-flex flex-wrap">

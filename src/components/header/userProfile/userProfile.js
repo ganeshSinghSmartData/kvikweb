@@ -173,7 +173,7 @@ const UserProfile = props => {
           <Link className="dropdown-item" to={""}>
             Metrics
           </Link>
-          <DropdownItem header>Profile</DropdownItem>
+          <DropdownItem header className="padd">Profile</DropdownItem>
           <DropdownItem divider />
           <Link className="dropdown-item" to="/profile">
             My Profile
