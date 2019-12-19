@@ -7,12 +7,12 @@ const Breadcrumb = () => {
     <nav aria-label="breadcrumb" className="breadcrumb-nav">
       <ol className="breadcrumb">
         <li className="breadcrumb-item">
-          <Link className="btn btn-link" to={"/"}>
+          <Link to={"/"}>
             Job
           </Link>
         </li>
         <li className="breadcrumb-item">
-          <Link className="btn btn-link" to={"/job-list"}>
+          <Link to={"/job-list"}>
             Job List
           </Link>
         </li>

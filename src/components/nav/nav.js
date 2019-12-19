@@ -15,49 +15,27 @@ const Nav = props => {
       className={"d-flex align-items-center " + props.className}
       onClick={stopPropagationHandler}
     >
-      <ul className="d-flex align-items-center flex-wrap">
-        {user.loggedIn && (
+      {
+        <ul className="d-flex align-items-center flex-wrap">
           <li>
-            <Link className="btn btn-link" disabled={true} to={"/bid-list"}>
-              Bids
+            <Link className="btn btn-link" to={"/"}>
+              Home
             </Link>
           </li>
-        )}
-        {user.loggedIn && (
           <li>
-            <Link className="btn btn-link" disabled={true} to={"/job-list"}>
-              Jobs
+            <Link className="btn btn-link" to={"/"}>
+              About Us
             </Link>
           </li>
-        )}
-        {/*         <li>
-          <Link className="btn btn-link" disabled={true} to={""}>
-            Help
-          </Link>
-        </li> */}
-        {!user.loggedIn && (
           <li>
-            <Link className="btn btn-link" to={"/register"}>
-              Create an Account
-            </Link>
+            {!user.loggedIn && (
+              <Link className="login-btn btn btn-info" to={"/login"}>
+                Login
+              </Link>
+            )}
           </li>
-        )}
-        <li>
-          {user.loggedIn ? (
-            <Link
-              className="login-btn btn btn-info"
-              to={""}
-              onClick={() => dispatch(logout())}
-            >
-              Logout
-            </Link>
-          ) : (
-            <Link className="login-btn btn btn-info" to={"/login"}>
-              Login
-            </Link>
-          )}
-        </li>
-      </ul>
+        </ul>
+      }
     </nav>
   );
 };

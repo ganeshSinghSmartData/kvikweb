@@ -6,14 +6,18 @@ import "./userImage.scss";
 import { DummyUserImage } from "../../../../utilities/constants";
 import { apiUrl } from "./../../../../environment";
 
-const UserImage = ({ image, handleImageUpload, edit = false }) => {
+const UserImage = ({ image, handleImageUpload, edit = false, path }) => {
   let imagepath = DummyUserImage;
   if (image && image.length !== 0) {
     imagepath = `${apiUrl}/${image[0].path}`;
   }
 
   return (
-    <div className="job-user rounded-circle border-secondary-200 d-flex align-items-center justify-content-center flex-shrink-0 position-relative">
+    <div
+      className={`job-user rounded-circle border-secondary-200 d-flex align-items-center justify-content-center flex-shrink-0 position-relative ${
+        path ? "hidden" : ""
+      }`}
+    >
       {edit && (
         <div className="update-cell position-absolute w-100 h-100">
           <span className="update-cell-inner position-absolute w-100 h-100 d-flex align-items-center justify-content-center">

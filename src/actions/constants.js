@@ -16,6 +16,7 @@ export const USER_BID_LISTING = "USER_BID_LISTING";
 export const GET_USER_DETAILS = "GET_USER_DETAILS";
 export const UPDATE_USER_DETAILS = "UPDATE_USER_DETAILS";
 export const UPDATE_USER_PROFILE = "UPDATE_USER_PROFILE";
+export const UPDATE_USER_IMAGE = "UPDATE_USER_IMAGE";
 
 /************Bid*********************/
 export const BID_LIST = "BID_LIST";
@@ -44,10 +45,9 @@ export const GET_ACTIVE_JOB = "GET_ACTIVE_JOB";
 export const GET_COMPLETED_JOB = "GET_COMPLETED_JOB";
 
 /*************MESSAGES*********************************/
-export const MESSAGES_LIST = 'MESSAGES_LIST';
-export const SEND_MESSAGE = 'SEND_MESSAGE';
-export const GET_MESSAGE = 'GET_MESSAGE';
+export const MESSAGES_LIST = "MESSAGES_LIST";
+export const SEND_MESSAGE = "SEND_MESSAGE";
+export const GET_MESSAGE = "GET_MESSAGE";
 
 /*************CARDS*********************************/
-export const USER_CARDS = 'USER_CARDS';
-
+export const USER_CARDS = "USER_CARDS";

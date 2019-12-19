@@ -19,6 +19,7 @@ const SignInModal = ({
   _modalType,
   _handleSubmit,
   _handleForgotPassword,
+  _loading = false,
   ...props
 }) => {
   let customClass = "";
@@ -37,7 +38,9 @@ const SignInModal = ({
           customClass
         }
       >
-        {/* <Spinner className="position-absolute w-100 h-100 d-flex justify-content-center align-items-center with-overlay overlay-opacity" /> */}
+        {_loading && (
+          <Spinner className="position-absolute w-100 h-100 d-flex justify-content-center align-items-center with-overlay overlay-opacity" />
+        )}
         {_modalType === "/register" || _modalType === "/login" ? (
           <Button
             color="link"
@@ -501,6 +504,57 @@ const SignInModal = ({
               <UserImage />
               <label className="mb-0 d-flex align-items-center">Rapha Conrad</label>
             </div>
+          </div>
+        </ModalBody>
+      </Modal> */}
+
+      {/* contact-Us Form */}
+      {/* <Modal isOpen={true} size="lg" className={"d-flex flex-column bid-modal secondary-font-family align-items-center justify-content-center"}>
+        <ModalHeader className="border-0">
+          <span>Contact Us</span>
+          <Button color="link" className="close-btn btn2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
+              <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
+            </svg>
+          </Button>
+        </ModalHeader>
+        <ModalBody className={"overflow-auto pt-0"}>
+          <div className="contact-us-blc">
+            <LocalForm onSubmit={values => _handleSubmit(values)}>
+              <div className="contact-us-frm">
+                <InputCell
+                  Name={"lname"}
+                  Placeholder={"Username"}
+                  Model=".lname"
+                  InputType={"text"}
+                  ClassName="input-icon-cell"
+                  InputIcon={true}
+                  Errors={{ required: "required" }}
+                />
+                <InputCell
+                  Name={"lname"}
+                  Placeholder={"Email"}
+                  Model=".lname"
+                  InputType={"text"}
+                  ClassName="input-icon-cell"
+                  InputIcon={true}
+                  Errors={{ required: "required" }}
+                />
+                <InputCell
+                  Name={"lname"}
+                  Placeholder={"Message"}
+                  Model=".lname"
+                  InputType={"textarea"}
+                  InputIcon={true}
+                  Errors={{ required: "required" }}
+                />
+              </div>
+              <div className="contact-us-btm text-left">
+                <Button color="primary">
+                  Submit
+                </Button>
+              </div>
+            </LocalForm>
           </div>
         </ModalBody>
       </Modal> */}

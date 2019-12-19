@@ -11,11 +11,7 @@ import SpinnerOverlay from "../commonUi/spinner/spinnerOverlay/spinnerOverlay";
 import NoData from "../commonUi/noData/noData";
 import DataLoader from "../commonUi/loader/loader";
 import "./jobs.scss";
-import {
-  getJobProduct,
-  reset_job_products,
-  getUserActiveJob
-} from "./../../actions/job";
+import { getJobProduct, reset_job_products } from "./../../actions/job";
 smoothscroll.polyfill();
 
 const Job = ({
@@ -27,13 +23,15 @@ const Job = ({
 }) => {
   const dispatch = useDispatch();
   const [listType, setlistType] = useState(false);
+  const [selectedCategory, setCategory] = useState([]);
+  const [postalCode, setPostalCode] = useState("");
   let [page, setPage] = useState(pagination.page);
   let [jobType, setJobType] = useState("active");
-  // let [bidType, setBidType] = useState("accepted");
 
   const toggleListType = value => {
     setlistType(value);
   };
+
   let jobs = useSelector(state => state.job);
   let bids = useSelector(state => state.bid);
 
@@ -86,14 +84,51 @@ const Job = ({
         _handleUserCompletedBid({ page: page });
       }
     } else {
-      dispatch(getJobProduct({ page: page }));
+      const reqData = {
+        page: page,
+        category: selectedCategory,
+        lat: "",
+        long: ""
+      };
+      console.log("reqData in show more product:", reqData);
+      dispatch(getJobProduct(reqData));
     }
+  };
+
+  const handleCategory = category => {
+    let newSelectedCategory = [...selectedCategory];
+    if (newSelectedCategory.length === 0) {
+      newSelectedCategory.push(category);
+      setCategory(newSelectedCategory);
+    } else {
+      if (newSelectedCategory.includes(category)) {
+        const index = newSelectedCategory.indexOf(category);
+        if (index > -1) {
+          newSelectedCategory.splice(index, 1);
+          setCategory(newSelectedCategory);
+        }
+      } else {
+        newSelectedCategory.push(category);
+        setCategory(newSelectedCategory);
+      }
+    }
+  };
+
+  const handlePostalCode = value => {
+    setPostalCode(value);
   };
 
   useEffect(() => {
     if (path !== "/job-list") {
+      const reqData = {
+        page: page,
+        category: selectedCategory,
+        lat: "",
+        long: ""
+      };
+      console.log("reqData in use Dispatch :", reqData);
       dispatch(reset_job_products());
-      dispatch(getJobProduct({ page: page }));
+      dispatch(getJobProduct(reqData));
     }
   }, []);
 
@@ -120,7 +155,10 @@ const Job = ({
         <Row className="d-flex flex-nowrap position-relative">
           {path === "" && (
             <Col className="sidebar-col d-flex flex-column">
-              <Sidebar />
+              <Sidebar
+                _handleCategory={handleCategory}
+                _handlePostalCode={handlePostalCode}
+              />
             </Col>
           )}
           <Col className="job-rt-col">

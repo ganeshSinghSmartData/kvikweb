@@ -19,6 +19,10 @@ export const update_user_profile = data => ({
   type: TYPE.UPDATE_USER_PROFILE,
   data
 });
+export const update_user_image = data => ({
+  type: TYPE.UPDATE_USER_IMAGE,
+  data
+});
 
 /****** action creator for register users ********/
 export const registerUser = (params, callback) => {
@@ -143,17 +147,19 @@ export const AddCard = (params = {}, callback) => {
     const {
       data: { token }
     } = getState().user;
-    ApiClient.post(`${apiUrl}/payment/saveCardByToken`, params, token).then(response => {
-      if (response.status === 200) {
-        toastAction(true, "Card successfully saved");
-        dispatch(is_fetching(false));
-        callback(true);
-      } else {
-        dispatch(is_fetching(false));
-        toastAction(false, response.msg);
-        callback(false);
+    ApiClient.post(`${apiUrl}/payment/saveCardByToken`, params, token).then(
+      response => {
+        if (response.status === 200) {
+          toastAction(true, "Card successfully saved");
+          dispatch(is_fetching(false));
+          callback(true);
+        } else {
+          dispatch(is_fetching(false));
+          toastAction(false, response.msg);
+          callback(false);
+        }
       }
-    });
+    );
   };
 };
 
@@ -174,9 +180,8 @@ export const updateUserDetails = (params, callback) => {
         dispatch(is_fetching(false));
       }
     });
-  }
+  };
 };
-
 
 /****** action creator for add card ********/
 export const GetCards = (params = {}) => {
@@ -185,15 +190,17 @@ export const GetCards = (params = {}) => {
     const {
       data: { token }
     } = getState().user;
-    ApiClient.get(`${apiUrl}/payment/getUserSavedCards`, {}, token).then(response => {
-      if (response.status === 200) {
-        dispatch(user_cards(response.cards));
-        dispatch(is_fetching(false));
-      } else {
-        dispatch(is_fetching(false));
-        toastAction(false, response.msg);
+    ApiClient.get(`${apiUrl}/payment/getUserSavedCards`, {}, token).then(
+      response => {
+        if (response.status === 200) {
+          dispatch(user_cards(response.cards));
+          dispatch(is_fetching(false));
+        } else {
+          dispatch(is_fetching(false));
+          toastAction(false, response.msg);
+        }
       }
-    });
+    );
   };
 };
 
@@ -207,7 +214,9 @@ export const uploadUserImage = (params, callback) => {
       response => {
         if (response.status === 200) {
           callback(true);
-          dispatch(update_user_details(response.data));
+          console.log("response: ", response);
+
+          dispatch(update_user_image(response.data));
         } else if (response.status === 401) {
           callback(false);
           toastErrorAction(dispatch, response.msg);
