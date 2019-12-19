@@ -26,7 +26,6 @@ const UserProfile = props => {
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [userListOpen, setuserListOpen] = useState(false);
-  const user = useSelector(state => state.user);
 
   const toggle = () => setDropdownOpen(prevState => !prevState);
   const userListtoggle = () => setuserListOpen(prevState => !prevState);
