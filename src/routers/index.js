@@ -56,6 +56,24 @@ const Routers = store => {
           type={public_type}
         />
         <AppRoute
+          path="/about-us"
+          exact={true}
+          component={HomePage}
+          requireAuth={Authorization}
+          layout={PublicLayout}
+          store={store}
+          type={public_type}
+        />
+        <AppRoute
+          path="/contact-us"
+          exact={true}
+          component={HomePage}
+          requireAuth={Authorization}
+          layout={PublicLayout}
+          store={store}
+          type={public_type}
+        />
+        <AppRoute
           path="/job-details/:job_id"
           exact={true}
           component={JobDetails}

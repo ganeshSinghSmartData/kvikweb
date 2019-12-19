@@ -15,8 +15,6 @@ class SocketClient {
       this.socket = io(SOCKET_URL, { query: `token=${TOKEN}` });
       this.dispatch = dispatch;
     }
-
-    console.log(this.socket);
     /*********** check user authentication ******************** */
     // this.authentication(TOKEN);
 
