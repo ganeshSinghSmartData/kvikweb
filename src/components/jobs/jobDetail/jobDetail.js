@@ -23,6 +23,7 @@ import { placeYourBid } from "./../../../actions/job";
 import Spinner from "../../commonUi/spinner/spinner";
 import { CategoryItems } from "../../../utilities/constants";
 import InputCell from "../../commonUi/input/inputCell";
+import RatingBlock from "../../jobs/ratingBock/ratingBlock";
 
 export default function JobDetail({
   history,
@@ -178,10 +179,13 @@ export default function JobDetail({
                     </span>
                   </div>
                 )}
-                <div className="job-detail-hd-rw job-detail-hd-rw d-flex align-items-start flex-wrap">
-                  <div className="job-detail-hd-col d-flex flex-fill">
+                <div className="job-detail-hd-rw d-flex flex-wrap">
+                  <div className="job-detail-hd-col d-flex flex-fill flex-wrap">
                     <h3 className="text-primary">{job.jobtitle}</h3>
                     {/* <RatingBlock /> */}
+                    <p className="m-0 w-100">
+                      bidding ends in: {StringToDate(job.created_at)}
+                    </p>
                   </div>
                   <label
                     className={`job-detail-amnt flex-shrink-0 ${
@@ -229,9 +233,6 @@ export default function JobDetail({
                     </>
                   )}
                 </div>
-                <p className="m-0">
-                  bidding ends in: {StringToDate(job.created_at)}
-                </p>
               </div>
               <div className="job-desc-list">
                 <ul className="d-flex flex-wrap">

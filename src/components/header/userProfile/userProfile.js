@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import "./userProfile.scss";
 import { DummyUserImage } from "../../../utilities/constants";
 import { apiUrl } from "./../../../environment";
-import { messages_count, message_count } from '../../../actions/messages';
+import { messages_count, message_count } from "../../../actions/messages";
 
 const UserProfile = props => {
   const dispatch = useDispatch();
@@ -29,11 +29,10 @@ const UserProfile = props => {
     }
   });
 
-
   const setMessageCount = () => {
     const data = { count: 0 };
     dispatch(message_count(data));
-  }
+  };
 
   let imagepath = DummyUserImage;
   if (props.image && props.image.length) {
@@ -52,15 +51,21 @@ const UserProfile = props => {
         props.className
       }
     >
-      <Dropdown onClick={() => setMessageCount()} isOpen={userListOpen} toggle={userListtoggle}>
+      <Dropdown
+        onClick={() => setMessageCount()}
+        isOpen={userListOpen}
+        toggle={userListtoggle}
+      >
         <DropdownToggle
           caret
           className="user-mail position-relative"
           color="link"
         >
-          {messages && messages.count > 0 &&
-            <Badge className="position-absolute badge-danger">{messages.count}</Badge>
-          }
+          {messages && messages.count > 0 && (
+            <Badge className="position-absolute badge-danger">
+              {messages.count}
+            </Badge>
+          )}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="146"
@@ -77,6 +82,7 @@ const UserProfile = props => {
         </DropdownToggle>
         <DropdownMenu right className="user-list-dropdown">
           <DropdownItem header>User Message List</DropdownItem>
+          <DropdownItem divider />
           <div className="user-list-scroll overflow-auto">
             <DropdownItem className="d-flex align-items-center">
               <span className="rounded-circle flex-shrink-0">
@@ -174,8 +180,9 @@ const UserProfile = props => {
             />
           </svg>
         </DropdownToggle>
-        <DropdownMenu right>
+        <DropdownMenu right className="overflow-auto">
           <DropdownItem header>General</DropdownItem>
+          <DropdownItem divider />
           <Link className="dropdown-item" to={"/"}>
             Setting
           </Link>
@@ -188,7 +195,10 @@ const UserProfile = props => {
           <Link className="dropdown-item" to={""}>
             Metrics
           </Link>
-          <DropdownItem header>Profile</DropdownItem>
+          <DropdownItem header className="padd">
+            Profile
+          </DropdownItem>
+          <DropdownItem divider />
           <Link className="dropdown-item" to="/profile">
             My Profile
           </Link>

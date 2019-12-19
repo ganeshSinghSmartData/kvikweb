@@ -152,7 +152,6 @@ const JobAddress = ({
             )}
             {end_date && (
               <li className="job-start-blc">
-                <h4>Jobs starts in:</h4>
                 <div className="d-flex job-start-rw">
                   <span className="svg-secondary-100 flex-shrink-0">
                     <svg
