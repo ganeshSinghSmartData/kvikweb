@@ -467,3 +467,77 @@
     }
   }
 }
+
+// Payment modal style start
+.payment-confirm-blc > h2 {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+.payment-confirm {
+  border: 1px solid #d2d2d2;
+  background: #f3f3f3;
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: 0 0 4px #c5c5c5;
+}
+.payment-confirm-check {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  cursor: pointer;
+  background: $primary-dark;
+  border-radius: 0 8px;
+}
+.payment-confirm-rw {
+  margin: 0 0 12px 0;
+}
+.payment-confirm-rw label {
+  font-size: 13px;
+  margin-bottom: 5px;
+  color: #777;
+}
+
+.card-confirm-pic {
+  width: 46px;
+  margin-right: 6px;
+  border: 1px solid #e1e1e1;
+  background: #fff;
+  border-radius: 4px;
+}
+.card-confirm-pic img {
+  width: 35px;
+}
+.payment-confirm .form-control {
+  height: 35px;
+  padding: 0px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  background-color: #fff;
+}
+.payment-confirm-col.cvv {
+  width: 50px;
+  flex: none !important;
+}
+.payment-confirm-col:first-child {
+  margin-right: 6px;
+}
+.payment-card-list li {
+  padding: 0 15px 15px;
+  width: 50%;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+}
+
+.no-card-blc {
+  height: 250px;
+}
+.no-card-msg {
+  font-size: 17px;
+}
+.no-card-msg p {
+  margin: 15px 0 0;
+}

@@ -42,3 +42,36 @@
     }
   }
 }
+
+.budget-row {
+  .input-range__track {
+    height: 5px;
+  }
+  .input-range__track--active {
+    background-color: $primary;
+  }
+  .input-range__slider {
+    background: $primary;
+    border: 1px solid $primary;
+    border: 4px solid #333;
+    width: 18px;
+    height: 18px;
+    margin-top: -11px;
+  }
+}
+.distance-row {
+  .input-range__track {
+    height: 5px;
+  }
+  .input-range__track--active {
+    background-color: $secondary-200;
+  }
+  .input-range__slider {
+    background: $secondary-200;
+    border: 1px solid $secondary-200;
+    border: 4px solid #333;
+    width: 18px;
+    height: 18px;
+    margin-top: -11px;
+  }
+}

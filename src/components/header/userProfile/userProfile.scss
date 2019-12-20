@@ -103,8 +103,13 @@
   }
   .dropdown-menu {
     width: 180px;
-    max-height: 250px;
+    max-height: 280px;
     left: -15px !important;
+  }
+  .dropdown-header {
+    &:focus {
+      outline: none;
+    }
   }
   .dropdown-header.padd {
     padding-top: 0.8rem;

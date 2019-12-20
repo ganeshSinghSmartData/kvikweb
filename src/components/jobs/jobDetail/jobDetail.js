@@ -181,21 +181,49 @@ export default function JobDetail({
                 )}
                 <div className="job-detail-hd-rw d-flex flex-wrap">
                   <div className="job-detail-hd-col d-flex flex-fill flex-wrap">
-                    <h3 className="text-primary">{job.jobtitle}</h3>
+                    <h3 className="text-primary">{job.jobtitle}
+                    </h3>
                     {/* <RatingBlock /> */}
                     <p className="m-0 w-100">
                       bidding ends in: {StringToDate(job.created_at)}
                     </p>
+                    {path === "/job-proposal" && (
+                      <div className="job-edit-btns d-flex">
+                        <Link
+                          className="btn d-flex justify-content-center align-items-center p-0 job-edit-btn"
+                          to={`/edit-job/${job._id}`}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="528.899" height="526.321" viewBox="0 0 528.899 526.321">
+                            <g id="pencil-edit-button" transform="translate(0 -1.289)">
+                              <path id="Path_3559" data-name="Path 3559" d="M328.883,89.125l107.59,107.589-272.34,272.34L56.6,361.465Zm189.23-25.948L470.132,15.2a47.614,47.614,0,0,0-67.259,0L356.912,61.157,464.5,168.747l53.611-53.611A36.679,36.679,0,0,0,518.113,63.177ZM.3,512.69a12.243,12.243,0,0,0,14.811,14.565L135,498.186,27.473,390.6Z" />
+                            </g>
+                          </svg>
+                        </Link>
+                        <Button
+                          className="d-flex justify-content-center align-items-center p-0 job-delete-btn"
+                          color="link"
+                          onClick={() => _deleteJob(job._id)}
+                        >
+                          <svg id="delete" xmlns="http://www.w3.org/2000/svg" width="310.398" height="407" viewBox="0 0 310.398 407">
+                            <path id="Path_3559" data-name="Path 3559" d="M89.2,37c0-12.133,9.469-21,21.6-21h88.8c12.129,0,21.6,8.867,21.6,21V60h16V37c0-20.953-16.645-37-37.6-37H110.8C89.848,0,73.2,16.047,73.2,37V60h16Zm0,0" />
+                            <path id="Path_3560" data-name="Path 3560" d="M60.6,407H249.8c18.242,0,32.4-16.047,32.4-36V124H28.2V371C28.2,390.953,42.355,407,60.6,407ZM206.2,162.2a8,8,0,0,1,16,0v189a8,8,0,0,1-16,0Zm-59,0a8,8,0,0,1,16,0v189a8,8,0,0,1-16,0Zm-59,0a8,8,0,0,1,16,0v189a8,8,0,0,1-16,0Zm0,0" />
+                            <path id="Path_3561" data-name="Path 3561" d="M20,108H290.4a20,20,0,0,0,0-40H20a20,20,0,0,0,0,40Zm0,0" />
+                          </svg>
+
+                        </Button>
+                      </div>
+                    )}
                   </div>
-                  <label
-                    className={`job-detail-amnt flex-shrink-0 ${
-                      path === "/job-proposal" ? "margin" : ""
-                    }`}
-                  >
-                    $ {job.budget}
-                  </label>
-                  {path === "/job-proposal" && job.status === "completed" && (
-                    <div className="mark-dn-cell d-flex">
+                  <div className="job-detail-col-rt d-flex">
+                    <label
+                      className={`job-detail-amnt margin flex-shrink-0 ${
+                        path === "/job-proposal" ? "" : ""
+                        }`}
+                    >
+                      $ {job.budget}
+                    </label>
+                    {/* {path === "/job-proposal" && job.status === "completed" && ( */}
+                    <div className="mark-dn-cell">
                       <Button
                         color="secondary"
                         onClick={() =>
@@ -209,29 +237,8 @@ export default function JobDetail({
                         Mark as Done
                       </Button>
                     </div>
-                  )}
-
-                  {path === "/job-proposal" && (
-                    <>
-                      <div className="mark-dn-cell d-flex">
-                        <Link
-                          className="btn btn-link"
-                          to={`/edit-job/${job._id}`}
-                        >
-                          Edit Job
-                        </Link>
-                      </div>
-
-                      <div className="mark-dn-cell d-flex">
-                        <Button
-                          color="secondary"
-                          onClick={() => _deleteJob(job._id)}
-                        >
-                          Delete
-                        </Button>
-                      </div>
-                    </>
-                  )}
+                    {/* )} */}
+                  </div>
                 </div>
               </div>
               <div className="job-desc-list">

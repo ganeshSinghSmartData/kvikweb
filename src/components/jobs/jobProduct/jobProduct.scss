@@ -145,6 +145,44 @@
   }
 }
 
+@mixin color-opacity($primary, $opacity: 1) {
+  background-color: $primary;
+  background-color: rgba($primary, $opacity);
+}
+.job-status-bar {
+  bottom: 0;
+  right: 0;
+  left: 0;
+  color: #fff;
+  padding: 3px 10px;
+}
+
+// Bid has been accepted
+.job-primary-bar {
+  @include color-opacity($primary, 0.15);
+  background: $primary;
+}
+
+// Bid not started
+// Bid has been expired
+// Bid has been rejected
+.job-danger-bar {
+  @include color-opacity($danger, 0.15);
+  background: $danger;
+}
+
+// Bid is in progress
+.job-secondary-bar {
+  @include color-opacity($secondary, 0.15);
+  background: $secondary;
+}
+
+// Bid has been completed
+.job-success-bar {
+  @include color-opacity($success, 0.15);
+  background: $success;
+}
+
 @media (max-width: 1024px) {
   .job-list-row {
     .job-wrapper {

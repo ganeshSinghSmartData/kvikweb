@@ -61,15 +61,45 @@
 }
 .job-detail-hd-col {
   margin: 0px 15px 10px 0;
+  @media (max-width: 600px) {
+    flex-direction: column !important;
+  }
   .rating-blc {
     margin-top: -2px;
     @media (max-width: 600px) {
       margin-left: -3px;
     }
   }
+  .job-edit-btns {
+    margin-top: 8px;
+    .btn {
+      border: 1px solid $secondary;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      margin-right: 7px;
+      svg {
+        width: 12px;
+      }
+    }
+    .job-edit-btn {
+      svg {
+        width: 14px;
+        fill: $secondary;
+      }
+    }
+    .job-delete-btn {
+      border-color: $danger;
+      svg {
+        width: 12px;
+        fill: $danger;
+      }
+    }
+  }
 }
 .job-detail-amnt.margin {
   margin-right: 8px;
+  margin-top: 2px;
   line-height: 1;
 }
 .job-detail-inner {
@@ -257,6 +287,13 @@
     background: $secondary;
   }
 }
+.place-bid-rw {
+  margin-top: 20px;
+  .place-bid-btn {
+    max-width: 327px;
+    width: 100%;
+  }
+}
 @media (max-width: 767px) {
   .job-detail-blc {
     margin-top: 0px;
@@ -272,18 +309,5 @@
   }
   .job-detail-pic-col {
     margin-bottom: 20px;
-  }
-}
-.place-bid-rw {
-  margin-top: 20px;
-  .place-bid-btn {
-    max-width: 327px;
-    width: 100%;
-  }
-}
-
-@media (max-width: 600px) {
-  .job-detail-hd-col {
-    flex-direction: column !important;
   }
 }

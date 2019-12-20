@@ -40,9 +40,12 @@ const JobProduct = ({ product, listType, path }) => {
     <div className={"job-wrapper " + (listType ? "d-flex flex-column" : "")}>
       <div className="job-pic text-center flex-shrink-0 d-flex position-relative">
         {product.images && product.images.length && (
-          <Link className="text-black flex-fill" to={`${pathname}${product._id}`}>
+          <Link className="text-black flex-fill position-relative" to={`${pathname}${product._id}`}>
             {/* <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" /> */}
             <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />
+            <span className="job-status-bar position-absolute job-primary-bar job-secondary-bar job-danger-bar job-success-bar">
+              Bid has been expired.
+              </span>
           </Link>
         )}
       </div>
