@@ -31,7 +31,8 @@ export const END_BID_WORK = "END_BID_WORK";
 
 /************ FILE *************/
 
-/************ Customer *************/
+/************ Common *************/
+export const ABOUT_US = "ABOUT_US";
 
 /************ Job *************/
 export const GET_JOB_PRODUCTS = "GET_JOB_PRODUCTS";

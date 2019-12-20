@@ -221,7 +221,7 @@ export default function JobDetail({
                     </div>
                   )}
 
-                  {path === "/job-proposal" && (
+                  {path === "/job-proposal" && job.status === "not_started" && (
                     <>
                       <div className="mark-dn-cell d-flex">
                         <Link
@@ -495,7 +495,11 @@ export default function JobDetail({
           _isOpen={rateBidder}
           _toggleModal={() => setRateBidder(!rateBidder)}
           _modalType={"Rate Bidder"}
-          _bidderName={`${job.bidersLIstingcheck[0].job_provider_id.fname} ${job.bidersLIstingcheck[0].job_provider_id.lname}`}
+          _bidderName={
+            job.bidersLIstingcheck &&
+            job.bidersLIstingcheck.length &&
+            `${job.bidersLIstingcheck[0].job_provider_id.fname} ${job.bidersLIstingcheck[0].job_provider_id.lname}`
+          }
           _handleSubmit={handleSubmit}
           history={history}
         />

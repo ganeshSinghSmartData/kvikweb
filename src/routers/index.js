@@ -19,6 +19,7 @@ import Profile from "../containers/user/profile";
 import BidderProfile from "../containers/bid/bidder-profile";
 import { socketUrl } from "../environment";
 import SocketClient from "../config/socket";
+import AboutUs from "../containers/common/about-us";
 
 const Routers = store => {
   const res = User(store);
@@ -58,7 +59,7 @@ const Routers = store => {
         <AppRoute
           path="/about-us"
           exact={true}
-          component={HomePage}
+          component={AboutUs}
           requireAuth={Authorization}
           layout={PublicLayout}
           store={store}

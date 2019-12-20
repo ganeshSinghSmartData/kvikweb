@@ -53,6 +53,31 @@ class ApiClient {
     setAuthorizationToken(axios, token);
     let query = querystring.stringify(params);
     url = query ? `${url}?${query}` : url;
+    console.log("url: ", url);
+
+    return new Promise(function(fulfill, reject) {
+      axios
+        .get(url, config)
+
+        .then(function(response) {
+          fulfill(response.data);
+        })
+        .catch(function(error) {
+          if (error && error.response) {
+            fulfill(error.response.data);
+          } else {
+            reject(error);
+          }
+        });
+    });
+  }
+
+  static fetch(url, params, token = null) {
+    // setAuthorizationToken(axios, token);
+    let query = querystring.stringify(params);
+    url = query ? `${url}?${query}` : url;
+    console.log("url: ", url);
+
     return new Promise(function(fulfill, reject) {
       axios
         .get(url, config)
