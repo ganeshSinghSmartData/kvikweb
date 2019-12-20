@@ -8,32 +8,47 @@ import {
   Button,
   Badge
 } from "reactstrap";
+import Chat from "../../jobs/bidderProfile/chat/chat";
 import { logout } from "../../../actions/user";
 import { Link } from "react-router-dom";
+import moment from 'moment';
 
 import "./userProfile.scss";
 import { DummyUserImage } from "../../../utilities/constants";
 import { apiUrl } from "./../../../environment";
-import { messages_count, message_count } from '../../../actions/messages';
+import { messages_count, message_count, notifications } from '../../../actions/messages';
 
 const UserProfile = props => {
   const dispatch = useDispatch();
   const { user } = useSelector(state => state);
   const messages = useSelector(state => state.messages);
   const [count, setCount] = useState(0);
+  const [recieverID, setId] = useState(0);
 
   useEffect(() => {
     if (count === 0) {
       dispatch(messages_count());
+      dispatch(notifications({ limit: 3, skip: 0 }));
       setCount(1);
     }
   });
-
+  console.log(messages.chatUsers);
 
   const setMessageCount = () => {
     const data = { count: 0 };
     dispatch(message_count(data));
   }
+
+  const [chatVisible, setchatVisible] = useState(false);
+  const chatToggle = (id) => {
+    setchatVisible(!chatVisible);
+    setId(id);
+    console.log("chatVisible", chatVisible);
+  };
+  const chatHideCallback = value => {
+    setchatVisible(value);
+    console.log("chatHideCallback", value);
+  };
 
   let imagepath = DummyUserImage;
   if (props.image && props.image.length) {
@@ -78,58 +93,26 @@ const UserProfile = props => {
         <DropdownMenu right className="user-list-dropdown">
           <DropdownItem header>User Message List</DropdownItem>
           <div className="user-list-scroll overflow-auto">
-            <DropdownItem className="d-flex align-items-center">
-              <span className="rounded-circle flex-shrink-0">
-                <img
-                  className="rounded-circle"
-                  src={require("../../../assets/images/user-profile.jpg")}
-                  alt="User"
-                />
-              </span>
-              <div className="user-label d-flex flex-fill">
-                John Smith
-                <label className="ml-auto flex-shrink-0 mb-0">16:07</label>
-              </div>
-            </DropdownItem>
-            <DropdownItem className="d-flex align-items-center">
-              <span className="rounded-circle flex-shrink-0">
-                <img
-                  className="rounded-circle"
-                  src={require("../../../assets/images/user-profile.jpg")}
-                  alt="User"
-                />
-              </span>
-              <div className="user-label d-flex flex-fill">
-                John Smith this is testing.
-                <label className="ml-auto flex-shrink-0 mb-0">16:07</label>
-              </div>
-            </DropdownItem>
-            <DropdownItem className="d-flex align-items-center">
-              <span className="rounded-circle flex-shrink-0">
-                <img
-                  className="rounded-circle"
-                  src={require("../../../assets/images/user-profile.jpg")}
-                  alt="User"
-                />
-              </span>
-              <div className="user-label d-flex flex-fill">
-                John Smith
-                <label className="ml-auto flex-shrink-0 mb-0">16:07</label>
-              </div>
-            </DropdownItem>
-            <DropdownItem className="d-flex align-items-center">
-              <span className="rounded-circle flex-shrink-0">
-                <img
-                  className="rounded-circle"
-                  src={require("../../../assets/images/user-profile.jpg")}
-                  alt="User"
-                />
-              </span>
-              <div className="user-label d-flex flex-fill">
-                John Smith
-                <label className="ml-auto flex-shrink-0 mb-0">16:07</label>
-              </div>
-            </DropdownItem>
+            {messages && messages.chatUsers.length > 0 && messages.chatUsers.map((val, index) => {
+              return (
+                <DropdownItem onClick={() => chatToggle(val._id)} className="d-flex align-items-center">
+                  <span className="rounded-circle flex-shrink-0">
+                    <img
+                      className="rounded-circle"
+                      src={`${apiUrl}/${val.image[0].path}`}
+                      alt="User"
+                    />
+                  </span>
+                  <div className="user-label d-flex flex-fill">
+                    {val.fname}
+                    <label className="ml-auto flex-shrink-0 mb-0">
+                      {moment(val.createdAt).format('LT')}
+                    </label>
+                  </div>
+                </DropdownItem>
+              );
+            })}
+
           </div>
         </DropdownMenu>
       </Dropdown>
@@ -208,6 +191,11 @@ const UserProfile = props => {
           <DropdownItem>Quo Action</DropdownItem> */}
         </DropdownMenu>
       </Dropdown>
+      <Chat
+        Id={recieverID}
+        chatToggle={chatVisible}
+        chatHideCallback={value => chatHideCallback(value)}
+      />
     </div>
   );
 };
