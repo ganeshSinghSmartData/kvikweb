@@ -106,7 +106,8 @@ const UserProfile = props => {
                   <span className="rounded-circle flex-shrink-0">
                     <img
                       className="rounded-circle"
-                      src={`${apiUrl}/${val.image[0].path}`}
+                      // src={`${apiUrl}/${val.image[0].path}`}
+                      src={imagepath}
                       alt="User"
                     />
                   </span>

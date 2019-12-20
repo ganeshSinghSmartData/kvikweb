@@ -29,10 +29,11 @@ class SocketClient {
     });
 
     /************** event of get messages******* *****************/
-    // this.socket.on(`${user_id}-get_message`, (res) => {
-
-    //   this.dispatch(get_message(res));
-    // });
+    this.socket.on(`get_message`, res => {
+      console.log(res, 'get');
+      this.dispatch(get_message(res));
+      this.dispatch(messages_count());
+    });
   };
 
   /*********** user authentication before socket connection ******* */
@@ -58,8 +59,9 @@ class SocketClient {
           message: data.message
         });
       case TYPE.GET_MESSAGE:
-        this.socket.on(`${data.user_id}-get_message`, res => {
-          console.log(res);
+        console.log('id', data);
+        this.socket.on(`${data.senderId}-get_message`, res => {
+          console.log(res, 'get');
           this.dispatch(get_message(res));
           this.dispatch(messages_count());
         });

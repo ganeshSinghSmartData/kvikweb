@@ -1,22 +1,54 @@
-import React, { useState, useEffect } from "react";
+import React, { Component, useState, useEffect } from "react";
 import StripeCard from '../../../config/stripe';
 import { AddCard, GetCards } from '../../../actions/user';
 import { useSelector, useDispatch } from 'react-redux';
 import { stripeKey } from '../../../environment';
-
-const UserPayment = () => {
+import { Button, Label } from "reactstrap";
+import { LocalForm, actions } from "react-redux-form";
+import InputCell from "../../commonUi/input/inputCell";
+import {
+    CardElement,
+    injectStripe,
+    StripeProvider,
+    Elements,
+    BankForm
+} from 'react-stripe-elements';
+const UserPayment = (props) => {
+    console.log(props);
     const [cards, setCards] = useState(0);
     const [isCard, setIsCard] = useState(true);
     const [cardtype, setCardType] = useState('credit');
     const dispatch = useDispatch();
     const user = useSelector(state => state.user);
-
+    // Stripe.setPublishableKey('THE-PUBLIC-KEY');
     useEffect(() => {
         if (cards === 0) {
             dispatch(GetCards());
             setCards(1);
         }
     });
+
+    const handleBankSubmit = (e) => {
+        const account_holder_type = 'personal';
+
+        props.stripe.createSource({
+            country: 'US',
+            currency: 'USD',
+            routing_number: e.routing_number,
+            account_number: e.account_number,
+            account_holder_name: e.first_name,
+            account_holder_type
+        }, (status, response) => {
+            if (response.error) {
+                alert('Adding bank account failed with error: ' + response.error.message);
+            } else {
+                const bankAccountToken = response.id;
+                console.log(bankAccountToken);
+                // send bankAccountToken to server to be saved under the current user
+                // show success message and navigate away from form
+            }
+        });
+    }
 
     const handleResult = (val) => {
 
@@ -153,8 +185,59 @@ const UserPayment = () => {
                 />
             </li>
         </ul> */}
+                        {cardtype === "credit" ?
+                            <StripeCard handleResult={handleResult} />
+                            :
+                            <LocalForm
+                                onSubmit={values => handleBankSubmit(values)}
+                            >
+                                <ul className="card-detail-item">
+                                    <li>
+                                        <Label>Personal Details</Label>
+                                        <InputCell
+                                            Name={"firstName"}
+                                            Placeholder={"First Name"}
+                                            Model=".firstName"
+                                            maxlength={16}
+                                            InputType={"text"}
+                                            className="input-line-blc"
+                                            Errors={{ required: "required" }}
+                                        />
 
-                        <StripeCard handleResult={handleResult} />
+                                        <InputCell
+                                            Name={"Last Name"}
+                                            Placeholder={"Last Name"}
+                                            Model=".last_name"
+                                            InputType={"text"}
+                                            className="input-line-blc"
+                                            Errors={{ required: "required" }}
+                                        />
+                                    </li>
+                                    <li>
+                                        <Label>Account Details</Label>
+                                        <InputCell
+                                            Name={"Account Number"}
+                                            Placeholder={"Account Number"}
+                                            Model=".account_no"
+                                            InputType={"text"}
+                                            className="input-line-blc"
+                                            Errors={{ required: "required" }}
+                                        />
+                                        <InputCell
+                                            Name={"Routing Number"}
+                                            Placeholder={"Routing Number"}
+                                            Model=".routing_no"
+                                            InputType={"text"}
+                                            className="input-line-blc"
+                                            Errors={{ required: "required" }}
+                                        />
+                                    </li>
+                                </ul>
+                                <Button color="secondary" type="submit">
+                                    Submit
+                            </Button>
+                            </LocalForm>
+                        }
                     </div>
                 </React.Fragment>
 
@@ -259,7 +342,7 @@ const UserPayment = () => {
                                     </g>
                                 </svg>
                             </span>
-                            <label>Debit Card</label>
+                            <label>Bank Details</label>
                         </div>
                     </div>
                     <div className="user-cards-rw" onClick={() => setCard('credit')}>
@@ -366,10 +449,23 @@ const UserPayment = () => {
                     </div>
                 </React.Fragment>
             }
+
         </div>
 
 
     );
 };
+const CardForm = injectStripe(UserPayment);
 
-export default UserPayment;
+export default class CardDemo extends Component {
+    render() {
+        return (
+            <StripeProvider apiKey="pk_test_DwzVvw7dIyntcsbXh6OsNVS200eXzmTfcz">
+                <Elements>
+                    <CardForm handleResult={this.props.handleResult} />
+                </Elements>
+            </StripeProvider>
+
+        );
+    }
+}
