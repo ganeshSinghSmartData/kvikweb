@@ -27,6 +27,8 @@ const SignInModal = ({
     customClass = "signup";
   } else if (_modalType === "Place your bid" || _modalType === "Bid Details") {
     customClass = "bid-modal secondary-font-family";
+  } else if (_modalType === "/contact-us" || _modalType === "/about-us") {
+    customClass = "static-pages";
   }
   return (
     <div>
@@ -108,7 +110,7 @@ const SignInModal = ({
                     />
                   </svg>
                 </span>
-                <h3 className="text-center position-relative">
+                <h3 className="text-center position-relative mb0">
                   Welcome to
                   <span className="d-block">
                     <Logo className="signup-logo" />
@@ -326,74 +328,49 @@ const SignInModal = ({
               </div>
             </div>
           )}
+
+          {_modalType === "Contact Us" && (
+            <div className="contact-us-blc">
+              <LocalForm onSubmit={values => _handleSubmit(values)}>
+                <div className="contact-us-frm">
+                  <InputCell
+                    Name={"name"}
+                    Placeholder={"Username"}
+                    Model=".name"
+                    InputType={"text"}
+                    ClassName="input-icon-cell"
+                    InputIcon={true}
+                    Errors={{ required: "required" }}
+                  />
+                  <InputCell
+                    Name={"email"}
+                    Placeholder={"Email"}
+                    Model=".email"
+                    InputType={"email"}
+                    ClassName="input-icon-cell"
+                    InputIcon={true}
+                    Errors={{
+                      required: "required",
+                      invalidEmail: "invalidEmail"
+                    }}
+                  />
+                  <InputCell
+                    Name={"message"}
+                    Placeholder={"Message"}
+                    Model=".message"
+                    InputType={"textarea"}
+                    InputIcon={true}
+                    Errors={{ required: "required" }}
+                  />
+                </div>
+                <div className="contact-us-btm text-left">
+                  <Button color="primary">Submit</Button>
+                </div>
+              </LocalForm>
+            </div>
+          )}
         </ModalBody>
       </Modal>
-
-      {/* <Modal isOpen={true} size="lg"
-        className={"d-flex flex-column align-items-center   justify-content-center bid-modal secondary-font-family"}>
-        <ModalHeader>
-          <span>Modal title</span>
-          <Button color="link" className="close-btn btn2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
-              <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
-            </svg>
-          </Button>
-        </ModalHeader>
-        <ModalBody className={"overflow-auto"}>
-          <div className="bid-desc-blc">
-            <h2>Description</h2>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero Lorem ipsum dolor sit amet, consetetur.</p>
-
-            <form>
-              <div className="row bid-desc-frm">
-                <div className="col-md-6">
-
-                </div>
-              </div>
-              <div className="bid-frm-btns d-flex justify-content-center">
-                <Button color="link" className="btn-dark cancel">REJECT</Button>
-                <Button color="secondary">SEND</Button>
-              </div>
-            </form>
-          </div>
-        </ModalBody>
-      </Modal> */}
-
-      {/* <Modal isOpen={true} size="lg" className={"d-flex flex-column align-items-center justify-content-center bid-modal secondary-font-family"}>
-        <ModalHeader>
-          <span>Bid Details</span>
-          <Button color="link" className="close-btn btn2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
-              <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
-            </svg>
-          </Button>
-        </ModalHeader>
-        <ModalBody className={"overflow-auto"}>
-          <div className="bid-detail-blc d-flex">
-            <div className="bid-detail-l">
-              <UserImage />
-            </div>
-            <div className="bid-detail-r">
-              <div className="bid-detail-rw">
-                <h2>
-                  Jorden Luise
-                <span>1 Day Ago</span>
-                </h2>
-                <p>
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero Lorem ipsum dolor sit amet, consetetur.
-                </p>
-                <div className="bid-price">
-                  $ 650.00
-                </div>
-              </div>
-              <div className="bid-frm-btns d-flex justify-content-center">
-                <Button color="link" className="btn-dark cancel">REJECT</Button>
-                <Button color="secondary">SEND</Button>
-              </div>
-            </div>
-          </div>
-        </ModalBody>
-      </Modal> */}
 
       {/* <Modal isOpen={true} size="lg" className={"d-flex flex-column align-items-center justify-content-center confirm-modal secondary-font-family"}>
         <ModalHeader>
@@ -504,57 +481,6 @@ const SignInModal = ({
               <UserImage />
               <label className="mb-0 d-flex align-items-center">Rapha Conrad</label>
             </div>
-          </div>
-        </ModalBody>
-      </Modal> */}
-
-      {/* contact-Us Form */}
-      {/* <Modal isOpen={true} size="lg" className={"d-flex flex-column bid-modal secondary-font-family align-items-center justify-content-center"}>
-        <ModalHeader className="border-0">
-          <span>Contact Us</span>
-          <Button color="link" className="close-btn btn2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
-              <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
-            </svg>
-          </Button>
-        </ModalHeader>
-        <ModalBody className={"overflow-auto pt-0"}>
-          <div className="contact-us-blc">
-            <LocalForm onSubmit={values => _handleSubmit(values)}>
-              <div className="contact-us-frm">
-                <InputCell
-                  Name={"lname"}
-                  Placeholder={"Username"}
-                  Model=".lname"
-                  InputType={"text"}
-                  ClassName="input-icon-cell"
-                  InputIcon={true}
-                  Errors={{ required: "required" }}
-                />
-                <InputCell
-                  Name={"lname"}
-                  Placeholder={"Email"}
-                  Model=".lname"
-                  InputType={"text"}
-                  ClassName="input-icon-cell"
-                  InputIcon={true}
-                  Errors={{ required: "required" }}
-                />
-                <InputCell
-                  Name={"lname"}
-                  Placeholder={"Message"}
-                  Model=".lname"
-                  InputType={"textarea"}
-                  InputIcon={true}
-                  Errors={{ required: "required" }}
-                />
-              </div>
-              <div className="contact-us-btm text-left">
-                <Button color="primary">
-                  Submit
-                </Button>
-              </div>
-            </LocalForm>
           </div>
         </ModalBody>
       </Modal> */}

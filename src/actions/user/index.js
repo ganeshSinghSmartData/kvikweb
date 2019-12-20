@@ -93,9 +93,11 @@ export const logout = (params = {}) => {
         toastAction(true, "User successfully logged out");
         dispatch(is_fetching(false));
         dispatch(logout_users());
-      } else {
+      } else if (response.status === 402) {
         dispatch(is_fetching(false));
         toastAction(false, response.msg);
+      } else {
+        dispatch(logout_users());
       }
     });
   };

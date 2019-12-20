@@ -101,4 +101,12 @@
     height: 12px;
     fill: #fff;
   }
+  .dropdown-menu {
+    width: 180px;
+    max-height: 250px;
+    left: -15px !important;
+  }
+  .dropdown-header.padd {
+    padding-top: 0.8rem;
+  }
 }

@@ -4,16 +4,23 @@ import { bindActionCreators } from "redux";
 
 import JobDetail from "./../../../components/jobs/jobDetail/jobDetail";
 import { getUserJobDetails } from "../../../actions/bid";
-import { approvedBidWork } from "../../../actions/job";
+import SpinnerOverlay from "../../../components/commonUi/spinner/spinnerOverlay/spinnerOverlay";
+import {
+  approvedBidWork,
+  deleteMyJob,
+  reset_job_details
+} from "../../../actions/job";
 
 class JobProposal extends Component {
   constructor(props) {
     super(props);
     this.state = {};
     this.markJobComplete = this.markJobComplete.bind(this);
+    this.deleteJob = this.deleteJob.bind(this);
   }
 
   componentDidMount() {
+    this.props.reset_job_details();
     const params = this.props.match.params.job_id;
     if (params) {
       this.props.getUserJobDetails({ jobId: params });
@@ -34,6 +41,16 @@ class JobProposal extends Component {
     });
   };
 
+  deleteJob = jobId => {
+    console.log("i am in delete job : ", jobId);
+    this.props.deleteMyJob({ job_id: jobId }, callback => {
+      if (callback) {
+        console.log(" I am in calback : ", callback);
+        this.props.history.push("/job-list");
+      }
+    });
+  };
+
   render() {
     let pathname = "";
     if (this.props.match.path.search("/job-proposal") !== -1) {
@@ -41,13 +58,16 @@ class JobProposal extends Component {
     }
     return (
       <React.Fragment>
-        {Object.keys(this.props.userJobDetails).length && (
+        {Object.keys(this.props.userJobDetails).length ? (
           <JobDetail
             job={this.props.userJobDetails}
             history={this.props.history}
             path={pathname}
             _markJobComplete={this.markJobComplete}
+            _deleteJob={this.deleteJob}
           ></JobDetail>
+        ) : (
+          <SpinnerOverlay className="position-fixed" />
         )}
       </React.Fragment>
     );
@@ -60,7 +80,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getUserJobDetails: bindActionCreators(getUserJobDetails, dispatch),
-  approvedBidWork: bindActionCreators(approvedBidWork, dispatch)
+  approvedBidWork: bindActionCreators(approvedBidWork, dispatch),
+  deleteMyJob: bindActionCreators(deleteMyJob, dispatch),
+  reset_job_details: bindActionCreators(reset_job_details, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(JobProposal);

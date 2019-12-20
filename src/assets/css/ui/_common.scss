@@ -89,3 +89,257 @@ body {
   background-color: $primary !important;
 }
 // Background Color style end
+
+/*Alert Popup Start*/
+body .react-confirm-alert-overlay {
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1051;
+}
+body .react-confirm-alert {
+  width: auto;
+  max-width: 400px;
+  text-align: center;
+  padding: 20px;
+
+  border-radius: 0;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  -o-border-radius: 0;
+}
+body .react-confirm-alert > h1 {
+  font-size: 21px;
+  color: #444;
+  margin: 0 0 7px 0;
+}
+.react-confirm-alert > h3 {
+  margin: 0;
+  font-size: 16px;
+  line-height: 22px;
+}
+body .react-confirm-alert-button-group {
+  justify-content: center;
+  -moz-justify-content: center;
+  -webkit-justify-content: center;
+  -o-justify-content: center;
+}
+body .react-confirm-alert-button-group > button {
+  padding: 8px 25px;
+  font-size: 15px;
+  cursor: pointer;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -o-border-radius: 3px;
+}
+body .react-confirm-alert-button-group > button:first-child {
+  background: #d9534f;
+  color: #fff;
+}
+body .react-confirm-alert-button-group > button:first-child:hover {
+  background: #e04540;
+}
+body .react-confirm-alert-button-group > button + button {
+  background: #39b3d7;
+  margin-right: 0;
+}
+/*Alert Popup End*/
+/* Custom CSS for search and selct box */
+[class*="fontawesome-"]:before {
+  font-family: "fontawesome", sans-serif;
+}
+.select-search-box {
+  width: 100%;
+  position: relative;
+  margin-bottom: 1rem;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.select-search-box--multiple {
+  border-radius: 4px;
+  box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+
+.select-search-box::after {
+  font-family: fontawesome;
+  content: "\f078";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 40px;
+  text-align: center;
+  line-height: 40px;
+  color: #222f3e;
+  z-index: 1;
+}
+
+.select-search-box--multiple::after,
+.select-search-box--focus::after {
+  content: "\f002";
+}
+
+.select-search-box__icon--disabled::after {
+  content: none !important;
+}
+
+.select-search-box--input::after {
+  display: none !important;
+}
+
+.select-search-box__out {
+  display: none;
+}
+
+.select-search-box__search {
+  display: block;
+  width: 100%;
+  height: 41px;
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 14px;
+  padding: 0 20px;
+  color: #333;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 41px;
+  border: 1px solid #e1e1e1;
+  border-radius: 22px;
+}
+
+input.select-search-box__search {
+  line-height: 1;
+}
+
+.select-search-box--multiple .select-search-box__search {
+  box-shadow: none;
+}
+
+.select-search-box--input .select-search-box__search {
+  cursor: text;
+}
+
+.select-search-box__search:focus {
+  cursor: text;
+}
+
+.select-search-box__search--placeholder {
+  font-style: italic;
+  font-weight: normal;
+}
+
+.select-search-box input::-webkit-input-placeholder {
+  color: #ccc;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.select-search-box input::-moz-placeholder {
+  color: #ccc;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.select-search-box input:-moz-placeholder {
+  color: #ccc;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.select-search-box input:-ms-input-placeholder {
+  color: #ccc;
+  font-style: italic;
+  font-weight: normal;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+.select-search-box__select {
+  display: none;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-radius: 4px;
+  overflow: auto;
+  box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  z-index: 100;
+  min-height: 49px;
+}
+
+.select-search-box--multiple .select-search-box__select {
+  display: block;
+  position: static;
+  border-top: 1px solid #eee;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.select-search-box__select--display {
+  display: block;
+}
+
+.select-search-box__option {
+  font-size: 14px;
+  font-weight: 400;
+  color: #616b74;
+  padding: 8px 20px;
+  border-top: 1px solid #eee;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: none;
+}
+
+.select-search-box__option:first-child {
+  border-top: none;
+}
+
+.select-search-box__option--hover,
+.select-search-box__option:hover {
+  background: #f4f7fa;
+}
+
+.select-search-box__option--selected {
+  background: #54a0ff;
+  color: #fff;
+  border-top-color: #2184ff;
+}
+
+.select-search-box__option--selected:hover,
+.select-search-box__option--selected.select-search-box__option--hover {
+  background: #2184ff;
+  color: #fff;
+  border-top-color: #2184ff;
+}
+
+.select-search-box__group {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  position: relative;
+}
+
+.select-search-box__group-header {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 0 10px;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 12px;
+}

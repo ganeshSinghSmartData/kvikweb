@@ -23,8 +23,13 @@ const Nav = props => {
             </Link>
           </li>
           <li>
-            <Link className="btn btn-link" to={"/"}>
+            <Link className="btn btn-link" to={"/about-us"}>
               About Us
+            </Link>
+          </li>
+          <li>
+            <Link className="btn btn-link" to={"/contact-us"}>
+              Contact Us
             </Link>
           </li>
           <li>

@@ -58,10 +58,7 @@ export const getJobProduct = ({
 
 /****** action creator for get jobs ********/
 export const getJobDetails = job_id => {
-  return (dispatch, getState) => {
-    /* const {
-      data: { token }
-    } = getState().user; */
+  return dispatch => {
     ApiClient.get(`${apiUrl}/api/job_detail/${job_id}`, {}).then(response => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
@@ -82,6 +79,30 @@ export const createNewJob = (params, callback) => {
       data: { token }
     } = getState().user;
     ApiClient._postFormData(`${apiUrl}/api/add_job`, params, token).then(
+      response => {
+        if (response.status === 200) {
+          dispatch(is_fetching(false));
+          dispatch(post_job_products(response.data));
+          toastAction(true, response.msg);
+          callback(true);
+        } else if (response.status === 401) {
+          callback(false);
+          console.log("errror with 401 : ");
+        } else {
+          dispatch(is_fetching(false));
+          callback(false);
+        }
+      }
+    );
+  };
+};
+
+export const updateExistingJob = (params, callback) => {
+  return (dispatch, getState) => {
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient._putFormData(`${apiUrl}/api/job_update`, params, token).then(
       response => {
         if (response.status === 200) {
           dispatch(is_fetching(false));
@@ -201,6 +222,30 @@ export const approvedBidWork = (params, callback) => {
           console.log("errror with 401 : ");
           callback(false);
           // toastErrorAction(dispatch, response.message);
+        } else {
+          dispatch(is_fetching(false));
+        }
+      }
+    );
+  };
+};
+
+/****** action creator for list users cpmpleted job ********/
+export const deleteMyJob = (params, callback) => {
+  return (dispatch, getState) => {
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient.delete(`${apiUrl}/api/delete_job/${params.job_id}`, token).then(
+      response => {
+        if (response.status === 200) {
+          console.log("response: ", response);
+          callback(true);
+          toastAction(true, response.message);
+        } else if (response.status === 401) {
+          console.log("errror with 401 : ");
+          callback(false);
+          toastAction(false, response.message);
         } else {
           dispatch(is_fetching(false));
         }

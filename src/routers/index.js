@@ -56,6 +56,24 @@ const Routers = store => {
           type={public_type}
         />
         <AppRoute
+          path="/about-us"
+          exact={true}
+          component={HomePage}
+          requireAuth={Authorization}
+          layout={PublicLayout}
+          store={store}
+          type={public_type}
+        />
+        <AppRoute
+          path="/contact-us"
+          exact={true}
+          component={HomePage}
+          requireAuth={Authorization}
+          layout={PublicLayout}
+          store={store}
+          type={public_type}
+        />
+        <AppRoute
           path="/job-details/:job_id"
           exact={true}
           component={JobDetails}
@@ -67,6 +85,15 @@ const Routers = store => {
         <AppRoute
           exact={true}
           path="/post-job"
+          component={PostNewJob}
+          requireAuth={Authorization}
+          layout={PublicLayout}
+          store={store}
+          type={private_type}
+        />
+        <AppRoute
+          exact={true}
+          path="/edit-job/:job_id"
           component={PostNewJob}
           requireAuth={Authorization}
           layout={PublicLayout}

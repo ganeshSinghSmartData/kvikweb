@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import UserImage from "../userImage/userImage";
 import RatingBlock from "../../ratingBock/ratingBlock";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 import "./proposal.scss";
 import { DaysBetween } from "../../../../utilities/common";
@@ -24,6 +26,23 @@ const Proposal = ({ props, jobId, history }) => {
 
   let daysfrom = new Date() - new Date(DaysBetween(props.created_at));
   daysfrom = parseInt(daysfrom / (1000 * 3600 * 24));
+
+  const confirmAccept = value => {
+    confirmAlert({
+      title: "",
+      message: "Are you sure do you want to pay for this job ?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => handleAccept(value)
+        },
+        {
+          label: "No",
+          onClick: () => setOpenModal(false)
+        }
+      ]
+    });
+  };
 
   const handleAccept = value => {
     setModalLoading(true);
@@ -54,6 +73,7 @@ const Proposal = ({ props, jobId, history }) => {
       })
     );
   };
+
   const hadleReject = value => {
     setModalLoading(true);
     dispatch(
@@ -72,7 +92,6 @@ const Proposal = ({ props, jobId, history }) => {
       )
     );
   };
-
   return (
     <div className="proposal-rw d-flex" onClick={() => setOpenModal(true)}>
       <div className="proposal-col-l">
@@ -91,7 +110,7 @@ const Proposal = ({ props, jobId, history }) => {
         _isOpen={openModal}
         _toggleModal={() => setOpenModal(false)}
         _modalType={"Bid Details"}
-        _handleAccept={handleAccept}
+        _handleAccept={confirmAccept}
         _hadleReject={hadleReject}
         _propsDetails={{ ...props, daysfrom: daysfrom }}
         _loading={isModalLoading}

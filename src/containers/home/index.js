@@ -5,6 +5,7 @@ import { bindActionCreators } from "redux";
 import Job from "./../../components/jobs/jobs";
 import SignInModal from "./../../components/commonUi/modal/modal";
 import { registerUser, loginUser } from "./../../actions/user";
+import { contactUs } from "./../../actions/common";
 import SpinnerOverlay from "../../components/commonUi/spinner/spinnerOverlay/spinnerOverlay";
 import { socketUrl } from "../../environment";
 import SocketClient from "../../config/socket";
@@ -32,6 +33,15 @@ class Home extends Component {
         if (callback) {
           SocketClient.init(socketUrl, callback.token, this.props.dispatch);
           this.toggleModal();
+        }
+      });
+    } else if (values.message) {
+      console.log("inside contact us submit");
+      this.props.contactUs(values, callback => {
+        if (callback) {
+          this.props.history.push("/");
+        } else {
+          this.props.history.push("/");
         }
       });
     } else {
@@ -64,9 +74,14 @@ class Home extends Component {
 
         <div>
           <SignInModal
-            _isOpen={path === "/register" || path === "/login"}
+            _isOpen={
+              path === "/register" ||
+              path === "/login" ||
+              path === "/about-us" ||
+              path === "/contact-us"
+            }
             _toggleModal={this.toggleModal}
-            _modalType={path}
+            _modalType={path === "/contact-us" ? "Contact Us" : path}
             _handleSubmit={this.handleSubmit}
             _handleForgotPassword={this.handleForgotPassword}
             handleSocialLogin={this.handleSocialLogin}
@@ -85,7 +100,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   registerUser: bindActionCreators(registerUser, dispatch),
-  loginUser: bindActionCreators(loginUser, dispatch)
+  loginUser: bindActionCreators(loginUser, dispatch),
+  contactUs: bindActionCreators(contactUs, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

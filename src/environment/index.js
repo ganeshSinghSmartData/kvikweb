@@ -1,7 +1,7 @@
 /*
  * @file: index.js
  * @description: It Contain environment variables.
- * @date: 04.07.2018
+ * @date: 05.12.2019
  * @author: smartData
  */
 
@@ -11,7 +11,8 @@ const local = {
 };
 
 const staging = {
-  apiUrl: "http://54.71.18.74:4599"
+  apiUrl: "http://54.71.18.74:4599",
+  socketUrl: "http://54.71.18.74:4599"
 };
 
 const production = {
@@ -23,5 +24,5 @@ if (process.env.REACT_APP_ENV === "prod") {
 } else if (process.env.REACT_APP_ENV === "dev") {
   module.exports = staging;
 } else {
-  module.exports = local;
+  module.exports = staging;
 }
