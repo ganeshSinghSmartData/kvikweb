@@ -34,7 +34,7 @@ export const JobStatus = {
   approved: "Bid has been approved",
   accepted: "Bid has been accepted",
   completed: "Bid has been completed",
-  not_accepted: "Bid not accepted",
+  not_accepted: "Bid not accepted yet",
   in_progress: "Bid is in progress"
 };
 

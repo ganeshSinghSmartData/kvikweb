@@ -60,14 +60,16 @@ class Profile extends Component {
     return (
       <React.Fragment>
         {this.state.loading && <Loader loading={this.state.loading} />}
-        <UserProfile
-          user={this.props.user.userDetails}
-          handleImageUpload={this._handleImageUpload}
-          isEdit={this.state.isEdit}
-          handleSubmit={this._handleSubmit}
-          loading={this.state.loading}
-          _toggleEdit={this._toggleEdit}
-        />
+        {Object.keys(this.props.user.userDetails).length > 0 && (
+          <UserProfile
+            user={this.props.user.userDetails}
+            handleImageUpload={this._handleImageUpload}
+            isEdit={this.state.isEdit}
+            handleSubmit={this._handleSubmit}
+            loading={this.state.loading}
+            _toggleEdit={this._toggleEdit}
+          />
+        )}
       </React.Fragment>
     );
   }

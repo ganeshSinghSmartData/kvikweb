@@ -207,7 +207,7 @@ export const startBid = params => {
     const {
       data: { token }
     } = getState().user;
-    ApiClient.put(`${apiUrl}/bid/start_bid_work`, params, token).then(
+    ApiClient.post(`${apiUrl}/bid/start_bid_work`, params, token).then(
       response => {
         if (response.status === 200) {
           toastAction(true, response.msg);
@@ -229,7 +229,7 @@ export const endBid = params => {
     const {
       data: { token }
     } = getState().user;
-    ApiClient.put(`${apiUrl}/bid/end_bid_work`, params, token).then(
+    ApiClient.post(`${apiUrl}/bid/end_bid_work`, params, token).then(
       response => {
         if (response.status === 200) {
           toastAction(true, response.msg);

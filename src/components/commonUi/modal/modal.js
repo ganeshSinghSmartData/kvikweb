@@ -17,18 +17,26 @@ const SignInModal = ({
   _isOpen,
   _toggleModal,
   _modalType,
+  _jobProviderName = "",
+  _bidderName = "",
   _handleSubmit,
   _handleForgotPassword,
   _loading = false,
   ...props
 }) => {
   let customClass = "";
+  let headerClass = "";
   if (_modalType === "/register" || _modalType === "/login") {
     customClass = "signup";
   } else if (_modalType === "Place your bid" || _modalType === "Bid Details") {
     customClass = "bid-modal secondary-font-family";
   } else if (_modalType === "/contact-us" || _modalType === "/about-us") {
     customClass = "static-pages";
+  } else if (_modalType === "Confirmation") {
+    customClass = "confirm-modal bidder-completion secondary-font-family";
+  } else if (_modalType === "Rate Bidder") {
+    customClass = "confirm-modal bidder-completion secondary-font-family";
+    headerClass = "border-0";
   }
   return (
     <div>
@@ -63,8 +71,8 @@ const SignInModal = ({
             </svg>
           </Button>
         ) : (
-          <ModalHeader>
-            <span>{_modalType}</span>
+          <ModalHeader className={`${headerClass}`}>
+            {headerClass === "" && <span>{_modalType}</span>}
             <Button
               color="link"
               className="close-btn btn2"
@@ -367,6 +375,46 @@ const SignInModal = ({
                   <Button color="primary">Submit</Button>
                 </div>
               </LocalForm>
+            </div>
+          )}
+          {_modalType === "Confirmation" && (
+            <ModalBody className={"overflow-auto"}>
+              <div className="bid-confirm-blc text-center">
+                <h2 className="text-primary">
+                  The job request has been accepted by{" "}
+                </h2>
+                <h3>{_jobProviderName}</h3>
+                <div className="bid-confirm-btns d-flex flex-column align-items-center">
+                  <Button
+                    color="secondary"
+                    className="start-job-btn"
+                    onClick={() => props.startJob()}
+                  >
+                    START JOB
+                  </Button>
+                  <Button color="link" onClick={() => _toggleModal()}>
+                    Remind me later
+                  </Button>
+                </div>
+              </div>
+            </ModalBody>
+          )}
+          {_modalType === "Rate Bidder" && (
+            <div className="bid-confirm-blc bidder-completion-blc text-center">
+              <div className="bidder-label">{_bidderName}</div>
+              <h2 className="text-primary">Has been completed the job</h2>
+              <h3>Tap a star to rate him</h3>
+              <div className="bidder-rate d-flex justify-content-center">
+                <RatingBlock />
+              </div>
+              <div className="bid-confirm-btns d-flex flex-column align-items-center">
+                <Button
+                  color="link"
+                  onClick={() => props.history.push("/job-list")}
+                >
+                  Remind me later
+                </Button>
+              </div>
             </div>
           )}
         </ModalBody>

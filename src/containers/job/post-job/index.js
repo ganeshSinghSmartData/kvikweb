@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 
 import PostJob from "../../../components/jobs/postJob";
 import Loader from "../../../components/commonUi/loader/loader";
+import { CategoryItems } from "./../../../utilities/constants";
 import {
   createNewJob,
   updateExistingJob,
@@ -16,13 +17,13 @@ class PostNewJob extends Component {
     this.state = {
       stage: 1,
       pathname: "",
+      selectedCategory: CategoryItems[0].value,
       dataload: false
     };
 
     this.handleJobPost = this.handleJobPost.bind(this);
     this.handleJobUpdate = this.handleJobUpdate.bind(this);
     this.handleStageChange = this.handleStageChange.bind(this);
-    this.handleCategoryOnchange = this.handleCategoryOnchange.bind(this);
   }
 
   componentDidMount() {
@@ -32,11 +33,6 @@ class PostNewJob extends Component {
     } else {
       this.setState({ pathname: "/post-job" });
     }
-  }
-
-  //   Handling Category change
-  handleCategoryOnchange(category) {
-    console.log(" I am in category on change : ", category);
   }
 
   //   Handling Job Ppost
@@ -81,7 +77,7 @@ class PostNewJob extends Component {
           }
         }
       }
-      formData.append("category", jobData.category);
+      formData.append("category", this.state.selectedCategory);
       formData.append("jobtitle", jobData.jobtitle);
       formData.append("description", jobData.description);
       formData.append("budget", jobData.budget);
@@ -132,7 +128,12 @@ class PostNewJob extends Component {
               _handleStageChange={this.handleStageChange}
               _handleJobPost={this.handleJobPost}
               _handleJobUpdate={this.handleJobUpdate}
-              _handleCategoryOnchange={this.handleCategoryOnchange}
+              _handleCategoryOnchange={category =>
+                this.setState({
+                  selectedCategory: category
+                })
+              }
+              _selectedCategory={this.state.selectedCategory}
               path={this.state.pathname}
             />
           )}
@@ -143,7 +144,12 @@ class PostNewJob extends Component {
             _handleStageChange={this.handleStageChange}
             _handleJobPost={this.handleJobPost}
             _handleJobUpdate={this.handleJobUpdate}
-            _handleCategoryOnchange={this.handleCategoryOnchange}
+            _handleCategoryOnchange={category =>
+              this.setState({
+                selectedCategory: category
+              })
+            }
+            _selectedCategory={this.state.selectedCategory}
             path={this.state.pathname}
           />
         )}

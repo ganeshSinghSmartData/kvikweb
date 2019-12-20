@@ -20,7 +20,8 @@ export default ({
   _handleJobPost,
   _handleCategoryOnchange,
   _handleJobUpdate,
-  _path
+  _path,
+  _selectedCategory
 }) => {
   const [images, setImages] = useState([]);
   const [uploadedImages, setUploadedImages] = useState(
@@ -146,10 +147,10 @@ export default ({
                 <SelectSearch
                   options={CategoryItems}
                   className={"select-search-box"}
-                  value={CategoryItems[0].value}
+                  value={_selectedCategory}
                   name="category"
-                  onMount={category => _handleCategoryOnchange(category)}
-                  onChange={category => _handleCategoryOnchange(category)}
+                  onMount={() => _handleCategoryOnchange(_selectedCategory)}
+                  onChange={category => _handleCategoryOnchange(category.value)}
                   placeholder="Category"
                 />
               </div>

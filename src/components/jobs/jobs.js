@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Button } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import smoothscroll from "smoothscroll-polyfill";
+
 import JobProduct from "./jobProduct/jobProduct";
 import Sidebar from "../sidebar/sidebar";
 import Heading from "../../components/commonUi/heading/heading";
@@ -9,7 +10,6 @@ import Paragraph from "../../components/commonUi/paragraph/paragraph";
 import { pagination } from "../../utilities/constants";
 import SpinnerOverlay from "../commonUi/spinner/spinnerOverlay/spinnerOverlay";
 import NoData from "../commonUi/noData/noData";
-import DataLoader from "../commonUi/loader/loader";
 import "./jobs.scss";
 import { getJobProduct, reset_job_products } from "./../../actions/job";
 smoothscroll.polyfill();
@@ -27,6 +27,8 @@ const Job = ({
   const [postalCode, setPostalCode] = useState("");
   const [distance, setDistance] = useState("");
   const [budget, setBudget] = useState("");
+  const [confirmOpen, setConfirmOpen] = useState(false);
+
   let [page, setPage] = useState(pagination.page);
   let [jobType, setJobType] = useState("active");
 
@@ -136,7 +138,6 @@ const Job = ({
         lat: "",
         long: ""
       };
-      console.log("reqData in use Dispatch :", reqData);
       dispatch(reset_job_products());
       dispatch(getJobProduct(reqData));
     }
