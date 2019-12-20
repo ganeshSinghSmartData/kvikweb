@@ -19,8 +19,6 @@ class JobList extends Component {
     this.state = { loading: true };
     this.handleUserActiveJob = this.handleUserActiveJob.bind(this);
     this.handleUserCompletedJob = this.handleUserCompletedJob.bind(this);
-    this.startJob = this.startJob.bind(this);
-    this.endJob = this.endJob.bind(this);
   }
 
   componentDidMount() {
@@ -50,14 +48,6 @@ class JobList extends Component {
         this.setState({ loading: false });
       }
     });
-  }
-
-  startJob(jobId, jobSeekerId, userId) {
-    console.log(" I am herer in start job");
-  }
-
-  endJob(jobId, jobSeekerId, userId) {
-    console.log(" I am herer in end job");
   }
 
   render() {

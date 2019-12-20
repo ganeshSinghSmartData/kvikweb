@@ -1,29 +1,30 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import datetimeDifference from "datetime-difference";
-import SelectSearch from "react-select-search";
 import { Button, Row, Col } from "reactstrap";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
+import { confirmAlert } from "react-confirm-alert";
 
-import Paragraph from "../../commonUi/paragraph/paragraph";
-import JobCreatedBy from "./JobAddress/jobCreatedBy";
-import JobAddress from "./JobAddress/jobAddress";
-import Proposal from "./proposal/proposal";
-import PlaceYourBidModal from "../../commonUi/modal/modal";
-import Breadcrumb from "../../commonUi/breadcrumb/breadcrumb";
 import "./jobDetail.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
-import { StringToDate, DaysBetween } from "./../../../utilities/common";
+import Paragraph from "../../commonUi/paragraph/paragraph";
+import JobCreatedBy from "./JobAddress/jobCreatedBy";
+import Proposal from "./proposal/proposal";
+import Breadcrumb from "../../commonUi/breadcrumb/breadcrumb";
+
+import { StringToDate } from "./../../../utilities/common";
 import { JobStatus } from "../../../utilities/constants";
 import { apiUrl } from "./../../../environment";
 import { placeYourBid } from "./../../../actions/job";
 import Spinner from "../../commonUi/spinner/spinner";
-import { CategoryItems } from "../../../utilities/constants";
-import InputCell from "../../commonUi/input/inputCell";
-import RatingBlock from "../../jobs/ratingBock/ratingBlock";
+
+import PlaceYourBidModal from "../../commonUi/modal/modal";
+import ConfirmJobStartModal from "../../commonUi/modal/modal";
+import RateBidderWorkModal from "../../commonUi/modal/modal";
 
 export default function JobDetail({
   history,
@@ -35,8 +36,16 @@ export default function JobDetail({
   _startJob,
   _endJob
 }) {
+  console.log("job : ", job);
+
   const [imageIndex, setImageIndex] = useState(0);
   const [openModal, setOpenModal] = useState(false);
+  const [confirmStartModal, setConfirmStartModal] = useState(
+    job.status && job.status === "accepted" ? true : false
+  );
+
+  const [rateBidder, setRateBidder] = useState(false);
+
   const [imageLoad, setImageLoad] = useState(false);
   const [isModalLoading, setModalLoading] = useState(false);
 
@@ -222,22 +231,23 @@ export default function JobDetail({
                     >
                       $ {job.budget}
                     </label>
-                    {/* {path === "/job-proposal" && job.status === "completed" && ( */}
-                    <div className="mark-dn-cell">
-                      <Button
-                        color="secondary"
-                        onClick={() =>
-                          _markJobComplete(
-                            job._id,
-                            job.job_seeker_id._id,
-                            user.data._id
-                          )
-                        }
-                      >
-                        Mark as Done
+                    {path === "/job-proposal" && job.status === "approved" && (
+                      <div className="mark-dn-cell">
+                        <Button
+                          color="secondary"
+                          onClick={() => {
+                            setRateBidder(!rateBidder);
+                            _markJobComplete(
+                              job._id,
+                              job.job_seeker_id._id,
+                              user.data._id
+                            );
+                          }}
+                        >
+                          Mark as Done
                       </Button>
-                    </div>
-                    {/* )} */}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -426,30 +436,28 @@ export default function JobDetail({
               </div>
               <div className="job-detail-form"></div>
 
-              {job.status === "bid_accepted" || job.status === "completed" ? (
-                <div className="bid-status-btns">
-                  {job.status === "bid_accepted" && (
-                    <Button
-                      color="primary"
-                      onClick={() =>
-                        _startJob(job._id, job.job_seeker_id._id, user.data._id)
-                      }
-                    >
-                      Job Started
-                    </Button>
-                  )}
-                  {job.status === "completed" && (
-                    <Button
-                      color="secondary"
-                      onClick={() =>
-                        _endJob(job._id, job.job_seeker_id._id, user.data._id)
-                      }
-                    >
-                      Job End
-                    </Button>
-                  )}
-                </div>
-              ) : null}
+              <div className="bid-status-btns">
+                {job.status === "accepted" && path !== "/job-proposal" && (
+                  <Button
+                    color="primary"
+                    onClick={() =>
+                      _startJob(job._id, job.job_seeker_id._id, user.data._id)
+                    }
+                  >
+                    Start Job
+                  </Button>
+                )}
+                {job.status === "in_progress" && path !== "/job-proposal" && (
+                  <Button
+                    color="secondary"
+                    onClick={() =>
+                      _endJob(job._id, job.job_seeker_id._id, user.data._id)
+                    }
+                  >
+                    Job End
+                  </Button>
+                )}
+              </div>
             </div>
             <JobCreatedBy job_seeker_id={job.job_seeker_id} />
 
@@ -478,6 +486,29 @@ export default function JobDetail({
           _handleSubmit={handleSubmit}
           _frequency={job.frequency}
           _loading={isModalLoading}
+        />
+        <ConfirmJobStartModal
+          _isOpen={confirmStartModal}
+          _toggleModal={() => setConfirmStartModal(!confirmStartModal)}
+          _modalType={"Confirmation"}
+          _jobProviderName={`${job.job_seeker_id.fname} ${job.job_seeker_id.lname}`}
+          startJob={() =>
+            _startJob(job._id, job.job_seeker_id._id, user.data._id)
+          }
+          _loading={isModalLoading}
+        />
+
+        <RateBidderWorkModal
+          _isOpen={rateBidder}
+          _toggleModal={() => setRateBidder(!rateBidder)}
+          _modalType={"Rate Bidder"}
+          _bidderName={
+            job.bidersLIstingcheck &&
+            job.bidersLIstingcheck.length &&
+            `${job.bidersLIstingcheck[0].job_provider_id.fname} ${job.bidersLIstingcheck[0].job_provider_id.lname}`
+          }
+          _handleSubmit={handleSubmit}
+          history={history}
         />
         {path === "/job-proposal" &&
           job &&

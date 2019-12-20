@@ -14,7 +14,8 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isModal: false
+      isModal: false,
+      isLoading: false
     };
     this.toggleModal = this.toggleModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,9 +29,11 @@ class Home extends Component {
   }
 
   handleSubmit = values => {
+    this.setState({ isLoading: true });
     if (values.lname || values.fname) {
       this.props.registerUser(values, callback => {
         if (callback) {
+          this.setState({ isLoading: false });
           SocketClient.init(socketUrl, callback.token, this.props.dispatch);
           this.toggleModal();
         }
@@ -39,14 +42,17 @@ class Home extends Component {
       console.log("inside contact us submit");
       this.props.contactUs(values, callback => {
         if (callback) {
+          this.setState({ isLoading: false });
           this.props.history.push("/");
         } else {
+          this.setState({ isLoading: false });
           this.props.history.push("/");
         }
       });
     } else {
       this.props.loginUser(values, callback => {
         if (callback) {
+          this.setState({ isLoading: false });
           SocketClient.init(socketUrl, callback.token, this.props.dispatch);
           this.toggleModal();
         }
@@ -82,6 +88,7 @@ class Home extends Component {
             }
             _toggleModal={this.toggleModal}
             _modalType={path === "/contact-us" ? "Contact Us" : path}
+            _loading={this.state.isLoading}
             _handleSubmit={this.handleSubmit}
             _handleForgotPassword={this.handleForgotPassword}
             handleSocialLogin={this.handleSocialLogin}

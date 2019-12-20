@@ -7,6 +7,8 @@ import JobDetail from "../../../components/jobs/jobDetail/jobDetail";
 import { getJobDetails, reset_job_details } from "../../../actions/job";
 import {
   getUserJobDetails,
+  startBid,
+  endBid,
   reset_user_job_details
 } from "../../../actions/bid";
 import "./../../../components/jobs/jobDetail/jobDetail.scss";
@@ -14,7 +16,49 @@ import "./../../../components/jobs/jobDetail/jobDetail.scss";
 class JobDetails extends Component {
   constructor(props) {
     super(props);
-    this.state = { pathname: "" };
+    this.state = { pathname: "", isLoading: false };
+    this.startBidWork = this.startBidWork.bind(this);
+    this.endBidWork = this.endBidWork.bind(this);
+  }
+
+  startBidWork(jobId, jobSeekerId, userId) {
+    this.setState({ isLoading: true });
+    const reqData = {
+      job_id: jobId,
+      job_seeker_id: jobSeekerId,
+      job_provider_id: userId
+    };
+    console.log(" I am herer in start job  :", reqData);
+    this.props.startBid(reqData, callback => {
+      if (callback) {
+        this.setState({ isLoading: false });
+        this.props.history.push("/bid-list");
+        console.log("Success for start bid : ", callback);
+      } else {
+        this.setState({ isLoading: false });
+        console.log("errror in callback : ");
+      }
+    });
+  }
+
+  endBidWork(jobId, jobSeekerId, userId) {
+    this.setState({ isLoading: true });
+    const reqData = {
+      job_id: jobId,
+      job_seeker_id: jobSeekerId,
+      job_provider_id: userId
+    };
+    console.log(" I am herer in end job  :", reqData);
+    this.props.endBid(reqData, callback => {
+      if (callback) {
+        this.setState({ isLoading: false });
+        this.props.history.push("/bid-list");
+        console.log("Success for start bid : ", callback);
+      } else {
+        this.setState({ isLoading: false });
+        console.log("errror in callback : ");
+      }
+    });
   }
 
   componentDidMount() {
@@ -53,6 +97,8 @@ class JobDetails extends Component {
             job={jobDetails}
             history={this.props.history}
             path={this.state.pathname}
+            _startJob={this.startBidWork}
+            _endJob={this.endBidWork}
           ></JobDetail>
         ) : (
           <SpinnerOverlay className="position-fixed" />
@@ -71,6 +117,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getJobDetails: bindActionCreators(getJobDetails, dispatch),
   getUserJobDetails: bindActionCreators(getUserJobDetails, dispatch),
+  startBid: bindActionCreators(startBid, dispatch),
+  endBid: bindActionCreators(endBid, dispatch),
   reset_job_details: bindActionCreators(reset_job_details, dispatch),
   reset_user_job_details: bindActionCreators(reset_user_job_details, dispatch)
 });

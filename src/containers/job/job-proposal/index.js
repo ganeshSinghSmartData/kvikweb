@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { confirmAlert } from "react-confirm-alert";
+
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 import JobDetail from "./../../../components/jobs/jobDetail/jobDetail";
 import { getUserJobDetails } from "../../../actions/bid";
@@ -17,6 +20,7 @@ class JobProposal extends Component {
     this.state = {};
     this.markJobComplete = this.markJobComplete.bind(this);
     this.deleteJob = this.deleteJob.bind(this);
+    // this.confirmDelete = this.confirmDelete.bind(this);
   }
 
   componentDidMount() {
@@ -33,7 +37,6 @@ class JobProposal extends Component {
       job_provider_id: jobSeekerId,
       job_id: jobId
     };
-    console.log("i am in completen job : ", reqData);
     this.props.approvedBidWork(reqData, callback => {
       if (callback) {
         console.log(" I am in calback : ", callback);
@@ -42,7 +45,6 @@ class JobProposal extends Component {
   };
 
   deleteJob = jobId => {
-    console.log("i am in delete job : ", jobId);
     this.props.deleteMyJob({ job_id: jobId }, callback => {
       if (callback) {
         console.log(" I am in calback : ", callback);
@@ -64,7 +66,7 @@ class JobProposal extends Component {
             history={this.props.history}
             path={pathname}
             _markJobComplete={this.markJobComplete}
-            _deleteJob={this.deleteJob}
+            _deleteJob={jobId => this.deleteJob}
           ></JobDetail>
         ) : (
           <SpinnerOverlay className="position-fixed" />

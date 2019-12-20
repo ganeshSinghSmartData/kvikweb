@@ -183,23 +183,35 @@ const UserProfile = props => {
         <DropdownMenu right className="overflow-auto">
           <DropdownItem header>General</DropdownItem>
           <DropdownItem divider />
-          <Link className="dropdown-item" to={"/"}>
+          <Link className="dropdown-item" to={"/"} onClick={() => toggle()}>
             Setting
           </Link>
-          <Link className="dropdown-item" to={"/bid-list"}>
+          <Link
+            className="dropdown-item"
+            to={"/bid-list"}
+            onClick={() => toggle()}
+          >
             Bids
           </Link>
-          <Link className="dropdown-item" to={"/job-list"}>
+          <Link
+            className="dropdown-item"
+            to={"/job-list"}
+            onClick={() => toggle()}
+          >
             Jobs
           </Link>
-          <Link className="dropdown-item" to={""}>
+          <Link className="dropdown-item" to={""} onClick={() => toggle()}>
             Metrics
           </Link>
           <DropdownItem header className="padd">
             Profile
           </DropdownItem>
           <DropdownItem divider />
-          <Link className="dropdown-item" to="/profile">
+          <Link
+            className="dropdown-item"
+            to="/profile"
+            onClick={() => toggle()}
+          >
             My Profile
           </Link>
           <Link

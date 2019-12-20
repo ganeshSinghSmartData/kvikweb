@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import datetimeDifference from "datetime-difference";
-import Spinner from '../../commonUi/spinner/spinner';
+
+import Spinner from "../../commonUi/spinner/spinner";
 import "./jobProduct.scss";
 import { StringToDate, DaysBetween } from "./../../../utilities/common";
 import { apiUrl } from "./../../../environment";
+import { JobStatus } from "../../../utilities/constants";
 
 /********* Get time ago in string format *********/
 
@@ -44,8 +46,9 @@ const JobProduct = ({ product, listType, path }) => {
             {/* <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" /> */}
             <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />
             <span className="job-status-bar position-absolute job-primary-bar job-secondary-bar job-danger-bar job-success-bar">
-              Bid has been expired.
-              </span>
+              {JobStatus[product.status]}
+            </span>
+            <span>Total Bids :{JobStatus[product.status]}</span>
           </Link>
         )}
       </div>

@@ -4,7 +4,11 @@ import { bindActionCreators } from "redux";
 
 import Job from "../../../components/jobs/jobs";
 import SpinnerOverlay from "../../../components/commonUi/spinner/spinnerOverlay/spinnerOverlay";
-import { getUserActiveBid, getUserCompletedBid } from "./../../../actions/bid";
+import {
+  getUserActiveBid,
+  getUserCompletedBid,
+  reset_user_job_details
+} from "./../../../actions/bid";
 
 class BidList extends Component {
   constructor(props) {
@@ -16,8 +20,7 @@ class BidList extends Component {
 
   componentDidMount() {
     this.setState({ loading: true });
-    console.log("Here in am in did mount");
-
+    this.props.reset_user_job_details();
     this.props.getUserActiveBid({ page: 1 }, callback => {
       if (callback) {
         this.setState({ loading: false });
@@ -36,7 +39,6 @@ class BidList extends Component {
   }
   // handleUserNotAcceptedBid
   handleUserCompletedBid = value => {
-    console.log("value handleUserCompletedBid : ", value);
     this.props.getUserCompletedBid({ page: value }, callback => {
       if (callback) {
         this.setState({ loading: false });
@@ -48,7 +50,6 @@ class BidList extends Component {
 
   // handleUserActiveBid
   handleUserActiveBid = value => {
-    console.log("value handleUserActiveBid : ", value);
     this.props.getUserActiveBid({ page: value }, callback => {
       if (callback) {
         this.setState({ loading: false });
@@ -82,7 +83,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getUserActiveBid: bindActionCreators(getUserActiveBid, dispatch),
-  getUserCompletedBid: bindActionCreators(getUserCompletedBid, dispatch)
+  getUserCompletedBid: bindActionCreators(getUserCompletedBid, dispatch),
+  reset_user_job_details: bindActionCreators(reset_user_job_details, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BidList);
