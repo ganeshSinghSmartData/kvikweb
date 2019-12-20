@@ -11,7 +11,8 @@ const local = {
 };
 
 const staging = {
-  apiUrl: "http://54.71.18.74:4599"
+  apiUrl: "http://54.71.18.74:4599",
+  socketUrl: "http://54.71.18.74:4599"
 };
 
 const production = {

@@ -119,7 +119,7 @@ export default function JobDetail({
     <div className="job-detail-blc d-flex flex-column flex-fill">
       <div className="job-detail-hd d-flex align-items-center">
         <h2 className="flex-fill">Job Details</h2>
-        <Breadcrumb />
+        <Breadcrumb path={path} />
       </div>
 
       <div className="job-detail-inner d-flex flex-column flex-fill overflow-auto">

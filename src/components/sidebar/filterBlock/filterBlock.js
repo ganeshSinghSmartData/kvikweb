@@ -8,7 +8,7 @@ const FilterBlock = ({
   budgetFilter = false
 }) => {
   const [distanceRange, setDistanceRange] = useState(0);
-  const [budgetRange, setBudgetRange] = useState({ min: 0, max: 150 });
+  const [budgetRange, setBudgetRange] = useState({ min: 10, max: 100 });
 
   return (
     <div className="filter-row">
@@ -30,7 +30,7 @@ const FilterBlock = ({
               <InputRange
                 // step={2}
                 allowSameValues={true}
-                maxValue={149}
+                maxValue={150}
                 minValue={0}
                 value={budgetRange}
                 onChange={value => setBudgetRange(value)}

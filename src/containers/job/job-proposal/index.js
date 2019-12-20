@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 
 import JobDetail from "./../../../components/jobs/jobDetail/jobDetail";
 import { getUserJobDetails } from "../../../actions/bid";
+import SpinnerOverlay from "../../../components/commonUi/spinner/spinnerOverlay/spinnerOverlay";
 import {
   approvedBidWork,
   deleteMyJob,
@@ -57,7 +58,7 @@ class JobProposal extends Component {
     }
     return (
       <React.Fragment>
-        {Object.keys(this.props.userJobDetails).length && (
+        {Object.keys(this.props.userJobDetails).length ? (
           <JobDetail
             job={this.props.userJobDetails}
             history={this.props.history}
@@ -65,6 +66,8 @@ class JobProposal extends Component {
             _markJobComplete={this.markJobComplete}
             _deleteJob={this.deleteJob}
           ></JobDetail>
+        ) : (
+          <SpinnerOverlay className="position-fixed" />
         )}
       </React.Fragment>
     );
