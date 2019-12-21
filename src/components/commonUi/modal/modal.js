@@ -356,7 +356,7 @@ const SignInModal = ({
                   <ul className="row">
                     <li>
                       <div class="payment-confirm position-relative">
-                        <label class="payment-confirm-check d-flex align-items-center justify-content-center ">
+                        <label className="payment-confirm-check d-flex align-items-center justify-content-center ">
                           <input type="checkbox" />
                         </label>
                         <div class="form-group payment-confirm-rw">

@@ -195,8 +195,6 @@ const Job = ({
               <div className="job-list-heading d-flex">
                 {path !== "" && (
                   <div className="job-list-tab">
-                    {/* <Button color="primary" onClick={() => { path === "/job-list" ? setJobType('active') : setBidType('accepted') }} style={{ marginBottom: '1rem' }}>{path === "/job-list" ? 'Active Jobs' : 'Accepted'}</Button>
-                    <Button color="primary" onClick={() => { path === "/job-list" ? setJobType('completed') : setBidType('not-accepted') }} style={{ marginBottom: '1rem' }}>{path === "/job-list" ? 'Completed Jobs' : 'Not-Accepted'}</Button> */}
                     <button
                       className={`btn ${
                         jobType === "active" ? "btn-primary" : ""

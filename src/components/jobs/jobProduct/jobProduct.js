@@ -37,6 +37,73 @@ const JobProduct = ({ product, listType, path }) => {
   if (path === "/bid-list") {
     pathname = "/bid-details/";
   }
+
+  // job-secondary-bar job-danger-bar job-success-bar
+
+  let classname = "";
+  const setJobStatus = status => {
+    switch (status) {
+      case "not_started":
+        return (classname = "job-danger-bar");
+      case "not_accepted":
+        return (classname = "job-danger-bar");
+      case "expired":
+        return (classname = "job-danger-bar");
+      case "rejected":
+        return (classname = "job-danger-bar");
+      case "approved":
+        return (classname = "status-primary");
+      case "accepted":
+        return (classname = "status-primary");
+      case "completed":
+        return (classname = "job-success-bar");
+      case "in_progress":
+        return (classname = "job-secondary-bar");
+      default:
+        return (classname = "job-danger-bar");
+    }
+  };
+  setJobStatus(product.status);
+
+  /*   const labelTypes = ({ type, bidcount, status }) => {
+    if (type == "jobs")
+      return status === "accepted"
+        ? JobStatus.jobAccepted
+        : status === "in_progress"
+        ? JobStatus.inProgress
+        : status === "completed"
+        ? JobStatus.jobCompleted
+        : status === "approved"
+        ? JobStatus.jobApproved
+        : `${bidcount} ${
+            bidcount && bidcount > 1
+              ? JobStatus.bidsRecieved
+              : JobStatus.bidRecieved
+          }`;
+    else {
+      switch (status) {
+        case "expired":
+          return JobStatus.jobExpired;
+        case "approved":
+          return JobStatus.jobApproved;
+        case "completed":
+          return JobStatus.jobCompleted;
+        case "not_accepted":
+          return JobStatus.bidNotAccepted;
+        case "not_started":
+          return JobStatus.bidNotAccepted;
+        case "accepted":
+          return JobStatus.bidAccepted;
+        case "in_progress":
+          return JobStatus.inProgress;
+        case "rejected":
+          return JobStatus.rejected;
+        default:
+          break;
+      }
+    }
+  }; */
+
   return (
     <div className={"job-wrapper " + (listType ? "d-flex flex-column" : "")}>
       <div className="job-pic text-center flex-shrink-0 d-flex position-relative">
@@ -50,8 +117,9 @@ const JobProduct = ({ product, listType, path }) => {
           ) : (
             <img src={`${apiUrl}/favicon.ico`} alt="Job" />
           )}
+          {/*  job-secondary-bar job-danger-bar job-success-bar */}
           {path !== "" && (
-            <span className="job-status-bar position-absolute job-primary-bar job-secondary-bar job-danger-bar job-success-bar">
+            <span className={`job-status-bar position-absolute ${classname}`}>
               {JobStatus[product.status]}
             </span>
           )}
