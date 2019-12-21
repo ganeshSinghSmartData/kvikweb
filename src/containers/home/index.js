@@ -36,10 +36,12 @@ class Home extends Component {
           this.setState({ isLoading: false });
           SocketClient.init(socketUrl, callback.token, this.props.dispatch);
           this.toggleModal();
+        } else {
+          this.setState({ isLoading: false });
+          this.toggleModal();
         }
       });
     } else if (values.message) {
-      console.log("inside contact us submit");
       this.props.contactUs(values, callback => {
         if (callback) {
           this.setState({ isLoading: false });
@@ -54,6 +56,9 @@ class Home extends Component {
         if (callback) {
           this.setState({ isLoading: false });
           SocketClient.init(socketUrl, callback.token, this.props.dispatch);
+          this.toggleModal();
+        } else {
+          this.setState({ isLoading: false });
           this.toggleModal();
         }
       });
