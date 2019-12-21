@@ -35,6 +35,7 @@ export const registerUser = (params, callback) => {
         callback(true);
       } else {
         console.log("errror with 401 : ", response);
+        callback(false);
         toastErrorAction(dispatch, response.msg);
       }
     });
@@ -51,8 +52,11 @@ export const loginUser = (params, callback) => {
         // toastAction(true, "User successfully logged In");
         callback(true);
       } else if (response.status === 404) {
+        callback(false);
+        console.log("response : ", response);
         toastErrorAction(dispatch, response.msg);
       } else {
+        callback(false);
         dispatch(is_fetching(false));
       }
     });

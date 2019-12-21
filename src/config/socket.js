@@ -30,7 +30,7 @@ class SocketClient {
 
     /************** event of get messages******* *****************/
     this.socket.on(`get_message`, res => {
-      console.log(res, 'get');
+      console.log(res, "get");
       this.dispatch(get_message(res));
       this.dispatch(messages_count());
     });
@@ -59,9 +59,7 @@ class SocketClient {
           message: data.message
         });
       case TYPE.GET_MESSAGE:
-        console.log('id', data);
         this.socket.on(`${data.senderId}-get_message`, res => {
-          console.log(res, 'get');
           this.dispatch(get_message(res));
           this.dispatch(messages_count());
         });

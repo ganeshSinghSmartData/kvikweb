@@ -37,25 +37,26 @@ const JobProduct = ({ product, listType, path }) => {
   if (path === "/bid-list") {
     pathname = "/bid-details/";
   }
-
   return (
     <div className={"job-wrapper " + (listType ? "d-flex flex-column" : "")}>
       <div className="job-pic text-center flex-shrink-0 d-flex position-relative">
-        {product.images && product.images.length ? (
-          <Link
-            className="text-black flex-fill position-relative"
-            to={`${pathname}${product._id}`}
-          >
-            {/* <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" /> */}
+        <Link
+          className={`text-black flex-fill position-relative 
+          ${!product.images && !product.images.length ? 'no-job-image-blc align-items-center justify-content-center' : ''}`}
+          to={`${pathname}${product._id}`}
+        >
+          {/* <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" /> */}
+          {product.images && product.images.length ? (
             <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />
+          ) : (
+              <img src={`${apiUrl}/favicon.ico`} alt="Job" />
+            )}
+          {path !== "" && (
             <span className="job-status-bar position-absolute job-primary-bar job-secondary-bar job-danger-bar job-success-bar">
               {JobStatus[product.status]}
             </span>
-            <span>Total Bids :{JobStatus[product.status]}</span>
-          </Link>
-        ) : (
-          <img src={`${apiUrl}/favicon.ico`} alt="Job" />
-        )}
+          )}
+        </Link>
       </div>
       <div
         className={
@@ -71,7 +72,7 @@ const JobProduct = ({ product, listType, path }) => {
             {product.jobtitle || ""}
           </label>
           <span className="text-primary flex-shrink-0 ml-auto">
-            ${product.budget || 0}
+            {product.budget ? `$${product.budget}` : ""}
           </span>
         </div>
         <div className="job-location d-flex">

@@ -297,60 +297,55 @@ const SignInModal = ({
             </div>
           )}
           {_modalType === "Bid Details" && (
-            <div className="bid-detail-blc d-flex">
-              {/* <div className="bid-detail-l">
-                <UserImage />
-              </div>
-              <div className="bid-detail-r">
-                <div className="bid-detail-rw">
-                  <h2>
-                    <Link
-                      className="user-detail-link"
-                      to={`/bidder-profile/${props._propsDetails.job_provider_id._id}`}
-                    >
-                      {`${props._propsDetails.job_provider_id.fname} ${props._propsDetails.job_provider_id.lname}`}
-                    </Link>
-                    <span>{props._propsDetails.daysfrom} Day Ago</span>
-                  </h2>
+            <>
+              <div className="bid-detail-blc d-flex">
+                <div className="bid-detail-l">
+                  <UserImage />
+                </div>
+                <div className="bid-detail-r flex-fill">
+                  <div className="bid-detail-rw">
+                    <h2>
+                      <Link
+                        className="user-detail-link"
+                        to={`/bidder-profile/${props._propsDetails.job_provider_id._id}`}
+                      >
+                        {`${props._propsDetails.job_provider_id.fname} ${props._propsDetails.job_provider_id.lname}`}
+                      </Link>
+                      <span>{props._propsDetails.daysfrom} Day Ago</span>
+                    </h2>
 
-                  <p>{props._propsDetails.description}</p>
-                  <div className="bid-price">
-                    $ {props._propsDetails.bid_amount}
+                    <p>{props._propsDetails.description}</p>
+                    <div className="bid-price">
+                      $ {props._propsDetails.bid_amount}
+                    </div>
+                  </div>
+                  <div className="bid-frm-btns d-flex justify-content-center">
+                    <Button
+                      color="link"
+                      className="btn-dark cancel"
+                      onClick={() => props._hadleReject(props._propsDetails)}
+                    >
+                      REJECT
+                  </Button>
+                    <Button
+                      color="secondary"
+                      onClick={() => props._handleAccept(props._propsDetails)}
+                    >
+                      ACCEPT
+                  </Button>
                   </div>
                 </div>
-                <div className="bid-frm-btns d-flex justify-content-center">
-                  <Button
-                    color="link"
-                    className="btn-dark cancel"
-                    onClick={() => props._hadleReject(props._propsDetails)}
-                  >
-                    REJECT
-                  </Button>
-                  <Button
-                    color="secondary"
-                    onClick={() => props._handleAccept(props._propsDetails)}
-                  >
-                    ACCEPT
-                  </Button>
-                </div>
-              </div> */}
+              </div>
 
-              {/* payment section start */}
               <div className="payment-confirm-blc flex-fill">
-
-                {/* card not found start*/}
                 <div className="no-card-blc text-center d-flex justify-content-center align-items-center">
                   <div className="no-card-msg">
                     No Card Added yet!!
                     <p className="">
-                      <Button color="secondary">
-                        Add Payment Card
-                    </Button>
+                      <Button color="secondary">Add Payment Card</Button>
                     </p>
                   </div>
                 </div>
-                {/* card not found end*/}
-
                 <h2>
                   <strong>Card Holder:</strong>
                   John Smith
@@ -366,18 +361,45 @@ const SignInModal = ({
                           <label>Card Number</label>
                           <div class="card-confirm-pic-rw d-flex">
                             <div class="card-confirm-pic d-flex justify-content-center align-items-center">
-                              <img src="/static/media/visa.1e2e108b.svg" alt="Visa Card" /></div>
-                            <div class="card-confirm-col flex-fill"><input type="email" disabled class="form-control" id="exampleFormControlInput1"
-                              placeholder="name@example.com" /></div>
+                              <img
+                                src={require('../../../assets/images/icons/payment-icon/visa.svg')}
+                                alt="Visa Card"
+                              />
+                            </div>
+                            <div class="card-confirm-col flex-fill">
+                              <input
+                                type="email"
+                                disabled
+                                class="form-control"
+                                id="exampleFormControlInput1"
+                                placeholder="name@example.com"
+                              />
+                            </div>
                           </div>
                         </div>
                         <div class="form-group payment-confirm-rw d-flex">
-                          <div class="payment-confirm-col flex-fill"><label for="exampleFormControlInput1">Expiration Date</label>
-                            <input type="email" disabled class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
+                          <div class="payment-confirm-col flex-fill">
+                            <label for="exampleFormControlInput1">
+                              Expiration Date
+                            </label>
+                            <input
+                              type="email"
+                              disabled
+                              class="form-control"
+                              id="exampleFormControlInput1"
+                              placeholder="name@example.com"
+                            />
                           </div>
                           <div class="payment-confirm-col flex-fill cvv">
-                            <label for="exampleFormControlInput1">CVV</label><input type="email" disabled class="form-control"
-                              id="exampleFormControlInput1" placeholder="name@example.com" /></div>
+                            <label for="exampleFormControlInput1">CVV</label>
+                            <input
+                              type="email"
+                              disabled
+                              class="form-control"
+                              id="exampleFormControlInput1"
+                              placeholder="name@example.com"
+                            />
+                          </div>
                         </div>
                       </div>
                     </li>
@@ -390,18 +412,45 @@ const SignInModal = ({
                           <label>Card Number</label>
                           <div class="card-confirm-pic-rw d-flex">
                             <div class="card-confirm-pic d-flex justify-content-center align-items-center">
-                              <img src="/static/media/visa.1e2e108b.svg" alt="Visa Card" /></div>
-                            <div class="card-confirm-col flex-fill"><input type="email" disabled class="form-control" id="exampleFormControlInput1"
-                              placeholder="name@example.com" /></div>
+                              <img
+                                src={require('../../../assets/images/icons/payment-icon/master-card.svg')}
+                                alt="Visa Card"
+                              />
+                            </div>
+                            <div class="card-confirm-col flex-fill">
+                              <input
+                                type="email"
+                                disabled
+                                class="form-control"
+                                id="exampleFormControlInput1"
+                                placeholder="name@example.com"
+                              />
+                            </div>
                           </div>
                         </div>
                         <div class="form-group payment-confirm-rw d-flex">
-                          <div class="payment-confirm-col flex-fill"><label for="exampleFormControlInput1">Expiration Date</label>
-                            <input type="email" disabled class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
+                          <div class="payment-confirm-col flex-fill">
+                            <label for="exampleFormControlInput1">
+                              Expiration Date
+                            </label>
+                            <input
+                              type="email"
+                              disabled
+                              class="form-control"
+                              id="exampleFormControlInput1"
+                              placeholder="name@example.com"
+                            />
                           </div>
                           <div class="payment-confirm-col flex-fill">
-                            <label for="exampleFormControlInput1">CVV</label><input type="email" disabled class="form-control"
-                              id="exampleFormControlInput1" placeholder="name@example.com" /></div>
+                            <label for="exampleFormControlInput1">CVV</label>
+                            <input
+                              type="email"
+                              disabled
+                              class="form-control"
+                              id="exampleFormControlInput1"
+                              placeholder="name@example.com"
+                            />
+                          </div>
                         </div>
                       </div>
                     </li>
@@ -414,18 +463,45 @@ const SignInModal = ({
                           <label>Card Number</label>
                           <div class="card-confirm-pic-rw d-flex">
                             <div class="card-confirm-pic d-flex justify-content-center align-items-center">
-                              <img src="/static/media/visa.1e2e108b.svg" alt="Visa Card" /></div>
-                            <div class="card-confirm-col flex-fill"><input type="email" disabled class="form-control" id="exampleFormControlInput1"
-                              placeholder="name@example.com" /></div>
+                              <img
+                                src={require('../../../assets/images/icons/payment-icon/amex.svg')}
+                                alt="Visa Card"
+                              />
+                            </div>
+                            <div class="card-confirm-col flex-fill">
+                              <input
+                                type="email"
+                                disabled
+                                class="form-control"
+                                id="exampleFormControlInput1"
+                                placeholder="name@example.com"
+                              />
+                            </div>
                           </div>
                         </div>
                         <div class="form-group payment-confirm-rw d-flex">
-                          <div class="payment-confirm-col flex-fill"><label for="exampleFormControlInput1">Expiration Date</label>
-                            <input type="email" disabled class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
+                          <div class="payment-confirm-col flex-fill">
+                            <label for="exampleFormControlInput1">
+                              Expiration Date
+                            </label>
+                            <input
+                              type="email"
+                              disabled
+                              class="form-control"
+                              id="exampleFormControlInput1"
+                              placeholder="name@example.com"
+                            />
                           </div>
                           <div class="payment-confirm-col flex-fill cvv">
-                            <label for="exampleFormControlInput1">CVV</label><input type="email" disabled class="form-control"
-                              id="exampleFormControlInput1" placeholder="name@example.com" /></div>
+                            <label for="exampleFormControlInput1">CVV</label>
+                            <input
+                              type="email"
+                              disabled
+                              class="form-control"
+                              id="exampleFormControlInput1"
+                              placeholder="name@example.com"
+                            />
+                          </div>
                         </div>
                       </div>
                     </li>
@@ -438,18 +514,45 @@ const SignInModal = ({
                           <label>Card Number</label>
                           <div class="card-confirm-pic-rw d-flex">
                             <div class="card-confirm-pic d-flex justify-content-center align-items-center">
-                              <img src="/static/media/visa.1e2e108b.svg" alt="Visa Card" /></div>
-                            <div class="card-confirm-col flex-fill"><input type="email" disabled class="form-control" id="exampleFormControlInput1"
-                              placeholder="name@example.com" /></div>
+                              <img
+                                src={require('../../../assets/images/icons/payment-icon/discover.svg')}
+                                alt="Visa Card"
+                              />
+                            </div>
+                            <div class="card-confirm-col flex-fill">
+                              <input
+                                type="email"
+                                disabled
+                                class="form-control"
+                                id="exampleFormControlInput1"
+                                placeholder="name@example.com"
+                              />
+                            </div>
                           </div>
                         </div>
                         <div class="form-group payment-confirm-rw d-flex">
-                          <div class="payment-confirm-col flex-fill"><label for="exampleFormControlInput1">Expiration Date</label>
-                            <input type="email" disabled class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
+                          <div class="payment-confirm-col flex-fill">
+                            <label for="exampleFormControlInput1">
+                              Expiration Date
+                            </label>
+                            <input
+                              type="email"
+                              disabled
+                              class="form-control"
+                              id="exampleFormControlInput1"
+                              placeholder="name@example.com"
+                            />
                           </div>
                           <div class="payment-confirm-col flex-fill cvv">
-                            <label for="exampleFormControlInput1">CVV</label><input type="email" disabled class="form-control"
-                              id="exampleFormControlInput1" placeholder="name@example.com" /></div>
+                            <label for="exampleFormControlInput1">CVV</label>
+                            <input
+                              type="email"
+                              disabled
+                              class="form-control"
+                              id="exampleFormControlInput1"
+                              placeholder="name@example.com"
+                            />
+                          </div>
                         </div>
                       </div>
                     </li>
@@ -462,18 +565,45 @@ const SignInModal = ({
                           <label>Card Number</label>
                           <div class="card-confirm-pic-rw d-flex">
                             <div class="card-confirm-pic d-flex justify-content-center align-items-center">
-                              <img src="/static/media/visa.1e2e108b.svg" alt="Visa Card" /></div>
-                            <div class="card-confirm-col flex-fill"><input type="email" disabled class="form-control" id="exampleFormControlInput1"
-                              placeholder="name@example.com" /></div>
+                              <img
+                                src={require('../../../assets/images/icons/payment-icon/diner.svg')}
+                                alt="Visa Card"
+                              />
+                            </div>
+                            <div class="card-confirm-col flex-fill">
+                              <input
+                                type="email"
+                                disabled
+                                class="form-control"
+                                id="exampleFormControlInput1"
+                                placeholder="name@example.com"
+                              />
+                            </div>
                           </div>
                         </div>
                         <div class="form-group payment-confirm-rw d-flex">
-                          <div class="payment-confirm-col flex-fill"><label for="exampleFormControlInput1">Expiration Date</label>
-                            <input type="email" disabled class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
+                          <div class="payment-confirm-col flex-fill">
+                            <label for="exampleFormControlInput1">
+                              Expiration Date
+                            </label>
+                            <input
+                              type="email"
+                              disabled
+                              class="form-control"
+                              id="exampleFormControlInput1"
+                              placeholder="name@example.com"
+                            />
                           </div>
                           <div class="payment-confirm-col flex-fill cvv">
-                            <label for="exampleFormControlInput1">CVV</label><input type="email" disabled class="form-control"
-                              id="exampleFormControlInput1" placeholder="name@example.com" /></div>
+                            <label for="exampleFormControlInput1">CVV</label>
+                            <input
+                              type="email"
+                              disabled
+                              class="form-control"
+                              id="exampleFormControlInput1"
+                              placeholder="name@example.com"
+                            />
+                          </div>
                         </div>
                       </div>
                     </li>
@@ -486,33 +616,55 @@ const SignInModal = ({
                           <label>Card Number</label>
                           <div class="card-confirm-pic-rw d-flex">
                             <div class="card-confirm-pic d-flex justify-content-center align-items-center">
-                              <img src="/static/media/visa.1e2e108b.svg" alt="Visa Card" /></div>
-                            <div class="card-confirm-col flex-fill"><input type="email" disabled class="form-control" id="exampleFormControlInput1"
-                              placeholder="name@example.com" /></div>
+                              <img
+                                src={require('../../../assets/images/icons/payment-icon/jcb.svg')}
+                                alt="Visa Card"
+                              />
+                            </div>
+                            <div class="card-confirm-col flex-fill">
+                              <input
+                                type="email"
+                                disabled
+                                class="form-control"
+                                id="exampleFormControlInput1"
+                                placeholder="name@example.com"
+                              />
+                            </div>
                           </div>
                         </div>
                         <div class="form-group payment-confirm-rw d-flex">
-                          <div class="payment-confirm-col flex-fill"><label for="exampleFormControlInput1">Expiration Date</label>
-                            <input type="email" disabled class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
+                          <div class="payment-confirm-col flex-fill">
+                            <label for="exampleFormControlInput1">
+                              Expiration Date
+                            </label>
+                            <input
+                              type="email"
+                              disabled
+                              class="form-control"
+                              id="exampleFormControlInput1"
+                              placeholder="name@example.com"
+                            />
                           </div>
                           <div class="payment-confirm-col flex-fill cvv">
-                            <label for="exampleFormControlInput1">CVV</label><input type="email" disabled class="form-control"
-                              id="exampleFormControlInput1" placeholder="name@example.com" /></div>
+                            <label for="exampleFormControlInput1">CVV</label>
+                            <input
+                              type="email"
+                              disabled
+                              class="form-control"
+                              id="exampleFormControlInput1"
+                              placeholder="name@example.com"
+                            />
+                          </div>
                         </div>
                       </div>
                     </li>
                   </ul>
                 </div>
                 <div className="bid-frm-btns text-center">
-                  <Button
-                    color="secondary"
-                  >
-                    Make Payment
-                  </Button>
+                  <Button color="secondary">Make Payment</Button>
                 </div>
               </div>
-              {/* payment section end*/}
-            </div>
+            </>
           )}
 
           {_modalType === "Contact Us" && (
@@ -521,7 +673,7 @@ const SignInModal = ({
                 <div className="contact-us-frm">
                   <InputCell
                     Name={"name"}
-                    Placeholder={"Username"}
+                    Placeholder={"Name"}
                     Model=".name"
                     InputType={"text"}
                     ClassName="input-icon-cell"
@@ -577,24 +729,24 @@ const SignInModal = ({
               </div>
             </ModalBody>
           )}
-          {_modalType === "Rate Bidder" && (
-            <div className="bid-confirm-blc bidder-completion-blc text-center">
-              <div className="bidder-label">{_bidderName}</div>
-              <h2 className="text-primary">Has been completed the job</h2>
-              <h3>Tap a star to rate him</h3>
-              <div className="bidder-rate d-flex justify-content-center">
-                <RatingBlock />
-              </div>
-              <div className="bid-confirm-btns d-flex flex-column align-items-center">
-                <Button
-                  color="link"
-                  onClick={() => props.history.push("/job-list")}
-                >
-                  Remind me later
-                </Button>
-              </div>
+
+          <div className="bid-confirm-blc bidder-completion-blc text-center">
+            <div className="bidder-label">{_bidderName}</div>
+            <h2 className="text-primary">Has been completed the job</h2>
+            <h3>Tap a star to rate him</h3>
+            <div className="bidder-rate d-flex justify-content-center">
+              <RatingBlock />
             </div>
-          )}
+            <div className="bid-confirm-btns d-flex flex-column align-items-center">
+              <Button
+                color="link"
+                onClick={() => props.history.push("/job-list")}
+              >
+                Remind me later
+                </Button>
+            </div>
+          </div>
+
         </ModalBody>
       </Modal>
 

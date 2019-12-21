@@ -10,16 +10,11 @@ export const about_us = data => ({ type: TYPE.ABOUT_US, data });
 /****** action creator for list users cpmpleted job ********/
 export const contactUs = (params, callback) => {
   return (dispatch, getState) => {
-    const {
-      data: { token }
-    } = getState().user;
-    ApiClient.delete(`${apiUrl}/contact-us}`, params, token).then(response => {
+    ApiClient.post(`${apiUrl}/contact/contact_us`, params).then(response => {
       if (response.status === 200) {
-        console.log("response: ", response);
         callback(true);
         toastAction(true, response.msg);
-      } else if (response.status === 401) {
-        console.log("errror with 401 : ");
+      } else if (response.status === 404) {
         callback(false);
         toastAction(false, response.msg);
       } else {
@@ -31,8 +26,6 @@ export const contactUs = (params, callback) => {
 
 /****** action creator for get the about us details ********/
 export const getCustomPageDetails = (page_name, callback) => {
-  console.log("page_name:", page_name);
-
   return (dispatch, getState) => {
     const {
       data: { token }

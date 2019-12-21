@@ -13,7 +13,9 @@ var config = {
 
 class ApiClient {
   static post(url, params, token = null) {
-    setAuthorizationToken(axios, token);
+    if (token) {
+      setAuthorizationToken(axios, token);
+    }
     return new Promise(function(fulfill, reject) {
       axios
         .post(url, JSON.stringify(params), config)
@@ -53,8 +55,6 @@ class ApiClient {
     setAuthorizationToken(axios, token);
     let query = querystring.stringify(params);
     url = query ? `${url}?${query}` : url;
-    console.log("url: ", url);
-
     return new Promise(function(fulfill, reject) {
       axios
         .get(url, config)
@@ -76,8 +76,6 @@ class ApiClient {
     // setAuthorizationToken(axios, token);
     let query = querystring.stringify(params);
     url = query ? `${url}?${query}` : url;
-    console.log("url: ", url);
-
     return new Promise(function(fulfill, reject) {
       axios
         .get(url, config)

@@ -124,7 +124,7 @@ export default ({
       <div
         className={`post-job-inner ${
           _currentstage === 3 ? "gallery-block" : ""
-        }`}
+          }`}
       >
         <LocalForm
           initialState={_jobDetails}

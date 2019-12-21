@@ -150,7 +150,7 @@ const UserPayment = (props) => {
                     Model=".number"
                     maxlength={16}
                     InputType={"text"}
-                    className="input-line-blc"
+                    ClassName="input-line-blc"
                     Errors={{ required: "required" }}
                 />
             </li>
@@ -161,7 +161,7 @@ const UserPayment = (props) => {
                     Placeholder={"Card CVC"}
                     Model=".cvc"
                     InputType={"text"}
-                    className="input-line-blc"
+                    ClassName="input-line-blc"
                     Errors={{ required: "required" }}
                 />
             </li>
@@ -172,7 +172,7 @@ const UserPayment = (props) => {
                     Placeholder={"Expiry month"}
                     Model=".exp_month"
                     InputType={"text"}
-                    className="input-line-blc"
+                    ClassName="input-line-blc"
                     Errors={{ required: "required" }}
                 />
                 <InputCell
@@ -180,7 +180,7 @@ const UserPayment = (props) => {
                     Placeholder={"Expiry year"}
                     Model=".exp_year"
                     InputType={"text"}
-                    className="input-line-blc"
+                    ClassName="input-line-blc"
                     Errors={{ required: "required" }}
                 />
             </li>
@@ -200,7 +200,7 @@ const UserPayment = (props) => {
                                             Model=".firstName"
                                             maxlength={16}
                                             InputType={"text"}
-                                            className="input-line-blc"
+                                            ClassName="input-line-blc"
                                             Errors={{ required: "required" }}
                                         />
 
@@ -209,7 +209,7 @@ const UserPayment = (props) => {
                                             Placeholder={"Last Name"}
                                             Model=".last_name"
                                             InputType={"text"}
-                                            className="input-line-blc"
+                                            ClassName="input-line-blc"
                                             Errors={{ required: "required" }}
                                         />
                                     </li>
@@ -220,7 +220,7 @@ const UserPayment = (props) => {
                                             Placeholder={"Account Number"}
                                             Model=".account_no"
                                             InputType={"text"}
-                                            className="input-line-blc"
+                                            ClassName="input-line-blc"
                                             Errors={{ required: "required" }}
                                         />
                                         <InputCell
@@ -228,7 +228,7 @@ const UserPayment = (props) => {
                                             Placeholder={"Routing Number"}
                                             Model=".routing_no"
                                             InputType={"text"}
-                                            className="input-line-blc"
+                                            ClassName="input-line-blc"
                                             Errors={{ required: "required" }}
                                         />
                                     </li>

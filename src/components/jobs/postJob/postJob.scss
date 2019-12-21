@@ -146,17 +146,24 @@
       li {
         margin: 0 13px 11px 0;
         .add-gallery-btn {
+          * {
+            cursor: pointer;
+          }
           width: 111px;
           height: 111px;
           border-radius: 5px;
           input {
-            position: absolute;
+            height: 100%;
+            opacity: 0;
+          }
+          div,
+          input {
+            margin: 0;
+            position: absolute !important;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            opacity: 0;
-            cursor: pointer;
           }
         }
         .gallery-btn {
