@@ -173,8 +173,8 @@ export default function JobDetail({
                   alt="Job Post User"
                 />
               ) : (
-                  <img src={`${apiUrl}/favicon.ico`} alt="Job Post User" />
-                )}
+                <img src={`${apiUrl}/favicon.ico`} alt="Job Post User" />
+              )}
             </div>
             <div className="d-flex justify-content-center">
               <div className="job-slider-track-inner">
@@ -191,8 +191,8 @@ export default function JobDetail({
                     ))}
                   </Slider>
                 ) : (
-                    ""
-                  )}
+                  ""
+                )}
               </div>
             </div>
           </Col>
@@ -224,7 +224,7 @@ export default function JobDetail({
                   </div>
                 )}
                 <div className="job-detail-hd-rw d-flex flex-wrap">
-                  <div className="job-detail-hd-col d-flex flex-fill flex-wrap">
+                  <div className="job-detail-hd-col d-flex flex-column flex-fill flex-wrap">
                     <h3 className="text-primary">{job.jobtitle}</h3>
                     {/* <RatingBlock /> */}
                     <p className="m-0 w-100">
@@ -290,7 +290,7 @@ export default function JobDetail({
                     <label
                       className={`job-detail-amnt margin flex-shrink-0 ${
                         path === "/job-proposal" ? "" : ""
-                        }`}
+                      }`}
                     >
                       {job.budget ? `$${job.budget}` : ""}
                     </label>

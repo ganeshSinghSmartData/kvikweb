@@ -386,9 +386,9 @@ const SignInModal = ({
                         No Card Added yet!!
                         <p className="">
                           <Link
-                            className="btn btn-link"
+                            className="btn btn-secondary"
                             color="secondary"
-                            to={"/"}
+                            to={"/profile"}
                           >
                             Add Payment Card
                           </Link>
@@ -397,7 +397,7 @@ const SignInModal = ({
                     </div>
                   )}
                   {false && (
-                    <div>
+                    <>
                       <h2>
                         <strong>Card Holder:</strong>
                         John Smith
@@ -407,7 +407,7 @@ const SignInModal = ({
                           <li>
                             <div className="payment-confirm position-relative">
                               <label className="payment-confirm-check d-flex align-items-center justify-content-center ">
-                                <input type="checkbox" />
+                                <input type="radio" name="select-option" />
                               </label>
                               <div className="form-group payment-confirm-rw">
                                 <label>Card Number</label>
@@ -460,7 +460,7 @@ const SignInModal = ({
                           <li>
                             <div className="payment-confirm position-relative">
                               <label className="payment-confirm-check d-flex align-items-center justify-content-center ">
-                                <input type="checkbox" />
+                                <input type="radio" name="select-option" />
                               </label>
                               <div className="form-group payment-confirm-rw">
                                 <label>Card Number</label>
@@ -513,7 +513,7 @@ const SignInModal = ({
                           <li>
                             <div className="payment-confirm position-relative">
                               <label className="payment-confirm-check d-flex align-items-center justify-content-center ">
-                                <input type="checkbox" />
+                                <input type="radio" name="select-option" />
                               </label>
                               <div className="form-group payment-confirm-rw">
                                 <label>Card Number</label>
@@ -566,7 +566,7 @@ const SignInModal = ({
                           <li>
                             <div className="payment-confirm position-relative">
                               <label className="payment-confirm-check d-flex align-items-center justify-content-center ">
-                                <input type="checkbox" />
+                                <input type="radio" name="select-option" />
                               </label>
                               <div className="form-group payment-confirm-rw">
                                 <label>Card Number</label>
@@ -619,7 +619,7 @@ const SignInModal = ({
                           <li>
                             <div className="payment-confirm position-relative">
                               <label className="payment-confirm-check d-flex align-items-center justify-content-center ">
-                                <input type="checkbox" />
+                                <input type="radio" name="select-option" />
                               </label>
                               <div className="form-group payment-confirm-rw">
                                 <label>Card Number</label>
@@ -672,7 +672,7 @@ const SignInModal = ({
                           <li>
                             <div className="payment-confirm position-relative">
                               <label className="payment-confirm-check d-flex align-items-center justify-content-center ">
-                                <input type="checkbox" />
+                                <input type="radio" name="select-option" />
                               </label>
                               <div className="form-group payment-confirm-rw">
                                 <label>Card Number</label>
@@ -727,7 +727,7 @@ const SignInModal = ({
                       <div className="bid-frm-btns text-center">
                         <Button color="secondary">Make Payment</Button>
                       </div>
-                    </div>
+                    </>
                   )}
                 </div>
               )}

@@ -343,3 +343,18 @@ input[type="search"]::-webkit-search-decoration {
   color: rgba(0, 0, 0, 0.5);
   font-size: 12px;
 }
+
+.select-search-box::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 40px;
+  text-align: center;
+  line-height: 40px;
+  color: #222f3e;
+  z-index: 1;
+  background: url(../../images/icons/angle-down.svg) center center no-repeat;
+  background-size: 14px;
+}

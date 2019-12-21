@@ -6,8 +6,9 @@ const RatingBlock = ({ rating = 4 }) => {
     <div className="rating-blc d-flex align-items-start bidder">
       {[1, 2, 3, 4, 5].map((item, key) => (
         <Rating
+          disablestar={true}
           key={key}
-          className={`rating-btn ${item <= rating ? "svg-secondary-100" : ""}`}
+          classname={`rating-btn ${item <= rating ? "svg-secondary-100" : ""}`}
         />
       ))}
     </div>
