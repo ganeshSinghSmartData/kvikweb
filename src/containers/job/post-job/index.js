@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import PostJob from "../../../components/jobs/postJob";
-import Loader from "../../../components/commonUi/loader/loader";
 import { CategoryItems } from "./../../../utilities/constants";
 import {
   createNewJob,
@@ -121,7 +120,6 @@ class PostNewJob extends Component {
   render() {
     return (
       <React.Fragment>
-        {this.state.dataload && <Loader loading={this.state.dataload} />}
         {this.state.pathname === "/edit-job" &&
           Object.keys(this.props.jobDetails).length && (
             <PostJob
@@ -137,9 +135,9 @@ class PostNewJob extends Component {
               }
               _selectedCategory={this.state.selectedCategory}
               path={this.state.pathname}
+              dataload={this.state.dataload}
             />
           )}
-        {this.state.dataload && <Loader loading={this.state.dataload} />}
         {this.state.pathname === "/post-job" && (
           <PostJob
             _currentstage={this.state.stage}
@@ -153,6 +151,7 @@ class PostNewJob extends Component {
             }
             _selectedCategory={this.state.selectedCategory}
             path={this.state.pathname}
+            dataload={this.state.dataload}
           />
         )}
       </React.Fragment>

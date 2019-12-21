@@ -6,12 +6,14 @@ import { LocalForm } from "react-redux-form";
 import DatePicker from "react-datepicker";
 import SelectSearch from "react-select-search";
 import moment from "moment";
-import "react-datepicker/dist/react-datepicker.css";
 
-import InputCell from "../../commonUi/input/inputCell";
+import "react-datepicker/dist/react-datepicker.css";
 import "./postJob.scss";
-import { CategoryItems, FrequencyItem } from "./../../../utilities/constants";
+
 import { apiUrl } from "../../../environment";
+import { CategoryItems, FrequencyItem } from "./../../../utilities/constants";
+import InputCell from "../../commonUi/input/inputCell";
+import Loader from "../../../components/commonUi/loader/loader";
 
 export default ({
   _jobDetails = {},
@@ -21,6 +23,7 @@ export default ({
   _handleCategoryOnchange,
   _handleJobUpdate,
   _path,
+  dataload,
   _selectedCategory
 }) => {
   const [images, setImages] = useState([]);
@@ -102,6 +105,7 @@ export default ({
 
   return (
     <div className="post-wrapper data-block ml-auto mr-auto position-relative">
+      {dataload && <Loader loading={dataload} />}
       <div className="post-job-nav d-flex justify-content-center">
         <ul className="d-flex">
           <li className={getClass(1)}>

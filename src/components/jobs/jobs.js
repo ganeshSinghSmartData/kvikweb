@@ -71,6 +71,8 @@ const Job = ({
     count = jobs.count;
   }
 
+  console.log("products: ", products);
+
   const showMoreProduct = page => {
     setPage(page);
     if (path === "/job-list") {

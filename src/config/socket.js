@@ -19,28 +19,37 @@ class SocketClient {
     // this.authentication(TOKEN);
 
     /*********** event for socket connect ******************** */
-    this.socket.on("connect", res => {
-      // console.log('connect');
-    });
+    if (this.socket) {
+      this.socket.on("connect", res => {
+        // console.log('connect');
+      });
+    }
 
     /*********** event for socket disconnect ******************** */
-    this.socket.on("disconnect", res => {
-      // console.log('disconnect');
-    });
+
+    if (this.socket) {
+      this.socket.on("disconnect", res => {
+        // console.log('disconnect');
+      });
+    }
 
     /************** event of get messages******* *****************/
-    this.socket.on(`get_message`, res => {
-      console.log(res, "get");
-      this.dispatch(get_message(res));
-      this.dispatch(messages_count());
-    });
+    if (this.socket) {
+      this.socket.on(`get_message`, res => {
+        console.log(res, "get");
+        this.dispatch(get_message(res));
+        this.dispatch(messages_count());
+      });
+    }
   };
 
   /*********** user authentication before socket connection ******* */
   authentication = token => {
-    this.socket.emit("authenticate", { token }, (error, res) => {
-      // console.log(error, res, "authenticate", this.socket);
-    });
+    if (this.socket) {
+      this.socket.emit("authenticate", { token }, (error, res) => {
+        // console.log(error, res, "authenticate", this.socket);
+      });
+    }
   };
 
   /*********** Handler for emitting events ******* */
@@ -52,17 +61,21 @@ class SocketClient {
         }
         break;
       case TYPE.SEND_MESSAGE:
-        this.socket.emit(`${data.senderId}-send_message`, {
-          recieverId: data.recieverId, // message reciever
-          senderId: data.senderId, // your id
-          type: "text", // text/image
-          message: data.message
-        });
+        if (this.socket) {
+          this.socket.emit(`${data.senderId}-send_message`, {
+            recieverId: data.recieverId, // message reciever
+            senderId: data.senderId, // your id
+            type: "text", // text/image
+            message: data.message
+          });
+        }
       case TYPE.GET_MESSAGE:
-        this.socket.on(`${data.senderId}-get_message`, res => {
-          this.dispatch(get_message(res));
-          this.dispatch(messages_count());
-        });
+        if (this.socket) {
+          this.socket.on(`${data.senderId}-get_message`, res => {
+            this.dispatch(get_message(res));
+            this.dispatch(messages_count());
+          });
+        }
         break;
     }
   };

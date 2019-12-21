@@ -43,6 +43,7 @@ const UserProfile = props => {
 
   const [chatVisible, setchatVisible] = useState(false);
   const chatToggle = id => {
+    console.log("chatToggle id: ");
     setchatVisible(!chatVisible);
     setId(id);
     console.log("chatVisible", chatVisible);
@@ -213,13 +214,6 @@ const UserProfile = props => {
           >
             Logout
           </Link>
-
-          {/* <DropdownItem divider />
-          <DropdownItem disabled>Action (disabled)</DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem>Foo Action</DropdownItem>
-          <DropdownItem>Bar Action</DropdownItem>
-          <DropdownItem>Quo Action</DropdownItem> */}
         </DropdownMenu>
       </Dropdown>
       <Chat
