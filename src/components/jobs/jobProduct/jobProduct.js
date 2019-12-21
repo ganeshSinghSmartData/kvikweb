@@ -38,8 +38,6 @@ const JobProduct = ({ product, listType, path }) => {
     pathname = "/bid-details/";
   }
 
-  // job-secondary-bar job-danger-bar job-success-bar
-
   let classname = "";
   const setJobStatus = status => {
     switch (status) {
@@ -125,15 +123,18 @@ const JobProduct = ({ product, listType, path }) => {
           ) : (
             <img src={`${apiUrl}/favicon.ico`} alt="Job" />
           )}
-          {path !== "" && (
+          {console.log("path: ", path)}
+          {path === "/bid-list" && (
             <span className={`job-status-bar position-absolute ${classname}`}>
               {JobStatus[product.status]}
             </span>
-          )}{" "}
-          */}
-          <span className="job-status-bar position-absolute job-primary-bar job-secondary-bar job-danger-bar job-success-bar">
-            Bid has been expired.
-          </span>
+          )}
+
+          {path === "/job-list" && product.status !== "not_started" && (
+            <span className={`job-status-bar position-absolute ${classname}`}>
+              {JobStatus[product.status]}
+            </span>
+          )}
         </Link>
       </div>
       <div
@@ -175,37 +176,47 @@ const JobProduct = ({ product, listType, path }) => {
             {product.location}, {product.city}
           </label>
         </div>
-        <div className=" job-location bid-count-rw d-flex">
-          <span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="497.25"
-              height="612"
-              viewBox="0 0 497.25 612"
-            >
-              <g id="timer" transform="translate(-57.375)">
-                <g id="Group_4" data-name="Group 4">
-                  <path
-                    id="Path_3"
-                    data-name="Path 3"
-                    d="M432.272,68.692l-20.554,35.567,71.221,41.109L503.494,109.8a20.6,20.6,0,0,0-7.545-28.1L460.382,61.141A20.545,20.545,0,0,0,432.272,68.692Z"
-                  />
-                  <path
-                    id="Path_4"
-                    data-name="Path 4"
-                    d="M306,92.56a269.549,269.549,0,0,1,38.25,3.065V62.357l26.3-.2V19.125A19.114,19.114,0,0,0,351.422,0H260.779a19.114,19.114,0,0,0-19.125,19.125V62.156l26.1.2V95.625A269.549,269.549,0,0,1,306,92.56Z"
-                  />
-                  <path
-                    id="Path_5"
-                    data-name="Path 5"
-                    d="M306,114.75c-137.312,0-248.625,111.312-248.625,248.625S168.688,612,306,612,554.625,500.688,554.625,363.375,443.312,114.75,306,114.75ZM422.185,480.229l-144.873-100.3V238.34H319.12V358.029l126.86,87.827Z"
-                  />
+        {path === "/job-list" && (
+          <div className=" job-location bid-count-rw d-flex">
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="497.25"
+                height="612"
+                viewBox="0 0 497.25 612"
+              >
+                <g id="timer" transform="translate(-57.375)">
+                  <g id="Group_4" data-name="Group 4">
+                    <path
+                      id="Path_3"
+                      data-name="Path 3"
+                      d="M432.272,68.692l-20.554,35.567,71.221,41.109L503.494,109.8a20.6,20.6,0,0,0-7.545-28.1L460.382,61.141A20.545,20.545,0,0,0,432.272,68.692Z"
+                    />
+                    <path
+                      id="Path_4"
+                      data-name="Path 4"
+                      d="M306,92.56a269.549,269.549,0,0,1,38.25,3.065V62.357l26.3-.2V19.125A19.114,19.114,0,0,0,351.422,0H260.779a19.114,19.114,0,0,0-19.125,19.125V62.156l26.1.2V95.625A269.549,269.549,0,0,1,306,92.56Z"
+                    />
+                    <path
+                      id="Path_5"
+                      data-name="Path 5"
+                      d="M306,114.75c-137.312,0-248.625,111.312-248.625,248.625S168.688,612,306,612,554.625,500.688,554.625,363.375,443.312,114.75,306,114.75ZM422.185,480.229l-144.873-100.3V238.34H319.12V358.029l126.86,87.827Z"
+                    />
+                  </g>
                 </g>
-              </g>
-            </svg>
-          </span>
-          <label>Bid Count: 50</label>
-        </div>
+              </svg>
+            </span>
+
+            <label>
+              Bid Count:
+              {(product.jobBidStatus &&
+                product.jobBidStatus !== 0 &&
+                product.jobBidStatus.filter(status => status === "not_accepted")
+                  .length) ||
+                0}
+            </label>
+          </div>
+        )}
         {listType ? (
           <div className="job-desc">
             <p>{product.description || ""}</p>

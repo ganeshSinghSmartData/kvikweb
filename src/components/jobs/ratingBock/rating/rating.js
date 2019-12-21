@@ -1,12 +1,13 @@
 import React from "react";
 import { Button } from "reactstrap";
 import "./rating.scss";
-const Rating = ({ disablestar = false, classname }) => {
+const Rating = ({ disablestar = false, classname, _ratingClick }) => {
   return (
     <Button
       color="link"
       type="button"
       className={`${classname} ${disablestar ? "disable-star" : ""}`}
+      onClick={e => _ratingClick(e.target.value)}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

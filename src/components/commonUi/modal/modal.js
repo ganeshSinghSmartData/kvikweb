@@ -23,8 +23,6 @@ const SignInModal = ({
   _loading = false,
   ...props
 }) => {
-  console.log("_modalType : ", _modalType);
-
   let customClass = "";
   let headerClass = "";
   if (_modalType === "/register" || _modalType === "/login") {
@@ -41,6 +39,8 @@ const SignInModal = ({
   }
 
   let [isForgot, setForgot] = useState(false);
+  let [bidderRating, setBidderrating] = useState(1);
+
   return (
     <div>
       <Modal
@@ -252,17 +252,58 @@ const SignInModal = ({
                       <h2>
                         <label className="d-block">Forgot Password</label>
                       </h2>
-                      <InputCell
-                        Name={"email"}
-                        Placeholder={"Email"}
-                        Model=".forgotemail"
-                        InputType={"email"}
-                        ClassName="input-icon-cell"
-                        InputIcon={true}
-                        Errors={{
-                          required: "required"
-                        }}
-                      />
+                      {!props._sentForgotEmail && (
+                        <InputCell
+                          Name={"email"}
+                          Placeholder={"Email"}
+                          Model=".forgotemail"
+                          InputType={"email"}
+                          ClassName="input-icon-cell"
+                          InputIcon={true}
+                          Errors={{
+                            required: "required"
+                          }}
+                        />
+                      )}
+                      {props._sentForgotEmail && (
+                        <>
+                          <InputCell
+                            Name={"otp"}
+                            Placeholder={"OTP"}
+                            Model=".otp"
+                            InputType={"text"}
+                            ClassName="input-icon-cell"
+                            InputIcon={true}
+                            Errors={{
+                              required: "required"
+                            }}
+                          />
+                          <InputCell
+                            Name={"password"}
+                            Placeholder={"Password"}
+                            Model=".newpassword"
+                            InputType={"password"}
+                            ClassName="input-icon-cell"
+                            InputIcon={true}
+                            Errors={{
+                              required: "required",
+                              invalidPass: "invalidPass"
+                            }}
+                          />
+                          <InputCell
+                            Name={"confirmPassword"}
+                            Placeholder={"Confirm Password"}
+                            Model=".confirmPassword"
+                            InputType={"password"}
+                            ClassName="input-icon-cell"
+                            InputIcon={true}
+                            Errors={{
+                              required: "required",
+                              invalidPass: "invalidPass"
+                            }}
+                          />
+                        </>
+                      )}
                       <div className="signup-agree d-flex align-items-start">
                         <Button
                           type="button"
@@ -275,7 +316,7 @@ const SignInModal = ({
                       </div>
                       <div className="text-center">
                         <Button type="submit" size="lg" className="signup">
-                          Send Email
+                          Submit
                         </Button>
                       </div>
                     </div>
@@ -335,6 +376,7 @@ const SignInModal = ({
               </LocalForm>
             </div>
           )}
+
           {_modalType === "Bid Details" && (
             <>
               {!props._acceptProposal && (
@@ -774,6 +816,7 @@ const SignInModal = ({
               </LocalForm>
             </div>
           )}
+
           {_modalType === "Confirmation" && (
             <ModalBody className={"overflow-auto"}>
               <div className="bid-confirm-blc text-center">
@@ -796,16 +839,22 @@ const SignInModal = ({
               </div>
             </ModalBody>
           )}
+
           {_modalType === "Rate Bidder" && (
             <div className="bid-confirm-blc bidder-completion-blc text-center">
               <div className="bidder-label">{_bidderName}</div>
               <h2 className="text-primary">Has been completed the job</h2>
               <h3>Tap a star to rate him</h3>
               <div className="bidder-rate d-flex justify-content-center">
-                <RatingBlock />
+                <RatingBlock
+                  disablestar={false}
+                  ratingClick={rate => setBidderrating(rate)}
+                />
               </div>
               <div className="rating-desc">
-                <LocalForm onSubmit={values => _handleSubmit(values)}>
+                <LocalForm
+                  onSubmit={values => _handleSubmit(values, bidderRating)}
+                >
                   <div className="rating-desc-rw">
                     <InputCell
                       Name={"reveiw"}

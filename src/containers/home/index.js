@@ -20,6 +20,7 @@ class Home extends Component {
     super(props);
     this.state = {
       isModal: false,
+      sentForgotEmail: false,
       isLoading: false
     };
     this.toggleModal = this.toggleModal.bind(this);
@@ -56,37 +57,30 @@ class Home extends Component {
           this.props.history.push("/");
         }
       });
-    } else if (values.forgotemail) {
-      console.log("I am in forgot email : ", values);
-
+    } else if (values.forgotemail && !values.confirmPassword) {
       this.props.forgotPassword({ email: values.forgotemail }, callback => {
         if (callback) {
-          this.setState({ isLoading: false });
-          SocketClient.init(socketUrl, callback.token, this.props.dispatch);
-          this.toggleModal();
+          this.setState({ isLoading: false, sentForgotEmail: true });
         } else {
           this.setState({ isLoading: false });
-          // this.toggleModal();
         }
       });
     } else if (values.confirmPassword) {
       const reqData = {
         otp: values.otp,
-        email: values.email,
+        email: values.forgotemail,
         password: values.newpassword,
         confirmPassword: values.confirmPassword
       };
-      console.log("reqData : ", reqData);
-      /* this.props.changePassword(values, callback => {
+      this.props.changePassword(reqData, callback => {
         if (callback) {
-          this.setState({ isLoading: false });
-          SocketClient.init(socketUrl, callback.token, this.props.dispatch);
+          this.setState({ isLoading: false, sentForgotEmail: false });
           this.toggleModal();
         } else {
-          this.setState({ isLoading: false });
+          this.setState({ isLoading: false, sentForgotEmail: false });
           // this.toggleModal();
         }
-      }); */
+      });
     } else {
       this.props.loginUser(values, callback => {
         if (callback) {
@@ -130,6 +124,7 @@ class Home extends Component {
             _toggleModal={this.toggleModal}
             _modalType={path === "/contact-us" ? "Contact Us" : path}
             _loading={this.state.isLoading}
+            _sentForgotEmail={this.state.sentForgotEmail}
             _handleSubmit={this.handleSubmit}
             _handleForgotPassword={this.handleForgotPassword}
             handleSocialLogin={this.handleSocialLogin}

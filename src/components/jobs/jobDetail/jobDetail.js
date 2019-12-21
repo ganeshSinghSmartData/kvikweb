@@ -16,10 +16,10 @@ import JobCreatedBy from "./JobAddress/jobCreatedBy";
 import Proposal from "./proposal/proposal";
 import Breadcrumb from "../../commonUi/breadcrumb/breadcrumb";
 
-import { StringToDate } from "./../../../utilities/common";
+import { StringToDate, DaysBetween } from "./../../../utilities/common";
 import { JobStatus } from "../../../utilities/constants";
 import { apiUrl } from "./../../../environment";
-import { placeYourBid } from "./../../../actions/job";
+import { placeYourBid, addBidderReview } from "./../../../actions/job";
 import Spinner from "../../commonUi/spinner/spinner";
 
 import PlaceYourBidModal from "../../commonUi/modal/modal";
@@ -52,7 +52,7 @@ export default function JobDetail({
 
   const thmbnails = [];
   let [timeleft, seTimeleft] = useState(
-    datetimeDifference(new Date(), new Date(end_date))
+    datetimeDifference(new Date(), new Date(DaysBetween(job.jobStartDate)))
   );
   job.images.length &&
     job.images.map(item => {
@@ -72,29 +72,59 @@ export default function JobDetail({
     slidesToScroll: 1
   };
 
-  const handleSubmit = values => {
+  const handleSubmit = (values, rate = "") => {
     setModalLoading(true);
-    const reqData = {
-      jobtitle: job.jobtitle,
-      description: values.description,
-      frequency: values.frequency,
-      job_id: job._id,
-      bid_amount: values.bid_amount,
-      job_seeker_id: job.job_seeker_id._id,
-      name: `${user.data.fname} ${user.data.lname}`
-    };
-    dispatch(
-      placeYourBid(reqData, callback => {
-        if (callback) {
-          setModalLoading(false);
-          setOpenModal(!openModal);
-          history.push("/");
-        } else {
-          setOpenModal(!openModal);
-          setModalLoading(false);
-        }
-      })
-    );
+    console.log("values : ", values);
+    if (values.frequency) {
+      console.log("Inside plave bid");
+
+      const reqData = {
+        jobtitle: job.jobtitle,
+        description: values.description,
+        frequency: values.frequency,
+        job_id: job._id,
+        bid_amount: values.bid_amount,
+        job_seeker_id: job.job_seeker_id._id,
+        name: `${user.data.fname} ${user.data.lname}`
+      };
+      dispatch(
+        placeYourBid(reqData, callback => {
+          if (callback) {
+            setModalLoading(false);
+            setOpenModal(!openModal);
+            history.push("/");
+          } else {
+            setOpenModal(!openModal);
+            setModalLoading(false);
+          }
+        })
+      );
+    }
+    if (values.reveiw) {
+      console.log("Inside Revirew");
+
+      const reqData = {
+        bidder_id: job.bidersLIstingcheck[0].job_provider_id,
+        job_id: job._id,
+        rating: rate,
+        review: values.reveiw
+      };
+
+      console.log("reqData :", reqData);
+
+      dispatch(
+        addBidderReview(reqData, callback => {
+          if (callback) {
+            setModalLoading(false);
+            setOpenModal(!openModal);
+            history.push("/");
+          } else {
+            setOpenModal(!openModal);
+            setModalLoading(false);
+          }
+        })
+      );
+    }
   };
 
   let classname = "";
@@ -151,6 +181,8 @@ export default function JobDetail({
         return (classname = "status-secondary");
     }
   };
+  console.log("job.status :", job);
+
   setJobStatus(job.status);
 
   return (
@@ -294,7 +326,7 @@ export default function JobDetail({
                     >
                       {job.budget ? `$${job.budget}` : ""}
                     </label>
-                    {path === "/job-proposal" && (
+                    {path === "/job-proposal" && job.status === "completed" && (
                       <div className="mark-dn-cell">
                         <Button
                           color="secondary"

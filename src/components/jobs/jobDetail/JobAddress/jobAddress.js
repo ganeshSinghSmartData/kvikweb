@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 import RatingBlock from "../../ratingBock/ratingBlock";
 import UserImage from "../userImage/userImage";
+import { DaysBetween } from "./../../../../utilities/common";
 
 import "./jobAddress.scss";
 import { setTimeout } from "timers";
@@ -16,7 +17,7 @@ const JobAddress = ({
   editimage = false
 }) => {
   let [timeleft, seTimeleft] = useState(
-    datetimeDifference(new Date(), new Date(end_date))
+    datetimeDifference(new Date(), new Date(DaysBetween(end_date)))
   );
 
   /* setInterval(() => {
