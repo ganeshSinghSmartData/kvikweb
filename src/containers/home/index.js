@@ -4,7 +4,12 @@ import { bindActionCreators } from "redux";
 
 import Job from "./../../components/jobs/jobs";
 import SignInModal from "./../../components/commonUi/modal/modal";
-import { registerUser, loginUser } from "./../../actions/user";
+import {
+  registerUser,
+  loginUser,
+  forgotPassword,
+  changePassword
+} from "./../../actions/user";
 import { contactUs } from "./../../actions/common";
 import SpinnerOverlay from "../../components/commonUi/spinner/spinnerOverlay/spinnerOverlay";
 import { socketUrl } from "../../environment";
@@ -51,6 +56,37 @@ class Home extends Component {
           this.props.history.push("/");
         }
       });
+    } else if (values.forgotemail) {
+      console.log("I am in forgot email : ", values);
+
+      this.props.forgotPassword({ email: values.forgotemail }, callback => {
+        if (callback) {
+          this.setState({ isLoading: false });
+          SocketClient.init(socketUrl, callback.token, this.props.dispatch);
+          this.toggleModal();
+        } else {
+          this.setState({ isLoading: false });
+          // this.toggleModal();
+        }
+      });
+    } else if (values.confirmPassword) {
+      const reqData = {
+        otp: values.otp,
+        email: values.email,
+        password: values.newpassword,
+        confirmPassword: values.confirmPassword
+      };
+      console.log("reqData : ", reqData);
+      /* this.props.changePassword(values, callback => {
+        if (callback) {
+          this.setState({ isLoading: false });
+          SocketClient.init(socketUrl, callback.token, this.props.dispatch);
+          this.toggleModal();
+        } else {
+          this.setState({ isLoading: false });
+          // this.toggleModal();
+        }
+      }); */
     } else {
       this.props.loginUser(values, callback => {
         if (callback) {
@@ -59,7 +95,7 @@ class Home extends Component {
           this.toggleModal();
         } else {
           this.setState({ isLoading: false });
-          this.toggleModal();
+          // this.toggleModal();
         }
       });
     }
@@ -113,6 +149,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   registerUser: bindActionCreators(registerUser, dispatch),
   loginUser: bindActionCreators(loginUser, dispatch),
+  forgotPassword: bindActionCreators(forgotPassword, dispatch),
+  changePassword: bindActionCreators(changePassword, dispatch),
   contactUs: bindActionCreators(contactUs, dispatch)
 });
 

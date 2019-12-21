@@ -108,7 +108,12 @@ const JobProduct = ({ product, listType, path }) => {
     <div className={"job-wrapper " + (listType ? "d-flex flex-column" : "")}>
       <div className="job-pic text-center flex-shrink-0 d-flex position-relative">
         <Link
-          className="text-black flex-fill position-relative"
+          className={`text-black flex-fill position-relative 
+          ${
+            !product.images && !product.images.length
+              ? "no-job-image-blc align-items-center justify-content-center"
+              : ""
+          }`}
           to={`${pathname}${product._id}`}
         >
           {/* <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" /> */}
@@ -117,7 +122,6 @@ const JobProduct = ({ product, listType, path }) => {
           ) : (
             <img src={`${apiUrl}/favicon.ico`} alt="Job" />
           )}
-          {/*  job-secondary-bar job-danger-bar job-success-bar */}
           {path !== "" && (
             <span className={`job-status-bar position-absolute ${classname}`}>
               {JobStatus[product.status]}
