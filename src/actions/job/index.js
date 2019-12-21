@@ -240,13 +240,11 @@ export const deleteMyJob = (params, callback) => {
     ApiClient.delete(`${apiUrl}/api/delete_job/${params.job_id}`, token).then(
       response => {
         if (response.status === 200) {
-          console.log("response: ", response);
+          toastAction(true, response.msg);
           callback(true);
-          toastAction(true, response.message);
         } else if (response.status === 401) {
-          console.log("errror with 401 : ");
           callback(false);
-          toastAction(false, response.message);
+          toastAction(false, response.msg);
         } else {
           dispatch(is_fetching(false));
         }
@@ -261,16 +259,14 @@ export const addBidderReview = (params, callback) => {
     const {
       data: { token }
     } = getState().user;
-    ApiClient.delete(`${apiUrl}/reviews/post_review`, params, token).then(
+    ApiClient.post(`${apiUrl}/reviews/post_review`, params, token).then(
       response => {
         if (response.status === 200) {
-          console.log("response: ", response);
+          toastAction(true, response.msg);
           callback(true);
-          toastAction(true, response.message);
         } else if (response.status === 401) {
-          console.log("errror with 401 : ");
+          toastAction(false, response.msg);
           callback(false);
-          toastAction(false, response.message);
         } else {
           dispatch(is_fetching(false));
         }

@@ -104,7 +104,7 @@ export default function JobDetail({
       console.log("Inside Revirew");
 
       const reqData = {
-        bidder_id: job.bidersLIstingcheck[0].job_provider_id,
+        bidder_id: job.bidersLIstingcheck[0].job_provider_id._id,
         job_id: job._id,
         rating: rate,
         review: values.reveiw
@@ -326,7 +326,8 @@ export default function JobDetail({
                     >
                       {job.budget ? `$${job.budget}` : ""}
                     </label>
-                    {path === "/job-proposal" && job.status === "completed" && (
+                    {/* && job.status === "completed" */}
+                    {path === "/job-proposal" && (
                       <div className="mark-dn-cell">
                         <Button
                           color="secondary"
