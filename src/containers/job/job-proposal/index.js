@@ -20,7 +20,7 @@ class JobProposal extends Component {
     this.state = {};
     this.markJobComplete = this.markJobComplete.bind(this);
     this.deleteJob = this.deleteJob.bind(this);
-    // this.confirmDelete = this.confirmDelete.bind(this);
+    this.confirmDelete = this.confirmDelete.bind(this);
   }
 
   componentDidMount() {
@@ -44,10 +44,26 @@ class JobProposal extends Component {
     });
   };
 
+  confirmDelete = value => {
+    confirmAlert({
+      title: "",
+      message: "Are you sure do you want to delete this job ?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => this.deleteJob(value)
+        },
+        {
+          label: "No",
+          onClick: () => {}
+        }
+      ]
+    });
+  };
+
   deleteJob = jobId => {
     this.props.deleteMyJob({ job_id: jobId }, callback => {
       if (callback) {
-        console.log(" I am in calback : ", callback);
         this.props.history.push("/job-list");
       }
     });
@@ -66,7 +82,7 @@ class JobProposal extends Component {
             history={this.props.history}
             path={pathname}
             _markJobComplete={this.markJobComplete}
-            _deleteJob={jobId => this.deleteJob}
+            _deleteJob={this.confirmDelete}
           ></JobDetail>
         ) : (
           <SpinnerOverlay className="position-fixed" />

@@ -3,13 +3,21 @@ import { Link } from "react-router-dom";
 
 import "./logo.scss";
 
-const Logo = props => {
+const Logo = ({ classname = "", navigate = false }) => {
   return (
-    <Link className="text-black" to={"/"}>
-      <label className={"logo " + props.className}>
-        <img src={require('../../../assets/images/logo.svg')} alt="Logo" />
-      </label>
-    </Link>
+    <>
+      {navigate ? (
+        <Link className="btn btn-link" to={"/"}>
+          <label className={`logo ${classname}`}>
+            <img src={require("../../../assets/images/logo.svg")} alt="Logo" />
+          </label>
+        </Link>
+      ) : (
+        <label className={`logo ${classname}`}>
+          <img src={require("../../../assets/images/logo.svg")} alt="Logo" />
+        </label>
+      )}
+    </>
   );
 };
 

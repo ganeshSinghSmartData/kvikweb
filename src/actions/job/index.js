@@ -3,6 +3,7 @@ import ApiClient from "../../api-client";
 import { apiUrl } from "../../environment";
 import { toastAction } from "../toast-actions";
 import { pagination } from "../../utilities/constants";
+import { callbackify } from "util";
 
 export const is_fetching = status => ({ type: TYPE.IS_FETCHING, status });
 export const is_search = status => ({ type: TYPE.IS_STATUS, status });
@@ -237,6 +238,30 @@ export const deleteMyJob = (params, callback) => {
       data: { token }
     } = getState().user;
     ApiClient.delete(`${apiUrl}/api/delete_job/${params.job_id}`, token).then(
+      response => {
+        if (response.status === 200) {
+          console.log("response: ", response);
+          callback(true);
+          toastAction(true, response.message);
+        } else if (response.status === 401) {
+          console.log("errror with 401 : ");
+          callback(false);
+          toastAction(false, response.message);
+        } else {
+          dispatch(is_fetching(false));
+        }
+      }
+    );
+  };
+};
+
+/****** action creator to add commente to the Bidder ********/
+export const addBidderReview = (params, callback) => {
+  return (dispatch, getState) => {
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient.delete(`${apiUrl}/reviews/post_review`, params, token).then(
       response => {
         if (response.status === 200) {
           console.log("response: ", response);

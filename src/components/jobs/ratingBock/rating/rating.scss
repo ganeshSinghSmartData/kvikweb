@@ -7,6 +7,14 @@
     }
   }
 }
+.disable-star {
+  pointer-events: none;
+  &:hover {
+    svg {
+      fill: #707070;
+    }
+  }
+}
 .rating-btn {
   svg {
     fill: #707070;
@@ -14,6 +22,7 @@
     height: 18px;
   }
 }
+
 .job-detail-amnt {
   font-size: 30px;
   font-weight: 500;

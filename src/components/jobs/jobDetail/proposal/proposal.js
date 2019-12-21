@@ -22,6 +22,7 @@ const Proposal = ({ props, jobId, history }) => {
   }
 
   const [openModal, setOpenModal] = useState(false);
+  const [acceptProposal, setAcceptProposal] = useState(false);
   const [isModalLoading, setModalLoading] = useState(false);
 
   let daysfrom = new Date() - new Date(DaysBetween(props.created_at));
@@ -34,7 +35,7 @@ const Proposal = ({ props, jobId, history }) => {
       buttons: [
         {
           label: "Yes",
-          onClick: () => handleAccept(value)
+          onClick: () => setAcceptProposal(true)
         },
         {
           label: "No",
@@ -113,6 +114,7 @@ const Proposal = ({ props, jobId, history }) => {
         _handleAccept={confirmAccept}
         _hadleReject={hadleReject}
         _propsDetails={{ ...props, daysfrom: daysfrom }}
+        _acceptProposal={acceptProposal}
         _loading={isModalLoading}
       />
     </div>

@@ -9,11 +9,10 @@ export const about_us = data => ({ type: TYPE.ABOUT_US, data });
 
 /****** action creator for list users cpmpleted job ********/
 export const contactUs = (params, callback) => {
-  return (dispatch, getState) => {
+  return dispatch => {
     ApiClient.post(`${apiUrl}/contact/contact_us`, params).then(response => {
       if (response.status === 200) {
         callback(true);
-        toastAction(true, response.msg);
       } else if (response.status === 404) {
         callback(false);
         toastAction(false, response.msg);

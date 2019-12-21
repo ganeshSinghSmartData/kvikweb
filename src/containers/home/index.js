@@ -4,7 +4,12 @@ import { bindActionCreators } from "redux";
 
 import Job from "./../../components/jobs/jobs";
 import SignInModal from "./../../components/commonUi/modal/modal";
-import { registerUser, loginUser } from "./../../actions/user";
+import {
+  registerUser,
+  loginUser,
+  forgotPassword,
+  changePassword
+} from "./../../actions/user";
 import { contactUs } from "./../../actions/common";
 import SpinnerOverlay from "../../components/commonUi/spinner/spinnerOverlay/spinnerOverlay";
 import { socketUrl } from "../../environment";
@@ -15,6 +20,7 @@ class Home extends Component {
     super(props);
     this.state = {
       isModal: false,
+      sentForgotEmail: false,
       isLoading: false
     };
     this.toggleModal = this.toggleModal.bind(this);
@@ -51,6 +57,30 @@ class Home extends Component {
           this.props.history.push("/");
         }
       });
+    } else if (values.forgotemail && !values.confirmPassword) {
+      this.props.forgotPassword({ email: values.forgotemail }, callback => {
+        if (callback) {
+          this.setState({ isLoading: false, sentForgotEmail: true });
+        } else {
+          this.setState({ isLoading: false });
+        }
+      });
+    } else if (values.confirmPassword) {
+      const reqData = {
+        otp: values.otp,
+        email: values.forgotemail,
+        password: values.newpassword,
+        confirmPassword: values.confirmPassword
+      };
+      this.props.changePassword(reqData, callback => {
+        if (callback) {
+          this.setState({ isLoading: false, sentForgotEmail: false });
+          this.toggleModal();
+        } else {
+          this.setState({ isLoading: false, sentForgotEmail: false });
+          // this.toggleModal();
+        }
+      });
     } else {
       this.props.loginUser(values, callback => {
         if (callback) {
@@ -59,7 +89,7 @@ class Home extends Component {
           this.toggleModal();
         } else {
           this.setState({ isLoading: false });
-          this.toggleModal();
+          // this.toggleModal();
         }
       });
     }
@@ -94,6 +124,7 @@ class Home extends Component {
             _toggleModal={this.toggleModal}
             _modalType={path === "/contact-us" ? "Contact Us" : path}
             _loading={this.state.isLoading}
+            _sentForgotEmail={this.state.sentForgotEmail}
             _handleSubmit={this.handleSubmit}
             _handleForgotPassword={this.handleForgotPassword}
             handleSocialLogin={this.handleSocialLogin}
@@ -113,6 +144,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   registerUser: bindActionCreators(registerUser, dispatch),
   loginUser: bindActionCreators(loginUser, dispatch),
+  forgotPassword: bindActionCreators(forgotPassword, dispatch),
+  changePassword: bindActionCreators(changePassword, dispatch),
   contactUs: bindActionCreators(contactUs, dispatch)
 });
 

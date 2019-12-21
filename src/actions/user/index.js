@@ -63,6 +63,46 @@ export const loginUser = (params, callback) => {
   };
 };
 
+/****** action creator for send otp to email for forgot password ********/
+export const forgotPassword = (params, callback) => {
+  return dispatch => {
+    ApiClient.post(`${apiUrl}/forgotPasswordOTP`, params).then(response => {
+      if (response.status === 200) {
+        dispatch(is_fetching(false));
+        // dispatch(login_users(response));
+        toastAction(true, response.msg);
+        callback(true);
+      } else if (response.status === 404) {
+        callback(false);
+        toastErrorAction(dispatch, response.msg);
+      } else {
+        callback(false);
+        dispatch(is_fetching(false));
+      }
+    });
+  };
+};
+
+/****** action creator for change password for a user ********/
+export const changePassword = (params, callback) => {
+  return dispatch => {
+    ApiClient.post(`${apiUrl}/forgotPassword`, params).then(response => {
+      if (response.status === 200) {
+        dispatch(is_fetching(false));
+        // dispatch(login_users(response));
+        toastAction(true, response.msg);
+        callback(true);
+      } else if (response.status === 404) {
+        callback(false);
+        toastErrorAction(dispatch, response.msg);
+      } else {
+        callback(false);
+        dispatch(is_fetching(false));
+      }
+    });
+  };
+};
+
 /****** action creator for verify users email ********/
 export const verifyEmail = (params, callback) => {
   return dispatch => {

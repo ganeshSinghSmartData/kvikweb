@@ -38,26 +38,6 @@ const BidderProfile = ({ user_id, review }) => {
               <div className="bidder-profl-l">
                 <JobAddress job_seeker_id={biderDetails} />
               </div>
-              <div className="bidder-profl-r ml-auto d-flex flex-column">
-                <div className="profile-bar ml-auto">
-                  <span className="profile-percentage">95%</span>
-                  <div className="progress">
-                    <div
-                      className="progress-bar bg-primary"
-                      role="progressbar"
-                      style={{ width: "25%" }}
-                    ></div>
-                  </div>
-                  <span className="d-block profile-bar-txt text-left">
-                    Profile Completion
-                  </span>
-                </div>
-                {/* <div className="mark-btn mt-auto">
-                  <Button color="secondary" block>
-                    Mark as Done
-                  </Button>
-                </div> */}
-              </div>
             </div>
             <UserInfo description={biderDetails.about} />
             <div className="bidder-profl-rw bidder-profile-l-padd bidder-profile-list">

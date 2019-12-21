@@ -16,8 +16,6 @@ const ROOT_CSS = css({
 });
 
 const Chat = props => {
-  console.log("props: ", props);
-
   const [message, setMessage] = useState("");
   const user = useSelector(state => state.user);
   const messages = useSelector(state => state.messages);

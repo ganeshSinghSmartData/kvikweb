@@ -32,7 +32,7 @@ const Sidebar = ({
           <label className="flex-fill m-0">SEARCH BY CATEGORY</label>
           <Button
             color="link"
-            className="item-toggle-btn d-flex flex-column flex-column align-items-center flex-shrink-0   btn btn-link p-0"
+            className="item-toggle-btn d-flex flex-column flex-column align-items-end flex-shrink-0   btn btn-link p-0"
             onClick={toggleCategory}
           >
             <span className="d-flex align-items-center justify-content-center">
@@ -53,7 +53,7 @@ const Sidebar = ({
                         block
                         className={`d-flex flex-fill m-0 text-left`}
                         onClick={() => toggleCheckHandler(key)}
-                        // className={`d-flex flex-fill m-0 text-left ${toggleCheck ? "active" : ""}`}
+                      // className={`d-flex flex-fill m-0 text-left ${toggleCheck ? "active" : ""}`}
                       >
                         {item.name}
                         <input
@@ -92,7 +92,7 @@ const Sidebar = ({
           <label className="flex-fill m-0">FILTER BY</label>
           <Button
             color="link"
-            className="item-toggle-btn d-flex flex-column flex-column align-items-center flex-shrink-0 btn btn-link p-0"
+            className="item-toggle-btn d-flex flex-column flex-column align-items-end flex-shrink-0 btn btn-link p-0"
             onClick={toggleFilter}
           >
             <span className="d-flex align-items-center justify-content-center">

@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import Rating from "./rating/rating";
 import "./ratingBlock.scss";
-const RatingBlock = ({ rating = 4 }) => {
+
+const RatingBlock = ({ rating = 4, ratingClick, disablestar }) => {
+  const [ratingVal, setRatingVal] = useState(4);
   return (
     <div className="rating-blc d-flex align-items-start bidder">
       {[1, 2, 3, 4, 5].map((item, key) => (
         <Rating
+          disablestar={disablestar}
+          _ratingClick={() => {
+            setRatingVal(item);
+            ratingClick(item);
+          }}
           key={key}
-          className={`rating-btn ${item <= rating ? "svg-secondary-100" : ""}`}
+          classname={`rating-btn ${
+            item <= ratingVal ? "svg-secondary-100" : ""
+          }`}
         />
       ))}
     </div>

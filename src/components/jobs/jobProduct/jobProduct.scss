@@ -182,7 +182,14 @@
   @include color-opacity($success, 0.15);
   background: $success;
 }
-
+.job-pic .no-job-image {
+  height: 75% !important;
+  opacity: 0.15;
+}
+.job-bid-count {
+  top: 0;
+  right: 0;
+}
 @media (max-width: 1024px) {
   .job-list-row {
     .job-wrapper {
