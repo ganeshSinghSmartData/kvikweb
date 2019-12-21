@@ -32,14 +32,19 @@ const createOptions = () => {
 };
 
 class _CardForm extends Component {
-  state = {
-    errorMessage: '',
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+      errorMessage: false
+    }
+  }
 
   handleChange = ({ error }) => {
+    let errorMessage = false;
     if (error) {
-      this.setState({ errorMessage: error.message });
+      errorMessage = error.message;
     }
+    this.setState({ errorMessage: errorMessage });
   };
 
   handleSubmit = (evt) => {
@@ -87,16 +92,18 @@ class _CardForm extends Component {
           <label>
             <CardElement
               onChange={this.handleChange}
-              {...createOptions()}
+              {...createOptions() }
             />
             {/* <UserPayment></UserPayment> */}
           </label>
-          <div className="error" role="alert">
-            {this.state.errorMessage}
-          </div>
+          {
+            this.state.errorMessage ? <div className="error" role="alert">
+              {this.state.errorMessage}
+            </div> : null
+          }
 
           <div className="card-detail-btn text-center">
-            <Button color="secondary">Make Payment</Button>
+            <Button color="secondary">Save</Button>
           </div>
         </form>
       </div>

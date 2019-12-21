@@ -52,7 +52,7 @@ const UserPayment = (props) => {
 
     const handleResult = (val) => {
 
-        dispatch(AddCard({ token: val.token.id, type: cardtype }, res => {
+        dispatch(AddCard({ token: val && val.token && val.token.id ? val.token.id : "", type: cardtype }, res => {
             if (res) {
                 dispatch(GetCards());
             }
@@ -63,14 +63,25 @@ const UserPayment = (props) => {
         setCardType(type);
         setIsCard(false);
     }
-
+    const showCards = (e) => {
+        e.preventDefault();
+        alert(5)
+    }
     return (
         <div className="user-profl-col-r">
             {!isCard ?
                 <React.Fragment>
-                    <h2>Add Card</h2>
 
-                    {user && user.cards.length > 0 && user.cards.map((val, count) => {
+                    <h2 style={{
+                        float: "left"
+                    }}>Add Card</h2>
+                    <h2 style={{
+                        float: "right",
+                        cursor: "Pointer"
+
+                    }} onClick={e => showCards(e)}>View Card</h2>
+
+                    {user && user.cards && user.cards.length > 0 && user.cards.map((val, count) => {
                         return (
                             <div className="user-cards-rw">
                                 <div className="card-chip">
@@ -140,7 +151,9 @@ const UserPayment = (props) => {
                     })}
 
                     <div className="user-cards-rw card-detail">
-                        <h2>Type your card details</h2>
+                        <h2 style={{
+                            float: "left"
+                        }}>Type your card details</h2>
                         {/* <ul className="card-detail-item">
             <li>
                 <Label>Card Number</Label>
