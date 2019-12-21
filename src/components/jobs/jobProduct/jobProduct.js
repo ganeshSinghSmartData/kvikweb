@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import datetimeDifference from "datetime-difference";
-
+import { Badge } from "reactstrap";
 import Spinner from "../../commonUi/spinner/spinner";
 import "./jobProduct.scss";
 import { StringToDate, DaysBetween } from "./../../../utilities/common";
@@ -40,6 +40,9 @@ const JobProduct = ({ product, listType, path }) => {
   return (
     <div className={"job-wrapper " + (listType ? "d-flex flex-column" : "")}>
       <div className="job-pic text-center flex-shrink-0 d-flex position-relative">
+        <Badge color="danger" className="job-bid-count position-absolute">
+          50
+        </Badge>
         <Link
           className={`text-black flex-fill position-relative 
           ${!product.images && !product.images.length ? 'no-job-image-blc align-items-center justify-content-center' : ''}`}
@@ -51,11 +54,16 @@ const JobProduct = ({ product, listType, path }) => {
           ) : (
               <img src={`${apiUrl}/favicon.ico`} alt="Job" />
             )}
-          {path !== "" && (
+          {/* {path !== "" && (
             <span className="job-status-bar position-absolute job-primary-bar job-secondary-bar job-danger-bar job-success-bar">
               {JobStatus[product.status]}
             </span>
-          )}
+          )} */}
+
+          <span className="job-status-bar position-absolute job-primary-bar job-secondary-bar job-danger-bar job-success-bar">
+            Bid has been expired.
+          </span>
+
         </Link>
       </div>
       <div
@@ -95,6 +103,22 @@ const JobProduct = ({ product, listType, path }) => {
           </span>
           <label className="mb-0">
             {product.location}, {product.city}
+          </label>
+        </div>
+        <div className=" job-location bid-count-rw d-flex">
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="497.25" height="612" viewBox="0 0 497.25 612">
+              <g id="timer" transform="translate(-57.375)">
+                <g id="Group_4" data-name="Group 4">
+                  <path id="Path_3" data-name="Path 3" d="M432.272,68.692l-20.554,35.567,71.221,41.109L503.494,109.8a20.6,20.6,0,0,0-7.545-28.1L460.382,61.141A20.545,20.545,0,0,0,432.272,68.692Z" />
+                  <path id="Path_4" data-name="Path 4" d="M306,92.56a269.549,269.549,0,0,1,38.25,3.065V62.357l26.3-.2V19.125A19.114,19.114,0,0,0,351.422,0H260.779a19.114,19.114,0,0,0-19.125,19.125V62.156l26.1.2V95.625A269.549,269.549,0,0,1,306,92.56Z" />
+                  <path id="Path_5" data-name="Path 5" d="M306,114.75c-137.312,0-248.625,111.312-248.625,248.625S168.688,612,306,612,554.625,500.688,554.625,363.375,443.312,114.75,306,114.75ZM422.185,480.229l-144.873-100.3V238.34H319.12V358.029l126.86,87.827Z" />
+                </g>
+              </g>
+            </svg>
+          </span>
+          <label>
+            Bid Count: 50
           </label>
         </div>
         {listType ? (

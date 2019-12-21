@@ -43,6 +43,11 @@
   background-blend-mode: soft-light;
   background-color: #0680bf;
   color: #fff;
+  .signup-logo {
+    * {
+      cursor: default;
+    }
+  }
 }
 @supports (-ms-ime-align: auto) {
   .signup-modal-pic:after {
@@ -351,6 +356,9 @@
       width: 30px;
       height: 30px;
     }
+  }
+  .rating-desc {
+    margin: 12px 0 0 0;
   }
   .bidder-completion-blc {
     .bid-confirm-btns {

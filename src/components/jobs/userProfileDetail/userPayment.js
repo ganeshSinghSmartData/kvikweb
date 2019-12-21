@@ -68,12 +68,23 @@ const UserPayment = (props) => {
         <div className="user-profl-col-r">
             {!isCard ?
                 <React.Fragment>
-                    <h2>Add Card</h2>
-
+                    <div className="payment-card-hd d-flex flex-wrap align-items-center">
+                        <h2 className="flex-fill mb-0">Card Detail</h2>
+                        <Button color="link">
+                            + Add Bank
+                        </Button>
+                    </div>
                     {user && user.cards.length > 0 && user.cards.map((val, count) => {
                         return (
                             <div className="user-cards-rw">
-                                <div className="card-chip">
+                                <div className="card-chip position-relative">
+                                    <Button color="link" className="d-flex align-items-center justify-content-center card-del-btn position-absolute p-0">
+                                        <span className="rounded-circle d-flex align-items-center justify-content-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
+                                                <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
+                                            </svg>
+                                        </span>
+                                    </Button>
                                     <div className="card-chip-hd text-right">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"

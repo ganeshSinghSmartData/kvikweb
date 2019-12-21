@@ -173,8 +173,8 @@ export default function JobDetail({
                   alt="Job Post User"
                 />
               ) : (
-                <img src={`${apiUrl}/favicon.ico`} alt="Job Post User" />
-              )}
+                  <img src={`${apiUrl}/favicon.ico`} alt="Job Post User" />
+                )}
             </div>
             <div className="d-flex justify-content-center">
               <div className="job-slider-track-inner">
@@ -191,8 +191,8 @@ export default function JobDetail({
                     ))}
                   </Slider>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
               </div>
             </div>
           </Col>
@@ -290,11 +290,11 @@ export default function JobDetail({
                     <label
                       className={`job-detail-amnt margin flex-shrink-0 ${
                         path === "/job-proposal" ? "" : ""
-                      }`}
+                        }`}
                     >
                       {job.budget ? `$${job.budget}` : ""}
                     </label>
-                    {path === "/job-proposal" && job.status === "approved" && (
+                    {path === "/job-proposal" && (
                       <div className="mark-dn-cell">
                         <Button
                           color="secondary"
