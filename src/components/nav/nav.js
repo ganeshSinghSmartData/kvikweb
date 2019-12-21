@@ -32,11 +32,13 @@ const Nav = props => {
               Contact Us
             </Link>
           </li>
-          <li>
-            <Link className="btn btn-link" to={"/register"}>
-              Create an Account
-            </Link>
-          </li>
+          {!user.loggedIn && (
+            <li>
+              <Link className="btn btn-link" to={"/register"}>
+                Create an Account
+              </Link>
+            </li>
+          )}
           <li>
             {!user.loggedIn && (
               <Link className="login-btn btn btn-info" to={"/login"}>

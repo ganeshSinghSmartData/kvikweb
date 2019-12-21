@@ -41,8 +41,11 @@ const JobProduct = ({ product, listType, path }) => {
   return (
     <div className={"job-wrapper " + (listType ? "d-flex flex-column" : "")}>
       <div className="job-pic text-center flex-shrink-0 d-flex position-relative">
-        {product.images && product.images.length && (
-          <Link className="text-black flex-fill position-relative" to={`${pathname}${product._id}`}>
+        {product.images && product.images.length ? (
+          <Link
+            className="text-black flex-fill position-relative"
+            to={`${pathname}${product._id}`}
+          >
             {/* <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" /> */}
             <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />
             <span className="job-status-bar position-absolute job-primary-bar job-secondary-bar job-danger-bar job-success-bar">
@@ -50,6 +53,8 @@ const JobProduct = ({ product, listType, path }) => {
             </span>
             <span>Total Bids :{JobStatus[product.status]}</span>
           </Link>
+        ) : (
+          <img src={`${apiUrl}/favicon.ico`} alt="Job" />
         )}
       </div>
       <div

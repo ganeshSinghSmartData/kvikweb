@@ -42,7 +42,10 @@ const InputCell = ({
       ErrorsObject = { invalidPass };
     }
     if (Errors["invalidNumber"] === "invalidNumber") {
-      errors = { ...errors, invalidNumber: val => !Match.validateNumbers(val) };
+      errors = {
+        ...errors,
+        invalidNumber: val => val && !Match.validateNumbers(val)
+      };
       ErrorsObject = { invalidNumber };
     }
 

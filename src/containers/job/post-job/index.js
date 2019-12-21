@@ -80,7 +80,9 @@ class PostNewJob extends Component {
       formData.append("category", this.state.selectedCategory);
       formData.append("jobtitle", jobData.jobtitle);
       formData.append("description", jobData.description);
-      formData.append("budget", jobData.budget);
+      if (jobData.budget) {
+        formData.append("budget", jobData.budget);
+      }
       formData.append("street", jobData.street);
       formData.append("city", jobData.city);
       formData.append("location", jobData.location);
