@@ -26,7 +26,7 @@ const Chat = (props) => {
 
   useEffect(() => {
     if (message_count === 0) {
-      SocketClient.eventHandler(GET_MESSAGE, { user_id: props.Id });
+      SocketClient.eventHandler(GET_MESSAGE, { user_id: user.data._id });
       dispatch(messages_list({ id: props.Id, limit: 10, skip: 0 }));
       setMessageCount(1);
     }

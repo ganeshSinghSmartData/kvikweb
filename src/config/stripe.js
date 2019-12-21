@@ -4,6 +4,7 @@ import {
   injectStripe,
   StripeProvider,
   Elements,
+  BankForm
 } from 'react-stripe-elements';
 import { Button, Label } from "reactstrap";
 import UserPayment from '../components/jobs/userProfileDetail/userPayment';
@@ -51,6 +52,33 @@ class _CardForm extends Component {
       console.log("Stripe.js hasn't loaded yet.");
     }
   };
+  // handlebankSubmit = (evt) => {
+  //   evt.preventDefault();
+  //   if (this.props.stripe) {
+  //     const account_holder_type = 'personal';
+
+  //     Stripe.bankAccount.createToken({
+  //       country: 'US',
+  //       currency: 'USD',
+  //       routing_number: e.routing_number,
+  //       account_number: e.account_number,
+  //       account_holder_name: e.first_name,
+  //       account_holder_type
+  //     }, (status, response) => {
+  //       if (response.error) {
+  //         alert('Adding bank account failed with error: ' + response.error.message);
+  //       } else {
+  //         const bankAccountToken = response.id;
+  //         console.log(bankAccountToken);
+  //         // send bankAccountToken to server to be saved under the current user
+  //         // show success message and navigate away from form
+  //       }
+  //     });
+  //     // this.props.stripe.createToken().then(this.props.handleResult);
+  //   } else {
+  //     console.log("Stripe.js hasn't loaded yet.");
+  //   }
+  // };
 
   render() {
     return (
@@ -86,6 +114,7 @@ export default class CardDemo extends Component {
           <CardForm handleResult={this.props.handleResult} />
         </Elements>
       </StripeProvider>
+
     );
   }
 }

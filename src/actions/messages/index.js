@@ -13,6 +13,7 @@ export const is_fetching = (status) => ({ type: TYPE.IS_FETCHING, status });
 export const list = (data) => ({ type: TYPE.MESSAGES_LIST, data });
 export const get_message = (data) => ({ type: TYPE.GET_MESSAGE, data });
 export const message_count = (data) => ({ type: TYPE.MESSAGE_COUNT, data });
+export const chat_users = (data) => ({ type: TYPE.CHAT_USERS, data });
 
 /****** action creator for getting messages********/
 export const messages_list = (params, callback) => {
@@ -62,7 +63,7 @@ export const notifications = (params, callback) => {
     ApiClient.get(`${apiUrl}/chat/list/${_id}?limit=${params.limit}&skip=${params.skip}`, {}, token).then(
       response => {
         if (response.status === 200) {
-          dispatch(list(response.data));
+          dispatch(chat_users(response.data));
         } else if (response.status === 401) {
           toastErrorAction(dispatch, response.msg);
         } else {

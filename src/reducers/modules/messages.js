@@ -9,7 +9,8 @@ import * as TYPE from '../../actions/constants';
 /******** Reducers ********/
 const initialState = {
     data: [],
-    count: 0
+    count: 0,
+    chatUsers: []
 };
 
 
@@ -22,6 +23,8 @@ export default function reducer(state = initialState, action) {
             return state;
         case TYPE.MESSAGE_COUNT:
             return { ...state, count: action.data.count };
+        case TYPE.CHAT_USERS:
+            return { ...state, chatUsers: action.data };
         case TYPE.LOGOUT_USERS:
             return initialState;
         default:
