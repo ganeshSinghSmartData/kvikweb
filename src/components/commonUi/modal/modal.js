@@ -23,6 +23,8 @@ const SignInModal = ({
   _loading = false,
   ...props
 }) => {
+  console.log("props._propsDetails : ", props._propsDetails);
+
   let customClass = "";
   let headerClass = "";
   if (_modalType === "/register" || _modalType === "/login") {
@@ -872,10 +874,7 @@ const SignInModal = ({
                 </LocalForm>
               </div>
               <div className="bid-confirm-btns d-flex flex-column align-items-center">
-                <Button
-                  color="link"
-                  onClick={() => props.history.push("/job-list")}
-                >
+                <Button color="link" onClick={() => _toggleModal()}>
                   Remind me later
                 </Button>
               </div>

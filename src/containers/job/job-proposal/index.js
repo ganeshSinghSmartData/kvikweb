@@ -37,11 +37,7 @@ class JobProposal extends Component {
       job_provider_id: jobSeekerId,
       job_id: jobId
     };
-    this.props.approvedBidWork(reqData, callback => {
-      if (callback) {
-        console.log(" I am in calback : ", callback);
-      }
-    });
+    this.props.approvedBidWork(reqData);
   };
 
   confirmDelete = value => {

@@ -4,7 +4,6 @@ import datetimeDifference from "datetime-difference";
 import { Button, Row, Col } from "reactstrap";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
-import { confirmAlert } from "react-confirm-alert";
 
 import "./jobDetail.scss";
 import "slick-carousel/slick/slick.css";
@@ -17,10 +16,11 @@ import Proposal from "./proposal/proposal";
 import Breadcrumb from "../../commonUi/breadcrumb/breadcrumb";
 
 import { StringToDate, DaysBetween } from "./../../../utilities/common";
-import { JobStatus } from "../../../utilities/constants";
+import { JobStatus, BidStatus } from "../../../utilities/constants";
 import { apiUrl } from "./../../../environment";
 import { placeYourBid, addBidderReview } from "./../../../actions/job";
 import Spinner from "../../commonUi/spinner/spinner";
+import SpinnerOverlay from "../../commonUi/spinner/spinnerOverlay/spinnerOverlay";
 
 import PlaceYourBidModal from "../../commonUi/modal/modal";
 import ConfirmJobStartModal from "../../commonUi/modal/modal";
@@ -30,16 +30,26 @@ export default function JobDetail({
   history,
   job = {},
   path = "",
-  end_date = false,
   _markJobComplete,
   _deleteJob,
   _startJob,
-  _endJob
+  _endJob,
+  _isLoading = false,
+  _isStatusLoading = false
 }) {
+  let workStatus = {};
+  if (path === "/bid-details") {
+    workStatus = BidStatus;
+  } else {
+    workStatus = JobStatus;
+  }
+
   const [imageIndex, setImageIndex] = useState(0);
   const [openModal, setOpenModal] = useState(false);
   const [confirmStartModal, setConfirmStartModal] = useState(
-    job.status && job.status === "accepted" ? true : false
+    path !== "/job-proposal" && job.status && job.status === "accepted"
+      ? true
+      : false
   );
 
   const [rateBidder, setRateBidder] = useState(false);
@@ -74,10 +84,7 @@ export default function JobDetail({
 
   const handleSubmit = (values, rate = "") => {
     setModalLoading(true);
-    console.log("values : ", values);
     if (values.frequency) {
-      console.log("Inside plave bid");
-
       const reqData = {
         jobtitle: job.jobtitle,
         description: values.description,
@@ -101,17 +108,13 @@ export default function JobDetail({
       );
     }
     if (values.reveiw) {
-      console.log("Inside Revirew");
-
       const reqData = {
         bidder_id: job.bidersLIstingcheck[0].job_provider_id._id,
         job_id: job._id,
         rating: rate,
         review: values.reveiw
       };
-
-      console.log("reqData :", reqData);
-
+      _markJobComplete(job._id, job.job_seeker_id._id, user.data._id);
       dispatch(
         addBidderReview(reqData, callback => {
           if (callback) {
@@ -128,65 +131,38 @@ export default function JobDetail({
   };
 
   let classname = "";
-  /*   const labelTypes = ({type,bidcount, status})=>{
-    if(type=="jobs")
-     return status==="accepted"? CommonText.jobAccepted:
-        status==="in_progress"? CommonText.inProgress :
-        status==="completed"? CommonText.jobCompleted:
-        status==="approved"? CommonText.jobApproved:
-      `${bidcount} ${bidcount && bidcount > 1 ? CommonText.bidsRecieved : CommonText.bidRecieved}` 
-    else{
-      switch (status) {
-        case "expired":
-          return CommonText.jobExpired
-        case "approved":
-          return CommonText.jobApproved
-        case "completed":
-          return CommonText.jobCompleted
-        case "not_accepted":
-          return CommonText.bidNotAccepted
-        case "not_started":
-          return CommonText.bidNotAccepted
-        case "accepted":
-        return CommonText.bidAccepted;
-        case "in_progress":
-        return CommonText.inProgress
-        case "rejected":
-        return CommonText.rejected
-        default:
-          break;
-      }
-    }
-  } */
-
   const setJobStatus = status => {
     switch (status) {
       case "not_started":
-        return (classname = "status-secondary");
+        if (path === "/bid-details" && job.status === "not_started") {
+          return (classname = "status-secondary");
+        } else {
+          return (classname = "status-danger");
+        }
       case "not_accepted":
-        return (classname = "status-primary");
+        return (classname = "status-secondary");
       case "expired":
         return (classname = "status-danger");
       case "rejected":
         return (classname = "status-danger");
       case "approved":
-        return (classname = "status-success");
+        return (classname = "status-primary");
       case "accepted":
         return (classname = "status-primary");
       case "completed":
         return (classname = "status-success");
       case "in_progress":
-        return (classname = "status-primary");
+        return (classname = "status-secondary");
       default:
         return (classname = "status-secondary");
     }
   };
-  console.log("job.status :", job);
 
   setJobStatus(job.status);
 
   return (
     <div className="job-detail-blc d-flex flex-column flex-fill">
+      {_isStatusLoading && <SpinnerOverlay className="position-fixed" />}
       <div className="job-detail-hd d-flex align-items-center">
         <h2 className="flex-fill">Job Details</h2>
         <Breadcrumb path={path} />
@@ -231,7 +207,7 @@ export default function JobDetail({
           <Col md="8" className="job-detail-info">
             <div className="job-detail-tp">
               <div className="job-detail-hd">
-                {path === "/bid-details" && (
+                {(path === "/bid-details" || path === "/job-proposal") && (
                   <div className="bid_status_blc">
                     <span
                       className={`bid_status d-flex justify-content-center align-items-center ${classname}`}
@@ -251,16 +227,17 @@ export default function JobDetail({
                           />
                         </svg>
                       </span>
-                      {JobStatus[job.status]}
+                      {path === "/bid-details" && job.status === "not_started"
+                        ? workStatus["not_accepted"]
+                        : workStatus[job.status]}
                     </span>
                   </div>
                 )}
                 <div className="job-detail-hd-rw d-flex flex-wrap">
                   <div className="job-detail-hd-col d-flex flex-column flex-fill flex-wrap">
                     <h3 className="text-primary">{job.jobtitle}</h3>
-                    {/* <RatingBlock /> */}
                     <p className="m-0 w-100">
-                      bidding ends in: {StringToDate(job.created_at)}
+                      bidding ends in: {StringToDate(job.jobEndDate)}
                     </p>
                     {path === "/job-proposal" && (
                       <div className="job-edit-btns d-flex">
@@ -327,17 +304,12 @@ export default function JobDetail({
                       {job.budget ? `$${job.budget}` : ""}
                     </label>
                     {/* && job.status === "completed" */}
-                    {path === "/job-proposal" && (
+                    {path === "/job-proposal" && job.status === "completed" && (
                       <div className="mark-dn-cell">
                         <Button
                           color="secondary"
                           onClick={() => {
                             setRateBidder(!rateBidder);
-                            _markJobComplete(
-                              job._id,
-                              job.job_seeker_id._id,
-                              user.data._id
-                            );
                           }}
                         >
                           Mark as Done
@@ -452,7 +424,7 @@ export default function JobDetail({
                           />
                         </svg>
                       </span>
-                      <p>{StringToDate(job["jobStartDate"])}</p>
+                      <p>{StringToDate(job["created_at"])}</p>
                     </li>
                   )}
                   {job["phone"] && (
@@ -550,7 +522,7 @@ export default function JobDetail({
                       _endJob(job._id, job.job_seeker_id._id, user.data._id)
                     }
                   >
-                    Job End
+                    Mark as Complete
                   </Button>
                 )}
               </div>
@@ -591,7 +563,7 @@ export default function JobDetail({
           startJob={() =>
             _startJob(job._id, job.job_seeker_id._id, user.data._id)
           }
-          _loading={isModalLoading}
+          _loading={_isLoading}
         />
 
         <RateBidderWorkModal
@@ -611,7 +583,6 @@ export default function JobDetail({
           job.bidersLIstingcheck.length !== 0 && (
             <div className="proposal-blc flex-shrink-0">
               <h4>PROPOSALS</h4>
-
               {job.bidersLIstingcheck.map((item, key) => {
                 return (
                   <Proposal

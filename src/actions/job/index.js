@@ -208,7 +208,7 @@ export const getUserCompletedJob = (
 };
 
 /****** action creator for list users cpmpleted job ********/
-export const approvedBidWork = (params, callback) => {
+export const approvedBidWork = params => {
   return (dispatch, getState) => {
     const {
       data: { token }
@@ -217,12 +217,8 @@ export const approvedBidWork = (params, callback) => {
       response => {
         if (response.status === 200) {
           dispatch(is_fetching(false));
-          callback(true);
-          // dispatch(get_completed_job(response));
         } else if (response.status === 401) {
           console.log("errror with 401 : ");
-          callback(false);
-          // toastErrorAction(dispatch, response.message);
         } else {
           dispatch(is_fetching(false));
         }
