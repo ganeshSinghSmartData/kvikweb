@@ -15,7 +15,7 @@ const SearchService = props => {
   const pathname = props.history.location.pathname;
 
   const _handleSearch = searchKey => {
-    if (pathname === "/") {
+    if (pathname === "/" && searchKey.search) {
       dispatch(getJobProduct({ page: pagination.page, search: searchKey }));
     }
     /* if (pathname === '/') {
