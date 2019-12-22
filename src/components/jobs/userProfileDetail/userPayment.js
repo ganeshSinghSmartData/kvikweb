@@ -19,8 +19,10 @@ const UserPayment = (props) => {
     const [isCard, setIsCard] = useState(true);
     const [cardtype, setCardType] = useState('credit');
     const dispatch = useDispatch();
-    const user = useSelector(state => state.user);
+    let user = useSelector(state => state.user);
     // Stripe.setPublishableKey('THE-PUBLIC-KEY');
+
+    console.log("user :", user.cards);
     useEffect(() => {
         if (cards === 0) {
             dispatch(GetCards());
@@ -63,10 +65,7 @@ const UserPayment = (props) => {
         setCardType(type);
         setIsCard(false);
     }
-    const showCards = (e) => {
-        e.preventDefault();
-        alert(5)
-    }
+
     return (
         <div className="user-profl-col-r">
             {!isCard ?
@@ -77,86 +76,8 @@ const UserPayment = (props) => {
                             + Add Bank
                         </Button>
                     </div>
-                    {user && user.cards && user.cards.length > 0 && user.cards.map((val, count) => {
-                        return (
-                            <div className="user-cards-rw">
-                                <div className="card-chip position-relative">
-                                    <Button color="link" className="d-flex align-items-center justify-content-center card-del-btn position-absolute p-0">
-                                        <span className="rounded-circle d-flex align-items-center justify-content-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
-                                                <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
-                                            </svg>
-                                        </span>
-                                    </Button>
-                                    <div className="card-chip-hd text-right">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="44.679"
-                                            height="25"
-                                            viewBox="0 0 44.679 25"
-                                        >
-                                            <g
-                                                id="Group_8125"
-                                                data-name="Group 8125"
-                                                transform="translate(-1139.321 -235)"
-                                            >
-                                                <g
-                                                    id="Group_8055"
-                                                    data-name="Group 8055"
-                                                    transform="translate(1139.321 235.032)"
-                                                >
-                                                    <path
-                                                        id="Path_3530"
-                                                        data-name="Path 3530"
-                                                        d="M305.717,156.524a12.314,12.314,0,1,1,0-16.421"
-                                                        transform="translate(-284.224 -136)"
-                                                        fill="#eb001b"
-                                                    />
-                                                </g>
-                                                <g
-                                                    id="Group_8056"
-                                                    data-name="Group 8056"
-                                                    transform="translate(1159 235)"
-                                                >
-                                                    <circle
-                                                        id="Ellipse_369"
-                                                        data-name="Ellipse 369"
-                                                        cx="12.5"
-                                                        cy="12.5"
-                                                        r="12.5"
-                                                        fill="#ffd100"
-                                                    />
-                                                </g>
-                                            </g>
-                                        </svg>
-                                    </div>
-                                    <div className="card-chip-no">
-                                        <span>XXXX</span>
-                                        <span>XXXX</span>
-                                        <span>
-                                            XXX<span className="grey-digit">X</span>
-                                        </span>
-                                        <span className="last-digit grey-digit">{val.last4}</span>
-                                    </div>
-                                    <div className="card-chip-btm d-flex">
-                                        <div className="card-chip-col flex-fill">
-                                            <h2>{val.acHolderName ? val.acHolderName : '----'}</h2>
-                                            <h3>-----</h3>
-                                        </div>
-                                        <div className="card-chip-col rt">
-                                            <h2>VALID THRU</h2>
-                                            <h3 className="mb-0">{val.cardValidity}</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        );
-                    })}
-
                     <div className="user-cards-rw card-detail">
-                        <h2 style={{
-                            float: "left"
-                        }}>Type your card details</h2>
+                        <h2>Type your card details</h2>
                         {/* <ul className="card-detail-item">
             <li>
                 <Label>Card Number</Label>
@@ -255,6 +176,63 @@ const UserPayment = (props) => {
                             </LocalForm>
                         }
                     </div>
+                    {user && user.cards && user.cards.length > 0 && user.cards.map((val, count) => {
+                        return (
+                            <div className="user-cards-rw" key={count}>
+                                <div className="card-chip position-relative">
+                                    <Button color="link" className="d-flex align-items-center justify-content-center card-del-btn position-absolute p-0">
+                                        <span className="rounded-circle d-flex align-items-center justify-content-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
+                                                <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
+                                            </svg>
+                                        </span>
+                                    </Button>
+                                    <div className="card-chip-hd text-right">
+                                        <div className="card-confirm-pic d-flex justify-content-center align-items-center">
+                                            {val.type == "visa"
+                                                ? <img
+                                                    src={require("../../../assets/images/icons/payment-icon/visa.svg")}
+                                                    alt="Visa Card"
+                                                /> : val.type == "amex" ? <img
+                                                    src={require("../../../assets/images/icons/payment-icon/amex.svg")}
+                                                    alt="Visa Card"
+                                                /> : val.type == "mastercard" ? <img
+                                                    src={require("../../../assets/images/icons/payment-icon/master-card.svg")}
+                                                    alt="Visa Card"
+                                                /> : val.type == "discover" ? <img
+                                                    src={require("../../../assets/images/icons/payment-icon/discover.svg")}
+                                                    alt="Visa Card"
+                                                /> : val.type == "jcb" ? <img
+                                                    src={require("../../../assets/images/icons/payment-icon/jcb.svg")}
+                                                    alt="Visa Card"
+                                                /> : <img
+                                                                    src={require("../../../assets/images/icons/payment-icon/master-card.svg")}
+                                                                    alt="Visa Card"
+                                                                />}
+                                        </div>
+                                    </div>
+                                    <div className="card-chip-no">
+                                        <span>XXXX</span>
+                                        <span>XXXX</span>
+                                        <span>
+                                            XXX<span className="grey-digit">X</span>
+                                        </span>
+                                        <span className="last-digit grey-digit">{val.last4}</span>
+                                    </div>
+                                    <div className="card-chip-btm d-flex">
+                                        <div className="card-chip-col flex-fill">
+                                            <h2>{val.acHolderName ? val.acHolderName : '----'}</h2>
+                                            <h3>-----</h3>
+                                        </div>
+                                        <div className="card-chip-col rt">
+                                            <h2>VALID THRU</h2>
+                                            <h3 className="mb-0">{val.cardValidity}</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    })}
                 </React.Fragment>
 
                 :
@@ -288,12 +266,13 @@ const CardForm = injectStripe(UserPayment);
 export default class CardDemo extends Component {
     render() {
         return (
-            <StripeProvider apiKey="pk_test_DwzVvw7dIyntcsbXh6OsNVS200eXzmTfcz">
-                <Elements>
-                    <CardForm handleResult={this.props.handleResult} />
-                </Elements>
-            </StripeProvider>
-
+            <div>
+                <StripeProvider apiKey="pk_test_DwzVvw7dIyntcsbXh6OsNVS200eXzmTfcz">
+                    <Elements>
+                        <CardForm handleResult={this.props.handleResult} />
+                    </Elements>
+                </StripeProvider>
+            </div>
         );
     }
 }

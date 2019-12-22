@@ -267,41 +267,41 @@ const SignInModal = ({
                       )}
                       {props._sentForgotEmail && (
                         <>
-                          <InputCell
-                            Name={"otp"}
-                            Placeholder={"OTP"}
-                            Model=".otp"
-                            InputType={"text"}
-                            ClassName="input-icon-cell"
-                            InputIcon={true}
-                            Errors={{
-                              required: "required"
-                            }}
-                          />
-                          <InputCell
-                            Name={"password"}
-                            Placeholder={"Password"}
-                            Model=".newpassword"
-                            InputType={"password"}
-                            ClassName="input-icon-cell"
-                            InputIcon={true}
-                            Errors={{
-                              required: "required",
-                              invalidPass: "invalidPass"
-                            }}
-                          />
-                          <InputCell
-                            Name={"confirmPassword"}
-                            Placeholder={"Confirm Password"}
-                            Model=".confirmPassword"
-                            InputType={"password"}
-                            ClassName="input-icon-cell"
-                            InputIcon={true}
-                            Errors={{
-                              required: "required",
-                              invalidPass: "invalidPass"
-                            }}
-                          />
+                        <InputCell
+                          Name={"otp"}
+                          Placeholder={"OTP"}
+                          Model=".otp"
+                          InputType={"text"}
+                          ClassName="input-icon-cell"
+                          InputIcon={true}
+                          Errors={{
+                            required: "required"
+                          }}
+                        />
+                        <InputCell
+                          Name={"password"}
+                          Placeholder={"Password"}
+                          Model=".newpassword"
+                          InputType={"password"}
+                          ClassName="input-icon-cell"
+                          InputIcon={true}
+                          Errors={{
+                            required: "required",
+                            invalidPass: "invalidPass"
+                          }}
+                        />
+                        <InputCell
+                          Name={"confirmPassword"}
+                          Placeholder={"Confirm Password"}
+                          Model=".confirmPassword"
+                          InputType={"password"}
+                          ClassName="input-icon-cell"
+                          InputIcon={true}
+                          Errors={{
+                            required: "required",
+                            invalidPass: "invalidPass"
+                          }}
+                        />
                         </>
                       )}
                       <div className="signup-agree d-flex align-items-start">
@@ -378,7 +378,7 @@ const SignInModal = ({
           )}
 
           {_modalType === "Bid Details" && (
-            <>
+            <React.Fragment>
               {!props._acceptProposal && (
                 <div className="bid-detail-blc d-flex">
                   <div className="bid-detail-l">
@@ -439,7 +439,7 @@ const SignInModal = ({
                     </div>
                   )}
                   {false && (
-                    <>
+                    <React.Fragment>
                       <h2>
                         <strong>Card Holder:</strong>
                         John Smith
@@ -769,11 +769,11 @@ const SignInModal = ({
                       <div className="bid-frm-btns text-center">
                         <Button color="secondary">Make Payment</Button>
                       </div>
-                    </>
+                    </React.Fragment>
                   )}
                 </div>
               )}
-            </>
+            </React.Fragment>
           )}
 
           {_modalType === "Contact Us" && (
