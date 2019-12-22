@@ -10,12 +10,18 @@ export const login_users = data => ({ type: TYPE.LOGIN_USERS, data });
 export const logout_users = data => ({ type: TYPE.LOGOUT_USERS, data });
 export const user_bid_listing = data => ({ type: TYPE.USER_BID_LISTING, data });
 export const get_user_details = data => ({ type: TYPE.GET_USER_DETAILS, data });
+export const user_cards = data => ({ type: TYPE.USER_CARDS, data });
+export const remove_card = data => ({ type: TYPE.REMOVE_CARD, data });
 export const update_user_details = data => ({
   type: TYPE.UPDATE_USER_DETAILS,
   data
 });
 export const update_user_profile = data => ({
   type: TYPE.UPDATE_USER_PROFILE,
+  data
+});
+export const update_user_image = data => ({
+  type: TYPE.UPDATE_USER_IMAGE,
   data
 });
 
@@ -29,7 +35,7 @@ export const registerUser = (params, callback) => {
         toastAction(true, response.msg);
         callback(true);
       } else {
-        console.log("errror with 401 : ", response);
+        callback(false);
         toastErrorAction(dispatch, response.msg);
       }
     });
@@ -46,8 +52,50 @@ export const loginUser = (params, callback) => {
         // toastAction(true, "User successfully logged In");
         callback(true);
       } else if (response.status === 404) {
+        callback(false);
         toastErrorAction(dispatch, response.msg);
       } else {
+        callback(false);
+        dispatch(is_fetching(false));
+      }
+    });
+  };
+};
+
+/****** action creator for send otp to email for forgot password ********/
+export const forgotPassword = (params, callback) => {
+  return dispatch => {
+    ApiClient.post(`${apiUrl}/forgotPasswordOTP`, params).then(response => {
+      if (response.status === 200) {
+        dispatch(is_fetching(false));
+        // dispatch(login_users(response));
+        toastAction(true, response.msg);
+        callback(true);
+      } else if (response.status === 404) {
+        callback(false);
+        toastErrorAction(dispatch, response.msg);
+      } else {
+        callback(false);
+        dispatch(is_fetching(false));
+      }
+    });
+  };
+};
+
+/****** action creator for change password for a user ********/
+export const changePassword = (params, callback) => {
+  return dispatch => {
+    ApiClient.post(`${apiUrl}/forgotPassword`, params).then(response => {
+      if (response.status === 200) {
+        dispatch(is_fetching(false));
+        // dispatch(login_users(response));
+        toastAction(true, response.msg);
+        callback(true);
+      } else if (response.status === 404) {
+        callback(false);
+        toastErrorAction(dispatch, response.msg);
+      } else {
+        callback(false);
         dispatch(is_fetching(false));
       }
     });
@@ -88,9 +136,11 @@ export const logout = (params = {}) => {
         toastAction(true, "User successfully logged out");
         dispatch(is_fetching(false));
         dispatch(logout_users());
-      } else {
+      } else if (response.status === 402) {
         dispatch(is_fetching(false));
         toastAction(false, response.msg);
+      } else {
+        dispatch(logout_users());
       }
     });
   };
@@ -135,6 +185,29 @@ export const getUserDetails = user_id => {
   };
 };
 
+/****** action creator for add card ********/
+export const AddCard = (params = {}, callback) => {
+  return (dispatch, getState) => {
+    dispatch(is_fetching(true));
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient.post(`${apiUrl}/payment/saveCardByToken`, params, token).then(
+      response => {
+        if (response.status === 200) {
+          toastAction(true, "Card successfully saved");
+          dispatch(is_fetching(false));
+          callback(true);
+        } else {
+          dispatch(is_fetching(false));
+          toastAction(false, response.msg);
+          callback(false);
+        }
+      }
+    );
+  };
+};
+
 /****** action creator for update users details ********/
 export const updateUserDetails = (params, callback) => {
   return (dispatch, getState) => {
@@ -155,6 +228,27 @@ export const updateUserDetails = (params, callback) => {
   };
 };
 
+/****** action creator for add card ********/
+export const GetCards = (params = {}) => {
+  return (dispatch, getState) => {
+    dispatch(is_fetching(true));
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient.get(`${apiUrl}/payment/getUserSavedCards`, {}, token).then(
+      response => {
+        if (response.status === 200) {
+          dispatch(user_cards(response.data));
+          dispatch(is_fetching(false));
+        } else {
+          dispatch(is_fetching(false));
+          toastAction(false, response.msg);
+        }
+      }
+    );
+  };
+};
+
 /****** action creator for upload user profile picture ********/
 export const uploadUserImage = (params, callback) => {
   return (dispatch, getState) => {
@@ -165,7 +259,7 @@ export const uploadUserImage = (params, callback) => {
       response => {
         if (response.status === 200) {
           callback(true);
-          dispatch(update_user_details(response.data));
+          dispatch(update_user_image(response.data));
         } else if (response.status === 401) {
           callback(false);
           toastErrorAction(dispatch, response.msg);
@@ -174,5 +268,28 @@ export const uploadUserImage = (params, callback) => {
         }
       }
     );
+  };
+};
+
+/****** action creator for remove card ********/
+export const removeCard = (card_id, callback) => {
+  return (dispatch, getState) => {
+    dispatch(is_fetching(true));
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient.delete(
+      `${apiUrl}/payment/deleteUserPaymentDetail/${card_id}`,
+      token
+    ).then(response => {
+      if (response.status === 200) {
+        dispatch(remove_card(response.deleted));
+        toastAction(true, response.msg);
+        callback(true);
+      } else {
+        callback(false);
+        toastAction(false, response.msg);
+      }
+    });
   };
 };

@@ -4,8 +4,6 @@
  * @author: smartData
  */
 
-import * as TYPE from "../../actions/constants";
-
 /******** Reducers ********/
 const initialState = {};
 

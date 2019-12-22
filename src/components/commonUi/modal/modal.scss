@@ -43,6 +43,11 @@
   background-blend-mode: soft-light;
   background-color: #0680bf;
   color: #fff;
+  .signup-logo {
+    * {
+      cursor: default;
+    }
+  }
 }
 @supports (-ms-ime-align: auto) {
   .signup-modal-pic:after {
@@ -82,7 +87,7 @@
 .signup-modal-pic {
   > h3 {
     span {
-      margin-top: 20px;
+      margin-top: 5px;
     }
   }
 }
@@ -104,7 +109,7 @@
     margin-bottom: 43px;
     label {
       font-family: "Poppins", sans-serif;
-      font-size: 49px;
+      font-size: 45px;
       font-weight: 500;
       line-height: 1;
       margin-top: 7px;
@@ -161,14 +166,26 @@
 .start-job-btn {
   min-width: 130px;
 }
+.logo.signup-logo {
+  svg {
+    width: 350px;
+    height: auto;
+  }
+  img {
+    width: 350px;
+  }
+}
 // signup Modal style end
 @media (max-width: 1024px) {
   .signup-modal-pic {
     width: 350px;
     .logo.signup-logo {
       svg {
-        width: 200px;
+        width: 270px;
         height: auto;
+      }
+      img {
+        width: 270px;
       }
     }
   }
@@ -204,17 +221,24 @@
       }
       .bid-detail-l {
         margin: 0 40px 0 0;
+
+        @media (max-width: 1600px) {
+          margin-right: 20px;
+        }
         @media (max-width: 600px) {
           display: flex;
           justify-content: center;
           margin: 0 0 10px 0;
         }
-
-        @media (max-width: 1600px) {
-          margin-right: 20px;
-        }
       }
       .bid-detail-r {
+        .user-detail-link {
+          color: $dark-default;
+          text-decoration: none;
+          &:hover {
+            color: $secondary-100;
+          }
+        }
         .bid-detail-rw h2 {
           font-size: 18px;
           color: #000;
@@ -273,7 +297,7 @@
     flex-direction: column !important;
   }
   .btn {
-    margin: 0 5px 10px 0;
+    margin: 0 10px 10px 0;
     min-width: 130px;
     @media (max-width: 600px) {
       width: 100%;
@@ -332,6 +356,9 @@
       width: 30px;
       height: 30px;
     }
+  }
+  .rating-desc {
+    margin: 12px 0 0 0;
   }
   .bidder-completion-blc {
     .bid-confirm-btns {
@@ -401,6 +428,11 @@
     }
   }
 }
+.contact-us-btm {
+  .btn {
+    min-width: 120px;
+  }
+}
 //Pyament-Completion-Modal style end
 
 @media (max-width: 767px) {
@@ -432,4 +464,96 @@
       }
     }
   }
+  .signup-modal-pic {
+    .logo.signup-logo {
+      svg {
+        width: 210px;
+      }
+      img {
+        width: 210px;
+      }
+    }
+  }
+}
+
+// Payment modal style start
+.payment-confirm-blc > h2 {
+  font-size: 14px;
+  margin-bottom: 15px;
+  storng {
+    margin-right: 4px;
+  }
+}
+.payment-confirm {
+  border: 1px solid #d2d2d2;
+  background: #f3f3f3;
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: 0 0 4px #c5c5c5;
+}
+.payment-confirm-check {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  cursor: pointer;
+  background: $primary-dark;
+  border-radius: 0 8px;
+}
+.payment-confirm-rw {
+  margin: 0 0 12px 0;
+}
+.payment-confirm-rw label {
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.card-confirm-pic {
+  width: 46px;
+  margin-right: 6px;
+  border: 1px solid #e1e1e1;
+  background: #fff;
+  border-radius: 4px;
+}
+.card-confirm-pic img {
+  width: 35px;
+}
+.payment-confirm .form-control {
+  height: 35px;
+  padding: 0px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  background-color: #fff;
+  color: #666;
+  &::placeholder {
+    color: #666;
+  }
+}
+.payment-confirm-col.cvv {
+  width: 50px;
+  flex: none !important;
+}
+.payment-confirm-col:first-child {
+  margin-right: 6px;
+}
+.payment-card-list li {
+  padding: 0 15px 15px;
+  width: 50%;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+}
+
+.no-card-blc {
+  height: 250px;
+}
+.no-card-msg {
+  font-size: 17px;
+}
+.no-card-msg p {
+  margin: 15px 0 0;
 }

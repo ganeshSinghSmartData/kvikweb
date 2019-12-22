@@ -1,0 +1,11 @@
+@import "../../../assets/css/variables";
+.breadcrumb-nav {
+  .breadcrumb {
+    background-color: transparent;
+    justify-content: flex-end;
+    a {
+      color: $primary-dark;
+      padding: 4px 5px;
+    }
+  }
+}

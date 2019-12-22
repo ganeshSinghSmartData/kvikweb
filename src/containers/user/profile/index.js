@@ -10,27 +10,27 @@ import {
   updateUserDetails,
   uploadUserImage
 } from "./../../../actions/user";
-import { callbackify } from "util";
 
 class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: false,
+      isEdit: false,
       uploading: false
     };
     this._handleSubmit = this._handleSubmit.bind(this);
-    this._attachDispatch = this._attachDispatch.bind(this);
     this._handleImageUpload = this._handleImageUpload.bind(this);
+    this._toggleEdit = this._toggleEdit.bind(this);
   }
 
   componentDidMount() {
     this.props.getUserDetails(this.props.user.data._id);
   }
 
-  _attachDispatch(dispatch) {
-    this.formDispatch = dispatch;
-  }
+  _toggleEdit = val => {
+    this.setState({ isEdit: val });
+  };
 
   _handleImageUpload = file => {
     this.setState({ uploading: true });
@@ -47,9 +47,10 @@ class Profile extends Component {
     this.setState({ loading: true });
     this.props.updateUserDetails(params, callback => {
       if (callback) {
+        this._toggleEdit(false);
         this.setState({ loading: false });
-        this.props.history.push("/profile");
       } else {
+        this._toggleEdit(false);
         this.setState({ loading: false });
       }
     });
@@ -59,15 +60,16 @@ class Profile extends Component {
     return (
       <React.Fragment>
         {this.state.loading && <Loader loading={this.state.loading} />}
-        <UserProfile
-          path={this.props.match.path === "/edit-profile" ? false : true}
-          user={this.props.user.userDetails}
-          loading={this.state.loading}
-          history={this.props.history}
-          handleImageUpload={this._handleImageUpload}
-          handleSubmit={this._handleSubmit}
-          attachDispatch={this._attachDispatch}
-        />
+        {Object.keys(this.props.user.userDetails).length > 0 && (
+          <UserProfile
+            user={this.props.user.userDetails}
+            handleImageUpload={this._handleImageUpload}
+            isEdit={this.state.isEdit}
+            handleSubmit={this._handleSubmit}
+            loading={this.state.loading}
+            _toggleEdit={this._toggleEdit}
+          />
+        )}
       </React.Fragment>
     );
   }

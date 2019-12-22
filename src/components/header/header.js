@@ -7,13 +7,10 @@ import Logo from "../commonUi/logo/logo";
 import "./header.scss";
 const Header = () => {
   const { user } = useSelector(state => state);
+
   let imagepath = "";
-  if (
-    user.userDetails &&
-    user.userDetails.image &&
-    user.userDetails.image.length
-  ) {
-    imagepath = user.userDetails.image;
+  if (user.data && user.data.image && user.data.image.length) {
+    imagepath = user.data.image;
   }
 
   const [navVisible, setnavVisible] = useState(false);
@@ -41,7 +38,7 @@ const Header = () => {
         <Row>
           <Col className="d-flex header-inner">
             <Button color="link" className="logo p-0 rounded-0">
-              <Logo className="m-0" />
+              <Logo classname="m-0" navigate={true} />
             </Button>
             <div className="d-flex align-items-center ml-auto nav-wrapper">
               <Nav

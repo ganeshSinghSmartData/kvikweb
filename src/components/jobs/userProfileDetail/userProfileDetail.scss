@@ -76,6 +76,29 @@
     color: #000;
     margin: 0 0 12px 0;
   }
+  .payment-card-hd {
+    margin-bottom: 15px;
+    h2 {
+      margin-right: 15px;
+    }
+    .btn {
+      font-size: 14px;
+      font-weight: 600;
+      padding: 6px 10px 6px 7px;
+      line-height: normal;
+      align-self: flex-end;
+      color: $secondary-100;
+      span {
+        margin-right: 5px;
+      }
+      svg {
+        width: 17px;
+        path {
+          fill: $secondary-100;
+        }
+      }
+    }
+  }
   .user-cards-rw {
     margin: 0 0 17px 0;
     .user-cards {
@@ -99,6 +122,7 @@
       color: #fff;
       padding: 21px 18px 15px;
       border-radius: 15px;
+      margin-bottom: 10px;
       .card-chip-hd {
         margin: 0 0 20px 0;
         svg {
@@ -140,6 +164,22 @@
         }
       }
     }
+    .card-del-btn {
+      top: -10px;
+      right: -9px;
+      span {
+        background: $danger;
+        width: 24px;
+        height: 24px;
+        svg {
+          width: 12px;
+          fill: white;
+        }
+      }
+      &:hover {
+        opacity: 0.9;
+      }
+    }
   }
   .card-detail {
     margin-top: 25px;
@@ -150,8 +190,8 @@
     .card-detail-item {
       label {
         margin: 0;
-        font-size: 10px;
-        color: #2cb8fd;
+        font-size: 12px;
+        color: $primary;
       }
     }
     .card-detail-btn {
@@ -164,4 +204,25 @@
       }
     }
   }
+}
+
+.StripeElement {
+  background-color: white;
+}
+.StripeElement > iframe,
+.StripeElement > div {
+  width: 100%;
+  display: unset !important;
+}
+.CardDemo label {
+  width: 300px;
+  color: black;
+  margin-top: 10px;
+}
+.error {
+  color: red;
+}
+
+.hidden {
+  display: none !important;
 }

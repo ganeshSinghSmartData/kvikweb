@@ -28,10 +28,38 @@
   }
 }
 .sidebar-list-blc {
-  > ul > li {
+  ul > li {
     margin: 0;
-    padding: 0 0 0 15px;
+    padding: 0;
     position: relative;
+    button {
+      font-weight: 400;
+      * {
+        cursor: pointer;
+      }
+      padding: 5px 0;
+      input {
+        top: 0;
+        left: 0;
+        opacity: 0;
+      }
+      label {
+        display: none;
+        span {
+          svg {
+            width: 15px;
+            fill: $secondary-100;
+          }
+        }
+      }
+    }
+    .btn.active {
+      color: $secondary-100;
+    }
+    input:checked + label {
+      display: flex;
+      margin-right: 11px;
+    }
   }
 }
 .sidebar-list-blc {
@@ -91,9 +119,9 @@
   font-weight: 400;
   margin: 0;
 }
-// .sidebar-list-blc h5 {
-//   min-height: 29px;
-// }
+.sidebar-list-blc h5 {
+  margin-bottom: 10px;
+}
 .sidebar-list-blc h4 label,
 .sidebar-list-blc h5 label {
   padding-right: 15px;

@@ -11,6 +11,7 @@ const initialState = {
   data: {},
   userBids: [],
   userDetails: {},
+  cards: [],
   loggedIn: false
 };
 
@@ -31,10 +32,14 @@ export default function reducer(state = initialState, action) {
       return { ...state, userBids: action.data };
     case TYPE.GET_USER_DETAILS:
       return { ...state, userDetails: action.data };
+    case TYPE.USER_CARDS:
+      return { ...state, cards: action.data };
     case TYPE.UPDATE_USER_DETAILS:
       return { ...state, userDetails: action.data };
     case TYPE.UPDATE_USER_PROFILE:
       return { ...state };
+    case TYPE.UPDATE_USER_IMAGE:
+      return { ...state, data: { ...state.data, image: action.data.image } };
     default:
       return state;
   }

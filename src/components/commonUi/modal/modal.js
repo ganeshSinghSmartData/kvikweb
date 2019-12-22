@@ -3,12 +3,12 @@ import { Modal, ModalHeader, ModalBody, Button } from "reactstrap";
 import { LocalForm } from "react-redux-form";
 import { Link } from "react-router-dom";
 
-import Checkbox from "../checkbox/checkbox";
 import Logo from "../../commonUi/logo/logo";
 import LoginType from "./loginType/loginType";
 import InputCell from "./../input/inputCell";
 import RatingBlock from "../../jobs/ratingBock/ratingBlock";
 import UserImage from "../../jobs/jobDetail/userImage/userImage";
+import Spinner from "../../commonUi/spinner/spinner";
 
 import "./modal.scss";
 
@@ -16,16 +16,31 @@ const SignInModal = ({
   _isOpen,
   _toggleModal,
   _modalType,
+  _jobProviderName = "",
+  _bidderName = "",
   _handleSubmit,
   _handleForgotPassword,
+  _loading = false,
   ...props
 }) => {
   let customClass = "";
+  let headerClass = "";
   if (_modalType === "/register" || _modalType === "/login") {
     customClass = "signup";
   } else if (_modalType === "Place your bid" || _modalType === "Bid Details") {
     customClass = "bid-modal secondary-font-family";
+  } else if (_modalType === "/contact-us" || _modalType === "/about-us") {
+    customClass = "static-pages";
+  } else if (_modalType === "Confirmation") {
+    customClass = "confirm-modal bidder-completion secondary-font-family";
+  } else if (_modalType === "Rate Bidder") {
+    customClass = "confirm-modal bidder-completion secondary-font-family";
+    headerClass = "border-0";
   }
+
+  let [isForgot, setForgot] = useState(false);
+  let [bidderRating, setBidderrating] = useState(1);
+
   return (
     <div>
       <Modal
@@ -36,11 +51,17 @@ const SignInModal = ({
           customClass
         }
       >
+        {_loading && (
+          <Spinner className="position-absolute w-100 h-100 d-flex justify-content-center align-items-center with-overlay overlay-opacity" />
+        )}
         {_modalType === "/register" || _modalType === "/login" ? (
           <Button
             color="link"
             className="position-absolute close-btn"
-            onClick={() => _toggleModal()}
+            onClick={() => {
+              setForgot(false);
+              _toggleModal();
+            }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -56,8 +77,8 @@ const SignInModal = ({
             </svg>
           </Button>
         ) : (
-          <ModalHeader>
-            <span>{_modalType}</span>
+          <ModalHeader className={`${headerClass}`}>
+            {headerClass === "" && <span>{_modalType}</span>}
             <Button
               color="link"
               className="close-btn btn2"
@@ -103,7 +124,7 @@ const SignInModal = ({
                     />
                   </svg>
                 </span>
-                <h3 className="text-center position-relative">
+                <h3 className="text-center position-relative mb0">
                   Welcome to
                   <span className="d-block">
                     <Logo className="signup-logo" />
@@ -172,7 +193,7 @@ const SignInModal = ({
                       </div>
                     </React.Fragment>
                   )}
-                  {_modalType === "/login" && (
+                  {_modalType === "/login" && !isForgot && (
                     <div>
                       <h2>
                         <label className="d-block">Login</label>
@@ -202,15 +223,15 @@ const SignInModal = ({
                       <div className="signup-agree d-flex align-items-start">
                         {/* <label className="d-flex align-items-start">
                           <Checkbox /> Remember me
-                        </label>
+                        </label> */}
                         <Button
                           type="button"
                           color="link"
                           className="forgot-btn btn btn-link flex-shrink-0 ml-auto p-0 text-primary-hover"
-                          onClick={_handleForgotPassword("")}
+                          onClick={() => setForgot(true)}
                         >
                           Forgot Password?
-                        </Button> */}
+                        </Button>
                       </div>
                       <div className="text-center">
                         <Button type="submit" size="lg" className="signup">
@@ -224,6 +245,80 @@ const SignInModal = ({
                           Sign Up Now
                         </Link>
                       </p>
+                    </div>
+                  )}
+                  {_modalType === "/login" && isForgot && (
+                    <div>
+                      <h2>
+                        <label className="d-block">Forgot Password</label>
+                      </h2>
+                      {!props._sentForgotEmail && (
+                        <InputCell
+                          Name={"email"}
+                          Placeholder={"Email"}
+                          Model=".forgotemail"
+                          InputType={"email"}
+                          ClassName="input-icon-cell"
+                          InputIcon={true}
+                          Errors={{
+                            required: "required"
+                          }}
+                        />
+                      )}
+                      {props._sentForgotEmail && (
+                        <>
+                          <InputCell
+                            Name={"otp"}
+                            Placeholder={"OTP"}
+                            Model=".otp"
+                            InputType={"text"}
+                            ClassName="input-icon-cell"
+                            InputIcon={true}
+                            Errors={{
+                              required: "required"
+                            }}
+                          />
+                          <InputCell
+                            Name={"password"}
+                            Placeholder={"Password"}
+                            Model=".newpassword"
+                            InputType={"password"}
+                            ClassName="input-icon-cell"
+                            InputIcon={true}
+                            Errors={{
+                              required: "required",
+                              invalidPass: "invalidPass"
+                            }}
+                          />
+                          <InputCell
+                            Name={"confirmPassword"}
+                            Placeholder={"Confirm Password"}
+                            Model=".confirmPassword"
+                            InputType={"password"}
+                            ClassName="input-icon-cell"
+                            InputIcon={true}
+                            Errors={{
+                              required: "required",
+                              invalidPass: "invalidPass"
+                            }}
+                          />
+                        </>
+                      )}
+                      <div className="signup-agree d-flex align-items-start">
+                        <Button
+                          type="button"
+                          color="link"
+                          className="forgot-btn btn btn-link flex-shrink-0 ml-auto p-0 text-primary-hover"
+                          onClick={() => setForgot(false)}
+                        >
+                          Login?
+                        </Button>
+                      </div>
+                      <div className="text-center">
+                        <Button type="submit" size="lg" className="signup">
+                          Submit
+                        </Button>
+                      </div>
                     </div>
                   )}
                 </LocalForm>
@@ -281,108 +376,259 @@ const SignInModal = ({
               </LocalForm>
             </div>
           )}
+
           {_modalType === "Bid Details" && (
-            <div className="bid-detail-blc d-flex">
-              <div className="bid-detail-l">
-                <UserImage />
-              </div>
-              <div className="bid-detail-r">
-                <div className="bid-detail-rw">
-                  <h2>
-                    {`${props._propsDetails.job_provider_id.fname} ${props._propsDetails.job_provider_id.lname}`}
-                    <span>{props._propsDetails.daysfrom} Day Ago</span>
-                  </h2>
-                  <p>{props._propsDetails.description}</p>
-                  <div className="bid-price">
-                    $ {props._propsDetails.bid_amount}
+            <React.Fragment>
+              {!props._acceptProposal && (
+                <div className="bid-detail-blc d-flex">
+                  <div className="bid-detail-l">
+                    <UserImage />
+                  </div>
+                  <div className="bid-detail-r flex-fill">
+                    <div className="bid-detail-rw">
+                      <h2>
+                        <Link
+                          className="user-detail-link"
+                          to={`/bidder-profile/${props._propsDetails.job_provider_id._id}`}
+                        >
+                          {`${props._propsDetails.job_provider_id.fname} ${props._propsDetails.job_provider_id.lname}`}
+                        </Link>
+                        <span>{props._propsDetails.daysfrom} Day Ago</span>
+                      </h2>
+
+                      <p>{props._propsDetails.description}</p>
+                      <div className="bid-price">
+                        $ {props._propsDetails.bid_amount}
+                      </div>
+                    </div>
+                    <div className="bid-frm-btns d-flex justify-content-center">
+                      <Button
+                        color="link"
+                        className="btn-dark cancel"
+                        onClick={() => props._hadleReject(props._propsDetails)}
+                      >
+                        REJECT
+                      </Button>
+                      <Button color="secondary" onClick={props._handleAccept}>
+                        ACCEPT
+                      </Button>
+                    </div>
                   </div>
                 </div>
-                <div className="bid-frm-btns d-flex justify-content-center">
-                  <Button
-                    color="link"
-                    className="btn-dark cancel"
-                    onClick={() => props._hadleReject(props._propsDetails)}
-                  >
-                    REJECT
-                  </Button>
+              )}
+
+              {props._acceptProposal && (
+                <div className="payment-confirm-blc flex-fill">
+                  {(!props._cards || props._cards.length === 0) && (
+                    <div className="no-card-blc text-center d-flex justify-content-center align-items-center">
+                      <div className="no-card-msg">
+                        No Card Added yet!!
+                        <p className="">
+                          <Link
+                            className="btn btn-secondary"
+                            color="secondary"
+                            to={"/profile"}
+                          >
+                            Add Payment Card
+                          </Link>
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  {props._cards && props._cards.length !== 0 && (
+                    <React.Fragment>
+                      <h2>
+                        <strong>Card Holder:</strong>
+                        {props._cardHolderName}
+                      </h2>
+                      <div className="payment-card-list d-flex flex-wrap">
+                        <ul className="row">
+                          {props._cards.map((item, key) => {
+                            return (
+                              <li key={key}>
+                                <div className="payment-confirm position-relative">
+                                  <label className="payment-confirm-check d-flex align-items-center justify-content-center ">
+                                    <input
+                                      type="radio"
+                                      name="select-option"
+                                      checked="checked"
+                                      onChange={() => props._selectedCard(item)}
+                                    />
+                                  </label>
+                                  <div className="form-group payment-confirm-rw">
+                                    <label>Card Number</label>
+                                    <div className="card-confirm-pic-rw d-flex">
+                                      <div className="card-confirm-pic d-flex justify-content-center align-items-center">
+                                        {item.type === "visa" && (
+                                          <img
+                                            src={require("../../../assets/images/icons/payment-icon/visa.svg")}
+                                            alt="Visa Card"
+                                          />
+                                        )}
+                                      </div>
+                                      <div className="card-confirm-col flex-fill">
+                                        <input
+                                          type="email"
+                                          disabled
+                                          className="form-control"
+                                          id="exampleFormControlInput1"
+                                          placeholder={item.cardNumber}
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="form-group payment-confirm-rw d-flex">
+                                    <div className="payment-confirm-col flex-fill">
+                                      <label for="exampleFormControlInput1">
+                                        Expiration Date
+                                      </label>
+                                      <input
+                                        type="email"
+                                        disabled
+                                        className="form-control"
+                                        id="exampleFormControlInput1"
+                                        placeholder={item.cardValidity}
+                                      />
+                                    </div>
+                                    <div className="payment-confirm-col flex-fill cvv">
+                                      <label for="exampleFormControlInput1">
+                                        CVV
+                                      </label>
+                                      <input
+                                        type="email"
+                                        disabled
+                                        className="form-control"
+                                        id="exampleFormControlInput1"
+                                        placeholder={item.cardCvv}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                      <div className="bid-frm-btns text-center">
+                        <Button
+                          color="secondary"
+                          type="button"
+                          onClick={props._makePayment}
+                        >
+                          Make Payment
+                        </Button>
+                      </div>
+                    </React.Fragment>
+                  )}
+                </div>
+              )}
+            </React.Fragment>
+          )}
+
+          {_modalType === "Contact Us" && (
+            <div className="contact-us-blc">
+              <LocalForm onSubmit={values => _handleSubmit(values)}>
+                <div className="contact-us-frm">
+                  <InputCell
+                    Name={"name"}
+                    Placeholder={"Name"}
+                    Model=".name"
+                    InputType={"text"}
+                    ClassName="input-icon-cell"
+                    InputIcon={true}
+                    Errors={{ required: "required" }}
+                  />
+                  <InputCell
+                    Name={"email"}
+                    Placeholder={"Email"}
+                    Model=".email"
+                    InputType={"email"}
+                    ClassName="input-icon-cell"
+                    InputIcon={true}
+                    Errors={{
+                      required: "required",
+                      invalidEmail: "invalidEmail"
+                    }}
+                  />
+                  <InputCell
+                    Name={"message"}
+                    Placeholder={"Message"}
+                    Model=".message"
+                    InputType={"textarea"}
+                    InputIcon={true}
+                    Errors={{ required: "required" }}
+                  />
+                </div>
+                <div className="contact-us-btm text-left">
+                  <Button color="primary">Submit</Button>
+                </div>
+              </LocalForm>
+            </div>
+          )}
+
+          {_modalType === "Confirmation" && (
+            <ModalBody className={"overflow-auto"}>
+              <div className="bid-confirm-blc text-center">
+                <h2 className="text-primary">
+                  The job request has been accepted by{" "}
+                </h2>
+                <h3>{_jobProviderName}</h3>
+                <div className="bid-confirm-btns d-flex flex-column align-items-center">
                   <Button
                     color="secondary"
-                    onClick={() => props._handleAccept(props._propsDetails)}
+                    className="start-job-btn"
+                    onClick={() => props.startJob()}
                   >
-                    ACCEPT
+                    START JOB
+                  </Button>
+                  <Button color="link" onClick={() => _toggleModal()}>
+                    Remind me later
                   </Button>
                 </div>
+              </div>
+            </ModalBody>
+          )}
+
+          {_modalType === "Rate Bidder" && (
+            <div className="bid-confirm-blc bidder-completion-blc text-center">
+              <div className="bidder-label">{_bidderName}</div>
+              <h2 className="text-primary">Has been completed the job</h2>
+              <h3>Tap a star to rate him</h3>
+              <div className="bidder-rate d-flex justify-content-center">
+                <RatingBlock
+                  disablestar={false}
+                  ratingClick={rate => setBidderrating(rate)}
+                />
+              </div>
+              <div className="rating-desc">
+                <LocalForm
+                  onSubmit={values => _handleSubmit(values, bidderRating)}
+                >
+                  <div className="rating-desc-rw">
+                    <InputCell
+                      Name={"reveiw"}
+                      Placeholder={"Reveiw"}
+                      Model=".reveiw"
+                      InputType={"textarea"}
+                      Errors={{ required: "required" }}
+                    />
+                  </div>
+                  <div className="bid-confirm-btns rating-desc-rw text-center">
+                    <Button color="secondary" className="start-job-btn">
+                      SUBMIT
+                    </Button>
+                  </div>
+                </LocalForm>
+              </div>
+              <div className="bid-confirm-btns d-flex flex-column align-items-center">
+                <Button color="link" onClick={() => _toggleModal()}>
+                  Remind me later
+                </Button>
               </div>
             </div>
           )}
         </ModalBody>
       </Modal>
-
-      {/* <Modal isOpen={true} size="lg"
-        className={"d-flex flex-column align-items-center   justify-content-center bid-modal secondary-font-family"}>
-        <ModalHeader>
-          <span>Modal title</span>
-          <Button color="link" className="close-btn btn2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
-              <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
-            </svg>
-          </Button>
-        </ModalHeader>
-        <ModalBody className={"overflow-auto"}>
-          <div className="bid-desc-blc">
-            <h2>Description</h2>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero Lorem ipsum dolor sit amet, consetetur.</p>
-
-            <form>
-              <div className="row bid-desc-frm">
-                <div className="col-md-6">
-
-                </div>
-              </div>
-              <div className="bid-frm-btns d-flex justify-content-center">
-                <Button color="link" className="btn-dark cancel">REJECT</Button>
-                <Button color="secondary">SEND</Button>
-              </div>
-            </form>
-          </div>
-        </ModalBody>
-      </Modal> */}
-
-      {/* <Modal isOpen={true} size="lg" className={"d-flex flex-column align-items-center justify-content-center bid-modal secondary-font-family"}>
-        <ModalHeader>
-          <span>Bid Details</span>
-          <Button color="link" className="close-btn btn2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
-              <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
-            </svg>
-          </Button>
-        </ModalHeader>
-        <ModalBody className={"overflow-auto"}>
-          <div className="bid-detail-blc d-flex">
-            <div className="bid-detail-l">
-              <UserImage />
-            </div>
-            <div className="bid-detail-r">
-              <div className="bid-detail-rw">
-                <h2>
-                  Jorden Luise
-                <span>1 Day Ago</span>
-                </h2>
-                <p>
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero Lorem ipsum dolor sit amet, consetetur.
-                </p>
-                <div className="bid-price">
-                  $ 650.00
-                </div>
-              </div>
-              <div className="bid-frm-btns d-flex justify-content-center">
-                <Button color="link" className="btn-dark cancel">REJECT</Button>
-                <Button color="secondary">SEND</Button>
-              </div>
-            </div>
-          </div>
-        </ModalBody>
-      </Modal> */}
 
       {/* <Modal isOpen={true} size="lg" className={"d-flex flex-column align-items-center justify-content-center confirm-modal secondary-font-family"}>
         <ModalHeader>

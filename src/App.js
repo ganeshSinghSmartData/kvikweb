@@ -30,7 +30,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import configureStore from "./config";
 import Routers from "./routers";
-import Loader from "./components/Loader";
+import Loader from "./components/commonUi/loader/loader";
 
 export const history = createBrowserHistory();
 /************ store configration *********/

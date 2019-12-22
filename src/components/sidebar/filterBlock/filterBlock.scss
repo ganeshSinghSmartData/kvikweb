@@ -1,8 +1,17 @@
+@import "../../../assets/css/variables";
 .sidebar-list-blc {
   h5 {
     span {
       font-size: 12px;
     }
+  }
+  ul {
+    > li {
+      padding: 6px 0;
+    }
+  }
+  button {
+    color: $dark-default;
   }
 }
 .filter-row {
@@ -10,6 +19,58 @@
     font-weight: 500;
   }
   margin: 0 0 23px 0;
+  .input-range__slider {
+    border: 4px solid #333;
+    width: 18px;
+    height: 18px;
+    margin-top: -11px;
+  }
+  .input-range__track {
+    height: 5px;
+  }
+  .input-range__label--value {
+    top: -30px;
+  }
+  span.input-range__label.input-range__label--min,
+  .input-range__label.input-range__label--max {
+    color: #666;
+  }
+}
+.distance-row {
+  margin-bottom: 35px;
+  .input-range__track {
+    height: 5px;
+  }
+  .input-range__track--active {
+    background-color: $secondary-200;
+  }
+  .input-range__slider {
+    background: $secondary-200;
+    width: 18px;
+    height: 18px;
+    margin-top: -11px;
+  }
+  .input-range__label.input-range__label--value {
+    color: $secondary-200;
+  }
+}
+.budget-row {
+  margin-bottom: 35px;
+  .input-range__track {
+    height: 5px;
+  }
+  .input-range__track--active {
+    background-color: $primary;
+  }
+  .input-range__slider {
+    background: $primary;
+    width: 18px;
+    height: 18px;
+    margin-top: -11px;
+  }
+  .input-range__label.input-range__label--value {
+    color: $primary;
+  }
 }
 .filter-bar-outer .filter-bar {
   background-color: rgba(51, 51, 51, 0.1);

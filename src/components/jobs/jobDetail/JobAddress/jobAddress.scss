@@ -6,7 +6,7 @@
 .job-user-info {
   padding: 5px 0 0 15px;
   .job-user-rw {
-    margin-bottom: 18px;
+    margin-bottom: 10px;
     .job-user-l {
       margin-right: 15px;
     }
@@ -62,6 +62,10 @@
       margin: 0 0 0 10px;
       transform: rotate(15deg);
     }
+  }
+  .profile-label {
+    font-size: 18px;
+    font-weight: 500;
   }
 }
 

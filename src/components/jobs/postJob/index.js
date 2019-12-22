@@ -1,27 +1,72 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { LocalForm } from "react-redux-form";
 import DatePicker from "react-datepicker";
+import SelectSearch from "react-select-search";
 import moment from "moment";
+
 import "react-datepicker/dist/react-datepicker.css";
-import InputCell from "../../commonUi/input/inputCell";
 import "./postJob.scss";
-import { set } from "date-fns/esm";
+
+import { apiUrl } from "../../../environment";
+import { getJobCategory } from "./../../../actions/job";
+import InputCell from "../../commonUi/input/inputCell";
+import Loader from "../../../components/commonUi/loader/loader";
 
 export default ({
+  _jobDetails = {},
   _currentstage,
   _handleStageChange,
   _handleJobPost,
-  _handleJobUpdate,
-  _imageValidator
+  _handleCategoryOnchange,
+  dataload,
+  _selectedCategory
 }) => {
   const [images, setImages] = useState([]);
-  const [imageData, setImageData] = useState({});
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(
-    new Date(moment(new Date(), "DD-MM-YYYY").add(7, "days"))
+  const [uploadedImages, setUploadedImages] = useState(
+    _jobDetails && _jobDetails.images ? _jobDetails.images : []
   );
+  const [imageData, setImageData] = useState({});
+  let { job } = useSelector(state => state);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!job.category || job.category.length === 0) {
+      dispatch(getJobCategory());
+    }
+  });
+  let CategoryItems = [];
+  job.category &&
+    job.category.length &&
+    job.category.map(item => {
+      if (item) {
+        CategoryItems.push({ name: item.title, value: item._id });
+      }
+    });
+
+  const setStartDateOnRender = () => {
+    if (_jobDetails && _jobDetails.jobStartDate) {
+      return new Date(new Date(Number(_jobDetails.jobStartDate)));
+    } else {
+      return new Date();
+    }
+  };
+
+  const setEndDateOnRender = () => {
+    // _handleCategoryOnchange(CategoryItems[_jobDetails.category]);
+    // setImages(_jobDetails.images);
+    if (_jobDetails && _jobDetails.jobEndDate) {
+      return new Date(new Date(Number(_jobDetails.jobEndDate)));
+    } else {
+      return new Date(moment(new Date(), "DD-MM-YYYY").subtract(5, "minutes"));
+    }
+  };
+
+  const [startDate, setStartDate] = useState(setStartDateOnRender);
+  const [endDate, setEndDate] = useState(setEndDateOnRender);
+
   let files = {};
   const handleOnInputClick = () => {
     document.body.classList.add("datepicker");
@@ -55,6 +100,12 @@ export default ({
     setImages(images);
   };
 
+  const removeUploadedImage = index => {
+    let _uploadedImages = [...uploadedImages];
+    _uploadedImages.splice(index, 1);
+    setUploadedImages(_uploadedImages);
+  };
+
   /********** Change class on steps ************/
   const getClass = step => {
     if (step === _currentstage) {
@@ -66,18 +117,9 @@ export default ({
     }
   };
 
-  const onClickOutsideEvent = () => {
-    console.log("inside onClickOutsideEvent : ");
-  };
-
-  const onSelectEvent = () => {
-    console.log("inside onSelectEvent : ");
-  };
-
   return (
     <div className="post-wrapper data-block ml-auto mr-auto position-relative">
-      {/* <DataLoader /> */}
-      {/* Top Header Buttons */}
+      {dataload && <Loader loading={dataload} />}
       <div className="post-job-nav d-flex justify-content-center">
         <ul className="d-flex">
           <li className={getClass(1)}>
@@ -103,8 +145,16 @@ export default ({
         }`}
       >
         <LocalForm
+          initialState={_jobDetails}
           onSubmit={values =>
-            _handleJobPost(values, startDate, endDate, imageData, _currentstage)
+            _handleJobPost(
+              values,
+              startDate,
+              endDate,
+              imageData,
+              uploadedImages,
+              _currentstage
+            )
           }
         >
           {/* Stage 1 */}
@@ -112,12 +162,22 @@ export default ({
             <div className="row flex-wrap post-job-form">
               <div className="col-md-6">
                 <label className="input-title">Select Category</label>
-                <InputCell
-                  Name={"category"}
-                  Model=".category"
-                  InputType="select"
-                  Errors={{ required: "required" }}
-                ></InputCell>
+                {CategoryItems && (
+                  <SelectSearch
+                    options={CategoryItems}
+                    className={"select-search-box"}
+                    value={
+                      _selectedCategory
+                        ? _selectedCategory
+                        : CategoryItems &&
+                          CategoryItems.length &&
+                          CategoryItems[0].value
+                    }
+                    name="category"
+                    onChange={category => _handleCategoryOnchange(category)}
+                    placeholder="Category"
+                  />
+                )}
               </div>
               <div className="col-md-6">
                 <label className="input-title">Job Title</label>
@@ -147,7 +207,6 @@ export default ({
                   Model=".budget"
                   InputType={"text"}
                   Errors={{
-                    required: "required",
                     invalidNumber: "invalidNumber"
                   }}
                 />
@@ -194,7 +253,20 @@ export default ({
                 <label className="input-title">Start Date</label>
                 <DatePicker
                   selected={startDate}
-                  onChange={date => setStartDate(date)}
+                  onChange={date => {
+                    return (
+                      setStartDate(date),
+                      setEndDate(
+                        new Date(
+                          moment(new Date(date), "DD-MM-YYYY").subtract(
+                            5,
+                            "minutes"
+                          )
+                        )
+                      )
+                    );
+                  }}
+                  minDate={new Date()}
                   timeInputLabel="Time:"
                   dateFormat="MM/dd/yyyy h:mm aa"
                   onInputClick={() => handleOnInputClick()}
@@ -203,11 +275,13 @@ export default ({
                 />
               </div>
               <div className="col-md-4">
-                <label className="input-title">End Date</label>
+                <label className="input-title">Bid deadline date</label>
                 <DatePicker
                   selected={endDate}
                   onChange={date => setEndDate(date)}
                   timeInputLabel="Time:"
+                  minDate={new Date()}
+                  maxDate={startDate}
                   dateFormat="MM/dd/yyyy h:mm aa"
                   onInputClick={() => handleOnInputClick()}
                   onClickOutsideEvent={handleOnClickOutsideEvent()}
@@ -257,6 +331,33 @@ export default ({
                       </li>
                     );
                   })}
+                {uploadedImages &&
+                  uploadedImages.map((item, key) => {
+                    return (
+                      <li key={key} className="position-relative">
+                        <Button
+                          color="link"
+                          className="gallery-btn d-flex align-items-center justify-content-center"
+                          onClick={() => removeUploadedImage(key)}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="357"
+                            height="357"
+                            viewBox="0 0 357 357"
+                          >
+                            <path
+                              id="Forma_1"
+                              data-name="Forma 1"
+                              d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                            />
+                          </svg>
+                        </Button>
+                        <img src={`${apiUrl}/${item.path}`} alt="Job Pic" />
+                      </li>
+                    );
+                  })}
+
                 <li>
                   <Button
                     color="primary"
@@ -292,11 +393,6 @@ export default ({
                   </Button>
                 </li>
               </ul>
-            </div>
-          )}
-          {Object.keys(images).length === 0 && _imageValidator && (
-            <div className="requied-msg-blc d-flex justify-content-center text-center">
-              <span>Please Upload! your Post-Job Images.</span>
             </div>
           )}
 

@@ -11,40 +11,59 @@ import {
   reset_active_job,
   reset_completed_job
 } from "../../../actions/job";
+import SpinnerOverlay from "../../../components/commonUi/spinner/spinnerOverlay/spinnerOverlay";
 
 class JobList extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { loading: true };
     this.handleUserActiveJob = this.handleUserActiveJob.bind(this);
     this.handleUserCompletedJob = this.handleUserCompletedJob.bind(this);
   }
 
   componentDidMount() {
     this.props.reset_active_job();
-    this.props.getUserActiveJob({ page: pagination.page });
+    this.handleUserActiveJob({ page: pagination.page });
     this.props.reset_completed_job();
-    this.props.getUserCompletedJob({ page: pagination.page });
+    this.handleUserCompletedJob({ page: pagination.page });
   }
 
   handleUserActiveJob(page) {
-    // this.props.reset_active_job();
-    this.props.getUserActiveJob(page);
+    this.setState({ loading: true });
+    this.props.getUserActiveJob(page, callback => {
+      if (callback) {
+        this.setState({ loading: false });
+      } else {
+        this.setState({ loading: false });
+      }
+    });
   }
 
   handleUserCompletedJob(page) {
-    // this.props.reset_completed_job();
-    this.props.getUserCompletedJob(page);
+    this.setState({ loading: true });
+    this.props.getUserCompletedJob(page, callback => {
+      if (callback) {
+        this.setState({ loading: false });
+      } else {
+        this.setState({ loading: false });
+      }
+    });
   }
 
   render() {
     return (
       <React.Fragment>
-        <Job
-          path={this.props.match.path}
-          _handleUserActiveJob={page => this.handleUserActiveJob(page)}
-          _handleUserCompletedJob={page => this.handleUserCompletedJob(page)}
-        />
+        {this.state.loading ? (
+          <SpinnerOverlay className="position-fixed" />
+        ) : (
+          <Job
+            path={this.props.match.path}
+            _handleUserActiveJob={page => this.handleUserActiveJob(page)}
+            _handleUserCompletedJob={page => this.handleUserCompletedJob(page)}
+            _startJob={this.startJob}
+            _endJob={this.endJob}
+          />
+        )}
       </React.Fragment>
     );
   }

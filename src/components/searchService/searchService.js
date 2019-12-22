@@ -7,7 +7,7 @@ import { Container, Row, Col, Button } from "reactstrap";
 
 import "./searchService.scss";
 import { pagination } from "../../utilities/constants";
-import { getJobProduct } from "../../actions/job";
+import { getJobProduct, reset_job_products } from "../../actions/job";
 
 const SearchService = props => {
   const loggedInUser = useSelector(state => state.user.loggedIn);
@@ -15,8 +15,12 @@ const SearchService = props => {
   const pathname = props.history.location.pathname;
 
   const _handleSearch = searchKey => {
-    if (pathname === "/") {
+    dispatch(reset_job_products());
+    if (pathname === "/" && searchKey.search) {
       dispatch(getJobProduct({ page: pagination.page, search: searchKey }));
+    }
+    if (searchKey.search === "") {
+      dispatch(getJobProduct({ page: pagination.page, search: "" }));
     }
     /* if (pathname === '/') {
       dispatch(getJobProduct({ page: pagination.page, search: searchKey }));
@@ -63,17 +67,19 @@ const SearchService = props => {
                     model=".search"
                     placeholder="Search for a service"
                     className="border-0 flex-fill h-100 form-control"
+                    onChange={e => _handleSearch({ search: e.target.value })}
                   />
                   <Button color="primary" type="submit">
                     Search
                   </Button>
                 </LocalForm>
               </div>
-              {loggedInUser && (
-                <Link className="text-black" to={"/post-job"}>
-                  <Button className="post-job-btn btn-block">Post a Job</Button>
-                </Link>
-              )}
+              <Link
+                className="text-black"
+                to={loggedInUser ? "/post-job" : "/login"}
+              >
+                <Button className="post-job-btn btn-block">Post a Job</Button>
+              </Link>
             </div>
           </Col>
         </Row>

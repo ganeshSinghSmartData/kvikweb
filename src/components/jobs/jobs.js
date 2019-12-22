@@ -2,38 +2,40 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Button } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import smoothscroll from "smoothscroll-polyfill";
+
 import JobProduct from "./jobProduct/jobProduct";
 import Sidebar from "../sidebar/sidebar";
-import BidderProfile from "./bidderProfile/bidderProfile";
 import Heading from "../../components/commonUi/heading/heading";
 import Paragraph from "../../components/commonUi/paragraph/paragraph";
 import { pagination } from "../../utilities/constants";
-// import SpinnerOverlay from '../commonUi/spinner/spinnerOverlay/spinnerOverlay';
+import SpinnerOverlay from "../commonUi/spinner/spinnerOverlay/spinnerOverlay";
 import NoData from "../commonUi/noData/noData";
 import "./jobs.scss";
-import {
-  getJobProduct,
-  reset_job_products,
-  getUserActiveJob
-} from "./../../actions/job";
+import { getJobProduct, reset_job_products } from "./../../actions/job";
 smoothscroll.polyfill();
 
 const Job = ({
   path = "",
   _handleUserActiveJob,
   _handleUserCompletedJob,
-  _handleUserAcceptedBid,
-  _handleUserNotAcceptedBid
+  _handleUserActiveBid,
+  _handleUserCompletedBid
 }) => {
   const dispatch = useDispatch();
   const [listType, setlistType] = useState(false);
+  let [selectedCategory, setCategory] = useState([]);
+  let [postalCode, setPostalCode] = useState("");
+  let [distance, setDistance] = useState("");
+  let [budget, setBudget] = useState("");
+  const [confirmOpen, setConfirmOpen] = useState(false);
+
   let [page, setPage] = useState(pagination.page);
   let [jobType, setJobType] = useState("active");
-  // let [bidType, setBidType] = useState("accepted");
 
   const toggleListType = value => {
     setlistType(value);
   };
+
   let jobs = useSelector(state => state.job);
   let bids = useSelector(state => state.bid);
 
@@ -68,7 +70,6 @@ const Job = ({
     products = jobs.jobProduct;
     count = jobs.count;
   }
-
   const showMoreProduct = page => {
     setPage(page);
     if (path === "/job-list") {
@@ -80,20 +81,100 @@ const Job = ({
       }
     } else if (path === "/bid-list") {
       if (jobType === "active") {
-        _handleUserAcceptedBid({ page: page });
+        _handleUserActiveBid({ page: page });
       }
       if (jobType === "completed") {
-        _handleUserNotAcceptedBid({ page: page });
+        _handleUserCompletedBid({ page: page });
       }
     } else {
-      dispatch(getJobProduct({ page: page }));
+      const reqData = {
+        page: page,
+        category: selectedCategory,
+        lat: "",
+        long: ""
+      };
+      dispatch(getJobProduct(reqData));
     }
+  };
+
+  const handleCategory = category => {
+    let newSelectedCategory = [...selectedCategory];
+    if (newSelectedCategory.length === 0) {
+      newSelectedCategory.push(category);
+      setCategory(newSelectedCategory);
+    } else {
+      if (newSelectedCategory.includes(category)) {
+        const index = newSelectedCategory.indexOf(category);
+        if (index > -1) {
+          newSelectedCategory.splice(index, 1);
+          setCategory(newSelectedCategory);
+        }
+      } else {
+        newSelectedCategory.push(category);
+        setCategory(newSelectedCategory);
+      }
+    }
+    const reqData = {
+      page: page,
+      category: newSelectedCategory,
+      budget: budget,
+      zip_code: postalCode,
+      miles: distance
+    };
+
+    dispatch(reset_job_products());
+    dispatch(getJobProduct(reqData));
+  };
+
+  const handlePostalCode = value => {
+    setPostalCode(value);
+    const reqData = {
+      page: page,
+      category: selectedCategory,
+      budget: budget,
+      zip_code: value,
+      miles: distance
+    };
+    dispatch(reset_job_products());
+    dispatch(getJobProduct(reqData));
+  };
+
+  const handleBudget = value => {
+    setBudget(value);
+    const reqData = {
+      page: page,
+      category: selectedCategory,
+      budget: value,
+      zip_code: postalCode,
+      miles: distance
+    };
+    dispatch(reset_job_products());
+    dispatch(getJobProduct(reqData));
+  };
+
+  const handleDistance = value => {
+    setDistance(value);
+    const reqData = {
+      page: page,
+      category: selectedCategory,
+      budget: budget,
+      zip_code: postalCode,
+      miles: value
+    };
+    dispatch(reset_job_products());
+    dispatch(getJobProduct(reqData));
   };
 
   useEffect(() => {
     if (path !== "/job-list") {
+      const reqData = {
+        page: page,
+        category: selectedCategory,
+        lat: "",
+        long: ""
+      };
       dispatch(reset_job_products());
-      dispatch(getJobProduct({ page: page }));
+      dispatch(getJobProduct(reqData));
     }
   }, []);
 
@@ -117,17 +198,23 @@ const Job = ({
             />
           </svg>
         </Button>
-        {/* <BidderProfile /> */}
         <Row className="d-flex flex-nowrap position-relative">
           {path === "" && (
             <Col className="sidebar-col d-flex flex-column">
-              <Sidebar />
+              <Sidebar
+                _handleCategory={handleCategory}
+                _handlePostalCode={handlePostalCode}
+                _handleDistance={handleDistance}
+                _handleBudget={handleBudget}
+              />
             </Col>
           )}
           <Col className="job-rt-col">
             {path === "" && (
               <React.Fragment>
-                <Heading className="text-primary h1">Welcome to Kvik</Heading>
+                <Heading className="text-primary h1">
+                  Welcome to QvikTask
+                </Heading>
                 <Paragraph>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                   Pellentesque leo ipsum, consequat a tellus pharetra, commodo
@@ -141,8 +228,6 @@ const Job = ({
               <div className="job-list-heading d-flex">
                 {path !== "" && (
                   <div className="job-list-tab">
-                    {/* <Button color="primary" onClick={() => { path === "/job-list" ? setJobType('active') : setBidType('accepted') }} style={{ marginBottom: '1rem' }}>{path === "/job-list" ? 'Active Jobs' : 'Accepted'}</Button>
-                    <Button color="primary" onClick={() => { path === "/job-list" ? setJobType('completed') : setBidType('not-accepted') }} style={{ marginBottom: '1rem' }}>{path === "/job-list" ? 'Completed Jobs' : 'Not-Accepted'}</Button> */}
                     <button
                       className={`btn ${
                         jobType === "active" ? "btn-primary" : ""
