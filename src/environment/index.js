@@ -8,9 +8,9 @@
 const local = {
   apiUrl: "http://172.24.4.129:3000",
   socketUrl: "http://172.24.4.129:3000",
-  stripeKey: "pk_test_DwzVvw7dIyntcsbXh6OsNVS200eXzmTfcz"
   // apiUrl: "http://172.24.4.68:3000",
-  // socketUrl: "http://172.24.4.68:3000"
+  // socketUrl: "http://172.24.4.68:3000",
+  stripeKey: "pk_test_DwzVvw7dIyntcsbXh6OsNVS200eXzmTfcz"
 };
 
 const staging = {

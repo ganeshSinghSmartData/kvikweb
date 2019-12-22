@@ -33,18 +33,26 @@ export const approved_bid_work = data => ({
 /****** action creator for get jobs ********/
 export const getJobProduct = ({
   page,
+  budget = "",
   search = "",
+  zip_code = "",
+  miles = "",
   long = "",
   lat = "",
   category = []
 }) => {
   return (dispatch, getState) => {
     const skip = (page - 1) * pagination.limit;
+    // lat=30.706074&long=76.704154&category=&skip=0&limit=10&budget=&zip_code=&miles=10000&search=Sdsdf
     ApiClient.get(
-      `${apiUrl}/api/job_listing?lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${pagination.limit}&search=${search ? search.search ? search.search : "" : ""}`,
+      `${apiUrl}/api/job_listing?lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${
+        pagination.limit
+      }&budget=${budget}&zip_code=${zip_code}&miles=${miles}&&search=${
+        search ? (search.search ? search.search : "") : ""
+      }`,
       {}
     ).then(response => {
-      console.log("response response response ", response)
+      console.log("response response response ", response);
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(get_job_products(response));

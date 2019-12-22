@@ -61,7 +61,7 @@ const Sidebar = ({
                           type="checkbox"
                           name="select"
                           className="position-absolute w-100 h-100"
-                          onChange={() => _handleCategory(item.value)}
+                          onChange={() => _handleCategory(item.name)}
                         />
                         <label className="ml-auto mb-0">
                           <span>
