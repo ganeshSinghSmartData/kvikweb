@@ -20,7 +20,9 @@ const staging = {
 };
 
 const production = {
-  apiUrl: "http://3.18.168.191:3000/api/v1"
+  apiUrl: "http://54.71.18.74:4599",
+  socketUrl: "http://54.71.18.74:4599",
+  stripeKey: "pk_test_DwzVvw7dIyntcsbXh6OsNVS200eXzmTfcz"
 };
 
 if (process.env.REACT_APP_ENV === "prod") {
@@ -28,5 +30,5 @@ if (process.env.REACT_APP_ENV === "prod") {
 } else if (process.env.REACT_APP_ENV === "dev") {
   module.exports = staging;
 } else {
-  module.exports = staging;
+  module.exports = local;
 }
