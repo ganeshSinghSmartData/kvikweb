@@ -468,7 +468,7 @@ export default class CardDemo extends Component {
   render() {
     return (
       <div>
-        <StripeProvider apiKey={stripeKey}>
+        <StripeProvider apiKey="pk_test_DwzVvw7dIyntcsbXh6OsNVS200eXzmTfcz">
           <Elements>
             <CardForm handleResult={this.props.handleResult} />
           </Elements>
