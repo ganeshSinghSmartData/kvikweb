@@ -176,9 +176,9 @@ const UserProfile = props => {
         <DropdownMenu right className="overflow-auto">
           <DropdownItem header>General</DropdownItem>
           <DropdownItem divider />
-          <Link className="dropdown-item" to={"/"} onClick={() => toggle()}>
+          {/* <Link className="dropdown-item" to={"/"} onClick={() => toggle()}>
             Setting
-          </Link>
+          </Link> */}
           <Link
             className="dropdown-item"
             to={"/bid-list"}

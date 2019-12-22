@@ -239,7 +239,7 @@ export const GetCards = (params = {}) => {
     ApiClient.get(`${apiUrl}/payment/getUserSavedCards`, {}, token).then(
       response => {
         if (response.status === 200) {
-          dispatch(user_cards(response.cards));
+          dispatch(user_cards(response.data));
           dispatch(is_fetching(false));
         } else {
           dispatch(is_fetching(false));

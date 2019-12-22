@@ -28,7 +28,7 @@ class Home extends Component {
     this.handleForgotPassword = this.handleForgotPassword.bind(this);
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   toggleModal() {
     this.props.history.push("/");
