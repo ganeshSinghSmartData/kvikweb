@@ -4,6 +4,7 @@ import { LocalForm } from "react-redux-form";
 import { injectStripe, StripeProvider, Elements } from "react-stripe-elements";
 import { confirmAlert } from "react-confirm-alert";
 import { Button, Label } from "reactstrap";
+import moment from 'moment';
 import DatePicker from "react-datepicker";
 
 import { AddCard, GetCards, removeCard } from "../../../actions/user";
@@ -19,6 +20,7 @@ const UserPayment = props => {
   const [paymentType, setPaymentType] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const [date, setDate] = useState("");
   const [images, setImages] = useState([]);
   const [imageData, setImageData] = useState({});
 
@@ -63,21 +65,23 @@ const UserPayment = props => {
   };
 
   const handleResult = val => {
-    setIsLoading(true);
-    dispatch(
-      AddCard(
-        {
-          token: val && val.token && val.token.id ? val.token.id : "",
-          type: paymentType
-        },
-        res => {
-          if (res) {
-            dispatch(GetCards());
-            setIsLoading(false);
+    if (val && !val.error) {
+      setIsLoading(true);
+      dispatch(
+        AddCard(
+          {
+            token: val && val.token && val.token.id ? val.token.id : "",
+            type: paymentType
+          },
+          res => {
+            if (res) {
+              dispatch(GetCards());
+              setIsLoading(false);
+            }
           }
-        }
-      )
-    );
+        )
+      );
+    }
   };
 
   let files = {};
@@ -101,6 +105,11 @@ const UserPayment = props => {
     setIsSelect(!isSelect);
   };
 
+  const onDobChange = e => {
+    console.log("e._d", e._d);
+    setDate(e._d);
+  };
+
   const _removeCard = card_id => {
     confirmAlert({
       title: "",
@@ -122,7 +131,7 @@ const UserPayment = props => {
         },
         {
           label: "No",
-          onClick: () => {}
+          onClick: () => { }
         }
       ]
     });
@@ -163,88 +172,90 @@ const UserPayment = props => {
           </div>
         </div>
       ) : (
-        <React.Fragment>
-          <div className="payment-card-hd d-flex flex-wrap align-items-center">
-            <h2 className="flex-fill mb-0">
-              {paymentType === "credit" ? "Card" : "Bank"} Detail
+          <React.Fragment>
+            <div className="payment-card-hd d-flex flex-wrap align-items-center">
+              <h2 className="flex-fill mb-0">
+                {paymentType === "credit" ? "Card" : "Bank"} Detail
             </h2>
-            <Button
-              color="link"
-              onClick={() =>
-                paymentType === "credit"
-                  ? setPaymentType("bank")
-                  : setPaymentType("credit")
-              }
-            >
-              + Add {paymentType === "credit" ? "Bank" : "Card"}
-            </Button>
-          </div>
-          <div className="user-cards-rw card-detail">
-            <h2>
-              Type your {paymentType === "credit" ? "Card" : "Bank"} details
+              <Button
+                color="link"
+                onClick={() =>
+                  paymentType === "credit"
+                    ? setPaymentType("bank")
+                    : setPaymentType("credit")
+                }
+              >
+                + Add {paymentType === "credit" ? "Bank" : "Card"}
+              </Button>
+            </div>
+            <div className="user-cards-rw card-detail">
+              <h2>
+                Type your {paymentType === "credit" ? "Card" : "Bank"} details
             </h2>
-            {paymentType === "credit" ? (
-              <StripeCard handleResult={handleResult} />
-            ) : (
-              <div className="CardDemo payment-cardDemo">
-                <LocalForm onSubmit={values => handleBankSubmit(values)}>
-                  <ul className="card-detail-item">
-                    <li>
-                      <Label>Personal Details</Label>
-                      <InputCell
-                        Name={"firstName"}
-                        Placeholder={"First Name"}
-                        Model=".firstName"
-                        maxlength={16}
-                        InputType={"text"}
-                        ClassName="input-line-blc"
-                        Errors={{ required: "required" }}
-                      />
+              {paymentType === "credit" ? (
+                <StripeCard handleResult={handleResult} />
+              ) : (
+                  <div className="CardDemo payment-cardDemo">
+                    <LocalForm onSubmit={values => handleBankSubmit(values)}>
+                      <ul className="card-detail-item">
+                        <li>
+                          <InputCell
+                            Name={"firstName"}
+                            Placeholder={"First Name"}
+                            Model=".firstName"
+                            maxlength={16}
+                            InputType={"text"}
+                            ClassName="input-line-blc"
+                            Errors={{ required: "required" }}
+                          />
 
-                      <InputCell
-                        Name={"lastName"}
-                        Placeholder={"Last Name"}
-                        Model=".lastName"
-                        InputType={"text"}
-                        ClassName="input-line-blc"
-                        Errors={{ required: "required" }}
-                      />
+                          <InputCell
+                            Name={"lastName"}
+                            Placeholder={"Last Name"}
+                            Model=".lastName"
+                            InputType={"text"}
+                            ClassName="input-line-blc"
+                            Errors={{ required: "required" }}
+                          />
 
-                      <InputCell
-                        Name={"accountNumber"}
-                        Placeholder={"Account Number"}
-                        Model=".accountNumber"
-                        InputType={"text"}
-                        ClassName="input-line-blc"
-                        Errors={{
-                          required: "required",
-                          invalidNumber: "invalidNumber"
-                        }}
-                      />
+                          <InputCell
+                            Name={"accountNumber"}
+                            Placeholder={"Account Number"}
+                            Model=".accountNumber"
+                            InputType={"text"}
+                            ClassName="input-line-blc"
+                            Errors={{
+                              required: "required"
+                            }}
+                          />
 
-                      <InputCell
-                        Name={"routingNumber"}
-                        Placeholder={"Routing Number"}
-                        Model=".routingNumber"
-                        InputType={"text"}
-                        ClassName="input-line-blc"
-                        Errors={{
-                          required: "required",
-                          invalidNumber: "invalidNumber"
-                        }}
-                      />
-                      <DatePicker
-                        selected={new Date()}
-                        // onChange={date => setEndDate(date)}
-                        Placeholder={"Date of Birth"}
-                        maxDate={new Date()}
-                        // maxDate={startDate}
-                        dateFormat="MM/dd/yyyy"
-                        // onInputClick={() => handleOnInputClick()}
-                        // onClickOutsideEvent={handleOnClickOutsideEvent()}
-                        showTimeInput={false}
-                      />
-                      {/* <InputCell
+                          <InputCell
+                            Name={"routingNumber"}
+                            Placeholder={"Routing Number"}
+                            Model=".routingNumber"
+                            InputType={"text"}
+                            ClassName="input-line-blc"
+                            Errors={{
+                              required: "required",
+                              invalidNumber: "invalidNumber"
+                            }}
+                          />
+                          <DatePicker
+                            selected={new Date()}
+                            value={new Date(date)}
+                            // onChange={date => setEndDate(date)}
+                            Placeholder={"Date of Birth"}
+                            maxDate={new Date()}
+                            // maxDate={startDate}
+                            dateFormat="MM/dd/yyyy"
+                            // onInputClick={() => handleOnInputClick()}
+                            // onClickOutsideEvent={handleOnClickOutsideEvent()}
+                            showMonthDropdown
+                            showYearDropdown
+                            onChange={onDobChange}
+                            showTimeInput={false}
+                          />
+                          {/* <InputCell
                         Name={"dob"}
                         Placeholder={"Date of Birth"}
                         Model=".dob"
@@ -252,181 +263,193 @@ const UserPayment = props => {
                         ClassName="input-line-blc"
                         Errors={{ required: "required" }}
                       /> */}
-                      <InputCell
-                        Name={"phone"}
-                        Placeholder={"Mobile"}
-                        Model=".phone"
-                        InputType={"text"}
-                        ClassName="input-line-blc"
-                        Errors={{
-                          required: "required",
-                          invalidNumber: "invalidNumber"
-                        }}
-                      />
-                      <InputCell
-                        Name={"address"}
-                        Placeholder={"Address"}
-                        Model=".line1"
-                        InputType={"text"}
-                        ClassName="input-line-blc"
-                        Errors={{ required: "required" }}
-                      />
-                      <InputCell
-                        Name={"postal"}
-                        Placeholder={"Postal Code"}
-                        Model=".postal"
-                        InputType={"text"}
-                        ClassName="input-line-blc"
-                        Errors={{
-                          required: "required",
-                          invalidNumber: "invalidNumber"
-                        }}
-                      />
-                      <InputCell
-                        Name={"city"}
-                        Placeholder={"City"}
-                        Model=".city"
-                        InputType={"text"}
-                        ClassName="input-line-blc"
-                        Errors={{ required: "required" }}
-                      />
-                      <InputCell
-                        Name={"state"}
-                        Placeholder={"State"}
-                        Model=".state"
-                        InputType={"text"}
-                        ClassName="input-line-blc"
-                        Errors={{ required: "required" }}
-                      />
-                      <Button
-                        color="primary"
-                        block
-                        className="add-gallery-btn position-relative"
-                        type="button"
-                      >
-                        <InputCell
-                          Name={"file"}
-                          Model=".images"
-                          InputType="file"
-                          Placeholder={"Image Upload"}
-                          Multiple="multiple"
-                          Errors={{ required: "" }}
-                          HandleImageOnchange={handleImageOnchange}
-                        />
-                        <svg
-                          id="_x38__3_"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="48"
-                          height="48"
-                          viewBox="0 0 48 48"
-                        >
-                          <g id="Group_512" data-name="Group 512">
-                            <path
-                              id="Path_902"
-                              data-name="Path 902"
-                              d="M24,0A24,24,0,1,0,48,24,24,24,0,0,0,24,0Zm0,45A21,21,0,1,1,45,24,21,21,0,0,1,24,45Zm9-22.5H25.5V15a1.5,1.5,0,1,0-3,0v7.5H15a1.5,1.5,0,1,0,0,3h7.5V33a1.5,1.5,0,0,0,3,0V25.5H33a1.5,1.5,0,0,0,0-3Z"
-                              fill="#fff"
-                            />
-                          </g>
-                        </svg>
-                      </Button>
-                    </li>
-                  </ul>
-                  <Button color="secondary" type="submit">
-                    Submit
+                          <InputCell
+                            Name={"phone"}
+                            Placeholder={"Mobile"}
+                            Model=".phone"
+                            InputType={"text"}
+                            ClassName="input-line-blc"
+                            Errors={{
+                              required: "required",
+                              invalidNumber: "invalidNumber"
+                            }}
+                          />
+                          <InputCell
+                            Name={"address"}
+                            Placeholder={"Address"}
+                            Model=".line1"
+                            InputType={"text"}
+                            ClassName="input-line-blc"
+                            Errors={{ required: "required" }}
+                          />
+                          <InputCell
+                            Name={"postal"}
+                            Placeholder={"Zip code"}
+                            Model=".postal"
+                            InputType={"text"}
+                            ClassName="input-line-blc"
+                            Errors={{
+                              required: "required",
+                              invalidNumber: "invalidNumber"
+                            }}
+                          />
+                          <InputCell
+                            Name={"country"}
+                            Placeholder={"Country"}
+                            Model=".country"
+                            InputType={"text"}
+                            ClassName="input-line-blc"
+                            Errors={{
+                              required: "required"
+                            }}
+                          />
+                          <InputCell
+                            Name={"city"}
+                            Placeholder={"City"}
+                            Model=".city"
+                            InputType={"text"}
+                            ClassName="input-line-blc"
+                            Errors={{ required: "required" }}
+                          />
+                          <InputCell
+                            Name={"state"}
+                            Placeholder={"State"}
+                            Model=".state"
+                            InputType={"text"}
+                            ClassName="input-line-blc"
+                            Errors={{ required: "required" }}
+                          />
+
+                          {/* <Button
+                            color="primary"
+                            block
+                            className="add-gallery-btn position-relative"
+                            type="button"
+                          > */}
+                          {/* <svg
+                                id="_x38__3_"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="48"
+                                height="48"
+                                viewBox="0 0 48 48"
+                              >
+                                <g id="Group_512" data-name="Group 512">
+                                  <path
+                                    id="Path_902"
+                                    data-name="Path 902"
+                                    d="M24,0A24,24,0,1,0,48,24,24,24,0,0,0,24,0Zm0,45A21,21,0,1,1,45,24,21,21,0,0,1,24,45Zm9-22.5H25.5V15a1.5,1.5,0,1,0-3,0v7.5H15a1.5,1.5,0,1,0,0,3h7.5V33a1.5,1.5,0,0,0,3,0V25.5H33a1.5,1.5,0,0,0,0-3Z"
+                                    fill="#fff"
+                                  />
+                                </g>
+                              </svg> */}
+                          <InputCell
+                            Name={"file"}
+                            Model=".images"
+                            InputType="file"
+                            Placeholder={"Image Upload"}
+                            Multiple="multiple"
+                            Errors={{ required: "" }}
+                            HandleImageOnchange={handleImageOnchange}
+                            Errors={{ required: "required" }}
+                          />
+                          {/* </Button> */}
+                        </li>
+                      </ul>
+                      <Button color="secondary" type="submit">
+                        Submit
                   </Button>
-                </LocalForm>
-              </div>
-            )}
-          </div>
-          {paymentType === "credit" &&
-            usercards &&
-            usercards.length !== 0 &&
-            usercards.map((val, count) => {
-              return (
-                <div className="user-cards-rw" key={count}>
-                  <div className="card-chip position-relative">
-                    <Button
-                      color="link"
-                      className="d-flex align-items-center justify-content-center card-del-btn position-absolute p-0"
-                    >
-                      <span
-                        className="rounded-circle d-flex align-items-center justify-content-center"
-                        onClick={() => _removeCard(val.id)}
+                    </LocalForm>
+                  </div>
+                )}
+            </div>
+            {paymentType === "credit" &&
+              usercards &&
+              usercards.length !== 0 &&
+              usercards.map((val, count) => {
+                return (
+                  <div className="user-cards-rw" key={count}>
+                    <div className="card-chip position-relative">
+                      <Button
+                        color="link"
+                        className="d-flex align-items-center justify-content-center card-del-btn position-absolute p-0"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="357"
-                          height="357"
-                          viewBox="0 0 357 357"
+                        <span
+                          className="rounded-circle d-flex align-items-center justify-content-center"
+                          onClick={() => _removeCard(val.id)}
                         >
-                          <path
-                            id="Forma_1"
-                            data-name="Forma 1"
-                            d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
-                          />
-                        </svg>
-                      </span>
-                    </Button>
-                    <div className="card-chip-hd text-right">
-                      <div className="card-confirm-pic d-flex justify-content-center align-items-center">
-                        {val.type == "visa" ? (
-                          <img
-                            src={require("../../../assets/images/icons/payment-icon/visa.svg")}
-                            alt="Visa Card"
-                          />
-                        ) : val.type == "amex" ? (
-                          <img
-                            src={require("../../../assets/images/icons/payment-icon/amex.svg")}
-                            alt="Visa Card"
-                          />
-                        ) : val.type == "mastercard" ? (
-                          <img
-                            src={require("../../../assets/images/icons/payment-icon/master-card.svg")}
-                            alt="Visa Card"
-                          />
-                        ) : val.type == "discover" ? (
-                          <img
-                            src={require("../../../assets/images/icons/payment-icon/discover.svg")}
-                            alt="Visa Card"
-                          />
-                        ) : val.type == "jcb" ? (
-                          <img
-                            src={require("../../../assets/images/icons/payment-icon/jcb.svg")}
-                            alt="Visa Card"
-                          />
-                        ) : (
-                          <img
-                            src={require("../../../assets/images/icons/payment-icon/master-card.svg")}
-                            alt="Visa Card"
-                          />
-                        )}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="357"
+                            height="357"
+                            viewBox="0 0 357 357"
+                          >
+                            <path
+                              id="Forma_1"
+                              data-name="Forma 1"
+                              d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                            />
+                          </svg>
+                        </span>
+                      </Button>
+                      <div className="card-chip-hd text-right">
+                        <div className="card-confirm-pic d-flex justify-content-center align-items-center">
+                          {val.type == "visa" ? (
+                            <img
+                              src={require("../../../assets/images/icons/payment-icon/visa.svg")}
+                              alt="Visa Card"
+                            />
+                          ) : val.type == "amex" ? (
+                            <img
+                              src={require("../../../assets/images/icons/payment-icon/amex.svg")}
+                              alt="Visa Card"
+                            />
+                          ) : val.type == "mastercard" ? (
+                            <img
+                              src={require("../../../assets/images/icons/payment-icon/master-card.svg")}
+                              alt="Visa Card"
+                            />
+                          ) : val.type == "discover" ? (
+                            <img
+                              src={require("../../../assets/images/icons/payment-icon/discover.svg")}
+                              alt="Visa Card"
+                            />
+                          ) : val.type == "jcb" ? (
+                            <img
+                              src={require("../../../assets/images/icons/payment-icon/jcb.svg")}
+                              alt="Visa Card"
+                            />
+                          ) : (
+                                      <img
+                                        src={require("../../../assets/images/icons/payment-icon/master-card.svg")}
+                                        alt="Visa Card"
+                                      />
+                                    )}
+                        </div>
                       </div>
-                    </div>
-                    <div className="card-chip-no">
-                      <span>XXXX</span>
-                      <span>XXXX</span>
-                      <span>
-                        XXX<span className="grey-digit">X</span>
-                      </span>
-                      <span className="last-digit grey-digit">{val.last4}</span>
-                    </div>
-                    <div className="card-chip-btm d-flex">
-                      <div className="card-chip-col flex-fill">
-                        <h2>{val.acHolderName ? val.acHolderName : "----"}</h2>
-                        <h3>-----</h3>
+                      <div className="card-chip-no">
+                        <span>XXXX</span>
+                        <span>XXXX</span>
+                        <span>
+                          XXX<span className="grey-digit">X</span>
+                        </span>
+                        <span className="last-digit grey-digit">{val.last4}</span>
                       </div>
-                      <div className="card-chip-col rt">
-                        <h2>VALID THRU</h2>
-                        <h3 className="mb-0">{val.cardValidity}</h3>
+                      <div className="card-chip-btm d-flex">
+                        <div className="card-chip-col flex-fill">
+                          <h2>{val.acHolderName ? val.acHolderName : "----"}</h2>
+                          <h3>-----</h3>
+                        </div>
+                        <div className="card-chip-col rt">
+                          <h2>VALID THRU</h2>
+                          <h3 className="mb-0">{val.cardValidity}</h3>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-        </React.Fragment>
-      )}
+                );
+              })}
+          </React.Fragment>
+        )}
     </div>
   );
 };
