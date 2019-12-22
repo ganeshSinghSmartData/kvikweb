@@ -121,6 +121,8 @@ const Job = ({
   };
 
   const handlePostalCode = value => {
+    console.log("value : ", value);
+
     setPostalCode(value);
   };
 
