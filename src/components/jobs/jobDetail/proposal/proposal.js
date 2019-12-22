@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import UserImage from "../userImage/userImage";
 import RatingBlock from "../../ratingBock/ratingBlock";
 import { confirmAlert } from "react-confirm-alert";
@@ -12,13 +12,16 @@ import { acceptBid, rejectBid } from "../../../../actions/bid";
 
 const Proposal = ({ props, jobId, history }) => {
   const dispatch = useDispatch();
-  let imagepath = false;
-  if (
-    props.job_provider_id &&
-    props.job_provider_id.image &&
-    props.job_provider_id.image.length !== 0
-  ) {
+  let imagepath = [];
+  let username = "Dummy User";
+  console.log("here i am getting props  :", props);
+
+  if (props.job_provider_id) {
     imagepath = props.job_provider_id.image;
+    username = `${props.job_provider_id.fname} ${props.job_provider_id.lname}`;
+  } else {
+    username = `${props.user.fname} ${props.user.lname}`;
+    imagepath = props.user.image;
   }
 
   const [openModal, setOpenModal] = useState(false);
@@ -99,24 +102,30 @@ const Proposal = ({ props, jobId, history }) => {
         <UserImage image={imagepath} />
       </div>
       <div className="proposal-col-m flex-fill">
-        <h5>{`${props.job_provider_id.fname} ${props.job_provider_id.lname}`}</h5>
-        <p>{props.description}</p>
+        <h5>{username}</h5>
+        <p>{props.job_provider_id ? props.description : props.review}</p>
       </div>
       <div className="proposal-col-r time-rate text-right flex-shrink-0">
-        <span className="d-block"> {daysfrom} Day Ago</span>
-        <h3 className="text-primary">${props.bid_amount}</h3>
-        {/* <RatingBlock /> */}
+        {props.job_provider_id && (
+          <React.Fragment>
+            <span className="d-block"> {daysfrom} Day Ago</span>
+            <h3 className="text-primary">${props.bid_amount}</h3>
+          </React.Fragment>
+        )}
+        <RatingBlock rating={props.rating} />
       </div>
-      <AcceptProposalModal
-        _isOpen={openModal}
-        _toggleModal={() => setOpenModal(false)}
-        _modalType={"Bid Details"}
-        _handleAccept={confirmAccept}
-        _hadleReject={hadleReject}
-        _propsDetails={{ ...props, daysfrom: daysfrom }}
-        _acceptProposal={acceptProposal}
-        _loading={isModalLoading}
-      />
+      {props.job_provider_id && (
+        <AcceptProposalModal
+          _isOpen={openModal}
+          _toggleModal={() => setOpenModal(false)}
+          _modalType={"Bid Details"}
+          _handleAccept={confirmAccept}
+          _hadleReject={hadleReject}
+          _propsDetails={{ ...props, daysfrom: daysfrom }}
+          _acceptProposal={acceptProposal}
+          _loading={isModalLoading}
+        />
+      )}
     </div>
   );
 };

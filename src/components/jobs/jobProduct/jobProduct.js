@@ -7,7 +7,7 @@ import Spinner from "../../commonUi/spinner/spinner";
 import "./jobProduct.scss";
 import { StringToDate, DaysBetween } from "./../../../utilities/common";
 import { apiUrl } from "./../../../environment";
-import { JobStatus } from "../../../utilities/constants";
+import { JobStatus, BidStatus } from "../../../utilities/constants";
 
 /********* Get time ago in string format *********/
 
@@ -30,12 +30,15 @@ const JobProduct = ({ product, listType, path }) => {
     };
   });
 
+  let workStatus = {};
   let pathname = "/job-details/";
   if (path === "/job-list") {
     pathname = "/job-proposal/";
+    workStatus = JobStatus;
   }
   if (path === "/bid-list") {
     pathname = "/bid-details/";
+    workStatus = BidStatus;
   }
 
   let classname = "";
@@ -44,7 +47,7 @@ const JobProduct = ({ product, listType, path }) => {
       case "not_started":
         return (classname = "job-danger-bar");
       case "not_accepted":
-        return (classname = "job-danger-bar");
+        return (classname = "job-secondary-bar");
       case "expired":
         return (classname = "job-danger-bar");
       case "rejected":
@@ -62,45 +65,6 @@ const JobProduct = ({ product, listType, path }) => {
     }
   };
   setJobStatus(product.status);
-
-  /*   const labelTypes = ({ type, bidcount, status }) => {
-    if (type == "jobs")
-      return status === "accepted"
-        ? JobStatus.jobAccepted
-        : status === "in_progress"
-        ? JobStatus.inProgress
-        : status === "completed"
-        ? JobStatus.jobCompleted
-        : status === "approved"
-        ? JobStatus.jobApproved
-        : `${bidcount} ${
-            bidcount && bidcount > 1
-              ? JobStatus.bidsRecieved
-              : JobStatus.bidRecieved
-          }`;
-    else {
-      switch (status) {
-        case "expired":
-          return JobStatus.jobExpired;
-        case "approved":
-          return JobStatus.jobApproved;
-        case "completed":
-          return JobStatus.jobCompleted;
-        case "not_accepted":
-          return JobStatus.bidNotAccepted;
-        case "not_started":
-          return JobStatus.bidNotAccepted;
-        case "accepted":
-          return JobStatus.bidAccepted;
-        case "in_progress":
-          return JobStatus.inProgress;
-        case "rejected":
-          return JobStatus.rejected;
-        default:
-          break;
-      }
-    }
-  }; */
 
   return (
     <div className={"job-wrapper " + (listType ? "d-flex flex-column" : "")}>
@@ -123,16 +87,15 @@ const JobProduct = ({ product, listType, path }) => {
           ) : (
             <img src={`${apiUrl}/favicon.ico`} alt="Job" />
           )}
-          {console.log("path: ", path)}
           {path === "/bid-list" && (
             <span className={`job-status-bar position-absolute ${classname}`}>
-              {JobStatus[product.status]}
+              {workStatus[product.status]}
             </span>
           )}
 
           {path === "/job-list" && product.status !== "not_started" && (
             <span className={`job-status-bar position-absolute ${classname}`}>
-              {JobStatus[product.status]}
+              {workStatus[product.status]}
             </span>
           )}
         </Link>
@@ -176,7 +139,7 @@ const JobProduct = ({ product, listType, path }) => {
             {product.location}, {product.city}
           </label>
         </div>
-        {path === "/job-list" && (
+        {path === "/job-list" && product.status === "not_started" && (
           <div className=" job-location bid-count-rw d-flex">
             <span>
               <svg

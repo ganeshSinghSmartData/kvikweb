@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { confirmAlert } from "react-confirm-alert";
 
 import SpinnerOverlay from "../../../components/commonUi/spinner/spinnerOverlay/spinnerOverlay";
 import JobDetail from "../../../components/jobs/jobDetail/jobDetail";
@@ -16,33 +17,69 @@ import "./../../../components/jobs/jobDetail/jobDetail.scss";
 class JobDetails extends Component {
   constructor(props) {
     super(props);
-    this.state = { pathname: "", isLoading: false };
+    this.state = { pathname: "", isLoading: false, isStatusLoading: false };
+    this.confirmStartBidWork = this.confirmStartBidWork.bind(this);
+    this.confirmEndBidWork = this.confirmEndBidWork.bind(this);
     this.startBidWork = this.startBidWork.bind(this);
     this.endBidWork = this.endBidWork.bind(this);
   }
 
+  confirmStartBidWork = (jobId, jobSeekerId, userId) => {
+    confirmAlert({
+      title: "",
+      message: "Are you sure do you want to start this job ?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => this.startBidWork(jobId, jobSeekerId, userId)
+        },
+        {
+          label: "No",
+          onClick: () => {}
+        }
+      ]
+    });
+  };
+
+  confirmEndBidWork = (jobId, jobSeekerId, userId) => {
+    console.log("values : ", jobId, jobSeekerId, userId);
+
+    confirmAlert({
+      title: "",
+      message: "Are you sure do you want to end this job ?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => this.endBidWork(jobId, jobSeekerId, userId)
+        },
+        {
+          label: "No",
+          onClick: () => {}
+        }
+      ]
+    });
+  };
+
   startBidWork(jobId, jobSeekerId, userId) {
-    this.setState({ isLoading: true });
+    this.setState({ isStatusLoading: true });
     const reqData = {
       job_id: jobId,
       job_seeker_id: jobSeekerId,
       job_provider_id: userId
     };
-    console.log(" I am herer in start job  :", reqData);
     this.props.startBid(reqData, callback => {
       if (callback) {
-        this.setState({ isLoading: false });
+        this.setState({ isStatusLoading: false });
         this.props.history.push("/bid-list");
-        console.log("Success for start bid : ", callback);
       } else {
-        this.setState({ isLoading: false });
+        this.setState({ isStatusLoading: false });
         console.log("errror in callback : ");
       }
     });
   }
 
   endBidWork(jobId, jobSeekerId, userId) {
-    this.setState({ isLoading: true });
+    this.setState({ isStatusLoading: true });
     const reqData = {
       job_id: jobId,
       job_seeker_id: jobSeekerId,
@@ -51,11 +88,11 @@ class JobDetails extends Component {
     console.log(" I am herer in end job  :", reqData);
     this.props.endBid(reqData, callback => {
       if (callback) {
-        this.setState({ isLoading: false });
+        this.setState({ isStatusLoading: false });
         this.props.history.push("/bid-list");
         console.log("Success for start bid : ", callback);
       } else {
-        this.setState({ isLoading: false });
+        this.setState({ isStatusLoading: false });
         console.log("errror in callback : ");
       }
     });
@@ -97,8 +134,10 @@ class JobDetails extends Component {
             job={jobDetails}
             history={this.props.history}
             path={this.state.pathname}
-            _startJob={this.startBidWork}
-            _endJob={this.endBidWork}
+            _startJob={this.confirmStartBidWork}
+            _endJob={this.confirmEndBidWork}
+            _isLoading={this.state.isLoading}
+            _isStatusLoading={this.state.isStatusLoading}
           ></JobDetail>
         ) : (
           <SpinnerOverlay className="position-fixed" />
