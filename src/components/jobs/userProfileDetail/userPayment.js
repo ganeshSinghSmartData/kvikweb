@@ -1,24 +1,29 @@
 import React, { Component, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { LocalForm } from "react-redux-form";
 import { injectStripe, StripeProvider, Elements } from "react-stripe-elements";
 import { confirmAlert } from "react-confirm-alert";
+import { Button, Label } from "reactstrap";
+import DatePicker from "react-datepicker";
+
+import { AddCard, GetCards, removeCard } from "../../../actions/user";
+import { stripeKey } from "../../../environment";
 
 import StripeCard from "../../../config/stripe";
-import { AddCard, GetCards, removeCard } from "../../../actions/user";
-import { useSelector, useDispatch } from "react-redux";
-import { stripeKey } from "../../../environment";
-import { Button, Label } from "reactstrap";
-import { LocalForm } from "react-redux-form";
 import InputCell from "../../commonUi/input/inputCell";
 import SpinnerOverlay from "../../../components/commonUi/spinner/spinnerOverlay/spinnerOverlay";
+// import "./../postJob/postJob.scss";
 
 const UserPayment = props => {
   const [isSelect, setIsSelect] = useState(false);
   const [paymentType, setPaymentType] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const [images, setImages] = useState([]);
+  const [imageData, setImageData] = useState({});
+
   const dispatch = useDispatch();
   let user = useSelector(state => state.user);
-  console.log("here users is : ", user);
 
   let usercards = [];
   if (user && user.cards && user.cards.length !== 0) {
@@ -74,6 +79,23 @@ const UserPayment = props => {
       )
     );
   };
+
+  let files = {};
+  const handleImageOnchange = event => {
+    files = event;
+    setImageData({ ...imageData, ...files });
+    console.log("imageData  :", imageData);
+
+    const imagesData = Object.values(files).reduce((list, key) => {
+      if (key && typeof key === "object") {
+        let url = URL.createObjectURL(key);
+        list.push(url);
+      }
+      return list;
+    }, []);
+    setImages([...images, ...imagesData]);
+  };
+
   const choosePaymentMethod = type => {
     setPaymentType(type);
     setIsSelect(!isSelect);
@@ -164,7 +186,7 @@ const UserPayment = props => {
             {paymentType === "credit" ? (
               <StripeCard handleResult={handleResult} />
             ) : (
-              <div class="CardDemo payment-cardDemo">
+              <div className="CardDemo payment-cardDemo">
                 <LocalForm onSubmit={values => handleBankSubmit(values)}>
                   <ul className="card-detail-item">
                     <li>
@@ -180,32 +202,134 @@ const UserPayment = props => {
                       />
 
                       <InputCell
-                        Name={"Last Name"}
+                        Name={"lastName"}
                         Placeholder={"Last Name"}
-                        Model=".last_name"
+                        Model=".lastName"
                         InputType={"text"}
                         ClassName="input-line-blc"
                         Errors={{ required: "required" }}
                       />
-                    </li>
-                    <li>
-                      <Label>Account Details</Label>
+
                       <InputCell
-                        Name={"Account Number"}
+                        Name={"accountNumber"}
                         Placeholder={"Account Number"}
-                        Model=".account_no"
+                        Model=".accountNumber"
+                        InputType={"text"}
+                        ClassName="input-line-blc"
+                        Errors={{
+                          required: "required",
+                          invalidNumber: "invalidNumber"
+                        }}
+                      />
+
+                      <InputCell
+                        Name={"routingNumber"}
+                        Placeholder={"Routing Number"}
+                        Model=".routingNumber"
+                        InputType={"text"}
+                        ClassName="input-line-blc"
+                        Errors={{
+                          required: "required",
+                          invalidNumber: "invalidNumber"
+                        }}
+                      />
+                      <DatePicker
+                        selected={new Date()}
+                        // onChange={date => setEndDate(date)}
+                        Placeholder={"Date of Birth"}
+                        maxDate={new Date()}
+                        // maxDate={startDate}
+                        dateFormat="MM/dd/yyyy"
+                        // onInputClick={() => handleOnInputClick()}
+                        // onClickOutsideEvent={handleOnClickOutsideEvent()}
+                        showTimeInput={false}
+                      />
+                      {/* <InputCell
+                        Name={"dob"}
+                        Placeholder={"Date of Birth"}
+                        Model=".dob"
+                        InputType={"date"}
+                        ClassName="input-line-blc"
+                        Errors={{ required: "required" }}
+                      /> */}
+                      <InputCell
+                        Name={"phone"}
+                        Placeholder={"Mobile"}
+                        Model=".phone"
+                        InputType={"text"}
+                        ClassName="input-line-blc"
+                        Errors={{
+                          required: "required",
+                          invalidNumber: "invalidNumber"
+                        }}
+                      />
+                      <InputCell
+                        Name={"address"}
+                        Placeholder={"Address"}
+                        Model=".line1"
                         InputType={"text"}
                         ClassName="input-line-blc"
                         Errors={{ required: "required" }}
                       />
                       <InputCell
-                        Name={"Routing Number"}
-                        Placeholder={"Routing Number"}
-                        Model=".routing_no"
+                        Name={"postal"}
+                        Placeholder={"Postal Code"}
+                        Model=".postal"
+                        InputType={"text"}
+                        ClassName="input-line-blc"
+                        Errors={{
+                          required: "required",
+                          invalidNumber: "invalidNumber"
+                        }}
+                      />
+                      <InputCell
+                        Name={"city"}
+                        Placeholder={"City"}
+                        Model=".city"
                         InputType={"text"}
                         ClassName="input-line-blc"
                         Errors={{ required: "required" }}
                       />
+                      <InputCell
+                        Name={"state"}
+                        Placeholder={"State"}
+                        Model=".state"
+                        InputType={"text"}
+                        ClassName="input-line-blc"
+                        Errors={{ required: "required" }}
+                      />
+                      <Button
+                        color="primary"
+                        block
+                        className="add-gallery-btn position-relative"
+                        type="button"
+                      >
+                        <InputCell
+                          Name={"file"}
+                          Model=".images"
+                          InputType="file"
+                          Placeholder={"Image Upload"}
+                          Multiple="multiple"
+                          Errors={{ required: "" }}
+                          HandleImageOnchange={handleImageOnchange}
+                        />
+                        <svg
+                          id="_x38__3_"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="48"
+                          height="48"
+                          viewBox="0 0 48 48"
+                        >
+                          <g id="Group_512" data-name="Group 512">
+                            <path
+                              id="Path_902"
+                              data-name="Path 902"
+                              d="M24,0A24,24,0,1,0,48,24,24,24,0,0,0,24,0Zm0,45A21,21,0,1,1,45,24,21,21,0,0,1,24,45Zm9-22.5H25.5V15a1.5,1.5,0,1,0-3,0v7.5H15a1.5,1.5,0,1,0,0,3h7.5V33a1.5,1.5,0,0,0,3,0V25.5H33a1.5,1.5,0,0,0,0-3Z"
+                              fill="#fff"
+                            />
+                          </g>
+                        </svg>
+                      </Button>
                     </li>
                   </ul>
                   <Button color="secondary" type="submit">
