@@ -23,6 +23,7 @@ const InputCell = ({
   Multiple = "multiple",
   DefaultValue = "hourly",
   HandleImageOnchange,
+  handlePostalCode = () => {},
   Errors
 }) => {
   let ErrorsObject = {};
@@ -141,6 +142,7 @@ const InputCell = ({
               disabled={Disabled}
               model={Model}
               className={"form-control"}
+              onChange={event => handlePostalCode(event.target.value)}
               errors={validation()}
             />
           )}

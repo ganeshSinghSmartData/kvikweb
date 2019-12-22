@@ -11,6 +11,7 @@ export const logout_users = data => ({ type: TYPE.LOGOUT_USERS, data });
 export const user_bid_listing = data => ({ type: TYPE.USER_BID_LISTING, data });
 export const get_user_details = data => ({ type: TYPE.GET_USER_DETAILS, data });
 export const user_cards = data => ({ type: TYPE.USER_CARDS, data });
+export const remove_card = data => ({ type: TYPE.REMOVE_CARD, data });
 export const update_user_details = data => ({
   type: TYPE.UPDATE_USER_DETAILS,
   data
@@ -271,5 +272,28 @@ export const uploadUserImage = (params, callback) => {
         }
       }
     );
+  };
+};
+
+/****** action creator for remove card ********/
+export const removeCard = (card_id, callback) => {
+  return (dispatch, getState) => {
+    dispatch(is_fetching(true));
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient.delete(
+      `${apiUrl}/payment/deleteUserPaymentDetail/${card_id}`,
+      token
+    ).then(response => {
+      if (response.status === 200) {
+        dispatch(remove_card(response.deleted));
+        toastAction(true, response.msg);
+        callback(true);
+      } else {
+        callback(false);
+        toastAction(false, response.msg);
+      }
+    });
   };
 };

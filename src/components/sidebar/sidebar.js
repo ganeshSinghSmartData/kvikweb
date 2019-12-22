@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import { LocalForm } from "react-redux-form";
 import { Button, Input } from "reactstrap";
 import { Collapse } from "reactstrap";
-import InputRange from "react-input-range";
 import "react-input-range/lib/css/index.css";
 
 // onChangeComplete
 
 import FilterBlock from "../sidebar/filterBlock/filterBlock";
 import { CategoryItems } from "../../utilities/constants";
+import InputCell from "../commonUi/input/inputCell";
 import "./sidebar.scss";
 
 const Sidebar = ({
@@ -53,7 +54,7 @@ const Sidebar = ({
                         block
                         className={`d-flex flex-fill m-0 text-left`}
                         onClick={() => toggleCheckHandler(key)}
-                      // className={`d-flex flex-fill m-0 text-left ${toggleCheck ? "active" : ""}`}
+                        // className={`d-flex flex-fill m-0 text-left ${toggleCheck ? "active" : ""}`}
                       >
                         {item.name}
                         <input
@@ -108,6 +109,18 @@ const Sidebar = ({
                   Postal Code
                 </label>
               </h5>
+              <LocalForm>
+                <InputCell
+                  Name={"postal-code"}
+                  Placeholder={"Enter Postal Code"}
+                  Model=".postal-code"
+                  InputType={"text"}
+                  handlePostalCode={_handlePostalCode}
+                  Errors={{
+                    invalidNumber: "invalidNumber"
+                  }}
+                />
+              </LocalForm>
             </div>
             <FilterBlock
               handleBudgetRange={val => _handleBudget(val)}

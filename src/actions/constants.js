@@ -54,3 +54,4 @@ export const CHAT_USERS = "CHAT_USERS";
 
 /*************CARDS*********************************/
 export const USER_CARDS = "USER_CARDS";
+export const REMOVE_CARD = "REMOVE_CARD";
