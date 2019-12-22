@@ -20,7 +20,7 @@ const UserPayment = props => {
   const [paymentType, setPaymentType] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(new Date());
   const [images, setImages] = useState([]);
   const [imageData, setImageData] = useState({});
 
@@ -38,23 +38,36 @@ const UserPayment = props => {
   });
 
   const handleBankSubmit = e => {
+    console.log("e", e);
     const account_holder_type = "personal";
-
+    console.log("props.stripe", props.stripe);
     props.stripe.createSource(
       {
-        country: "US",
-        currency: "USD",
-        routing_number: e.routing_number,
-        account_number: e.account_number,
-        account_holder_name: e.first_name,
-        account_holder_type
+        // country: "DK",
+        // currency: "USD",
+        // routing_number: e.routing_number,
+        // account_number: e.account_number,
+        // account_holder_name: e.first_name,
+        // account_holder_type
+
+        type: 'ideal',
+        amount: 1099,
+        currency: 'eur',
+        owner: {
+          name: e.first_name,
+        },
+        redirect: {
+          return_url: 'https://example.com',
+        }
       },
       (status, response) => {
+        console.log("status, response", status, response)
         if (response.error) {
           alert(
             "Adding bank account failed with error: " + response.error.message
           );
         } else {
+          console.log("response", response);
           const bankAccountToken = response.id;
           console.log(bankAccountToken);
           // send bankAccountToken to server to be saved under the current user
@@ -106,8 +119,8 @@ const UserPayment = props => {
   };
 
   const onDobChange = e => {
-    console.log("e._d", e._d);
-    setDate(e._d);
+    console.log("e._d", e);
+    setDate(e);
   };
 
   const _removeCard = card_id => {
@@ -241,8 +254,8 @@ const UserPayment = props => {
                             }}
                           />
                           <DatePicker
-                            selected={new Date()}
-                            value={new Date(date)}
+                            selected={date}
+                            //      value={new Date()}
                             // onChange={date => setEndDate(date)}
                             Placeholder={"Date of Birth"}
                             maxDate={new Date()}
