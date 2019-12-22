@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { LocalForm } from "react-redux-form";
@@ -10,7 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./postJob.scss";
 
 import { apiUrl } from "../../../environment";
-import { CategoryItems } from "./../../../utilities/constants";
+import { getJobCategory } from "./../../../actions/job";
 import InputCell from "../../commonUi/input/inputCell";
 import Loader from "../../../components/commonUi/loader/loader";
 
@@ -28,6 +29,22 @@ export default ({
     _jobDetails && _jobDetails.images ? _jobDetails.images : []
   );
   const [imageData, setImageData] = useState({});
+  let { job } = useSelector(state => state);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!job.category || job.category.length === 0) {
+      dispatch(getJobCategory());
+    }
+  });
+  let CategoryItems = [];
+  job.category &&
+    job.category.length &&
+    job.category.map(item => {
+      if (item) {
+        CategoryItems.push({ name: item.title, value: item._id });
+      }
+    });
 
   const setStartDateOnRender = () => {
     if (_jobDetails && _jobDetails.jobStartDate) {
@@ -145,15 +162,22 @@ export default ({
             <div className="row flex-wrap post-job-form">
               <div className="col-md-6">
                 <label className="input-title">Select Category</label>
-                <SelectSearch
-                  options={CategoryItems}
-                  className={"select-search-box"}
-                  value={_selectedCategory}
-                  name="category"
-                  onMount={() => _handleCategoryOnchange(_selectedCategory)}
-                  onChange={category => _handleCategoryOnchange(category.value)}
-                  placeholder="Category"
-                />
+                {CategoryItems && (
+                  <SelectSearch
+                    options={CategoryItems}
+                    className={"select-search-box"}
+                    value={
+                      _selectedCategory
+                        ? _selectedCategory
+                        : CategoryItems &&
+                          CategoryItems.length &&
+                          CategoryItems[0].value
+                    }
+                    name="category"
+                    onChange={category => _handleCategoryOnchange(category)}
+                    placeholder="Category"
+                  />
+                )}
               </div>
               <div className="col-md-6">
                 <label className="input-title">Job Title</label>

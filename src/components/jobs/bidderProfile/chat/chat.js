@@ -38,7 +38,6 @@ const Chat = props => {
 
   /*********************** Handle message send ************************************** */
   const handleMessage = val => {
-    console.log(message, val.message);
     SocketClient.eventHandler(SEND_MESSAGE, {
       message: message,
       recieverId: props.Id,

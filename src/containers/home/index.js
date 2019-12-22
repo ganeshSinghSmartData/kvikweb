@@ -28,7 +28,7 @@ class Home extends Component {
     this.handleForgotPassword = this.handleForgotPassword.bind(this);
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   toggleModal() {
     this.props.history.push("/");
@@ -95,9 +95,7 @@ class Home extends Component {
     }
   };
 
-  handleForgotPassword = values => {
-    console.log("Handling forgot password feature");
-  };
+  handleForgotPassword = values => {};
 
   handleSocialLogin = user => {
     console.log(user);

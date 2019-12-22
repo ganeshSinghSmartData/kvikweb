@@ -12,6 +12,7 @@ export const reset_job_products = () => ({ type: TYPE.RESET_JOB_PRODUCTS });
 export const reset_active_job = () => ({ type: TYPE.RESET_ACTIVE_JOB });
 export const reset_completed_job = () => ({ type: TYPE.RESET_COMPLETED_JOB });
 export const get_job_details = data => ({ type: TYPE.GET_JOB_DETAILS, data });
+export const get_category = data => ({ type: TYPE.GET_CATEGORY, data });
 export const post_job_products = data => ({
   type: TYPE.POST_JOB_PRODUCTS,
   data
@@ -30,6 +31,21 @@ export const approved_bid_work = data => ({
   data
 });
 
+/****** action creator for get categories ********/
+export const getJobCategory = () => {
+  return dispatch => {
+    ApiClient.get(`${apiUrl}/categories`, {}).then(response => {
+      if (response.status === 200) {
+        dispatch(get_category(response.data));
+      } else if (response.status === 404) {
+        toastAction(false, response.msg);
+      } else {
+        dispatch(is_fetching(false));
+      }
+    });
+  };
+};
+
 /****** action creator for get jobs ********/
 export const getJobProduct = ({
   page,
@@ -41,23 +57,20 @@ export const getJobProduct = ({
   lat = "",
   category = []
 }) => {
-  return (dispatch, getState) => {
+  return dispatch => {
     const skip = (page - 1) * pagination.limit;
-    // lat=30.706074&long=76.704154&category=&skip=0&limit=10&budget=&zip_code=&miles=10000&search=Sdsdf
     ApiClient.get(
       `${apiUrl}/api/job_listing?lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${
         pagination.limit
-      }&budget=${budget}&zip_code=${zip_code}&miles=${miles}&&search=${
+      }&budget=${budget}&zip_code=${zip_code}&miles=${miles}&search=${
         search ? (search.search ? search.search : "") : ""
       }`,
       {}
     ).then(response => {
-      console.log("response response response ", response);
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(get_job_products(response));
       } else if (response.status === 401) {
-        console.log("errror with 401 : ");
         // toastErrorAction(dispatch, response.message);
       } else {
         dispatch(is_fetching(false));
@@ -97,7 +110,6 @@ export const createNewJob = (params, callback) => {
           callback(true);
         } else if (response.status === 401) {
           callback(false);
-          console.log("errror with 401 : ");
         } else {
           dispatch(is_fetching(false));
           callback(false);
@@ -121,7 +133,6 @@ export const updateExistingJob = (params, callback) => {
           callback(true);
         } else if (response.status === 401) {
           callback(false);
-          console.log("errror with 401 : ");
         } else {
           dispatch(is_fetching(false));
           callback(false);
@@ -174,7 +185,6 @@ export const getUserActiveJob = (
         dispatch(get_active_job(response));
         callback(true);
       } else if (response.status === 401) {
-        console.log("errror with 401 : ");
         callback(false);
         // toastErrorAction(dispatch, response.message);
       } else {
@@ -205,7 +215,6 @@ export const getUserCompletedJob = (
         dispatch(get_completed_job(response));
         callback(true);
       } else if (response.status === 401) {
-        console.log("errror with 401 : ");
         // toastErrorAction(dispatch, response.message);
         callback(false);
       } else {
@@ -227,7 +236,6 @@ export const approvedBidWork = params => {
         if (response.status === 200) {
           dispatch(is_fetching(false));
         } else if (response.status === 401) {
-          console.log("errror with 401 : ");
         } else {
           dispatch(is_fetching(false));
         }

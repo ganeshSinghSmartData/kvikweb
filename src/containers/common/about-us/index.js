@@ -8,13 +8,9 @@ class AboutUs extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    console.log("235456454564564654564644");
-    console.log("{this.props.about_us_details : ", this.props.about_us_details);
   }
 
   componentDidMount() {
-    console.log("Herekjnsdkf iopdfsjgoidfsoguoisdfg i");
-
     this.props.getCustomPageDetails("about_us", callback => {
       if (callback) {
         console.log(" I m in about us callback");

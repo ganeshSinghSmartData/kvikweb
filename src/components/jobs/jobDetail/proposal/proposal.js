@@ -1,20 +1,32 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import UserImage from "../userImage/userImage";
 import RatingBlock from "../../ratingBock/ratingBlock";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
 import "./proposal.scss";
+import { GetCards } from "../../../../actions/user";
 import { DaysBetween } from "../../../../utilities/common";
 import AcceptProposalModal from "../../../commonUi/modal/modal";
 import { acceptBid, rejectBid } from "../../../../actions/bid";
 
-const Proposal = ({ props, jobId, history }) => {
+const Proposal = ({ props, jobId, history, isclick = false }) => {
   const dispatch = useDispatch();
+
+  let usercards = [];
+  let user = useSelector(state => state.user);
+  if (user && user.cards && user.cards.length !== 0) {
+    usercards = user.cards;
+  }
+  useEffect(() => {
+    if (usercards.length === 0) {
+      dispatch(GetCards());
+    }
+  });
+
   let imagepath = [];
   let username = "Dummy User";
-  console.log("here i am getting props  :", props);
 
   if (props.job_provider_id) {
     imagepath = props.job_provider_id.image;
@@ -27,11 +39,12 @@ const Proposal = ({ props, jobId, history }) => {
   const [openModal, setOpenModal] = useState(false);
   const [acceptProposal, setAcceptProposal] = useState(false);
   const [isModalLoading, setModalLoading] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(usercards[0]);
 
   let daysfrom = new Date() - new Date(DaysBetween(props.created_at));
   daysfrom = parseInt(daysfrom / (1000 * 3600 * 24));
 
-  const confirmAccept = value => {
+  const confirmAccept = () => {
     confirmAlert({
       title: "",
       message: "Are you sure do you want to pay for this job ?",
@@ -48,19 +61,19 @@ const Proposal = ({ props, jobId, history }) => {
     });
   };
 
-  const handleAccept = value => {
+  const makePayment = () => {
     setModalLoading(true);
     const reqData = {
-      job_provider_id: value.job_provider_id._id,
+      job_provider_id: props.job_provider_id._id,
       job_id: jobId,
       card: {
-        cardId: "card_1Fo4x0DakNpcPSmAjYVZQ1MX",
+        cardId: selectedCard.id,
         // cardCvv: "",
-        last4: "4242",
-        amount: value.bid_amount,
+        last4: selectedCard.last4,
+        amount: props.bid_amount,
         meta: {
-          bidderId: value.job_provider_id._id,
-          name: `${value.job_provider_id.fname} ${value.job_provider_id.lname}`
+          bidderId: props.job_provider_id._id,
+          name: `${props.job_provider_id.fname} ${props.job_provider_id.lname}`
         }
       }
     };
@@ -96,8 +109,12 @@ const Proposal = ({ props, jobId, history }) => {
       )
     );
   };
+
   return (
-    <div className="proposal-rw d-flex" onClick={() => setOpenModal(true)}>
+    <div
+      className="proposal-rw d-flex"
+      onClick={() => (isclick ? setOpenModal(true) : {})}
+    >
       <div className="proposal-col-l">
         <UserImage image={imagepath} />
       </div>
@@ -124,6 +141,10 @@ const Proposal = ({ props, jobId, history }) => {
           _propsDetails={{ ...props, daysfrom: daysfrom }}
           _acceptProposal={acceptProposal}
           _loading={isModalLoading}
+          _cards={usercards}
+          _cardHolderName={` ${user.data.fname} ${user.data.lname}`}
+          _selectedCard={value => setSelectedCard(value)}
+          _makePayment={makePayment}
         />
       )}
     </div>

@@ -37,6 +37,9 @@ export default function reducer(state = initialState, action) {
         activeJobsCount: action.data.count
       };
 
+    case TYPE.GET_CATEGORY:
+      return { ...state, category: action.data };
+
     case TYPE.GET_COMPLETED_JOB:
       return {
         ...state,

@@ -35,7 +35,6 @@ export const registerUser = (params, callback) => {
         toastAction(true, response.msg);
         callback(true);
       } else {
-        console.log("errror with 401 : ", response);
         callback(false);
         toastErrorAction(dispatch, response.msg);
       }
@@ -54,7 +53,6 @@ export const loginUser = (params, callback) => {
         callback(true);
       } else if (response.status === 404) {
         callback(false);
-        console.log("response : ", response);
         toastErrorAction(dispatch, response.msg);
       } else {
         callback(false);
@@ -261,8 +259,6 @@ export const uploadUserImage = (params, callback) => {
       response => {
         if (response.status === 200) {
           callback(true);
-          console.log("response: ", response);
-
           dispatch(update_user_image(response.data));
         } else if (response.status === 401) {
           callback(false);

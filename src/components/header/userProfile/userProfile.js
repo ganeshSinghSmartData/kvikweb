@@ -43,14 +43,11 @@ const UserProfile = props => {
 
   const [chatVisible, setchatVisible] = useState(false);
   const chatToggle = id => {
-    console.log("chatToggle id: ");
     setchatVisible(!chatVisible);
     setId(id);
-    console.log("chatVisible", chatVisible);
   };
   const chatHideCallback = value => {
     setchatVisible(value);
-    console.log("chatHideCallback", value);
   };
 
   let imagepath = DummyUserImage;

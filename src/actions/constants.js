@@ -44,6 +44,7 @@ export const RESET_ACTIVE_JOB = "RESET_ACTIVE_JOB";
 export const RESET_COMPLETED_JOB = "RESET_COMPLETED_JOB";
 export const GET_ACTIVE_JOB = "GET_ACTIVE_JOB";
 export const GET_COMPLETED_JOB = "GET_COMPLETED_JOB";
+export const GET_CATEGORY = "GET_CATEGORY";
 
 /*************MESSAGES*********************************/
 export const MESSAGES_LIST = "MESSAGES_LIST";

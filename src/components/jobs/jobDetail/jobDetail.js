@@ -590,6 +590,12 @@ export default function JobDetail({
                     key={key}
                     jobId={job._id}
                     history={history}
+                    isclick={
+                      job.status === "not_started" ||
+                      job.status === "not_accepted"
+                        ? true
+                        : false
+                    }
                   />
                 );
               })}

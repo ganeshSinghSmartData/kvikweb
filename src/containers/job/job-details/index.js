@@ -42,8 +42,6 @@ class JobDetails extends Component {
   };
 
   confirmEndBidWork = (jobId, jobSeekerId, userId) => {
-    console.log("values : ", jobId, jobSeekerId, userId);
-
     confirmAlert({
       title: "",
       message: "Are you sure do you want to end this job ?",
@@ -73,7 +71,6 @@ class JobDetails extends Component {
         this.props.history.push("/bid-list");
       } else {
         this.setState({ isStatusLoading: false });
-        console.log("errror in callback : ");
       }
     });
   }
@@ -85,15 +82,12 @@ class JobDetails extends Component {
       job_seeker_id: jobSeekerId,
       job_provider_id: userId
     };
-    console.log(" I am herer in end job  :", reqData);
     this.props.endBid(reqData, callback => {
       if (callback) {
         this.setState({ isStatusLoading: false });
         this.props.history.push("/bid-list");
-        console.log("Success for start bid : ", callback);
       } else {
         this.setState({ isStatusLoading: false });
-        console.log("errror in callback : ");
       }
     });
   }

@@ -8,7 +8,8 @@ import * as TYPE from "../../actions/constants";
 
 /******** Reducers ********/
 const initialState = {
-  about_us_details: {}
+  about_us_details: {},
+  category: []
 };
 
 export default function reducer(state = initialState, action) {

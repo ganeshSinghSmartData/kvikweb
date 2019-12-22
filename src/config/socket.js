@@ -36,7 +36,6 @@ class SocketClient {
     /************** event of get messages******* *****************/
     if (this.socket) {
       this.socket.on(`get_message`, res => {
-        console.log(res, "get");
         this.dispatch(get_message(res));
         this.dispatch(messages_count());
       });

@@ -409,10 +409,7 @@ const SignInModal = ({
                       >
                         REJECT
                       </Button>
-                      <Button
-                        color="secondary"
-                        onClick={() => props._handleAccept(props._propsDetails)}
-                      >
+                      <Button color="secondary" onClick={props._handleAccept}>
                         ACCEPT
                       </Button>
                     </div>
@@ -422,7 +419,7 @@ const SignInModal = ({
 
               {props._acceptProposal && (
                 <div className="payment-confirm-blc flex-fill">
-                  {true && (
+                  {(!props._cards || props._cards.length === 0) && (
                     <div className="no-card-blc text-center d-flex justify-content-center align-items-center">
                       <div className="no-card-msg">
                         No Card Added yet!!
@@ -438,336 +435,88 @@ const SignInModal = ({
                       </div>
                     </div>
                   )}
-                  {false && (
+                  {props._cards && props._cards.length !== 0 && (
                     <React.Fragment>
                       <h2>
                         <strong>Card Holder:</strong>
-                        John Smith
+                        {props._cardHolderName}
                       </h2>
                       <div className="payment-card-list d-flex flex-wrap">
                         <ul className="row">
-                          <li>
-                            <div className="payment-confirm position-relative">
-                              <label className="payment-confirm-check d-flex align-items-center justify-content-center ">
-                                <input type="radio" name="select-option" />
-                              </label>
-                              <div className="form-group payment-confirm-rw">
-                                <label>Card Number</label>
-                                <div className="card-confirm-pic-rw d-flex">
-                                  <div className="card-confirm-pic d-flex justify-content-center align-items-center">
-                                    <img
-                                      src={require("../../../assets/images/icons/payment-icon/visa.svg")}
-                                      alt="Visa Card"
-                                    />
-                                  </div>
-                                  <div className="card-confirm-col flex-fill">
+                          {props._cards.map((item, key) => {
+                            return (
+                              <li key={key}>
+                                <div className="payment-confirm position-relative">
+                                  <label className="payment-confirm-check d-flex align-items-center justify-content-center ">
                                     <input
-                                      type="email"
-                                      disabled
-                                      className="form-control"
-                                      id="exampleFormControlInput1"
-                                      placeholder="name@example.com"
+                                      type="radio"
+                                      name="select-option"
+                                      checked="checked"
+                                      onChange={() => props._selectedCard(item)}
                                     />
+                                  </label>
+                                  <div className="form-group payment-confirm-rw">
+                                    <label>Card Number</label>
+                                    <div className="card-confirm-pic-rw d-flex">
+                                      <div className="card-confirm-pic d-flex justify-content-center align-items-center">
+                                        {item.type === "visa" && (
+                                          <img
+                                            src={require("../../../assets/images/icons/payment-icon/visa.svg")}
+                                            alt="Visa Card"
+                                          />
+                                        )}
+                                      </div>
+                                      <div className="card-confirm-col flex-fill">
+                                        <input
+                                          type="email"
+                                          disabled
+                                          className="form-control"
+                                          id="exampleFormControlInput1"
+                                          placeholder={item.cardNumber}
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="form-group payment-confirm-rw d-flex">
+                                    <div className="payment-confirm-col flex-fill">
+                                      <label for="exampleFormControlInput1">
+                                        Expiration Date
+                                      </label>
+                                      <input
+                                        type="email"
+                                        disabled
+                                        className="form-control"
+                                        id="exampleFormControlInput1"
+                                        placeholder={item.cardValidity}
+                                      />
+                                    </div>
+                                    <div className="payment-confirm-col flex-fill cvv">
+                                      <label for="exampleFormControlInput1">
+                                        CVV
+                                      </label>
+                                      <input
+                                        type="email"
+                                        disabled
+                                        className="form-control"
+                                        id="exampleFormControlInput1"
+                                        placeholder={item.cardCvv}
+                                      />
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div className="form-group payment-confirm-rw d-flex">
-                                <div className="payment-confirm-col flex-fill">
-                                  <label for="exampleFormControlInput1">
-                                    Expiration Date
-                                  </label>
-                                  <input
-                                    type="email"
-                                    disabled
-                                    className="form-control"
-                                    id="exampleFormControlInput1"
-                                    placeholder="name@example.com"
-                                  />
-                                </div>
-                                <div className="payment-confirm-col flex-fill cvv">
-                                  <label for="exampleFormControlInput1">
-                                    CVV
-                                  </label>
-                                  <input
-                                    type="email"
-                                    disabled
-                                    className="form-control"
-                                    id="exampleFormControlInput1"
-                                    placeholder="name@example.com"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li>
-                            <div className="payment-confirm position-relative">
-                              <label className="payment-confirm-check d-flex align-items-center justify-content-center ">
-                                <input type="radio" name="select-option" />
-                              </label>
-                              <div className="form-group payment-confirm-rw">
-                                <label>Card Number</label>
-                                <div className="card-confirm-pic-rw d-flex">
-                                  <div className="card-confirm-pic d-flex justify-content-center align-items-center">
-                                    <img
-                                      src={require("../../../assets/images/icons/payment-icon/master-card.svg")}
-                                      alt="Visa Card"
-                                    />
-                                  </div>
-                                  <div className="card-confirm-col flex-fill">
-                                    <input
-                                      type="email"
-                                      disabled
-                                      className="form-control"
-                                      id="exampleFormControlInput1"
-                                      placeholder="name@example.com"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="form-group payment-confirm-rw d-flex">
-                                <div className="payment-confirm-col flex-fill">
-                                  <label for="exampleFormControlInput1">
-                                    Expiration Date
-                                  </label>
-                                  <input
-                                    type="email"
-                                    disabled
-                                    className="form-control"
-                                    id="exampleFormControlInput1"
-                                    placeholder="name@example.com"
-                                  />
-                                </div>
-                                <div className="payment-confirm-col flex-fill">
-                                  <label for="exampleFormControlInput1">
-                                    CVV
-                                  </label>
-                                  <input
-                                    type="email"
-                                    disabled
-                                    className="form-control"
-                                    id="exampleFormControlInput1"
-                                    placeholder="name@example.com"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li>
-                            <div className="payment-confirm position-relative">
-                              <label className="payment-confirm-check d-flex align-items-center justify-content-center ">
-                                <input type="radio" name="select-option" />
-                              </label>
-                              <div className="form-group payment-confirm-rw">
-                                <label>Card Number</label>
-                                <div className="card-confirm-pic-rw d-flex">
-                                  <div className="card-confirm-pic d-flex justify-content-center align-items-center">
-                                    <img
-                                      src={require("../../../assets/images/icons/payment-icon/amex.svg")}
-                                      alt="Visa Card"
-                                    />
-                                  </div>
-                                  <div className="card-confirm-col flex-fill">
-                                    <input
-                                      type="email"
-                                      disabled
-                                      className="form-control"
-                                      id="exampleFormControlInput1"
-                                      placeholder="name@example.com"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="form-group payment-confirm-rw d-flex">
-                                <div className="payment-confirm-col flex-fill">
-                                  <label for="exampleFormControlInput1">
-                                    Expiration Date
-                                  </label>
-                                  <input
-                                    type="email"
-                                    disabled
-                                    className="form-control"
-                                    id="exampleFormControlInput1"
-                                    placeholder="name@example.com"
-                                  />
-                                </div>
-                                <div className="payment-confirm-col flex-fill cvv">
-                                  <label for="exampleFormControlInput1">
-                                    CVV
-                                  </label>
-                                  <input
-                                    type="email"
-                                    disabled
-                                    className="form-control"
-                                    id="exampleFormControlInput1"
-                                    placeholder="name@example.com"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li>
-                            <div className="payment-confirm position-relative">
-                              <label className="payment-confirm-check d-flex align-items-center justify-content-center ">
-                                <input type="radio" name="select-option" />
-                              </label>
-                              <div className="form-group payment-confirm-rw">
-                                <label>Card Number</label>
-                                <div className="card-confirm-pic-rw d-flex">
-                                  <div className="card-confirm-pic d-flex justify-content-center align-items-center">
-                                    <img
-                                      src={require("../../../assets/images/icons/payment-icon/discover.svg")}
-                                      alt="Visa Card"
-                                    />
-                                  </div>
-                                  <div className="card-confirm-col flex-fill">
-                                    <input
-                                      type="email"
-                                      disabled
-                                      className="form-control"
-                                      id="exampleFormControlInput1"
-                                      placeholder="name@example.com"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="form-group payment-confirm-rw d-flex">
-                                <div className="payment-confirm-col flex-fill">
-                                  <label for="exampleFormControlInput1">
-                                    Expiration Date
-                                  </label>
-                                  <input
-                                    type="email"
-                                    disabled
-                                    className="form-control"
-                                    id="exampleFormControlInput1"
-                                    placeholder="name@example.com"
-                                  />
-                                </div>
-                                <div className="payment-confirm-col flex-fill cvv">
-                                  <label for="exampleFormControlInput1">
-                                    CVV
-                                  </label>
-                                  <input
-                                    type="email"
-                                    disabled
-                                    className="form-control"
-                                    id="exampleFormControlInput1"
-                                    placeholder="name@example.com"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li>
-                            <div className="payment-confirm position-relative">
-                              <label className="payment-confirm-check d-flex align-items-center justify-content-center ">
-                                <input type="radio" name="select-option" />
-                              </label>
-                              <div className="form-group payment-confirm-rw">
-                                <label>Card Number</label>
-                                <div className="card-confirm-pic-rw d-flex">
-                                  <div className="card-confirm-pic d-flex justify-content-center align-items-center">
-                                    <img
-                                      src={require("../../../assets/images/icons/payment-icon/diner.svg")}
-                                      alt="Visa Card"
-                                    />
-                                  </div>
-                                  <div className="card-confirm-col flex-fill">
-                                    <input
-                                      type="email"
-                                      disabled
-                                      className="form-control"
-                                      id="exampleFormControlInput1"
-                                      placeholder="name@example.com"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="form-group payment-confirm-rw d-flex">
-                                <div className="payment-confirm-col flex-fill">
-                                  <label for="exampleFormControlInput1">
-                                    Expiration Date
-                                  </label>
-                                  <input
-                                    type="email"
-                                    disabled
-                                    className="form-control"
-                                    id="exampleFormControlInput1"
-                                    placeholder="name@example.com"
-                                  />
-                                </div>
-                                <div className="payment-confirm-col flex-fill cvv">
-                                  <label for="exampleFormControlInput1">
-                                    CVV
-                                  </label>
-                                  <input
-                                    type="email"
-                                    disabled
-                                    className="form-control"
-                                    id="exampleFormControlInput1"
-                                    placeholder="name@example.com"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li>
-                            <div className="payment-confirm position-relative">
-                              <label className="payment-confirm-check d-flex align-items-center justify-content-center ">
-                                <input type="radio" name="select-option" />
-                              </label>
-                              <div className="form-group payment-confirm-rw">
-                                <label>Card Number</label>
-                                <div className="card-confirm-pic-rw d-flex">
-                                  <div className="card-confirm-pic d-flex justify-content-center align-items-center">
-                                    <img
-                                      src={require("../../../assets/images/icons/payment-icon/jcb.svg")}
-                                      alt="Visa Card"
-                                    />
-                                  </div>
-                                  <div className="card-confirm-col flex-fill">
-                                    <input
-                                      type="email"
-                                      disabled
-                                      className="form-control"
-                                      id="exampleFormControlInput1"
-                                      placeholder="name@example.com"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="form-group payment-confirm-rw d-flex">
-                                <div className="payment-confirm-col flex-fill">
-                                  <label for="exampleFormControlInput1">
-                                    Expiration Date
-                                  </label>
-                                  <input
-                                    type="email"
-                                    disabled
-                                    className="form-control"
-                                    id="exampleFormControlInput1"
-                                    placeholder="name@example.com"
-                                  />
-                                </div>
-                                <div className="payment-confirm-col flex-fill cvv">
-                                  <label for="exampleFormControlInput1">
-                                    CVV
-                                  </label>
-                                  <input
-                                    type="email"
-                                    disabled
-                                    className="form-control"
-                                    id="exampleFormControlInput1"
-                                    placeholder="name@example.com"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </li>
+                              </li>
+                            );
+                          })}
                         </ul>
                       </div>
                       <div className="bid-frm-btns text-center">
-                        <Button color="secondary">Make Payment</Button>
+                        <Button
+                          color="secondary"
+                          type="button"
+                          onClick={props._makePayment}
+                        >
+                          Make Payment
+                        </Button>
                       </div>
                     </React.Fragment>
                   )}

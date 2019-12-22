@@ -21,11 +21,9 @@ const BidderProfile = ({ user_id, review }) => {
   const [chatVisible, setchatVisible] = useState(false);
   const chatToggle = () => {
     setchatVisible(!chatVisible);
-    console.log("chatVisible", chatVisible);
   };
   const chatHideCallback = value => {
     setchatVisible(value);
-    console.log("chatHideCallback", value);
   };
 
   return (

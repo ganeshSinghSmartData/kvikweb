@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import PostJob from "../../../components/jobs/postJob";
-import { CategoryItems } from "./../../../utilities/constants";
+import { getJobCategory } from "./../../../actions/job";
 import {
   createNewJob,
   updateExistingJob,
@@ -16,7 +16,7 @@ class PostNewJob extends Component {
     this.state = {
       stage: 1,
       pathname: "",
-      selectedCategory: CategoryItems[0].value,
+      selectedCategory: "",
       dataload: false
     };
 
@@ -26,11 +26,15 @@ class PostNewJob extends Component {
   }
 
   componentDidMount() {
+    this.props.getJobCategory();
     if (this.props.match.params.job_id) {
       this.props.getJobDetails(this.props.match.params.job_id);
       this.setState({ pathname: "/edit-job" });
     } else {
       this.setState({ pathname: "/post-job" });
+    }
+    if (this.props.category && this.props.category) {
+      this.setState({ selectedCategory: this.props.category[0]._id });
     }
   }
 
@@ -131,6 +135,8 @@ class PostNewJob extends Component {
               _handleCategoryOnchange={category =>
                 this.setState({
                   selectedCategory: category
+                    ? category.value
+                    : this.props.category[0]._id
                 })
               }
               _selectedCategory={this.state.selectedCategory}
@@ -147,6 +153,8 @@ class PostNewJob extends Component {
             _handleCategoryOnchange={category =>
               this.setState({
                 selectedCategory: category
+                  ? category.value
+                  : this.props.category[0]._id
               })
             }
             _selectedCategory={this.state.selectedCategory}
@@ -160,13 +168,15 @@ class PostNewJob extends Component {
 }
 
 const mapStateToProps = state => ({
-  jobDetails: state.job.jobDetails
+  jobDetails: state.job.jobDetails,
+  category: state.job.category
 });
 
 const mapDispatchToProps = dispatch => ({
   createNewJob: bindActionCreators(createNewJob, dispatch),
   updateExistingJob: bindActionCreators(updateExistingJob, dispatch),
-  getJobDetails: bindActionCreators(getJobDetails, dispatch)
+  getJobDetails: bindActionCreators(getJobDetails, dispatch),
+  getJobCategory: bindActionCreators(getJobCategory, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostNewJob);

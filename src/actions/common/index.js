@@ -30,15 +30,11 @@ export const getCustomPageDetails = (page_name, callback) => {
       data: { token }
     } = getState().user;
     ApiClient.fetch(`${apiUrl}/content/${page_name}`).then(response => {
-      console.log("response:", response);
-
       if (response.status === 200) {
-        console.log("response: ", response);
         callback(true);
         toastAction(true, response.msg);
         dispatch(about_us(response.data));
       } else if (response.status === 401) {
-        console.log("errror with 401 : ");
         callback(false);
         toastAction(false, response.msg);
       } else {

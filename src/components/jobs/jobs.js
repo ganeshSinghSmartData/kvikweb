@@ -70,9 +70,6 @@ const Job = ({
     products = jobs.jobProduct;
     count = jobs.count;
   }
-
-  console.log("products: ", products);
-
   const showMoreProduct = page => {
     setPage(page);
     if (path === "/job-list") {
@@ -124,7 +121,6 @@ const Job = ({
       zip_code: postalCode,
       miles: distance
     };
-    console.log("reqData :", reqData);
 
     dispatch(reset_job_products());
     dispatch(getJobProduct(reqData));
