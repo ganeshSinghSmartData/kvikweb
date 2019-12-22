@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { LocalForm } from "react-redux-form";
@@ -11,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./postJob.scss";
 
 import { apiUrl } from "../../../environment";
-import { CategoryItems, FrequencyItem } from "./../../../utilities/constants";
+import { CategoryItems } from "./../../../utilities/constants";
 import InputCell from "../../commonUi/input/inputCell";
 import Loader from "../../../components/commonUi/loader/loader";
 
@@ -21,8 +20,6 @@ export default ({
   _handleStageChange,
   _handleJobPost,
   _handleCategoryOnchange,
-  _handleJobUpdate,
-  _path,
   dataload,
   _selectedCategory
 }) => {
@@ -46,7 +43,7 @@ export default ({
     if (_jobDetails && _jobDetails.jobEndDate) {
       return new Date(new Date(Number(_jobDetails.jobEndDate)));
     } else {
-      return new Date(moment(new Date(), "DD-MM-YYYY").add(7, "days"));
+      return new Date(moment(new Date(), "DD-MM-YYYY").subtract(5, "minutes"));
     }
   };
 
@@ -128,7 +125,7 @@ export default ({
       <div
         className={`post-job-inner ${
           _currentstage === 3 ? "gallery-block" : ""
-          }`}
+        }`}
       >
         <LocalForm
           initialState={_jobDetails}
@@ -237,7 +234,10 @@ export default ({
                       setStartDate(date),
                       setEndDate(
                         new Date(
-                          moment(new Date(date), "DD-MM-YYYY").add(7, "days")
+                          moment(new Date(date), "DD-MM-YYYY").subtract(
+                            5,
+                            "minutes"
+                          )
                         )
                       )
                     );
@@ -256,7 +256,8 @@ export default ({
                   selected={endDate}
                   onChange={date => setEndDate(date)}
                   timeInputLabel="Time:"
-                  minDate={startDate}
+                  minDate={new Date()}
+                  maxDate={startDate}
                   dateFormat="MM/dd/yyyy h:mm aa"
                   onInputClick={() => handleOnInputClick()}
                   onClickOutsideEvent={handleOnClickOutsideEvent()}
