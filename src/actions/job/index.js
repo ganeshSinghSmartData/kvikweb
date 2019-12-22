@@ -41,9 +41,10 @@ export const getJobProduct = ({
   return (dispatch, getState) => {
     const skip = (page - 1) * pagination.limit;
     ApiClient.get(
-      `${apiUrl}/api/job_listing?lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${pagination.limit}&search=${search}`,
+      `${apiUrl}/api/job_listing?lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${pagination.limit}&search=${search ? search.search ? search.search : "" : ""}`,
       {}
     ).then(response => {
+      console.log("response response response ", response)
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(get_job_products(response));
