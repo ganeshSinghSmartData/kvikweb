@@ -31,15 +31,12 @@ const UserPayment = props => {
     usercards = user.cards;
   }
   useEffect(() => {
-    if (usercards.length === 0) {
+    if (user && user.cards && user.cards.length === 0) {
       dispatch(GetCards());
     }
   });
 
   const handleBankSubmit = e => {
-    console.log("e", e);
-    const account_holder_type = "personal";
-    console.log("props.stripe", props.stripe);
     props.stripe.createSource(
       {
         // country: "DK",
@@ -88,6 +85,8 @@ const UserPayment = props => {
           res => {
             if (res) {
               dispatch(GetCards());
+              setIsLoading(false);
+            } else {
               setIsLoading(false);
             }
           }
@@ -468,7 +467,7 @@ export default class CardDemo extends Component {
   render() {
     return (
       <div>
-        <StripeProvider apiKey="pk_test_DwzVvw7dIyntcsbXh6OsNVS200eXzmTfcz">
+        <StripeProvider apiKey={stripeKey}>
           <Elements>
             <CardForm handleResult={this.props.handleResult} />
           </Elements>

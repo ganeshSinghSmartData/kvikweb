@@ -242,7 +242,7 @@ export const GetCards = (params = {}) => {
           dispatch(is_fetching(false));
         } else {
           dispatch(is_fetching(false));
-          toastAction(false, response.msg);
+          // toastAction(false, response.msg);
         }
       }
     );

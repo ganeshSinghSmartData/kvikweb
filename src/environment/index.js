@@ -6,17 +6,17 @@
  */
 
 const local = {
-  // apiUrl: "http://172.24.4.129:3000",
-  // socketUrl: "http://172.24.4.129:3000",
-  apiUrl: "http://172.24.4.68:3000",
-  socketUrl: "http://172.24.4.68:3000"
-  // stripeKey: "pk_test_DwzVvw7dIyntcsbXh6OsNVS200eXzmTfcz"
+  apiUrl: "http://172.24.4.129:3000",
+  socketUrl: "http://172.24.4.129:3000",
+  // apiUrl: "http://172.24.4.68:3000",
+  // socketUrl: "http://172.24.4.68:3000",
+  stripeKey: "pk_test_DwzVvw7dIyntcsbXh6OsNVS200eXzmTfcz"
 };
 
 const staging = {
   apiUrl: "http://54.71.18.74:4599",
-  socketUrl: "http://54.71.18.74:4599"
-  // stripeKey: "pk_test_DwzVvw7dIyntcsbXh6OsNVS200eXzmTfcz"
+  socketUrl: "http://54.71.18.74:4599",
+  stripeKey: "pk_test_DwzVvw7dIyntcsbXh6OsNVS200eXzmTfcz"
 };
 
 const production = {
@@ -30,5 +30,5 @@ if (process.env.REACT_APP_ENV === "prod") {
 } else if (process.env.REACT_APP_ENV === "dev") {
   module.exports = staging;
 } else {
-  module.exports = local;
+  module.exports = staging;
 }
