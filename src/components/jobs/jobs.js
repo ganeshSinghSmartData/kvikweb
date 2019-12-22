@@ -23,10 +23,10 @@ const Job = ({
 }) => {
   const dispatch = useDispatch();
   const [listType, setlistType] = useState(false);
-  const [selectedCategory, setCategory] = useState([]);
-  const [postalCode, setPostalCode] = useState("");
-  const [distance, setDistance] = useState("");
-  const [budget, setBudget] = useState("");
+  let [selectedCategory, setCategory] = useState([]);
+  let [postalCode, setPostalCode] = useState("");
+  let [distance, setDistance] = useState("");
+  let [budget, setBudget] = useState("");
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   let [page, setPage] = useState(pagination.page);
@@ -96,7 +96,6 @@ const Job = ({
         lat: "",
         long: ""
       };
-      console.log("reqData in show more product:", reqData);
       dispatch(getJobProduct(reqData));
     }
   };
@@ -118,20 +117,56 @@ const Job = ({
         setCategory(newSelectedCategory);
       }
     }
+    const reqData = {
+      page: page,
+      category: newSelectedCategory,
+      budget: budget,
+      zip_code: postalCode,
+      miles: distance
+    };
+    console.log("reqData :", reqData);
+
+    dispatch(reset_job_products());
+    dispatch(getJobProduct(reqData));
   };
 
   const handlePostalCode = value => {
-    console.log("value : ", value);
-
     setPostalCode(value);
+    const reqData = {
+      page: page,
+      category: selectedCategory,
+      budget: budget,
+      zip_code: value,
+      miles: distance
+    };
+    dispatch(reset_job_products());
+    dispatch(getJobProduct(reqData));
   };
 
   const handleBudget = value => {
     setBudget(value);
+    const reqData = {
+      page: page,
+      category: selectedCategory,
+      budget: value,
+      zip_code: postalCode,
+      miles: distance
+    };
+    dispatch(reset_job_products());
+    dispatch(getJobProduct(reqData));
   };
 
   const handleDistance = value => {
     setDistance(value);
+    const reqData = {
+      page: page,
+      category: selectedCategory,
+      budget: budget,
+      zip_code: postalCode,
+      miles: value
+    };
+    dispatch(reset_job_products());
+    dispatch(getJobProduct(reqData));
   };
 
   useEffect(() => {

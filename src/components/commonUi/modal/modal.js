@@ -23,8 +23,6 @@ const SignInModal = ({
   _loading = false,
   ...props
 }) => {
-  console.log("props._propsDetails : ", props._propsDetails);
-
   let customClass = "";
   let headerClass = "";
   if (_modalType === "/register" || _modalType === "/login") {
@@ -79,28 +77,28 @@ const SignInModal = ({
             </svg>
           </Button>
         ) : (
-            <ModalHeader className={`${headerClass}`}>
-              {headerClass === "" && <span>{_modalType}</span>}
-              <Button
-                color="link"
-                className="close-btn btn2"
-                onClick={_toggleModal}
+          <ModalHeader className={`${headerClass}`}>
+            {headerClass === "" && <span>{_modalType}</span>}
+            <Button
+              color="link"
+              className="close-btn btn2"
+              onClick={_toggleModal}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="357"
+                height="357"
+                viewBox="0 0 357 357"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="357"
-                  height="357"
-                  viewBox="0 0 357 357"
-                >
-                  <path
-                    id="Forma_1"
-                    data-name="Forma 1"
-                    d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
-                  />
-                </svg>
-              </Button>
-            </ModalHeader>
-          )}
+                <path
+                  id="Forma_1"
+                  data-name="Forma 1"
+                  d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                />
+              </svg>
+            </Button>
+          </ModalHeader>
+        )}
         <ModalBody
           className={
             "overflow-auto " +
@@ -269,41 +267,41 @@ const SignInModal = ({
                       )}
                       {props._sentForgotEmail && (
                         <>
-                        <InputCell
-                          Name={"otp"}
-                          Placeholder={"OTP"}
-                          Model=".otp"
-                          InputType={"text"}
-                          ClassName="input-icon-cell"
-                          InputIcon={true}
-                          Errors={{
-                            required: "required"
-                          }}
-                        />
-                        <InputCell
-                          Name={"password"}
-                          Placeholder={"Password"}
-                          Model=".newpassword"
-                          InputType={"password"}
-                          ClassName="input-icon-cell"
-                          InputIcon={true}
-                          Errors={{
-                            required: "required",
-                            invalidPass: "invalidPass"
-                          }}
-                        />
-                        <InputCell
-                          Name={"confirmPassword"}
-                          Placeholder={"Confirm Password"}
-                          Model=".confirmPassword"
-                          InputType={"password"}
-                          ClassName="input-icon-cell"
-                          InputIcon={true}
-                          Errors={{
-                            required: "required",
-                            invalidPass: "invalidPass"
-                          }}
-                        />
+                          <InputCell
+                            Name={"otp"}
+                            Placeholder={"OTP"}
+                            Model=".otp"
+                            InputType={"text"}
+                            ClassName="input-icon-cell"
+                            InputIcon={true}
+                            Errors={{
+                              required: "required"
+                            }}
+                          />
+                          <InputCell
+                            Name={"password"}
+                            Placeholder={"Password"}
+                            Model=".newpassword"
+                            InputType={"password"}
+                            ClassName="input-icon-cell"
+                            InputIcon={true}
+                            Errors={{
+                              required: "required",
+                              invalidPass: "invalidPass"
+                            }}
+                          />
+                          <InputCell
+                            Name={"confirmPassword"}
+                            Placeholder={"Confirm Password"}
+                            Model=".confirmPassword"
+                            InputType={"password"}
+                            ClassName="input-icon-cell"
+                            InputIcon={true}
+                            Errors={{
+                              required: "required",
+                              invalidPass: "invalidPass"
+                            }}
+                          />
                         </>
                       )}
                       <div className="signup-agree d-flex align-items-start">
