@@ -65,6 +65,13 @@ const JobProduct = ({ product, listType, path }) => {
     }
   };
   setJobStatus(product.status);
+  let imageclass = "";
+  if (product.images && product.images.length !== 0) {
+    imageclass = "";
+  } else {
+    imageclass =
+      "no-job-image-blc d-flex align-items-center justify-content-center";
+  }
 
   return (
     <div
@@ -78,15 +85,11 @@ const JobProduct = ({ product, listType, path }) => {
           50
         </Badge> */}
         <Link
-          className={`text-black flex-fill position-relative ${
-            product.images
-              ? "no-job-image-blc d-flex align-items-center justify-content-center"
-              : ""
-          }`}
+          className={`text-black flex-fill position-relative ${imageclass}`}
           to={`${pathname}${product._id}`}
         >
           {/* <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" /> */}
-          {product.images && product.images.length ? (
+          {product.images && product.images.length !== 0 ? (
             <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />
           ) : (
             <img
