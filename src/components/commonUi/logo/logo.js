@@ -7,16 +7,16 @@ const Logo = ({ classname = "", navigate = false }) => {
   return (
     <>
       {navigate ? (
-        <Link className="btn btn-link" to={"/"}>
+        <Link className="btn btn-link p-0" to={"/"}>
           <label className={`logo ${classname}`}>
             <img src={require("../../../assets/images/logo.svg")} alt="Logo" />
           </label>
         </Link>
       ) : (
-        <label className={`logo ${classname}`}>
-          <img src={require("../../../assets/images/logo.svg")} alt="Logo" />
-        </label>
-      )}
+          <label className={`logo ${classname}`}>
+            <img src={require("../../../assets/images/logo.svg")} alt="Logo" />
+          </label>
+        )}
     </>
   );
 };

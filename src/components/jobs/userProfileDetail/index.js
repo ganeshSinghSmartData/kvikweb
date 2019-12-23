@@ -8,12 +8,12 @@ import UserInfo from "../bidderProfile/userInfo/userInfo";
 import InputCell from "../../commonUi/input/inputCell";
 import UserImage from "../jobDetail/userImage/userImage";
 import UserPayment from "./userPayment";
-
 import "./userProfileDetail.scss";
 
 const UserProfile = ({
   user,
   handleImageUpload,
+  imegeUploading,
   isEdit,
   handleSubmit,
   loading,
@@ -36,6 +36,7 @@ const UserProfile = ({
                     <JobAddress
                       job_seeker_id={user}
                       handleImageUpload={handleImageUpload}
+                      imegeUploading={imegeUploading}
                       editimage={true}
                     />
                   ) : (
@@ -48,6 +49,7 @@ const UserProfile = ({
                         <UserImage
                           image={user.image}
                           handleImageUpload={handleImageUpload}
+                          imegeUploading={imegeUploading}
                           edit={isEdit}
                         />
                         <div className="job-user-info flex-fill">
@@ -183,7 +185,7 @@ const UserProfile = ({
             </div>
             {!isEdit && <UserInfo description={user.about} />}
           </div>
-          <UserPayment></UserPayment>
+          <UserPayment />
         </div>
       </div>
     </div>

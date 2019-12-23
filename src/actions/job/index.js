@@ -1,9 +1,8 @@
 import * as TYPE from "../constants";
 import ApiClient from "../../api-client";
 import { apiUrl } from "../../environment";
-import { toastAction } from "../toast-actions";
+import { toastAction, toastErrorAction } from "../toast-actions";
 import { pagination } from "../../utilities/constants";
-import { callbackify } from "util";
 
 export const is_fetching = status => ({ type: TYPE.IS_FETCHING, status });
 export const is_search = status => ({ type: TYPE.IS_STATUS, status });
@@ -226,7 +225,7 @@ export const getUserCompletedJob = (
 };
 
 /****** action creator for list users cpmpleted job ********/
-export const approvedBidWork = params => {
+export const approvedBidWork = (params, callback) => {
   return (dispatch, getState) => {
     const {
       data: { token }
@@ -234,10 +233,13 @@ export const approvedBidWork = params => {
     ApiClient.post(`${apiUrl}/bid/approved_bid_work`, params, token).then(
       response => {
         if (response.status === 200) {
-          dispatch(is_fetching(false));
-        } else if (response.status === 401) {
+          callback(true);
+          toastAction(true, response.msg);
+        } else if (response.status == 402) {
+          callback(false);
+          toastAction(false, response.msg);
         } else {
-          dispatch(is_fetching(false));
+          toastErrorAction(dispatch, response.msg);
         }
       }
     );
@@ -259,7 +261,7 @@ export const deleteMyJob = (params, callback) => {
           callback(false);
           toastAction(false, response.msg);
         } else {
-          dispatch(is_fetching(false));
+          toastErrorAction(dispatch, response.msg);
         }
       }
     );

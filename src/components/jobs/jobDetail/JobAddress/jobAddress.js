@@ -14,6 +14,7 @@ const JobAddress = ({
   end_date = false,
   job_seeker_id,
   handleImageUpload,
+  imegeUploading,
   editimage = false
 }) => {
   let [timeleft, seTimeleft] = useState(
@@ -30,6 +31,7 @@ const JobAddress = ({
       <UserImage
         image={job_seeker_id.image}
         handleImageUpload={handleImageUpload}
+        imegeUploading={imegeUploading}
         edit={editimage}
       />
       {job_seeker_id && (

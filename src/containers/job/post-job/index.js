@@ -9,6 +9,7 @@ import {
   updateExistingJob,
   getJobDetails
 } from "./../../../actions/job";
+import SpinnerOverlay from "../../../components/commonUi/spinner/spinnerOverlay/spinnerOverlay";
 
 class PostNewJob extends Component {
   constructor(props) {
@@ -34,7 +35,7 @@ class PostNewJob extends Component {
       this.setState({ pathname: "/post-job" });
     }
     if (this.props.category && this.props.category) {
-      this.setState({ selectedCategory: this.props.category[0]._id });
+      this.setState({ selectedCategory: this.props.category[0].title });
     }
   }
 
@@ -80,6 +81,8 @@ class PostNewJob extends Component {
           }
         }
       }
+      console.log("jobData :", jobData);
+
       formData.append("category", this.state.selectedCategory);
       formData.append("jobtitle", jobData.jobtitle);
       formData.append("description", jobData.description);
@@ -124,26 +127,6 @@ class PostNewJob extends Component {
   render() {
     return (
       <React.Fragment>
-        {this.state.pathname === "/edit-job" &&
-          Object.keys(this.props.jobDetails).length && (
-            <PostJob
-              _jobDetails={this.props.jobDetails}
-              _currentstage={this.state.stage}
-              _handleStageChange={this.handleStageChange}
-              _handleJobPost={this.handleJobPost}
-              _handleJobUpdate={this.handleJobUpdate}
-              _handleCategoryOnchange={category =>
-                this.setState({
-                  selectedCategory: category
-                    ? category.value
-                    : this.props.category[0]._id
-                })
-              }
-              _selectedCategory={this.state.selectedCategory}
-              path={this.state.pathname}
-              dataload={this.state.dataload}
-            />
-          )}
         {this.state.pathname === "/post-job" && (
           <PostJob
             _currentstage={this.state.stage}
@@ -154,7 +137,7 @@ class PostNewJob extends Component {
               this.setState({
                 selectedCategory: category
                   ? category.value
-                  : this.props.category[0]._id
+                  : this.props.category[0].title
               })
             }
             _selectedCategory={this.state.selectedCategory}
@@ -162,6 +145,28 @@ class PostNewJob extends Component {
             dataload={this.state.dataload}
           />
         )}
+        {this.state.pathname === "/edit-job" &&
+          (Object.keys(this.props.jobDetails).length ? (
+            <PostJob
+              _jobDetails={this.props.jobDetails}
+              _currentstage={this.state.stage}
+              _handleStageChange={this.handleStageChange}
+              _handleJobPost={this.handleJobPost}
+              _handleJobUpdate={this.handleJobUpdate}
+              _handleCategoryOnchange={category =>
+                this.setState({
+                  selectedCategory: category
+                    ? category.value
+                    : this.props.category[0].title
+                })
+              }
+              _selectedCategory={this.state.selectedCategory}
+              path={this.state.pathname}
+              dataload={this.state.dataload}
+            />
+          ) : (
+            <SpinnerOverlay className="position-fixed" />
+          ))}
       </React.Fragment>
     );
   }

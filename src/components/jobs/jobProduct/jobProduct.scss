@@ -190,6 +190,13 @@
   top: 0;
   right: 0;
 }
+
+.no-job-image-blc img {
+  width: 170px;
+  opacity: 0.1;
+  height: auto !important;
+  margin-bottom: 30px;
+}
 @media (max-width: 1024px) {
   .job-list-row {
     .job-wrapper {

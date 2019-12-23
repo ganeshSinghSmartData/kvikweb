@@ -134,7 +134,10 @@ const Proposal = ({ props, jobId, history, isclick = false }) => {
       {props.job_provider_id && (
         <AcceptProposalModal
           _isOpen={openModal}
-          _toggleModal={() => setOpenModal(false)}
+          _toggleModal={() => {
+            setAcceptProposal(false);
+            setOpenModal(false);
+          }}
           _modalType={"Bid Details"}
           _handleAccept={confirmAccept}
           _hadleReject={hadleReject}

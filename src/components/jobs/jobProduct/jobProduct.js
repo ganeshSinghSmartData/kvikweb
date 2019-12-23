@@ -65,27 +65,37 @@ const JobProduct = ({ product, listType, path }) => {
     }
   };
   setJobStatus(product.status);
+  let imageclass = "";
+  if (product.images && product.images.length !== 0) {
+    imageclass = "";
+  } else {
+    imageclass =
+      "no-job-image-blc d-flex align-items-center justify-content-center";
+  }
 
   return (
-    <div className={"job-wrapper " + (listType ? "d-flex flex-column" : "")}>
+    <div
+      className={
+        "job-wrapper d-flex flex-column flex-fill " +
+        (listType ? "d-flex flex-column" : "")
+      }
+    >
       <div className="job-pic text-center flex-shrink-0 d-flex position-relative">
-        <Badge color="danger" className="job-bid-count position-absolute">
+        {/* <Badge color="danger" className="job-bid-count position-absolute">
           50
-        </Badge>
+        </Badge> */}
         <Link
-          className={`text-black flex-fill position-relative 
-          ${
-            !product.images && !product.images.length
-              ? "no-job-image-blc align-items-center justify-content-center"
-              : ""
-          }`}
+          className={`text-black flex-fill position-relative ${imageclass}`}
           to={`${pathname}${product._id}`}
         >
           {/* <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" /> */}
-          {product.images && product.images.length ? (
+          {product.images && product.images.length !== 0 ? (
             <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />
           ) : (
-            <img src={`${apiUrl}/favicon.ico`} alt="Job" />
+            <img
+              src={require("../../../assets/images/icons/no-job-icon3.svg")}
+              alt="Job"
+            />
           )}
           {path === "/bid-list" && (
             <span className={`job-status-bar position-absolute ${classname}`}>
@@ -102,7 +112,8 @@ const JobProduct = ({ product, listType, path }) => {
       </div>
       <div
         className={
-          "job-inner " + (listType ? "d-flex flex-column flex-fill" : "")
+          "job-inner d-flex flex-column flex-fill " +
+          (listType ? "d-flex flex-column flex-fill" : "")
         }
       >
         <div

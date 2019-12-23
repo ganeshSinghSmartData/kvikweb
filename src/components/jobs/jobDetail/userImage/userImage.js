@@ -6,7 +6,13 @@ import "./userImage.scss";
 import { DummyUserImage } from "../../../../utilities/constants";
 import { apiUrl } from "./../../../../environment";
 
-const UserImage = ({ image, handleImageUpload, edit = false, path }) => {
+const UserImage = ({
+  image,
+  handleImageUpload,
+  imegeUploading,
+  edit = false,
+  path
+}) => {
   let imagepath = DummyUserImage;
   if (image && image.length !== 0) {
     imagepath = `${apiUrl}/${image[0].path}`;
@@ -21,11 +27,13 @@ const UserImage = ({ image, handleImageUpload, edit = false, path }) => {
       {edit && (
         <div className="update-cell position-absolute w-100 h-100">
           <span className="update-cell-inner position-absolute w-100 h-100 d-flex align-items-center justify-content-center">
-            {/* <span
+            {imegeUploading && (
+              <span
                 className="spinner-border spinner-border-sm"
                 role="status"
                 aria-hidden="true"
-              ></span> */}
+              ></span>
+            )}
             <span className="d-flex justify-content-center align-items-center udpate-image-btn position-absolute rounded-circle ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

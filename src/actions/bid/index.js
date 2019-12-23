@@ -202,7 +202,7 @@ export const acceptBid = (params, callback) => {
 };
 
 /****** action creator for start bid work ********/
-export const startBid = params => {
+export const startBid = (params, callback) => {
   return (dispatch, getState) => {
     const {
       data: { token }
@@ -211,11 +211,14 @@ export const startBid = params => {
       response => {
         if (response.status === 200) {
           toastAction(true, response.msg);
-          // dispatch(start_bid_work(response.data));
+          callback(true);
         } else if (response.status === 402) {
           console.log("errror with 401 : ");
+          callback(false);
           toastAction(false, response.msg);
         } else {
+          callback(false);
+          toastErrorAction(dispatch, response.msg);
           console.log("Un certain error");
         }
       }
@@ -224,7 +227,7 @@ export const startBid = params => {
 };
 
 /****** action creator for for end bid work ********/
-export const endBid = params => {
+export const endBid = (params, callback) => {
   return (dispatch, getState) => {
     const {
       data: { token }
@@ -232,13 +235,16 @@ export const endBid = params => {
     ApiClient.post(`${apiUrl}/bid/end_bid_work`, params, token).then(
       response => {
         if (response.status === 200) {
+          callback(true);
           toastAction(true, response.msg);
-          // dispatch(end_bid_work(response.data));
         } else if (response.status === 402) {
           console.log("errror with 401 : ");
+          callback(false);
           toastAction(false, response.msg);
         } else {
           console.log("Un certain error");
+          callback(false);
+          toastErrorAction(dispatch, response.msg);
         }
       }
     );

@@ -7,6 +7,7 @@ import Proposal from "../jobDetail/proposal/proposal";
 import Chat from "./chat/chat";
 import UserInfo from "./userInfo/userInfo";
 import { getUserDetails } from "./../../../actions/user";
+import Loader from "../../commonUi/loader/loader";
 import "./bidderProfile.scss";
 
 const BidderProfile = ({ user_id, review }) => {
@@ -57,10 +58,11 @@ const BidderProfile = ({ user_id, review }) => {
           </div>
           <div className="bidder-profl-blc-rw bidder-review">
             <h2>REVIEWS</h2>
-            {review.length !== 0 &&
-              review.map((item, key) => {
-                return <Proposal props={item} key={key} />;
-              })}
+            {review.length !== 0
+              ? review.map((item, key) => {
+                  return <Proposal props={item} key={key} />;
+                })
+              : ""}
             {review.length === 0 && <h6>No review found.</h6>}
           </div>
 
