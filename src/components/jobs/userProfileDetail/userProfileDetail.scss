@@ -102,6 +102,7 @@
   .user-cards-rw {
     margin: 0 0 17px 0;
     .user-cards {
+      cursor: pointer;
       border: 1px solid $secondary-200;
       padding: 20px;
       text-align: center;
@@ -166,7 +167,7 @@
     }
     .card-del-btn {
       top: -10px;
-      right: -9px;
+      right: 0;
       span {
         background: $danger;
         width: 24px;
@@ -183,6 +184,9 @@
   }
   .card-detail {
     margin-top: 25px;
+    max-height: 400px;
+    overflow: auto;
+    overflow-x: hidden;
     h2 {
       font-weight: 700;
       color: $dark-default;
@@ -206,6 +210,91 @@
   }
 }
 
+.payment-form {
+  .react-datepicker-wrapper input {
+    border-radius: 0;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    &:focus {
+      border-color: #2db7fe;
+      box-shadow: none;
+    }
+  }
+  .react-datepicker-wrapper input {
+    padding-left: 0;
+  }
+  .payment-upload-rw {
+    h4 {
+      font-size: 14px;
+      font-weight: 400;
+      margin: 10px 0 15px 0;
+      i {
+        font-style: normal;
+      }
+    }
+    .payment-pic-btn-cell {
+      width: 130px;
+      margin: 0 10px 10px 0;
+      label {
+        width: 100%;
+        font-weight: 500;
+        margin-top: 4px;
+        font-size: 14px;
+      }
+      .payment-pic-btn {
+        * {
+          cursor: pointer;
+        }
+        width: 130px;
+        height: 130px;
+        .payment-upload-pic {
+          display: none;
+          .payment-upload-pic-btn {
+            top: 0;
+            right: 0;
+            width: 22px;
+            height: 22px;
+            background-color: $danger;
+            svg {
+              width: 10px;
+              fill: white;
+            }
+          }
+        }
+      }
+      .payment-upload-btn {
+        input {
+          top: 0;
+          right: 0;
+          left: 0;
+          bottom: 0;
+          opacity: 0;
+        }
+        .payment-upload-btn-icn {
+          border: 1px solid $primary;
+          border-radius: 6px;
+          width: 50px;
+          height: 50px;
+          svg {
+            width: 35px;
+            fill: $primary;
+          }
+        }
+      }
+    }
+  }
+  .payment-btn-row {
+    .btn {
+      min-width: 100px;
+      margin: 0 10px 10px 0;
+      @media (max-width: 600px) {
+        width: 100%;
+      }
+    }
+  }
+}
+// devloper css start
 .StripeElement {
   background-color: white;
 }
@@ -220,7 +309,7 @@
   margin-top: 10px;
 }
 .error {
-  color: red;
+  color: $danger;
 }
 
 .hidden {

@@ -493,14 +493,33 @@
 }
 .payment-confirm-check {
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 35px;
-  height: 35px;
+  top: 6px;
+  right: 6px;
+  width: 26px;
+  height: 26px;
   text-align: center;
   cursor: pointer;
-  background: $primary-dark;
-  border-radius: 0 8px;
+  // background: $primary-dark;
+  border: 2px solid $primary-dark;
+  border-radius: 26px;
+
+  input {
+    opacity: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .card-check-cell {
+    display: none;
+    svg {
+      width: 15px;
+      fill: $primary-dark;
+    }
+  }
+  input:checked + .card-check-cell {
+    display: block;
+  }
 }
 .payment-confirm-rw {
   margin: 0 0 12px 0;
@@ -512,14 +531,18 @@
   color: #333;
 }
 
-.card-confirm-pic {
+.card-confirm-pic,
+.card-confirm-pic2 {
   width: 46px;
   margin-right: 6px;
-  border: 1px solid #e1e1e1;
-  background: #fff;
-  border-radius: 4px;
+  // border: 1px solid #e1e1e1;
+  // background: #fff;
+  // border-radius: 4px;
 }
-.card-confirm-pic img {
+.card-confirm-pic2 {
+  margin-right: 0;
+}
+.card-confirm-pic img .card-confirm-pic2 img {
   width: 35px;
 }
 .payment-confirm .form-control {
@@ -557,3 +580,4 @@
 .no-card-msg p {
   margin: 15px 0 0;
 }
+// Payment modal style end

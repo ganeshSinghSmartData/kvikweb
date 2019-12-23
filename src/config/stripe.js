@@ -87,12 +87,12 @@ class _CardForm extends Component {
 
   render() {
     return (
-      <div className="CardDemo payment-cardDemo">
+      <div className="CardDemo payment-cardDemo payment-form">
         <form onSubmit={this.handleSubmit.bind(this)}>
           <label>
             <CardElement
               onChange={this.handleChange}
-              {...createOptions() }
+              {...createOptions()}
             />
             {/* <UserPayment></UserPayment> */}
           </label>

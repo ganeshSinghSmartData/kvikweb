@@ -201,7 +201,7 @@ export default function JobDetail({
                 />
               ) : (
                 <img
-                  src={require("../../../assets/images/icons/no-job-icon.svg")}
+                  src={require("../../../assets/images/icons/no-job-icon3.svg")}
                   alt="Job Post User"
                 />
               )}

@@ -185,7 +185,7 @@ const UserProfile = ({
             </div>
             {!isEdit && <UserInfo description={user.about} />}
           </div>
-          <UserPayment></UserPayment>
+          <UserPayment />
         </div>
       </div>
     </div>

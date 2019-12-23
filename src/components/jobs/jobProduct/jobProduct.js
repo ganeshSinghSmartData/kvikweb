@@ -67,16 +67,20 @@ const JobProduct = ({ product, listType, path }) => {
   setJobStatus(product.status);
 
   return (
-    <div className={"job-wrapper " + (listType ? "d-flex flex-column" : "")}>
+    <div
+      className={
+        "job-wrapper d-flex flex-column flex-fill " +
+        (listType ? "d-flex flex-column" : "")
+      }
+    >
       <div className="job-pic text-center flex-shrink-0 d-flex position-relative">
-        <Badge color="danger" className="job-bid-count position-absolute">
+        {/* <Badge color="danger" className="job-bid-count position-absolute">
           50
-        </Badge>
+        </Badge> */}
         <Link
-          className={`text-black flex-fill position-relative 
-          ${
-            !product.images && !product.images.length
-              ? "no-job-image-blc align-items-center justify-content-center"
+          className={`text-black flex-fill position-relative ${
+            product.images
+              ? "no-job-image-blc d-flex align-items-center justify-content-center"
               : ""
           }`}
           to={`${pathname}${product._id}`}
@@ -86,7 +90,7 @@ const JobProduct = ({ product, listType, path }) => {
             <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />
           ) : (
             <img
-              src={require("../../../assets/images/icons/no-job-icon.svg")}
+              src={require("../../../assets/images/icons/no-job-icon3.svg")}
               alt="Job"
             />
           )}
@@ -105,7 +109,8 @@ const JobProduct = ({ product, listType, path }) => {
       </div>
       <div
         className={
-          "job-inner " + (listType ? "d-flex flex-column flex-fill" : "")
+          "job-inner d-flex flex-column flex-fill " +
+          (listType ? "d-flex flex-column flex-fill" : "")
         }
       >
         <div

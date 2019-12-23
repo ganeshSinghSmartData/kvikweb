@@ -13,8 +13,6 @@ const UserImage = ({
   edit = false,
   path
 }) => {
-  console.log("imegeUploading after : ", image);
-
   let imagepath = DummyUserImage;
   if (image && image.length !== 0) {
     imagepath = `${apiUrl}/${image[0].path}`;
