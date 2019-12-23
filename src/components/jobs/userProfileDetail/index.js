@@ -39,117 +39,117 @@ const UserProfile = ({
                       editimage={true}
                     />
                   ) : (
-                    <React.Fragment>
-                      <div
-                        className={`job-address d-flex ${
-                          isEdit ? "editMode" : ""
-                        }`}
-                      >
-                        <UserImage
-                          image={user.image}
-                          handleImageUpload={handleImageUpload}
-                          edit={isEdit}
-                        />
-                        <div className="job-user-info flex-fill">
-                          <div className="edit-profile-blc">
-                            <Label className="input-title">Email</Label>
-                            <InputCell
-                              Name={"email"}
-                              Placeholder={"Email"}
-                              Model=".email"
-                              InputType={"text"}
-                              Disabled={true}
-                              className="input-line-blc"
-                              Errors={{
-                                required: "required",
-                                invalidEmail: "invalidEmail"
-                              }}
-                            />
-                            <Label className="input-title">First Name</Label>
-                            <InputCell
-                              Name={"fname"}
-                              Placeholder={"First Name"}
-                              Model=".fname"
-                              InputType={"text"}
-                              className="input-line-blc"
-                              Errors={{
-                                required: "required"
-                              }}
-                            />
-                            <Label className="input-title">Last Name</Label>
-                            <InputCell
-                              Name={"lname"}
-                              Placeholder={"Last Name"}
-                              Model=".lname"
-                              InputType={"text"}
-                              className="input-line-blc"
-                              Errors={{
-                                required: "required"
-                              }}
-                            />
+                      <React.Fragment>
+                        <div
+                          className={`job-address d-flex ${
+                            isEdit ? "editMode" : ""
+                            }`}
+                        >
+                          <UserImage
+                            image={user.image}
+                            handleImageUpload={handleImageUpload}
+                            edit={isEdit}
+                          />
+                          <div className="job-user-info flex-fill">
+                            <div className="edit-profile-blc">
+                              <Label className="input-title">Email</Label>
+                              <InputCell
+                                Name={"email"}
+                                Placeholder={"Email"}
+                                Model=".email"
+                                InputType={"text"}
+                                Disabled={true}
+                                className="input-line-blc"
+                                Errors={{
+                                  required: "required",
+                                  invalidEmail: "invalidEmail"
+                                }}
+                              />
+                              <Label className="input-title">First Name</Label>
+                              <InputCell
+                                Name={"fname"}
+                                Placeholder={"First Name"}
+                                Model=".fname"
+                                InputType={"text"}
+                                className="input-line-blc"
+                                Errors={{
+                                  required: "required"
+                                }}
+                              />
+                              <Label className="input-title">Last Name</Label>
+                              <InputCell
+                                Name={"lname"}
+                                Placeholder={"Last Name"}
+                                Model=".lname"
+                                InputType={"text"}
+                                className="input-line-blc"
+                                Errors={{
+                                  required: "required"
+                                }}
+                              />
 
-                            <Label className="input-title">Mobile</Label>
-                            <InputCell
-                              Name={"mobile"}
-                              Placeholder={"Mobile"}
-                              Model=".mobile"
-                              InputType={"text"}
-                              className="input-line-blc"
-                              Errors={{
-                                required: "required",
-                                invalidNumber: "invalidNumber"
-                              }}
-                            />
-                            <Label className="input-title">Zip Code</Label>
-                            <InputCell
-                              Name={"zip"}
-                              Placeholder={"Zip"}
-                              Model=".zip_code"
-                              InputType={"text"}
-                              className="input-line-blc"
-                              Errors={{
-                                required: "required",
-                                invalidNumber: "invalidNumber"
-                              }}
-                            />
-                            <Label className="input-title">City</Label>
-                            <InputCell
-                              Name={"city"}
-                              Placeholder={"City"}
-                              Model=".city"
-                              InputType={"text"}
-                              className="input-line-blc"
-                              Errors={{
-                                required: "required"
-                              }}
-                            />
-                            <Label className="input-title">About Me </Label>
-                            <InputCell
-                              Name={"aboutme"}
-                              Placeholder={"About Me"}
-                              Model=".about"
-                              InputType={"textarea"}
-                              className="input-line-blc"
-                              Errors={{ required: "required" }}
-                            />
-                          </div>
-                          <div className="edit-profile-btns">
-                            <Button color="secondary" type="submit">
-                              Submit
+                              <Label className="input-title">Mobile</Label>
+                              <InputCell
+                                Name={"mobile"}
+                                Placeholder={"Mobile"}
+                                Model=".mobile"
+                                InputType={"text"}
+                                className="input-line-blc"
+                                Errors={{
+                                  required: "required",
+                                  invalidNumber: "invalidNumber"
+                                }}
+                              />
+                              <Label className="input-title">Zip Code</Label>
+                              <InputCell
+                                Name={"zip"}
+                                Placeholder={"Zip"}
+                                Model=".zip_code"
+                                InputType={"text"}
+                                className="input-line-blc"
+                                Errors={{
+                                  required: "required",
+                                  invalidNumber: "invalidNumber"
+                                }}
+                              />
+                              <Label className="input-title">City</Label>
+                              <InputCell
+                                Name={"city"}
+                                Placeholder={"City"}
+                                Model=".city"
+                                InputType={"text"}
+                                className="input-line-blc"
+                                Errors={{
+                                  required: "required"
+                                }}
+                              />
+                              <Label className="input-title">About Me </Label>
+                              <InputCell
+                                Name={"aboutme"}
+                                Placeholder={"About Me"}
+                                Model=".about"
+                                InputType={"textarea"}
+                                className="input-line-blc"
+                                Errors={{ required: "required" }}
+                              />
+                            </div>
+                            <div className="edit-profile-btns">
+                              <Button color="secondary" type="submit">
+                                Submit
                             </Button>
-                            <Button
-                              color="link"
-                              className="btn-dark cancel"
-                              onClick={() => _toggleEdit(!isEdit)}
-                              type="button"
-                            >
-                              Cancel
+                              <Button
+                                color="link"
+                                className="btn-dark cancel"
+                                onClick={() => _toggleEdit(!isEdit)}
+                                type="button"
+                              >
+                                Cancel
                             </Button>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </React.Fragment>
-                  )}
+                      </React.Fragment>
+                    )}
                 </LocalForm>
               </div>
               {!isEdit && (
@@ -183,7 +183,7 @@ const UserProfile = ({
             </div>
             {!isEdit && <UserInfo description={user.about} />}
           </div>
-          <UserPayment></UserPayment>
+          <UserPayment />
         </div>
       </div>
     </div>

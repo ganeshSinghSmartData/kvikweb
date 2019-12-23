@@ -231,7 +231,7 @@ const Job = ({
                     <button
                       className={`btn ${
                         jobType === "active" ? "btn-primary" : ""
-                      }`}
+                        }`}
                       onClick={() => {
                         setJobType("active");
                       }}
@@ -241,7 +241,7 @@ const Job = ({
                     <button
                       className={`btn ${
                         jobType === "completed" ? "btn-primary" : ""
-                      }`}
+                        }`}
                       onClick={() => {
                         setJobType("completed");
                       }}
@@ -304,7 +304,7 @@ const Job = ({
                       prodItem = { ...item.job_id, status: item.status };
                     }
                     return (
-                      <Col lg="4" className="product-col" key={key}>
+                      <Col lg="4" className="product-col d-flex flex-column" key={key}>
                         <JobProduct
                           product={prodItem}
                           listType={listType}

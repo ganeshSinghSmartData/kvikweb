@@ -1,3 +1,4 @@
+@import "../../assets/css/variables";
 nav {
   transition: all ease 0.3s 0s;
   li {
@@ -7,9 +8,27 @@ nav {
       color: #fff;
       text-decoration: none;
       padding: 9px 12px;
+    }
+    > .btn-link {
+      position: relative;
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        display: block;
+        height: 2px;
+        width: 0%;
+        background-color: #fff;
+        transition: all 0.35s ease;
+      }
       &:hover {
         color: #fff;
-        text-decoration: underline;
+        &:after {
+          opacity: 1;
+          width: calc(100% - 24px);
+          left: 12px;
+          right: 12px;
+        }
       }
     }
   }

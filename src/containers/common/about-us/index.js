@@ -20,19 +20,19 @@ class AboutUs extends Component {
     });
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   render() {
     return (
       <React.Fragment>
         {this.props.about_us_details &&
-        this.props.about_us_details.description ? (
-          <div
-            dangerouslySetInnerHTML={{
-              __html: this.props.about_us_details.description
-            }}
-          />
-        ) : null}
+          this.props.about_us_details.description ? (
+            <div className="data-page data-editor"
+              dangerouslySetInnerHTML={{
+                __html: this.props.about_us_details.description
+              }}
+            />
+          ) : null}
       </React.Fragment>
     );
   }
