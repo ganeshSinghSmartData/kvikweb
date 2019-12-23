@@ -8,7 +8,6 @@ import UserInfo from "../bidderProfile/userInfo/userInfo";
 import InputCell from "../../commonUi/input/inputCell";
 import UserImage from "../jobDetail/userImage/userImage";
 import UserPayment from "./userPayment";
-
 import "./userProfileDetail.scss";
 
 const UserProfile = ({

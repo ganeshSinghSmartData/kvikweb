@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
-import { LocalForm } from "react-redux-form";
+import { LocalForm, actions } from "react-redux-form";
 import DatePicker from "react-datepicker";
 import SelectSearch from "react-select-search";
 import moment from "moment";
@@ -21,8 +21,8 @@ export default ({
   _handleStageChange,
   _handleJobPost,
   _handleCategoryOnchange,
-  dataload,
-  _selectedCategory
+  _selectedCategory,
+  dataload
 }) => {
   const [images, setImages] = useState([]);
   const [uploadedImages, setUploadedImages] = useState(
@@ -42,7 +42,7 @@ export default ({
     job.category.length &&
     job.category.map(item => {
       if (item) {
-        CategoryItems.push({ name: item.title, value: item._id });
+        CategoryItems.push({ name: item.title, value: item.title });
       }
     });
 
@@ -156,6 +156,7 @@ export default ({
               _currentstage
             )
           }
+          getDispatch={dispatch => dispatch(actions.change(_jobDetails))}
         >
           {/* Stage 1 */}
           {_currentstage === 1 && (

@@ -7,6 +7,8 @@ import { DummyUserImage } from "../../../../utilities/constants";
 import { apiUrl } from "./../../../../environment";
 
 const UserImage = ({ image, handleImageUpload, edit = false, path }) => {
+  console.log("image : ", image);
+
   let imagepath = DummyUserImage;
   if (image && image.length !== 0) {
     imagepath = `${apiUrl}/${image[0].path}`;

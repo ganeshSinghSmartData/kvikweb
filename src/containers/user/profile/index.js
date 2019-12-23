@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 
 import UserProfile from "../../../components/jobs/userProfileDetail";
 import Loader from "../../../components/commonUi/loader/loader";
+import SpinnerOverlay from "../../../components/commonUi/spinner/spinnerOverlay/spinnerOverlay";
 
 import {
   getUserDetails,
@@ -60,7 +61,7 @@ class Profile extends Component {
     return (
       <React.Fragment>
         {this.state.loading && <Loader loading={this.state.loading} />}
-        {Object.keys(this.props.user.userDetails).length > 0 && (
+        {Object.keys(this.props.user.userDetails).length ? (
           <UserProfile
             user={this.props.user.userDetails}
             handleImageUpload={this._handleImageUpload}
@@ -69,6 +70,8 @@ class Profile extends Component {
             loading={this.state.loading}
             _toggleEdit={this._toggleEdit}
           />
+        ) : (
+          <SpinnerOverlay className="position-fixed" />
         )}
       </React.Fragment>
     );

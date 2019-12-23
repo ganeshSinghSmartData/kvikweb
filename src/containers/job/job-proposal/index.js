@@ -8,17 +8,12 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import JobDetail from "./../../../components/jobs/jobDetail/jobDetail";
 import { getUserJobDetails } from "../../../actions/bid";
 import SpinnerOverlay from "../../../components/commonUi/spinner/spinnerOverlay/spinnerOverlay";
-import {
-  approvedBidWork,
-  deleteMyJob,
-  reset_job_details
-} from "../../../actions/job";
+import { deleteMyJob, reset_job_details } from "../../../actions/job";
 
 class JobProposal extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    this.markJobComplete = this.markJobComplete.bind(this);
+    this.state = { isLoading: false };
     this.deleteJob = this.deleteJob.bind(this);
     this.confirmDelete = this.confirmDelete.bind(this);
   }
@@ -30,16 +25,6 @@ class JobProposal extends Component {
       this.props.getUserJobDetails({ jobId: params });
     }
   }
-
-  markJobComplete = (jobId, jobSeekerId, userId) => {
-    const reqData = {
-      job_seeker_id: userId,
-      job_provider_id: jobSeekerId,
-      job_id: jobId
-    };
-    this.props.approvedBidWork(reqData);
-  };
-
   confirmDelete = value => {
     confirmAlert({
       title: "",
@@ -77,7 +62,7 @@ class JobProposal extends Component {
             job={this.props.userJobDetails}
             history={this.props.history}
             path={pathname}
-            _markJobComplete={this.markJobComplete}
+            _isLoading={this.state.isLoading}
             _deleteJob={this.confirmDelete}
           ></JobDetail>
         ) : (
@@ -94,7 +79,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getUserJobDetails: bindActionCreators(getUserJobDetails, dispatch),
-  approvedBidWork: bindActionCreators(approvedBidWork, dispatch),
   deleteMyJob: bindActionCreators(deleteMyJob, dispatch),
   reset_job_details: bindActionCreators(reset_job_details, dispatch)
 });

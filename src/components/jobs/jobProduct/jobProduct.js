@@ -85,7 +85,10 @@ const JobProduct = ({ product, listType, path }) => {
           {product.images && product.images.length ? (
             <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />
           ) : (
-            <img src={`${apiUrl}/favicon.ico`} alt="Job" />
+            <img
+              src={require("../../../assets/images/icons/no-job-icon.svg")}
+              alt="Job"
+            />
           )}
           {path === "/bid-list" && (
             <span className={`job-status-bar position-absolute ${classname}`}>

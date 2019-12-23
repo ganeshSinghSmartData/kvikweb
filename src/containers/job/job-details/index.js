@@ -18,8 +18,6 @@ class JobDetails extends Component {
   constructor(props) {
     super(props);
     this.state = { pathname: "", isLoading: false, isStatusLoading: false };
-    this.confirmStartBidWork = this.confirmStartBidWork.bind(this);
-    this.confirmEndBidWork = this.confirmEndBidWork.bind(this);
     this.startBidWork = this.startBidWork.bind(this);
     this.endBidWork = this.endBidWork.bind(this);
   }
@@ -59,7 +57,7 @@ class JobDetails extends Component {
   };
 
   startBidWork(jobId, jobSeekerId, userId) {
-    this.setState({ isStatusLoading: true });
+    this.setState({ isStatusLoading: true, isLoading: true });
     const reqData = {
       job_id: jobId,
       job_seeker_id: jobSeekerId,
@@ -67,16 +65,17 @@ class JobDetails extends Component {
     };
     this.props.startBid(reqData, callback => {
       if (callback) {
-        this.setState({ isStatusLoading: false });
+        this.setState({ isStatusLoading: false, isLoading: false });
         this.props.history.push("/bid-list");
       } else {
-        this.setState({ isStatusLoading: false });
+        this.setState({ isStatusLoading: false, isLoading: false });
+        this.props.history.push("/bid-list");
       }
     });
   }
 
   endBidWork(jobId, jobSeekerId, userId) {
-    this.setState({ isStatusLoading: true });
+    this.setState({ isStatusLoading: true, isLoading: true });
     const reqData = {
       job_id: jobId,
       job_seeker_id: jobSeekerId,
@@ -84,10 +83,11 @@ class JobDetails extends Component {
     };
     this.props.endBid(reqData, callback => {
       if (callback) {
-        this.setState({ isStatusLoading: false });
+        this.setState({ isStatusLoading: false, isLoading: false });
         this.props.history.push("/bid-list");
       } else {
-        this.setState({ isStatusLoading: false });
+        this.setState({ isStatusLoading: false, isLoading: false });
+        this.props.history.push("/bid-list");
       }
     });
   }
@@ -128,8 +128,12 @@ class JobDetails extends Component {
             job={jobDetails}
             history={this.props.history}
             path={this.state.pathname}
-            _startJob={this.confirmStartBidWork}
-            _endJob={this.confirmEndBidWork}
+            _startJob={(jobId, jobSeekerId, userId) =>
+              this.confirmStartBidWork(jobId, jobSeekerId, userId)
+            }
+            _endJob={(jobId, jobSeekerId, userId) =>
+              this.confirmEndBidWork(jobId, jobSeekerId, userId)
+            }
             _isLoading={this.state.isLoading}
             _isStatusLoading={this.state.isStatusLoading}
           ></JobDetail>

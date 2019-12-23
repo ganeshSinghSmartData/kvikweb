@@ -7,7 +7,7 @@ import { verifyEmail } from "../../actions/user";
 
 const EmailVerify = () => {
   const dispatch = useDispatch();
-  const [verified, setVerified] = useState(false);
+  const [verified, setVerified] = useState(true);
 
   const { location } = useSelector(state => state.router);
   let params = location.pathname.split("/");

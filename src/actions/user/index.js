@@ -49,14 +49,13 @@ export const loginUser = (params, callback) => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(login_users(response));
-        // toastAction(true, "User successfully logged In");
         callback(true);
       } else if (response.status === 404) {
         callback(false);
-        toastErrorAction(dispatch, response.msg);
+        toastAction(false, response.msg);
       } else {
         callback(false);
-        dispatch(is_fetching(false));
+        toastErrorAction(dispatch, response.msg);
       }
     });
   };

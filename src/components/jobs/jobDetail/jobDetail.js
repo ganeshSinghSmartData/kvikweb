@@ -18,7 +18,11 @@ import Breadcrumb from "../../commonUi/breadcrumb/breadcrumb";
 import { StringToDate, DaysBetween } from "./../../../utilities/common";
 import { JobStatus, BidStatus } from "../../../utilities/constants";
 import { apiUrl } from "./../../../environment";
-import { placeYourBid, addBidderReview } from "./../../../actions/job";
+import {
+  placeYourBid,
+  addBidderReview,
+  approvedBidWork
+} from "./../../../actions/job";
 import Spinner from "../../commonUi/spinner/spinner";
 import SpinnerOverlay from "../../commonUi/spinner/spinnerOverlay/spinnerOverlay";
 
@@ -30,7 +34,6 @@ export default function JobDetail({
   history,
   job = {},
   path = "",
-  _markJobComplete,
   _deleteJob,
   _startJob,
   _endJob,
@@ -99,7 +102,7 @@ export default function JobDetail({
           if (callback) {
             setModalLoading(false);
             setOpenModal(!openModal);
-            history.push("/");
+            history.push("/bid-list");
           } else {
             setOpenModal(!openModal);
             setModalLoading(false);
@@ -114,18 +117,34 @@ export default function JobDetail({
         rating: rate,
         review: values.reveiw
       };
-      _markJobComplete(job._id, job.job_seeker_id._id, user.data._id);
       dispatch(
-        addBidderReview(reqData, callback => {
-          if (callback) {
-            setModalLoading(false);
-            setOpenModal(!openModal);
-            history.push("/");
-          } else {
-            setOpenModal(!openModal);
-            setModalLoading(false);
+        approvedBidWork(
+          {
+            job_seeker_id: job.bidersLIstingcheck[0].job_provider_id._id,
+            job_provider_id: job.job_provider_id,
+            job_id: job._id
+          },
+          callback => {
+            if (callback) {
+              dispatch(
+                addBidderReview(reqData, callback => {
+                  if (callback) {
+                    setModalLoading(false);
+                    setOpenModal(!openModal);
+                    history.push("/job-list");
+                  } else {
+                    setOpenModal(!openModal);
+                    setModalLoading(false);
+                  }
+                })
+              );
+            } else {
+              setOpenModal(!openModal);
+              setModalLoading(false);
+              history.push("/job-list");
+            }
           }
-        })
+        )
       );
     }
   };
@@ -162,7 +181,7 @@ export default function JobDetail({
 
   return (
     <div className="job-detail-blc d-flex flex-column flex-fill">
-      {_isStatusLoading && <SpinnerOverlay className="position-fixed" />}
+      {_isLoading && <SpinnerOverlay className="position-fixed" />}
       <div className="job-detail-hd d-flex align-items-center">
         <h2 className="flex-fill">Job Details</h2>
         <Breadcrumb path={path} />
@@ -181,7 +200,10 @@ export default function JobDetail({
                   alt="Job Post User"
                 />
               ) : (
-                <img src={`${apiUrl}/favicon.ico`} alt="Job Post User" />
+                <img
+                  src={require("../../../assets/images/icons/no-job-icon.svg")}
+                  alt="Job Post User"
+                />
               )}
             </div>
             <div className="d-flex justify-content-center">
@@ -239,7 +261,7 @@ export default function JobDetail({
                     <p className="m-0 w-100">
                       bidding ends in: {StringToDate(job.jobEndDate)}
                     </p>
-                    {path === "/job-proposal" && (
+                    {path === "/job-proposal" && job.status === "not_started" && (
                       <div className="job-edit-btns d-flex">
                         <Link
                           className="btn d-flex justify-content-center align-items-center p-0 job-edit-btn"
@@ -364,7 +386,7 @@ export default function JobDetail({
                       <p>{job["frequency"]}</p>
                     </li>
                   )}
-                  {job.job_seeker_id["city"] && (
+                  {job["street"] && (
                     <li className="d-flex">
                       <span className="svg-secondary-100 flex-shrink-0">
                         <svg
@@ -383,7 +405,7 @@ export default function JobDetail({
                           </g>
                         </svg>
                       </span>
-                      <p>{`${job.job_seeker_id["city"]}, ${job.job_seeker_id["zip_code"]}`}</p>
+                      <p>{`${job["street"]}, ${job["city"]}, ${job["location"]}`}</p>
                     </li>
                   )}
 
@@ -563,7 +585,7 @@ export default function JobDetail({
           startJob={() =>
             _startJob(job._id, job.job_seeker_id._id, user.data._id)
           }
-          _loading={_isLoading}
+          _loading={_isStatusLoading}
         />
 
         <RateBidderWorkModal
@@ -575,6 +597,7 @@ export default function JobDetail({
             job.bidersLIstingcheck.length &&
             `${job.bidersLIstingcheck[0].job_provider_id.fname} ${job.bidersLIstingcheck[0].job_provider_id.lname}`
           }
+          _loading={isModalLoading}
           _handleSubmit={handleSubmit}
           history={history}
         />

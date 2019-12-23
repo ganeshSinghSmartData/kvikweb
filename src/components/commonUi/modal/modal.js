@@ -127,7 +127,7 @@ const SignInModal = ({
                 <h3 className="text-center position-relative mb0">
                   Welcome to
                   <span className="d-block">
-                    <Logo className="signup-logo" />
+                    <Logo className="signup-logo" navigate={false} />
                   </span>
                 </h3>
               </div>
@@ -419,7 +419,7 @@ const SignInModal = ({
 
               {props._acceptProposal && (
                 <div className="payment-confirm-blc flex-fill">
-                  {(!props._cards || props._cards.length === 0) && (
+                  {!props._cards || props._cards.length === 0 ? (
                     <div className="no-card-blc text-center d-flex justify-content-center align-items-center">
                       <div className="no-card-msg">
                         No Card Added yet!!
@@ -434,8 +434,7 @@ const SignInModal = ({
                         </p>
                       </div>
                     </div>
-                  )}
-                  {props._cards && props._cards.length !== 0 && (
+                  ) : (
                     <React.Fragment>
                       <h2>
                         <strong>Card Holder:</strong>
