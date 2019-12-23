@@ -13,6 +13,7 @@ import "./userProfileDetail.scss";
 const UserProfile = ({
   user,
   handleImageUpload,
+  imegeUploading,
   isEdit,
   handleSubmit,
   loading,
@@ -35,6 +36,7 @@ const UserProfile = ({
                     <JobAddress
                       job_seeker_id={user}
                       handleImageUpload={handleImageUpload}
+                      imegeUploading={imegeUploading}
                       editimage={true}
                     />
                   ) : (
@@ -47,6 +49,7 @@ const UserProfile = ({
                         <UserImage
                           image={user.image}
                           handleImageUpload={handleImageUpload}
+                          imegeUploading={imegeUploading}
                           edit={isEdit}
                         />
                         <div className="job-user-info flex-fill">

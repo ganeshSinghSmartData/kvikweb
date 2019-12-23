@@ -39,7 +39,9 @@ class Profile extends Component {
     formData.append("images", file[0]);
     this.props.uploadUserImage(formData, callback => {
       if (callback) {
-        this.setState({ uploading: true });
+        this.setState({ uploading: false });
+      } else {
+        this.setState({ uploading: false });
       }
     });
   };
@@ -65,6 +67,7 @@ class Profile extends Component {
           <UserProfile
             user={this.props.user.userDetails}
             handleImageUpload={this._handleImageUpload}
+            imegeUploading={this.state.uploading}
             isEdit={this.state.isEdit}
             handleSubmit={this._handleSubmit}
             loading={this.state.loading}
