@@ -15,7 +15,7 @@ class PostNewJob extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      stage: 3,
+      stage: 1,
       pathname: "",
       selectedCategory: "",
       dataload: false
