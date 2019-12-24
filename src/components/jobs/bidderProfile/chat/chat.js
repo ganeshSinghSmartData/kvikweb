@@ -52,8 +52,12 @@ const Chat = props => {
     props.chatHideCallback(false);
   };
   return (
-    <div className={`chat-block d-flex flex-column ${props.chatToggle ? "on" : ""}`}>
-      <div className="chat-head d-flex">
+    <div
+      className={`chat-block d-flex flex-column ${
+        props.chatToggle ? "on" : ""
+      }`}
+    >
+      <div className="chat-head d-flex flex-shrink-0">
         <h2>CHAT</h2>
         <Button
           color="primary"
@@ -97,13 +101,13 @@ const Chat = props => {
                       </div>
                     </div>
                   ) : (
-                      <div className="chat-row d-flex justify-content-end">
-                        <div className="chat-txt user">
-                          <p>{val.message}</p>
-                          <span className="d-block chat-time">09:20PM</span>
-                        </div>
+                    <div className="chat-row d-flex justify-content-end">
+                      <div className="chat-txt user">
+                        <p>{val.message}</p>
+                        <span className="d-block chat-time">09:20PM</span>
                       </div>
-                    )}
+                    </div>
+                  )}
                 </React.Fragment>
               );
             })}
@@ -125,7 +129,11 @@ const Chat = props => {
         </div> */}
       </div>
       <div className="chat-foot">
-        <LocalForm model="messages" onSubmit={values => handleMessage(values)} className="d-flex">
+        <LocalForm
+          model="messages"
+          onSubmit={values => handleMessage(values)}
+          className="d-flex"
+        >
           <div className="chat-foot-l flex-fill">
             <FormGroup>
               <Control.text
