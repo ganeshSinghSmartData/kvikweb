@@ -52,7 +52,7 @@ const Chat = props => {
     props.chatHideCallback(false);
   };
   return (
-    <div className={`chat-block ${props.chatToggle ? "on" : ""}`}>
+    <div className={`chat-block d-flex flex-column ${props.chatToggle ? "on" : ""}`}>
       <div className="chat-head d-flex">
         <h2>CHAT</h2>
         <Button
@@ -79,15 +79,16 @@ const Chat = props => {
           </svg>
         </Button>
       </div>
-      <div className="chat-inner overflow-auto">
-        <ScrollToBottom className={ROOT_CSS}>
+      <div className="chat-inner overflow-auto flex-fill">
+        {/* <ScrollToBottom className={ROOT_CSS}> */}
+        <ScrollToBottom>
           {messages &&
             messages.data.length > 0 &&
             messages.data.map((val, index) => {
               return (
                 <React.Fragment>
                   {val.senderId === user.data._id ? (
-                    <div className="chat-row">
+                    <div className="chat-row d-flex">
                       <div className="chat-txt admin">
                         <p>{val.message}</p>
                         <span className="d-block chat-time">
@@ -96,13 +97,13 @@ const Chat = props => {
                       </div>
                     </div>
                   ) : (
-                    <div className="chat-row rt">
-                      <div className="chat-txt user">
-                        <p>{val.message}</p>
-                        <span className="d-block chat-time">09:20PM</span>
+                      <div className="chat-row d-flex justify-content-end">
+                        <div className="chat-txt user">
+                          <p>{val.message}</p>
+                          <span className="d-block chat-time">09:20PM</span>
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
                 </React.Fragment>
               );
             })}
@@ -112,7 +113,7 @@ const Chat = props => {
             Today
           </label>
         </div>
-        <div className="chat-row">
+        <div className="chat-row d-flex">
           <div className="chat-txt admin">
             <p>
               Lorem ipsum dolor sit ameti
@@ -123,8 +124,8 @@ const Chat = props => {
           </div>
         </div> */}
       </div>
-      <div className="chat-foot d-flex">
-        <LocalForm model="messages" onSubmit={values => handleMessage(values)}>
+      <div className="chat-foot">
+        <LocalForm model="messages" onSubmit={values => handleMessage(values)} className="d-flex">
           <div className="chat-foot-l flex-fill">
             <FormGroup>
               <Control.text

@@ -3,9 +3,34 @@
   .breadcrumb {
     background-color: transparent;
     justify-content: flex-end;
+    margin: 0;
+    @media (max-width: 600px) {
+      padding-left: 0;
+      padding-right: 0;
+    }
     a {
+      position: relative;
       color: $primary-dark;
       padding: 4px 5px;
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        display: block;
+        height: 2px;
+        width: 0%;
+        background-color: $primary;
+        transition: all 0.35s ease;
+      }
+      &:hover {
+        text-decoration: none;
+        &:after {
+          opacity: 1;
+          width: calc(100% - 10px);
+          left: 5px;
+          right: 5px;
+        }
+      }
     }
   }
 }

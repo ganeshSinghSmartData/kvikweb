@@ -8,6 +8,7 @@ import Chat from "./chat/chat";
 import UserInfo from "./userInfo/userInfo";
 import { getUserDetails } from "./../../../actions/user";
 import Loader from "../../commonUi/loader/loader";
+import Breadcrumb from "../../commonUi/breadcrumb/breadcrumb";
 import "./bidderProfile.scss";
 
 const BidderProfile = ({ user_id, review }) => {
@@ -30,7 +31,10 @@ const BidderProfile = ({ user_id, review }) => {
   return (
     <>
       <div className="bidder-profl-wrapper">
-        <h3 className="text-center">Profile</h3>
+        <div className="job-detail-hd d-flex align-items-center">
+          <h2 className="flex-fill">Profile</h2>
+          <Breadcrumb />
+        </div>
         <div className="data-page bidder-profl-blc position-relative">
           <div className="bidder-profl-blc-rw">
             <div className="bidder-profl-rw d-flex">
@@ -60,8 +64,8 @@ const BidderProfile = ({ user_id, review }) => {
             <h2>REVIEWS</h2>
             {review.length !== 0
               ? review.map((item, key) => {
-                  return <Proposal props={item} key={key} />;
-                })
+                return <Proposal props={item} key={key} />;
+              })
               : ""}
             {review.length === 0 && <h6>No review found.</h6>}
           </div>
