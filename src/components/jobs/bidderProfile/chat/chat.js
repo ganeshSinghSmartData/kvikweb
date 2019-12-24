@@ -85,7 +85,7 @@ const Chat = props => {
             messages.data.length > 0 &&
             messages.data.map((val, index) => {
               return (
-                <React.Fragment>
+                <React.Fragment key={index}>
                   {val.senderId === user.data._id ? (
                     <div className="chat-row">
                       <div className="chat-txt admin">

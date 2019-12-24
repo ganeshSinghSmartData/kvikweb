@@ -75,7 +75,7 @@ export const forgotPassword = (params, callback) => {
         toastErrorAction(dispatch, response.msg);
       } else {
         callback(false);
-        dispatch(is_fetching(false));
+        toastErrorAction(dispatch, response.msg);
       }
     });
   };
@@ -95,7 +95,7 @@ export const changePassword = (params, callback) => {
         toastErrorAction(dispatch, response.msg);
       } else {
         callback(false);
-        dispatch(is_fetching(false));
+        toastErrorAction(dispatch, response.msg);
       }
     });
   };
@@ -117,7 +117,7 @@ export const verifyEmail = (params, callback) => {
         toastErrorAction(dispatch, response.msg);
       } else {
         callback(response.msg);
-        dispatch(is_fetching(false));
+        toastErrorAction(dispatch, response.msg);
       }
     });
   };
@@ -195,10 +195,8 @@ export const AddCard = (params = {}, callback) => {
       response => {
         if (response.status === 200) {
           toastAction(true, "Card successfully saved");
-          dispatch(is_fetching(false));
           callback(true);
         } else {
-          dispatch(is_fetching(false));
           toastAction(false, response.msg);
           callback(false);
         }

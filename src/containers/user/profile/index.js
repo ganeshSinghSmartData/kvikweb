@@ -48,7 +48,9 @@ class Profile extends Component {
 
   _handleSubmit = params => {
     this.setState({ loading: true });
-    this.props.updateUserDetails(params, callback => {
+    let reqdata = { ...params };
+    delete reqdata.image;
+    this.props.updateUserDetails(reqdata, callback => {
       if (callback) {
         this._toggleEdit(false);
         this.setState({ loading: false });

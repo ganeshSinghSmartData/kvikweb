@@ -78,13 +78,17 @@ export default ({
   const handleImageOnchange = event => {
     files = event;
     setImageData({ ...imageData, ...files });
-    const imagesData = Object.values(files).reduce((list, key) => {
-      if (key && typeof key === "object") {
-        let url = URL.createObjectURL(key);
-        list.push(url);
-      }
-      return list;
-    }, []);
+    const imagesData = Object.values(files)
+      .slice(0, 5)
+      .reduce((list, key) => {
+        if (key.type.includes("image/")) {
+          if (key && typeof key === "object") {
+            let url = URL.createObjectURL(key);
+            list.push(url);
+          }
+        }
+        return list;
+      }, []);
     setImages([...images, ...imagesData]);
   };
 
@@ -117,6 +121,11 @@ export default ({
     }
   };
 
+  let isImageLengthExist = false;
+
+  if (images && uploadedImages && uploadedImages.length + images.length > 5) {
+    isImageLengthExist = true;
+  }
   return (
     <div className="post-wrapper data-block ml-auto mr-auto position-relative">
       {dataload && <Loader loading={dataload} />}
@@ -187,7 +196,8 @@ export default ({
                   Placeholder={"Job Title"}
                   Model=".jobtitle"
                   InputType={"text"}
-                  Errors={{ required: "required" }}
+                  Length={50}
+                  Errors={{ required: "required", lengthExist: "lengthExist" }}
                 />
               </div>
               <div className="col-md-6">
@@ -197,7 +207,8 @@ export default ({
                   Placeholder={"About the job"}
                   Model=".description"
                   InputType={"textarea"}
-                  Errors={{ required: "required" }}
+                  Length={500}
+                  Errors={{ required: "required", lengthExist: "lengthExist" }}
                 />
               </div>
               <div className="col-md-6">
@@ -207,8 +218,10 @@ export default ({
                   Placeholder={"Budget"}
                   Model=".budget"
                   InputType={"text"}
+                  Length={6}
                   Errors={{
-                    invalidNumber: "invalidNumber"
+                    invalidNumber: "invalidNumber",
+                    lengthExist: "lengthExist"
                   }}
                 />
               </div>
@@ -224,7 +237,8 @@ export default ({
                   Placeholder={"Street"}
                   Model=".street"
                   InputType={"text"}
-                  Errors={{ required: "required" }}
+                  Length={20}
+                  Errors={{ required: "required", lengthExist: "lengthExist" }}
                 />
               </div>
               <div className="col-md-4">
@@ -234,7 +248,8 @@ export default ({
                   Placeholder={"City"}
                   Model=".city"
                   InputType={"text"}
-                  Errors={{ required: "required" }}
+                  Length={20}
+                  Errors={{ required: "required", lengthExist: "lengthExist" }}
                 />
               </div>
               <div className="col-md-4">
@@ -244,8 +259,10 @@ export default ({
                   Placeholder={"Postal Code"}
                   Model=".location"
                   InputType={"text"}
+                  Length={6}
                   Errors={{
                     required: "required",
+                    lengthExist: "lengthExist",
                     invalidNumber: "invalidNumber"
                   }}
                 />
@@ -307,7 +324,7 @@ export default ({
               <ul className="d-flex flex-wrap ml-auto mr-auto">
                 {images &&
                   images.length > 0 &&
-                  images.map((item, key) => {
+                  images.slice(0, 5).map((item, key) => {
                     return (
                       <li key={key} className="position-relative">
                         <Button
@@ -358,7 +375,6 @@ export default ({
                       </li>
                     );
                   })}
-
                 <li>
                   <Button
                     color="primary"
@@ -369,6 +385,7 @@ export default ({
                     <InputCell
                       Name={"file"}
                       Model=".images"
+                      Disabled={isImageLengthExist}
                       InputType="file"
                       Placeholder={"Image Upload"}
                       Multiple="multiple"
@@ -392,6 +409,13 @@ export default ({
                       </g>
                     </svg>
                   </Button>
+                </li>
+                <li>
+                  {isImageLengthExist ? (
+                    <span>You can select maximum 5 images for the job.</span>
+                  ) : (
+                    ""
+                  )}
                 </li>
               </ul>
             </div>
@@ -425,7 +449,11 @@ export default ({
               </Button>
             )}
             {_currentstage === 3 && (
-              <Button color="secondary" type="submit">
+              <Button
+                color="secondary"
+                type="submit"
+                disabled={isImageLengthExist}
+              >
                 POST NOW
               </Button>
             )}

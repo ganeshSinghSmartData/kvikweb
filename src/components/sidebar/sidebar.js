@@ -115,9 +115,11 @@ const Sidebar = ({
                   Placeholder={"Enter Postal Code"}
                   Model=".postal-code"
                   InputType={"text"}
+                  Length={6}
                   handlePostalCode={_handlePostalCode}
                   Errors={{
-                    invalidNumber: "invalidNumber"
+                    invalidNumber: "invalidNumber",
+                    lengthExist: "lengthExist"
                   }}
                 />
               </LocalForm>

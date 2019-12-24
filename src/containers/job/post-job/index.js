@@ -15,7 +15,7 @@ class PostNewJob extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      stage: 1,
+      stage: 3,
       pathname: "",
       selectedCategory: "",
       dataload: false
@@ -33,9 +33,6 @@ class PostNewJob extends Component {
       this.setState({ pathname: "/edit-job" });
     } else {
       this.setState({ pathname: "/post-job" });
-    }
-    if (this.props.category && this.props.category) {
-      this.setState({ selectedCategory: this.props.category[0].title });
     }
   }
 
@@ -81,8 +78,6 @@ class PostNewJob extends Component {
           }
         }
       }
-      console.log("jobData :", jobData);
-
       formData.append("category", this.state.selectedCategory);
       formData.append("jobtitle", jobData.jobtitle);
       formData.append("description", jobData.description);
@@ -153,14 +148,14 @@ class PostNewJob extends Component {
               _handleStageChange={this.handleStageChange}
               _handleJobPost={this.handleJobPost}
               _handleJobUpdate={this.handleJobUpdate}
-              _handleCategoryOnchange={category =>
-                this.setState({
-                  selectedCategory: category
-                    ? category.value
-                    : this.props.category[0].title
-                })
+              _handleCategoryOnchange={category => {
+                this.setState({ selectedCategory: category.value });
+              }}
+              _selectedCategory={
+                this.state.selectedCategory !== ""
+                  ? this.state.selectedCategory
+                  : this.props.jobDetails.category
               }
-              _selectedCategory={this.state.selectedCategory}
               path={this.state.pathname}
               dataload={this.state.dataload}
             />

@@ -7,7 +7,6 @@ import Proposal from "../jobDetail/proposal/proposal";
 import Chat from "./chat/chat";
 import UserInfo from "./userInfo/userInfo";
 import { getUserDetails } from "./../../../actions/user";
-import Loader from "../../commonUi/loader/loader";
 import "./bidderProfile.scss";
 
 const BidderProfile = ({ user_id, review }) => {

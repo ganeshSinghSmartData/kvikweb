@@ -107,11 +107,12 @@ export const createNewJob = (params, callback) => {
           dispatch(post_job_products(response.data));
           toastAction(true, response.msg);
           callback(true);
-        } else if (response.status === 401) {
+        } else if (response.status === 402) {
+          toastAction(false, response.msg);
           callback(false);
         } else {
-          dispatch(is_fetching(false));
           callback(false);
+          toastErrorAction(dispatch, response.msg);
         }
       }
     );
@@ -133,8 +134,8 @@ export const updateExistingJob = (params, callback) => {
         } else if (response.status === 401) {
           callback(false);
         } else {
-          dispatch(is_fetching(false));
           callback(false);
+          toastErrorAction(dispatch, response.msg);
         }
       }
     );
@@ -157,8 +158,8 @@ export const placeYourBid = (params, callback) => {
         callback(false);
         toastAction(false, response.msg);
       } else {
-        dispatch(is_fetching(false));
         callback(false);
+        toastErrorAction(dispatch, response.msg);
       }
     });
   };
