@@ -51,7 +51,7 @@ const UserProfile = props => {
   };
 
   let imagepath = DummyUserImage;
-  if (props.image && props.image.length) {
+  if (!props.image && props.image.length) {
     imagepath = `${apiUrl}/${props.image[0].path}`;
   }
 

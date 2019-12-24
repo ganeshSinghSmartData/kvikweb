@@ -370,3 +370,29 @@ input[type="search"]::-webkit-search-decoration {
     margin-bottom: 20px;
   }
 }
+
+// Tab focus style
+.dropdown-header {
+  &:focus {
+    outline: none;
+  }
+}
+//Detail heading style start
+.job-detail-blc {
+  .job-detail-hd {
+    padding-bottom: 18px;
+    @media (max-width: 600px) {
+      flex-direction: column;
+      align-items: flex-start !important;
+    }
+    p {
+      color: rgba(0, 0, 0, 0.7);
+    }
+    > h2 {
+      margin: 0;
+      @media (max-width: 600px) {
+        order: 2;
+      }
+    }
+  }
+}

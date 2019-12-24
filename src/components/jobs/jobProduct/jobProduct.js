@@ -53,9 +53,9 @@ const JobProduct = ({ product, listType, path }) => {
       case "rejected":
         return (classname = "job-danger-bar");
       case "approved":
-        return (classname = "status-primary");
+        return (classname = "job-primary-bar");
       case "accepted":
-        return (classname = "status-primary");
+        return (classname = "job-primary-bar");
       case "completed":
         return (classname = "job-success-bar");
       case "in_progress":
@@ -81,9 +81,6 @@ const JobProduct = ({ product, listType, path }) => {
       }
     >
       <div className="job-pic text-center flex-shrink-0 d-flex position-relative">
-        {/* <Badge color="danger" className="job-bid-count position-absolute">
-          50
-        </Badge> */}
         <Link
           className={`text-black flex-fill position-relative ${imageclass}`}
           to={`${pathname}${product._id}`}
@@ -92,11 +89,11 @@ const JobProduct = ({ product, listType, path }) => {
           {product.images && product.images.length !== 0 ? (
             <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />
           ) : (
-            <img
-              src={require("../../../assets/images/icons/no-job-icon3.svg")}
-              alt="Job"
-            />
-          )}
+              <img
+                src={require("../../../assets/images/icons/no-job-icon3.svg")}
+                alt="Job"
+              />
+            )}
           {path === "/bid-list" && (
             <span className={`job-status-bar position-absolute ${classname}`}>
               {workStatus[product.status]}
@@ -153,34 +150,14 @@ const JobProduct = ({ product, listType, path }) => {
         {path === "/job-list" && product.status === "not_started" && (
           <div className=" job-location bid-count-rw d-flex">
             <span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="497.25"
-                height="612"
-                viewBox="0 0 497.25 612"
-              >
-                <g id="timer" transform="translate(-57.375)">
-                  <g id="Group_4" data-name="Group 4">
-                    <path
-                      id="Path_3"
-                      data-name="Path 3"
-                      d="M432.272,68.692l-20.554,35.567,71.221,41.109L503.494,109.8a20.6,20.6,0,0,0-7.545-28.1L460.382,61.141A20.545,20.545,0,0,0,432.272,68.692Z"
-                    />
-                    <path
-                      id="Path_4"
-                      data-name="Path 4"
-                      d="M306,92.56a269.549,269.549,0,0,1,38.25,3.065V62.357l26.3-.2V19.125A19.114,19.114,0,0,0,351.422,0H260.779a19.114,19.114,0,0,0-19.125,19.125V62.156l26.1.2V95.625A269.549,269.549,0,0,1,306,92.56Z"
-                    />
-                    <path
-                      id="Path_5"
-                      data-name="Path 5"
-                      d="M306,114.75c-137.312,0-248.625,111.312-248.625,248.625S168.688,612,306,612,554.625,500.688,554.625,363.375,443.312,114.75,306,114.75ZM422.185,480.229l-144.873-100.3V238.34H319.12V358.029l126.86,87.827Z"
-                    />
+              <svg xmlns="http://www.w3.org/2000/svg" width="270.006" height="270.122" viewBox="0 0 270.006 270.122">
+                <g id="arrow-next" transform="translate(-0.11)">
+                  <g id="Group_1" data-name="Group 1" transform="translate(0.11)">
+                    <path id="Path_1" data-name="Path 1" d="M133.472,0C67.4,0,11.371,48.968.11,111.847H114.068V72.279A7.915,7.915,0,0,1,126.927,66.1l79.137,63.31a7.923,7.923,0,0,1,0,12.365l-79.137,63.31a7.915,7.915,0,0,1-12.859-6.183V159.33H.11C11.371,222.21,67.4,270.122,133.472,270.122c74.183,0,136.644-60.35,136.644-134.533S207.656,0,133.472,0Z" transform="translate(-0.11)" />
                   </g>
                 </g>
               </svg>
             </span>
-
             <label>
               Bid Count:
               {(product.jobBidStatus &&

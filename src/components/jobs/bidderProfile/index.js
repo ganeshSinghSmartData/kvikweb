@@ -7,6 +7,7 @@ import Proposal from "../jobDetail/proposal/proposal";
 import Chat from "./chat/chat";
 import UserInfo from "./userInfo/userInfo";
 import { getUserDetails } from "./../../../actions/user";
+import Breadcrumb from "../../commonUi/breadcrumb/breadcrumb";
 import "./bidderProfile.scss";
 
 const BidderProfile = ({ user_id, review }) => {
@@ -29,7 +30,10 @@ const BidderProfile = ({ user_id, review }) => {
   return (
     <>
       <div className="bidder-profl-wrapper">
-        <h3 className="text-center">Profile</h3>
+        <div className="job-detail-hd d-flex align-items-center">
+          <h2 className="flex-fill">Profile</h2>
+          <Breadcrumb />
+        </div>
         <div className="data-page bidder-profl-blc position-relative">
           <div className="bidder-profl-blc-rw">
             <div className="bidder-profl-rw d-flex">
