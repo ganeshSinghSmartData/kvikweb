@@ -53,7 +53,7 @@ const Chat = props => {
   };
   return (
     <div className={`chat-block d-flex flex-column ${props.chatToggle ? "on" : ""}`}>
-      <div className="chat-head d-flex">
+      <div className="chat-head d-flex flex-shrink-0">
         <h2>CHAT</h2>
         <Button
           color="primary"
