@@ -29,7 +29,9 @@ const production = {
 if (process.env.REACT_APP_ENV === "prod") {
   module.exports = production;
 } else if (process.env.REACT_APP_ENV === "dev") {
-  module.exports = local;
+  // module.exports = local;
+  module.exports = staging;
 } else {
-  module.exports = local;
+  // module.exports = local;
+  module.exports = staging;
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Input, FormGroup } from "reactstrap";
 import "./chat.scss";
-import { messages_list } from "../../../../actions/messages";
+import { messages_list, resetChats } from "../../../../actions/messages";
 import { LocalForm, Control } from "react-redux-form";
 import SocketClient from "../../../../config/socket";
 import { SEND_MESSAGE, GET_MESSAGE } from "../../../../actions/constants";
@@ -15,22 +15,27 @@ const ROOT_CSS = css({
   width: 800
 });
 
+let messagesEnd = null;
 const Chat = props => {
   const [message, setMessage] = useState("");
   const user = useSelector(state => state.user);
   const messages = useSelector(state => state.messages);
   const [message_count, setMessageCount] = useState(0);
-
   const dispatch = useDispatch();
 
+  const scrollToBottom = () => {
+    messagesEnd&&messagesEnd.scrollIntoView({ behavior: "smooth" });
+  }
   useEffect(() => {
-    if (message_count === 0) {
+    loadChatData(props.Id);
+  }, []);
+  const loadChatData = async Id =>{
+    if(Id){
       SocketClient.eventHandler(GET_MESSAGE, { user_id: user.data._id });
-      dispatch(messages_list({ id: props.Id, limit: 10, skip: 0 }));
-      setMessageCount(1);
+      await dispatch(messages_list({ id: Id, limit: 10, skip: 0 }));
+        scrollToBottom()
     }
-  });
-
+  }
   /*********************** Handle message input ************************************** */
   const onHandleChange = e => {
     setMessage(e.target.value);
@@ -38,13 +43,14 @@ const Chat = props => {
 
   /*********************** Handle message send ************************************** */
   const handleMessage = val => {
+    if(message)
     SocketClient.eventHandler(SEND_MESSAGE, {
       message: message,
       recieverId: props.Id,
       senderId: user.data._id
     });
     setMessage("");
-
+    scrollToBottom()
     dispatch(messages_list({ id: props.Id, limit: 10, skip: 0 }));
   };
 
@@ -88,21 +94,21 @@ const Chat = props => {
               return (
                 <React.Fragment key={index}>
                   {val.senderId === user.data._id ? (
-                    <div className="chat-row d-flex">
-                      <div className="chat-txt admin">
+                    <div className="chat-row d-flex justify-content-end">
+                      <div ref={(el) => { messagesEnd = el; }} className="chat-txt user">
                         <p>{val.message}</p>
-                        <span className="d-block chat-time">
-                          {moment(val.createdAt).format("LT")}
-                        </span>
+                        <span className="d-block chat-time">09:20PM</span>
                       </div>
                     </div>
                   ) : (
-                      <div className="chat-row d-flex justify-content-end">
-                        <div className="chat-txt user">
-                          <p>{val.message}</p>
-                          <span className="d-block chat-time">09:20PM</span>
-                        </div>
-                      </div>
+                    <div className="chat-row d-flex">
+                    <div ref={(el) => { messagesEnd = el; }} className="chat-txt admin">
+                      <p>{val.message}</p>
+                      <span className="d-block chat-time">
+                        {moment(val.createdAt).format("LT")}
+                      </span>
+                    </div>
+                  </div>
                     )}
                 </React.Fragment>
               );
