@@ -15,25 +15,32 @@ export const get_message = data => ({ type: TYPE.GET_MESSAGE, data });
 export const message_count = data => ({ type: TYPE.MESSAGE_COUNT, data });
 export const chat_users = data => ({ type: TYPE.CHAT_USERS, data });
 
+
+/****** action creator for reset message list ********/
+export const resetChats = ()=>dispatch =>dispatch(list([]));
+export const toggleChat = (toggle=false,chatId="") => dispatch => dispatch({type:TYPE.TOGGLE_CHAT, chat:{toggle,chatId}})
 /****** action creator for getting messages********/
 export const messages_list = (params, callback) => {
   return (dispatch, getState) => {
     const {
       data: { token, _id }
     } = getState().user;
-    ApiClient.get(
-      `${apiUrl}/chat/chat/${params.id}/${_id}?limit=${params.limit}&skip=${params.skip}}`,
-      {},
-      token
-    ).then(response => {
-      if (response.status === 200) {
-        dispatch(list(response.data));
-      } else if (response.status === 401) {
-        toastErrorAction(dispatch, response.msg);
-      } else {
-        dispatch(is_fetching(false));
-      }
-    });
+    return new Promise(res=>
+      ApiClient.get(
+        `${apiUrl}/chat/chat/${params.id}/${_id}?limit=${params.limit}&skip=${params.skip}}`,
+        {},
+        token
+      ).then(response => {
+        if (response.status === 200) {
+          dispatch(list(response.data));
+        } else if (response.status === 401) {
+          toastErrorAction(dispatch, response.msg);
+        } else {
+          dispatch(is_fetching(false));
+        }
+        res({test:true})
+      })
+  )
   };
 };
 /****** action creator for message count********/

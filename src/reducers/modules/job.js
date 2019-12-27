@@ -14,7 +14,8 @@ const initialState = {
   completedJobProduct: [],
   count: 0,
   activeJobsCount: 0,
-  completedJobsCount: 0
+  completedJobsCount: 0,
+  sidebarToggle: false
 };
 
 export default function reducer(state = initialState, action) {
@@ -49,6 +50,13 @@ export default function reducer(state = initialState, action) {
         ],
         completedJobsCount: action.data.count
       };
+
+    case TYPE.SIDEBAR_TOGGLE:
+      return {
+        ...state,
+        sidebarToggle: action.data
+      };
+
     case TYPE.POST_JOB_PRODUCTS:
       return state;
     case TYPE.RESET_JOB_PRODUCTS:

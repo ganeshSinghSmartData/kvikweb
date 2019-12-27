@@ -75,7 +75,7 @@ export const forgotPassword = (params, callback) => {
         toastErrorAction(dispatch, response.msg);
       } else {
         callback(false);
-        dispatch(is_fetching(false));
+        toastErrorAction(dispatch, response.msg);
       }
     });
   };
@@ -95,7 +95,7 @@ export const changePassword = (params, callback) => {
         toastErrorAction(dispatch, response.msg);
       } else {
         callback(false);
-        dispatch(is_fetching(false));
+        toastErrorAction(dispatch, response.msg);
       }
     });
   };
@@ -117,7 +117,7 @@ export const verifyEmail = (params, callback) => {
         toastErrorAction(dispatch, response.msg);
       } else {
         callback(response.msg);
-        dispatch(is_fetching(false));
+        toastErrorAction(dispatch, response.msg);
       }
     });
   };
@@ -195,10 +195,8 @@ export const AddCard = (params = {}, callback) => {
       response => {
         if (response.status === 200) {
           toastAction(true, "Card successfully saved");
-          dispatch(is_fetching(false));
           callback(true);
         } else {
-          dispatch(is_fetching(false));
           toastAction(false, response.msg);
           callback(false);
         }
@@ -283,6 +281,29 @@ export const removeCard = (card_id, callback) => {
     ).then(response => {
       if (response.status === 200) {
         dispatch(remove_card(response.deleted));
+        toastAction(true, response.msg);
+        callback(true);
+      } else {
+        callback(false);
+        toastAction(false, response.msg);
+      }
+    });
+  };
+};
+
+/****** action creator for bank account ********/
+export const AddBankAccount = (params, callback) => {
+  return (dispatch, getState) => {
+    dispatch(is_fetching(true));
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient._postFormData(
+      `${apiUrl}/payment/saveBankByToken`,
+      params,
+      token
+    ).then(response => {
+      if (response.status === 200) {
         toastAction(true, response.msg);
         callback(true);
       } else {

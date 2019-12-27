@@ -152,7 +152,7 @@ export const CategoryItems = [
 ];
 
 export const FrequencyItem = [
-  { label: "One-time", value: "one-time" },
-  { label: "Weekly", value: "weekly" },
-  { label: "Monthly", value: "monthly" }
+  { label: "One-time", value: "One-time" },
+  { label: "Weekly", value: "Weekly" },
+  { label: "Monthly", value: "Monthly" }
 ];

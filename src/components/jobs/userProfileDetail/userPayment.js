@@ -6,12 +6,18 @@ import { confirmAlert } from "react-confirm-alert";
 import { Button } from "reactstrap";
 import DatePicker from "react-datepicker";
 
-import { AddCard, GetCards, removeCard } from "../../../actions/user";
+import {
+  AddCard,
+  GetCards,
+  removeCard,
+  AddBankAccount
+} from "../../../actions/user";
 import { stripeKey } from "../../../environment";
 
 import StripeCard from "../../../config/stripe";
 import InputCell from "../../commonUi/input/inputCell";
 import SpinnerOverlay from "../../../components/commonUi/spinner/spinnerOverlay/spinnerOverlay";
+import { toastAction } from "../../../actions/toast-actions";
 // import "./../postJob/postJob.scss";
 
 const UserPayment = props => {
@@ -22,6 +28,15 @@ const UserPayment = props => {
   const [date, setDate] = useState(new Date());
   const [images, setImages] = useState([]);
   const [imageData, setImageData] = useState({});
+
+  const [stripe, setStripe] = useState(window.Stripe(stripeKey));
+  const [front_image, setFrontImage] = useState({ url: "", file: {} });
+  const [back_image, setBackImage] = useState({ url: "", file: {} });
+  const [additional_front, setAdditionalFront] = useState({
+    url: "",
+    file: {}
+  });
+  const [additional_back, setAdditionalBack] = useState({ url: "", file: {} });
 
   const dispatch = useDispatch();
   let user = useSelector(state => state.user);
@@ -36,41 +51,65 @@ const UserPayment = props => {
     }
   });
 
-  const handleBankSubmit = e => {
-    props.stripe.createSource(
-      {
-        // country: "DK",
-        // currency: "USD",
-        // routing_number: e.routing_number,
-        // account_number: e.account_number,
-        // account_holder_name: e.first_name,
-        // account_holder_type
+  console.log("front_image :", front_image);
 
-        type: "ideal",
-        amount: 1099,
-        currency: "eur",
-        owner: {
-          name: e.first_name
-        },
-        redirect: {
-          return_url: "https://example.com"
-        }
-      },
-      (status, response) => {
-        console.log("status, response", status, response);
-        if (response.error) {
-          alert(
-            "Adding bank account failed with error: " + response.error.message
+  const handleBankSubmit = e => {
+    console.log("e", e);
+    setIsLoading(true);
+
+    console.log(front_image);
+    stripe
+      .createToken("bank_account", {
+        country: "DE",
+        currency: "EUR",
+        routing_number: undefined,
+        account_number: e.accountNumber,
+        account_holder_name: e.firstName,
+        account_holder_type: "individual"
+      })
+      .then(paymentMethod => {
+        console.log("Received Stripe PaymentMethod:", paymentMethod);
+        if (paymentMethod && paymentMethod.token) {
+          let formData = new FormData();
+          formData.append("front", front_image.file);
+          formData.append("back", back_image.file);
+          formData.append("additionalFront", additional_front.file);
+          formData.append("additionalBack", additional_back.file);
+          formData.append("token", paymentMethod.token.id);
+          formData.append("bankId", paymentMethod.token.bank_account.id);
+          formData.append("firstName", e.firstName);
+          formData.append("lastName", e.lastName);
+          formData.append("accountHolderType", "individual");
+          formData.append("accountHolderName", e.firstName);
+          formData.append("name", e.firstName);
+          formData.append("accountNumber", e.accountNumber);
+          formData.append("currency", "EUR");
+          formData.append("routingNumber", e.routingNumber);
+          formData.append("dob", "1997-12-23");
+          formData.append("line1", e.line1);
+          formData.append("postal", e.postal);
+          formData.append("countryCode", "DE");
+          formData.append("city", e.city);
+          formData.append("state", e.state);
+          formData.append("gender", "male");
+          formData.append("line2", e.line2);
+          formData.append("phone", e.phone);
+          formData.append("mcc", "7372");
+          formData.append("url", "http://google.com");
+
+          dispatch(
+            AddBankAccount(formData, res => {
+              if (res) {
+                setIsLoading(false);
+                setIsSelect(!isSelect);
+              }
+            })
           );
         } else {
-          console.log("response", response);
-          const bankAccountToken = response.id;
-          console.log(bankAccountToken);
-          // send bankAccountToken to server to be saved under the current user
-          // show success message and navigate away from form
+          toastAction(false, paymentMethod.error.code);
+          setIsLoading(false);
         }
-      }
-    );
+      });
   };
 
   const handleResult = val => {
@@ -95,18 +134,23 @@ const UserPayment = props => {
     }
   };
 
-  let files = {};
-  const handleImageOnchange = event => {
-    files = event;
-    setImageData({ ...imageData, ...files });
-    const imagesData = Object.values(files).reduce((list, key) => {
-      if (key && typeof key === "object") {
-        let url = URL.createObjectURL(key);
-        list.push(url);
-      }
-      return list;
-    }, []);
-    setImages([...images, ...imagesData]);
+  const handleImageOnchange = (type, event) => {
+    if (type === "front_image") {
+      const imgurl = URL.createObjectURL(event[0]);
+      setFrontImage({ url: imgurl, file: event[0] });
+    }
+    if (type === "back_image") {
+      const imgurl = URL.createObjectURL(event[0]);
+      setBackImage({ url: imgurl, file: event[0] });
+    }
+    if (type === "additional_back") {
+      const imgurl = URL.createObjectURL(event[0]);
+      setAdditionalBack({ url: imgurl, file: event[0] });
+    }
+    if (type === "additional_front") {
+      const imgurl = URL.createObjectURL(event[0]);
+      setAdditionalFront({ url: imgurl, file: event[0] });
+    }
   };
 
   const choosePaymentMethod = type => {
@@ -245,7 +289,7 @@ const UserPayment = props => {
                           InputType={"text"}
                           ClassName="input-line-blc"
                           Errors={{
-                            required: "required",
+                            required: "",
                             invalidNumber: "invalidNumber"
                           }}
                         />
@@ -336,7 +380,7 @@ const UserPayment = props => {
                             />
                           </div>
                         </div>
-                        <div class="payment-upload-rw">
+                        <div className="payment-upload-rw">
                           <h4>
                             National id{" "}
                             <i>
@@ -353,7 +397,11 @@ const UserPayment = props => {
                                 {/* payment-upload-pic */}
                                 <span className="payment-upload-pic position-absolute h-100 w-100 flex-fill">
                                   <img
-                                    src={require("../../../assets/images/job-user.jpg")}
+                                    src={
+                                      front_image.url !== ""
+                                        ? front_image.url
+                                        : require("../../../assets/images/job-user.jpg")
+                                    }
                                     alt="User"
                                     className="rounded-circle"
                                   />
@@ -382,6 +430,12 @@ const UserPayment = props => {
                                   <input
                                     type="file"
                                     className="position-absolute w-100"
+                                    onChange={event =>
+                                      handleImageOnchange(
+                                        "front_image",
+                                        event.target.files
+                                      )
+                                    }
                                   />
                                   <span className="payment-upload-btn-icn w-100 h-100 d-flex align-items-center justify-content-center">
                                     <svg
@@ -426,7 +480,11 @@ const UserPayment = props => {
                                 {/* payment-upload-pic */}
                                 <span className="payment-upload-pic position-absolute h-100 w-100 flex-fill">
                                   <img
-                                    src={require("../../../assets/images/job-user.jpg")}
+                                    src={
+                                      back_image.url !== ""
+                                        ? back_image.url
+                                        : require("../../../assets/images/job-user.jpg")
+                                    }
                                     alt="User"
                                     className="rounded-circle"
                                   />
@@ -455,6 +513,12 @@ const UserPayment = props => {
                                   <input
                                     type="file"
                                     className="position-absolute w-100"
+                                    onChange={event =>
+                                      handleImageOnchange(
+                                        "back_image",
+                                        event.target.files
+                                      )
+                                    }
                                   />
                                   <span className="payment-upload-btn-icn w-100 h-100 d-flex align-items-center justify-content-center">
                                     <svg
@@ -499,7 +563,11 @@ const UserPayment = props => {
                                 {/* payment-upload-pic */}
                                 <span className="payment-upload-pic position-absolute h-100 w-100 flex-fill">
                                   <img
-                                    src={require("../../../assets/images/job-user.jpg")}
+                                    src={
+                                      additional_front.url !== ""
+                                        ? additional_front.url
+                                        : require("../../../assets/images/job-user.jpg")
+                                    }
                                     alt="User"
                                     className="rounded-circle"
                                   />
@@ -528,6 +596,12 @@ const UserPayment = props => {
                                   <input
                                     type="file"
                                     className="position-absolute w-100"
+                                    onChange={event =>
+                                      handleImageOnchange(
+                                        "additional_front",
+                                        event.target.files
+                                      )
+                                    }
                                   />
                                   <span className="payment-upload-btn-icn w-100 h-100 d-flex align-items-center justify-content-center">
                                     <svg
@@ -572,7 +646,11 @@ const UserPayment = props => {
                                 {/* payment-upload-pic */}
                                 <span className="payment-upload-pic position-absolute h-100 w-100 flex-fill">
                                   <img
-                                    src={require("../../../assets/images/job-user.jpg")}
+                                    src={
+                                      additional_back.url !== ""
+                                        ? additional_back.url
+                                        : require("../../../assets/images/job-user.jpg")
+                                    }
                                     alt="User"
                                     className="rounded-circle"
                                   />
@@ -601,6 +679,12 @@ const UserPayment = props => {
                                   <input
                                     type="file"
                                     className="position-absolute w-100"
+                                    onChange={event =>
+                                      handleImageOnchange(
+                                        "additional_back",
+                                        event.target.files
+                                      )
+                                    }
                                   />
                                   <span className="payment-upload-btn-icn w-100 h-100 d-flex align-items-center justify-content-center">
                                     <svg
@@ -639,47 +723,15 @@ const UserPayment = props => {
                             </div>
                           </div>
                         </div>
-
-                        {/* <Button
-                            color="primary"
-                            block
-                            className="add-gallery-btn position-relative"
-                            type="button"
-                          > */}
-                        {/* <svg
-                                id="_x38__3_"
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="48"
-                                height="48"
-                                viewBox="0 0 48 48"
-                              >
-                                <g id="Group_512" data-name="Group 512">
-                                  <path
-                                    id="Path_902"
-                                    data-name="Path 902"
-                                    d="M24,0A24,24,0,1,0,48,24,24,24,0,0,0,24,0Zm0,45A21,21,0,1,1,45,24,21,21,0,0,1,24,45Zm9-22.5H25.5V15a1.5,1.5,0,1,0-3,0v7.5H15a1.5,1.5,0,1,0,0,3h7.5V33a1.5,1.5,0,0,0,3,0V25.5H33a1.5,1.5,0,0,0,0-3Z"
-                                    fill="#fff"
-                                  />
-                                </g>
-                              </svg> */}
-                        {/* <InputCell
-                            Name={"file"}
-                            Model=".images"
-                            InputType="file"
-                            Placeholder={"Image Upload"}
-                            Multiple="multiple"
-                            Errors={{ required: "" }}
-                            HandleImageOnchange={handleImageOnchange}
-                            Errors={{ required: "required" }}
-                          /> */}
-                        {/* </Button> */}
                       </li>
                     </ul>
                     <div className="payment-btn-row text-center">
                       <Button color="secondary" type="submit">
                         Submit
                       </Button>
-                      <Button color="primary">Reset</Button>
+                      <Button color="link" className="btn-dark">
+                        Reset
+                      </Button>
                     </div>
                   </LocalForm>
                 </div>

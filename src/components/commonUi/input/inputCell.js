@@ -7,6 +7,9 @@ import {
   invalidEmail,
   invalidPass,
   invalidNumber,
+  validateMobile,
+  lengthExist,
+  lengthShort,
   required
 } from "./../../../utilities/message";
 import { CategoryItems, FrequencyItem } from "./../../../utilities/constants";
@@ -21,14 +24,15 @@ const InputCell = ({
   ClassName = "",
   Disabled = false,
   Multiple = "multiple",
-  DefaultValue = "hourly",
+  DefaultValue = "One-time",
+  Length = "",
   HandleImageOnchange,
   handlePostalCode = () => {},
   Errors
 }) => {
   let ErrorsObject = {};
   /**************** Error validations ****************/
-  const validation = () => {
+  const validation = props => {
     let errors = {};
     if (Errors["required"] === "required") {
       errors = { ...errors, required: val => !val || !val.length };
@@ -48,6 +52,30 @@ const InputCell = ({
         invalidNumber: val => val && !Match.validateNumbers(val)
       };
       ErrorsObject = { invalidNumber };
+    }
+
+    if (Errors["validateMobile"] === "validateMobile") {
+      errors = {
+        ...errors,
+        validateMobile: val => !Match.validateMobile(val)
+      };
+      ErrorsObject = { validateMobile };
+    }
+
+    if (Errors["lengthExist"] === "lengthExist") {
+      errors = {
+        ...errors,
+        lengthExist: val => val && val.length > props
+      };
+      ErrorsObject = { lengthExist };
+    }
+
+    if (Errors["lengthShort"] === "lengthShort") {
+      errors = {
+        ...errors,
+        lengthShort: val => val.length < props
+      };
+      ErrorsObject = { lengthShort };
     }
 
     return errors;
@@ -143,7 +171,7 @@ const InputCell = ({
               model={Model}
               className={"form-control"}
               onChange={event => handlePostalCode(event.target.value)}
-              errors={validation()}
+              errors={validation(Length ? Length : "")}
             />
           )}
 
@@ -194,6 +222,7 @@ const InputCell = ({
             name={Name}
             placeholder={Placeholder}
             model={Model}
+            disabled={Disabled}
             multiple={Multiple}
             onChange={event => HandleImageOnchange(event.target.files)}
             className={"form-control"}

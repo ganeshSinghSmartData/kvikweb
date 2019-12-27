@@ -60,6 +60,7 @@ class SocketClient {
         }
         break;
       case TYPE.SEND_MESSAGE:
+        console.log("data.recieverId data.recieverId sockets>> ",data)
         if (this.socket) {
           this.socket.emit(`${data.senderId}-send_message`, {
             recieverId: data.recieverId, // message reciever

@@ -435,6 +435,12 @@
 }
 //Pyament-Completion-Modal style end
 
+//Contact-Us Modal Start
+.modal-dialog.contact-us-modal {
+  max-width: 500px;
+}
+//Contact-Us Modal End
+
 @media (max-width: 767px) {
   .close-btn.btn {
     right: 16px;

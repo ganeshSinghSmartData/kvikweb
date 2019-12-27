@@ -178,29 +178,20 @@ const Job = ({
     }
   }, []);
 
+  const sidebarToggleValue = useSelector(state => {
+    return state.job.sidebarToggle
+  });
+  const stopPropagation =(e)=>{
+    e.nativeEvent.stopImmediatePropagation()
+  }
+
   return (
     <React.Fragment>
       {/* <SpinnerOverlay className="position-fixed" /> */}
       <section className="d-flex flex-column position-relative">
-        <Button className="sidebar-toogle-btn text-right position-fixed rounded-left d-md-none flex-shrink-0">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="21"
-            height="11.667"
-            viewBox="0 0 21 11.667"
-          >
-            <path
-              id="Path_804"
-              data-name="Path 804"
-              d="M3,14H5.333V11.667H3Zm0,4.667H5.333V16.333H3ZM3,9.333H5.333V7H3ZM7.667,14H24V11.667H7.667Zm0,4.667H24V16.333H7.667ZM7.667,7V9.333H24V7Z"
-              transform="translate(-3 -7)"
-              fill="#b3b3b3"
-            />
-          </svg>
-        </Button>
         <Row className="d-flex flex-nowrap position-relative">
           {path === "" && (
-            <Col className="sidebar-col d-flex flex-column">
+            <Col className={`sidebar-col d-flex flex-column ${sidebarToggleValue ? 'active' : ''}`} onClick={stopPropagation}>
               <Sidebar
                 _handleCategory={handleCategory}
                 _handlePostalCode={handlePostalCode}

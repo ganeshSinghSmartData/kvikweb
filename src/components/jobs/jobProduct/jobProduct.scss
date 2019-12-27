@@ -159,7 +159,7 @@
 
 // Bid has been accepted
 .job-primary-bar {
-  @include color-opacity($primary, 0.15);
+  @include color-opacity($primary, 0.1);
   background: $primary;
 }
 
@@ -167,19 +167,19 @@
 // Bid has been expired
 // Bid has been rejected
 .job-danger-bar {
-  @include color-opacity($danger, 0.15);
+  @include color-opacity($danger, 0.1);
   background: $danger;
 }
 
 // Bid is in progress
 .job-secondary-bar {
-  @include color-opacity($secondary, 0.15);
+  @include color-opacity($secondary, 0.1);
   background: $secondary;
 }
 
 // Bid has been completed
 .job-success-bar {
-  @include color-opacity($success, 0.15);
+  @include color-opacity($success, 0.1);
   background: $success;
 }
 .job-pic .no-job-image {
@@ -192,10 +192,17 @@
 }
 
 .no-job-image-blc img {
-  width: 170px;
+  width: 170px !important;
   opacity: 0.1;
   height: auto !important;
-  margin-bottom: 30px;
+  margin-bottom: 27px;
+}
+.no-jobdetail-image img {
+  max-width: 220px !important;
+  width: 100% !important;
+  opacity: 0.1;
+  height: auto !important;
+  margin-bottom: 0;
 }
 @media (max-width: 1024px) {
   .job-list-row {

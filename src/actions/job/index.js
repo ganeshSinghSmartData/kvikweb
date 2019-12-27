@@ -60,9 +60,9 @@ export const getJobProduct = ({
     const skip = (page - 1) * pagination.limit;
     ApiClient.get(
       `${apiUrl}/api/job_listing?lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${
-        pagination.limit
+      pagination.limit
       }&budget=${budget}&zip_code=${zip_code}&miles=${miles}&search=${
-        search ? (search.search ? search.search : "") : ""
+      search ? (search.search ? search.search : "") : ""
       }`,
       {}
     ).then(response => {
@@ -107,11 +107,12 @@ export const createNewJob = (params, callback) => {
           dispatch(post_job_products(response.data));
           toastAction(true, response.msg);
           callback(true);
-        } else if (response.status === 401) {
+        } else if (response.status === 402) {
+          toastAction(false, response.msg);
           callback(false);
         } else {
-          dispatch(is_fetching(false));
           callback(false);
+          toastErrorAction(dispatch, response.msg);
         }
       }
     );
@@ -133,8 +134,8 @@ export const updateExistingJob = (params, callback) => {
         } else if (response.status === 401) {
           callback(false);
         } else {
-          dispatch(is_fetching(false));
           callback(false);
+          toastErrorAction(dispatch, response.msg);
         }
       }
     );
@@ -157,8 +158,8 @@ export const placeYourBid = (params, callback) => {
         callback(false);
         toastAction(false, response.msg);
       } else {
-        dispatch(is_fetching(false));
         callback(false);
+        toastErrorAction(dispatch, response.msg);
       }
     });
   };
@@ -289,3 +290,10 @@ export const addBidderReview = (params, callback) => {
     );
   };
 };
+
+/****** action creator for Sidebar Toggle ********/
+
+export const sidebarToggleHandler = (data) => (
+  { type: TYPE.SIDEBAR_TOGGLE, data }
+);
+

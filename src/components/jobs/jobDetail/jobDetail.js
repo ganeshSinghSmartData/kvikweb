@@ -178,6 +178,10 @@ export default function JobDetail({
   };
 
   setJobStatus(job.status);
+  let noImageClass = ''
+  if (!job.images || job.images.length === 0) {
+    noImageClass = 'd-flex justify-content-center justify-content-center no-jobdetail-image'
+  }
 
   return (
     <div className="job-detail-blc d-flex flex-column flex-fill">
@@ -190,7 +194,7 @@ export default function JobDetail({
       <div className="job-detail-inner d-flex flex-column flex-fill overflow-auto">
         <Row className="job-detail-rw row flex-shrink-0">
           <Col md="4" className="job-detail-pic-col">
-            <div className="job-detail-pic position-relative">
+            <div className={`job-detail-pic position-relative ${noImageClass}`}>
               {imageLoad && (
                 <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" />
               )}
@@ -200,11 +204,11 @@ export default function JobDetail({
                   alt="Job Post User"
                 />
               ) : (
-                <img
-                  src={require("../../../assets/images/icons/no-job-icon3.svg")}
-                  alt="Job Post User"
-                />
-              )}
+                  <img
+                    src={require("../../../assets/images/icons/no-job-icon3.svg")}
+                    alt="Job Post User"
+                  />
+                )}
             </div>
             <div className="d-flex justify-content-center">
               <div className="job-slider-track-inner">
@@ -221,8 +225,8 @@ export default function JobDetail({
                     ))}
                   </Slider>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
               </div>
             </div>
           </Col>
@@ -321,7 +325,7 @@ export default function JobDetail({
                     <label
                       className={`job-detail-amnt margin flex-shrink-0 ${
                         path === "/job-proposal" ? "" : ""
-                      }`}
+                        }`}
                     >
                       {job.budget ? `$${job.budget}` : ""}
                     </label>
@@ -409,7 +413,7 @@ export default function JobDetail({
                     </li>
                   )}
 
-                  {job.job_seeker_id["email"] && (
+                  {job.job_seeker_id && job.job_seeker_id["email"] && (
                     <li className="d-flex">
                       <span className="svg-secondary-100 flex-shrink-0">
                         <svg
@@ -615,7 +619,7 @@ export default function JobDetail({
                     history={history}
                     isclick={
                       job.status === "not_started" ||
-                      job.status === "not_accepted"
+                        job.status === "not_accepted"
                         ? true
                         : false
                     }
