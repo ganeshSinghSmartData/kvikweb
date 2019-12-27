@@ -290,3 +290,26 @@ export const removeCard = (card_id, callback) => {
     });
   };
 };
+
+/****** action creator for bank account ********/
+export const AddBankAccount = (params, callback) => {
+  return (dispatch, getState) => {
+    dispatch(is_fetching(true));
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient._postFormData(
+      `${apiUrl}/payment/saveBankByToken`,
+      params,
+      token
+    ).then(response => {
+      if (response.status === 200) {
+        toastAction(true, response.msg);
+        callback(true);
+      } else {
+        callback(false);
+        toastAction(false, response.msg);
+      }
+    });
+  };
+};

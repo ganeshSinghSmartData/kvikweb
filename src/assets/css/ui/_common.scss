@@ -45,6 +45,9 @@ body {
   .border-secondary-200 {
     border-color: $orange-200;
   }
+  p {
+    word-break:break-word;
+  }
 }
 .container {
   max-width: 1200px;

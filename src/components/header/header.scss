@@ -46,7 +46,7 @@
     }
   }
   @media (max-width: 480px) {
-    .header-inner {
+    .header-inner:not(.beforeLogin) {
       flex-direction: column;
     }
     .nav-wrapper {
@@ -56,6 +56,10 @@
       .user-profile-blc {
         padding-left: 0;
       }
+    }
+    .beforeLogin .nav-wrapper {
+      margin-left: auto !important;
+      margin-top: 0;
     }
   }
   @media (max-width: 480px) {

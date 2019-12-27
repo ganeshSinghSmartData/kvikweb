@@ -10,6 +10,11 @@ const Nav = props => {
   };
   const { user } = useSelector(state => state);
   const dispatch = useDispatch();
+
+  const navVisibleHander = () => {
+    props.navVisibleProp(false)
+    console.log('click')
+  }
   return (
     <nav
       className={"d-flex align-items-center " + props.className}
@@ -18,30 +23,30 @@ const Nav = props => {
       {
         <ul className="d-flex align-items-center flex-wrap">
           <li>
-            <Link className="btn btn-link" to={"/"}>
+            <Link className="btn btn-link" to={"/"} onClick={navVisibleHander}>
               Home
             </Link>
           </li>
           <li>
-            <Link className="btn btn-link" to={"/about-us"}>
+            <Link className="btn btn-link" to={"/about-us"} onClick={navVisibleHander}>
               About Us
             </Link>
           </li>
           <li>
-            <Link className="btn btn-link" to={"/contact-us"}>
+            <Link className="btn btn-link" to={"/contact-us"} onClick={navVisibleHander}>
               Contact Us
             </Link>
           </li>
           {!user.loggedIn && (
             <li>
-              <Link className="btn btn-link" to={"/register"}>
+              <Link className="btn btn-link" to={"/register"} onClick={navVisibleHander}>
                 Create an Account
               </Link>
             </li>
           )}
           <li>
             {!user.loggedIn && (
-              <Link className="login-btn btn btn-info" to={"/login"}>
+              <Link className={`login-btn btn btn-info`} to={"/login"} onClick={navVisibleHander}>
                 Login
               </Link>
             )}

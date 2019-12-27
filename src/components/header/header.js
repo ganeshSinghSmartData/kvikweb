@@ -5,7 +5,7 @@ import Nav from "../nav/nav";
 import UserProfile from "./userProfile/userProfile";
 import Logo from "../commonUi/logo/logo";
 import "./header.scss";
-const Header = () => {
+const Header = (props) => {
   const { user } = useSelector(state => state);
 
   let imagepath = "";
@@ -32,16 +32,22 @@ const Header = () => {
       setnavVisible(false);
     }
   };
+  const navClickCallback = (value) => {
+    setnavVisible(value)
+  }
+  console.log('header', props)
   return (
     <header className="header d-flex flex-column flex-shrink-0">
       <Container>
         <Row>
-          <Col className="d-flex header-inner">
+          <Col className={`d-flex header-inner ${!user.loggedIn && 'beforeLogin'}`}>
             <Button color="link" className="logo p-0 rounded-0">
               <Logo classname="m-0" navigate={true} />
             </Button>
             <div className="d-flex align-items-center ml-auto nav-wrapper">
               <Nav
+                {...props}
+                navVisibleProp={navClickCallback}
                 className={
                   "d-sm-none d-md-block nav " + (navVisible ? "active" : "")
                 }

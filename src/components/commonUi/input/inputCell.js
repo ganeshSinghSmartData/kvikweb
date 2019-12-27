@@ -63,7 +63,6 @@ const InputCell = ({
     }
 
     if (Errors["lengthExist"] === "lengthExist") {
-      console.log("props ", props);
       errors = {
         ...errors,
         lengthExist: val => val && val.length > props

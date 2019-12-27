@@ -52,7 +52,11 @@ const Chat = props => {
     props.chatHideCallback(false);
   };
   return (
-    <div className={`chat-block d-flex flex-column ${props.chatToggle ? "on" : ""}`}>
+    <div
+      className={`chat-block d-flex flex-column ${
+        props.chatToggle ? "on" : ""
+        }`}
+    >
       <div className="chat-head d-flex flex-shrink-0">
         <h2>CHAT</h2>
         <Button
@@ -125,7 +129,11 @@ const Chat = props => {
         </div> */}
       </div>
       <div className="chat-foot">
-        <LocalForm model="messages" onSubmit={values => handleMessage(values)} className="d-flex">
+        <LocalForm
+          model="messages"
+          onSubmit={values => handleMessage(values)}
+          className="d-flex"
+        >
           <div className="chat-foot-l flex-fill">
             <FormGroup>
               <Control.text

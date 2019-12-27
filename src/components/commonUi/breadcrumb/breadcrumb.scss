@@ -16,6 +16,8 @@
         content: "";
         position: absolute;
         bottom: 0;
+        left: 5px;
+        right: 5px;
         display: block;
         height: 2px;
         width: 0%;
@@ -27,8 +29,6 @@
         &:after {
           opacity: 1;
           width: calc(100% - 10px);
-          left: 5px;
-          right: 5px;
         }
       }
     }

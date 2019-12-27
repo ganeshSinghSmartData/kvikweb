@@ -68,30 +68,32 @@ const BidderProfile = ({ user_id, review }) => {
               : ""}
             {review.length === 0 && <h6>No review found.</h6>}
           </div>
+          
 
+          {/* customchatbtn */}
           <Button
-            color="primary"
-            className="chat-btn rounded-circle position-fixed"
-            onClick={chatToggle}
-          >
-            <svg
-              id="chat"
-              xmlns="http://www.w3.org/2000/svg"
-              width="19.361"
-              height="19.37"
-              viewBox="0 0 19.361 19.37"
+              color="primary"
+              className={`chat-btn bidder-profile rounded-circle position-fixed ${!chatVisible && 'active'}`}
+              onClick={chatToggle}
             >
-              <g id="Group_7885" data-name="Group 7885">
-                <path
-                  id="Path_3432"
-                  data-name="Path 3432"
-                  d="M16.643,2.839A9.682,9.682,0,0,0,2.31,15.825,3.634,3.634,0,0,1,.785,17.59a.9.9,0,0,0,.26,1.7,4.608,4.608,0,0,0,.685.053h0a6.262,6.262,0,0,0,3.48-1.127A9.685,9.685,0,0,0,16.643,2.839Z"
-                  transform="translate(-0.117 0)"
-                  fill="#fff"
-                />
-              </g>
-            </svg>
-          </Button>
+              <svg
+                id="chat"
+                xmlns="http://www.w3.org/2000/svg"
+                width="19.361"
+                height="19.37"
+                viewBox="0 0 19.361 19.37"
+              >
+                <g id="Group_7885" data-name="Group 7885">
+                  <path
+                    id="Path_3432"
+                    data-name="Path 3432"
+                    d="M16.643,2.839A9.682,9.682,0,0,0,2.31,15.825,3.634,3.634,0,0,1,.785,17.59a.9.9,0,0,0,.26,1.7,4.608,4.608,0,0,0,.685.053h0a6.262,6.262,0,0,0,3.48-1.127A9.685,9.685,0,0,0,16.643,2.839Z"
+                    transform="translate(-0.117 0)"
+                    fill="#fff"
+                  />
+                </g>
+              </svg>
+            </Button>
           <Chat
             Id={biderDetails._id}
             chatToggle={chatVisible}
