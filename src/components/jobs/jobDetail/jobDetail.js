@@ -413,7 +413,7 @@ export default function JobDetail({
                     </li>
                   )}
 
-                  {job.job_seeker_id["email"] && (
+                  {job.job_seeker_id && job.job_seeker_id["email"] && (
                     <li className="d-flex">
                       <span className="svg-secondary-100 flex-shrink-0">
                         <svg

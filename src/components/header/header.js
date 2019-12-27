@@ -23,7 +23,11 @@ const Header = (props) => {
   useEffect(() => {
     document.addEventListener("click", bodyClickHandler);
     document.addEventListener("keydown", escFunction);
-  });
+    return(()=>{
+      document.removeEventListener("click",bodyClickHandler);
+      document.removeEventListener("keydown",escFunction)
+    })
+  }, []);
   const bodyClickHandler = () => {
     setnavVisible(false);
   };
@@ -35,7 +39,6 @@ const Header = (props) => {
   const navClickCallback = (value) => {
     setnavVisible(value)
   }
-  console.log('header', props)
   return (
     <header className="header d-flex flex-column flex-shrink-0">
       <Container>

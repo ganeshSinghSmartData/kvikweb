@@ -41,7 +41,12 @@ export const PublicLayout = props => {
     document.addEventListener("click", bodyClickHandler);
     document.addEventListener("keydown", escFunction);
     window.addEventListener('resize', windowResize)
-  });
+    return(()=>{
+      document.removeEventListener("click",bodyClickHandler);
+      document.removeEventListener("keydown",escFunction);
+      document.removeEventListener("resize",windowResize)
+    })
+  },[]);
   const windowResize = () => {
     const windowWidth = window.innerWidth;
     if (windowWidth <= 768) {
@@ -57,8 +62,6 @@ export const PublicLayout = props => {
   const bodyClickHandler = () => {
     dispatch(sidebarToggleHandler(false))
   };
-
-  console.log('layout.js props', props)
   return (
     <>
       {sidebarToggleValue ? <Spinner className="with-overlay no-spin-icon" /> : null}

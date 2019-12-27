@@ -14,9 +14,9 @@ const Users = ({rooms , setRoomId ,_handlePageChange}) => {
                    {rooms.map((val,index) =>
                         <li key={index}>
                           <span className="message-name">
-                            <i className="fa fa-circle" aria-hidden="true"></i>{`${val.user.userId.firstName} ${val.user.userId.lastName}`}
+                            <i className="fa fa-circle" aria-hidden="true"></i>{`${val&&val.user&&val.user.userId&&val.user.userId.firstName} ${val&&val.user&&val.user.userId&&val.user.userId.lastName}`}
                           </span>
-                            <button onClick={() => setRoomId(val._id,val.user.userId.firstName)} className="btn-transparent"><i className="fa fa-angle-right" aria-hidden="true"></i></button>
+                            <button onClick={() => setRoomId(val._id,val&&val.user&&val.user.userId&&val.user.userId.firstName)} className="btn-transparent"><i className="fa fa-angle-right" aria-hidden="true"></i></button>
                         </li>
                    )
                 }
