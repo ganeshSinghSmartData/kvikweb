@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Input, FormGroup } from "reactstrap";
 import "./chat.scss";
-import { messages_list, resetChats } from "../../../../actions/messages";
+import { messages_list, toggleChat } from "../../../../actions/messages";
 import { LocalForm, Control } from "react-redux-form";
 import SocketClient from "../../../../config/socket";
 import { SEND_MESSAGE, GET_MESSAGE } from "../../../../actions/constants";
@@ -14,21 +14,20 @@ const ROOT_CSS = css({
   height: 400,
   width: 800
 });
-
+let chatId = "";
 let messagesEnd = null;
 const Chat = props => {
   const [message, setMessage] = useState("");
   const user = useSelector(state => state.user);
   const messages = useSelector(state => state.messages);
-  const [message_count, setMessageCount] = useState(0);
   const dispatch = useDispatch();
-
   const scrollToBottom = () => {
     messagesEnd&&messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
   useEffect(() => {
-    loadChatData(props.Id);
-  }, []);
+    loadChatData(messages.chatId)
+}, [messages.chatId])
+
   const loadChatData = async Id =>{
     if(Id){
       SocketClient.eventHandler(GET_MESSAGE, { user_id: user.data._id });
@@ -36,6 +35,7 @@ const Chat = props => {
         scrollToBottom()
     }
   }
+
   /*********************** Handle message input ************************************** */
   const onHandleChange = e => {
     setMessage(e.target.value);
@@ -60,7 +60,7 @@ const Chat = props => {
   return (
     <div
       className={`chat-block d-flex flex-column ${
-        props.chatToggle ? "on" : ""
+        messages.showChat ? "on" : ""
       }`}
     >
       <div className="chat-head d-flex flex-shrink-0">
@@ -68,7 +68,7 @@ const Chat = props => {
         <Button
           color="primary"
           className="chat-btn rounded-circle position-static ml-auto"
-          onClick={chatHide}
+          onClick={()=>dispatch(toggleChat(false,""))}
         >
           <svg
             id="chat"

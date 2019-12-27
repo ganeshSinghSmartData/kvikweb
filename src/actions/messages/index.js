@@ -18,7 +18,7 @@ export const chat_users = data => ({ type: TYPE.CHAT_USERS, data });
 
 /****** action creator for reset message list ********/
 export const resetChats = ()=>dispatch =>dispatch(list([]));
-
+export const toggleChat = (toggle=false,chatId="") => dispatch => dispatch({type:TYPE.TOGGLE_CHAT, chat:{toggle,chatId}})
 /****** action creator for getting messages********/
 export const messages_list = (params, callback) => {
   return (dispatch, getState) => {

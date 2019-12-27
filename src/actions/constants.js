@@ -52,6 +52,8 @@ export const SEND_MESSAGE = "SEND_MESSAGE";
 export const GET_MESSAGE = "GET_MESSAGE";
 export const MESSAGE_COUNT = "MESSAGE_COUNT";
 export const CHAT_USERS = "CHAT_USERS";
+export const TOGGLE_CHAT = "TOGGLE_CHAT";
+
 
 /*************CARDS*********************************/
 export const USER_CARDS = "USER_CARDS";

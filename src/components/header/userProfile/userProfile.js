@@ -20,11 +20,8 @@ import {
   messages_count,
   message_count,
   resetChats,
-  notifications
+  notifications, toggleChat
 } from "../../../actions/messages";
-
-
-
 
 
 
@@ -42,12 +39,9 @@ const UserProfile = props => {
   const userListtoggle = () => setuserListOpen(prevState => !prevState);
 
   const chatToggle = id => {
-    setchatVisible(false);
-    setTimeout(() => {
-      setchatVisible(true);  
-    }, 100);
     dispatch(resetChats())
-    setId(id);
+    dispatch(toggleChat(true,id))
+    // setId(id);
   };
   const chatHideCallback = value => {
     setchatVisible(value);
@@ -61,7 +55,7 @@ const UserProfile = props => {
     }
   });
   const setMessageCount = () => {
-    setchatVisible(false);
+    // setchatVisible(false);
     const data = { count: 0 };
     dispatch(message_count(data));    
   };
@@ -223,11 +217,11 @@ const UserProfile = props => {
           </Link>
         </DropdownMenu>
       </Dropdown>
-      {chatVisible?<Chat
+      <Chat
         Id={recieverID}
         chatToggle={chatVisible}
         chatHideCallback={value => chatHideCallback(value)}
-      /> : null}
+      />
     </div>
   );
 };
