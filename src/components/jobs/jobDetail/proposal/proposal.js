@@ -113,7 +113,7 @@ const Proposal = ({ props, jobId, history, isclick = false }) => {
   return (
     <div
       className="proposal-rw d-flex"
-      onClick={() => (isclick ? setOpenModal(true) : {})}
+      onClick={() => (setOpenModal(true))}
     >
       <div className="proposal-col-l">
         <UserImage image={imagepath} />
