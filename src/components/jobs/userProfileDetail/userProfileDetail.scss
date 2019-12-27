@@ -217,7 +217,7 @@
     border-left: none;
     border-right: none;
     &:focus {
-      border-color: #2db7fe;
+      border-color: $primary;
       box-shadow: none;
     }
   }

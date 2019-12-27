@@ -39,6 +39,8 @@ export default function reducer(state = initialState, action) {
     case TYPE.UPDATE_USER_PROFILE:
       return { ...state };
     case TYPE.UPDATE_USER_IMAGE:
+      console.log("action.data: ", action.data);
+
       return {
         ...state,
         data: { ...state.data, image: action.data.image },

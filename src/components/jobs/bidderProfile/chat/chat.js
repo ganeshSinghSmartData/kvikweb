@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Input, FormGroup } from "reactstrap";
 import "./chat.scss";
-import { messages_list } from "../../../../actions/messages";
+import { messages_list, resetChats } from "../../../../actions/messages";
 import { LocalForm, Control } from "react-redux-form";
 import SocketClient from "../../../../config/socket";
 import { SEND_MESSAGE, GET_MESSAGE } from "../../../../actions/constants";
@@ -15,22 +15,27 @@ const ROOT_CSS = css({
   width: 800
 });
 
+let messagesEnd = null;
 const Chat = props => {
   const [message, setMessage] = useState("");
   const user = useSelector(state => state.user);
   const messages = useSelector(state => state.messages);
   const [message_count, setMessageCount] = useState(0);
-
   const dispatch = useDispatch();
 
+  const scrollToBottom = () => {
+    messagesEnd&&messagesEnd.scrollIntoView({ behavior: "smooth" });
+  }
   useEffect(() => {
-    if (message_count === 0) {
+    loadChatData(props.Id);
+  }, []);
+  const loadChatData = async Id =>{
+    if(Id){
       SocketClient.eventHandler(GET_MESSAGE, { user_id: user.data._id });
-      dispatch(messages_list({ id: props.Id, limit: 10, skip: 0 }));
-      setMessageCount(1);
+      await dispatch(messages_list({ id: Id, limit: 10, skip: 0 }));
+        scrollToBottom()
     }
-  });
-
+  }
   /*********************** Handle message input ************************************** */
   const onHandleChange = e => {
     setMessage(e.target.value);
@@ -38,13 +43,14 @@ const Chat = props => {
 
   /*********************** Handle message send ************************************** */
   const handleMessage = val => {
+    if(message)
     SocketClient.eventHandler(SEND_MESSAGE, {
       message: message,
       recieverId: props.Id,
       senderId: user.data._id
     });
     setMessage("");
-
+    scrollToBottom()
     dispatch(messages_list({ id: props.Id, limit: 10, skip: 0 }));
   };
 
@@ -52,8 +58,12 @@ const Chat = props => {
     props.chatHideCallback(false);
   };
   return (
-    <div className={`chat-block ${props.chatToggle ? "on" : ""}`}>
-      <div className="chat-head d-flex">
+    <div
+      className={`chat-block d-flex flex-column ${
+        props.chatToggle ? "on" : ""
+      }`}
+    >
+      <div className="chat-head d-flex flex-shrink-0">
         <h2>CHAT</h2>
         <Button
           color="primary"
@@ -79,30 +89,31 @@ const Chat = props => {
           </svg>
         </Button>
       </div>
-      <div className="chat-inner overflow-auto">
-        <ScrollToBottom className={ROOT_CSS}>
+      <div className="chat-inner overflow-auto flex-fill">
+        {/* <ScrollToBottom className={ROOT_CSS}> */}
+        <ScrollToBottom>
           {messages &&
             messages.data.length > 0 &&
             messages.data.map((val, index) => {
               return (
-                <React.Fragment>
+                <React.Fragment key={index}>
                   {val.senderId === user.data._id ? (
-                    <div className="chat-row">
-                      <div className="chat-txt admin">
-                        <p>{val.message}</p>
-                        <span className="d-block chat-time">
-                          {moment(val.createdAt).format("LT")}
-                        </span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="chat-row rt">
-                      <div className="chat-txt user">
+                    <div className="chat-row d-flex justify-content-end">
+                      <div ref={(el) => { messagesEnd = el; }} className="chat-txt user">
                         <p>{val.message}</p>
                         <span className="d-block chat-time">09:20PM</span>
                       </div>
                     </div>
-                  )}
+                  ) : (
+                    <div className="chat-row d-flex">
+                    <div ref={(el) => { messagesEnd = el; }} className="chat-txt admin">
+                      <p>{val.message}</p>
+                      <span className="d-block chat-time">
+                        {moment(val.createdAt).format("LT")}
+                      </span>
+                    </div>
+                  </div>
+                    )}
                 </React.Fragment>
               );
             })}
@@ -112,7 +123,7 @@ const Chat = props => {
             Today
           </label>
         </div>
-        <div className="chat-row">
+        <div className="chat-row d-flex">
           <div className="chat-txt admin">
             <p>
               Lorem ipsum dolor sit ameti
@@ -123,8 +134,12 @@ const Chat = props => {
           </div>
         </div> */}
       </div>
-      <div className="chat-foot d-flex">
-        <LocalForm model="messages" onSubmit={values => handleMessage(values)}>
+      <div className="chat-foot">
+        <LocalForm
+          model="messages"
+          onSubmit={values => handleMessage(values)}
+          className="d-flex"
+        >
           <div className="chat-foot-l flex-fill">
             <FormGroup>
               <Control.text

@@ -19,15 +19,39 @@ import { apiUrl } from "./../../../environment";
 import {
   messages_count,
   message_count,
+  resetChats,
   notifications
 } from "../../../actions/messages";
 
+
+
+
+
+
 const UserProfile = props => {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [userListOpen, setuserListOpen] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector(state => state);
   const messages = useSelector(state => state.messages);
   const [count, setCount] = useState(0);
-  const [recieverID, setId] = useState(0);
+  const [recieverID, setId] = useState("");
+  const [chatVisible, setchatVisible] = useState(false);
+
+  const toggle = () => setDropdownOpen(prevState => !prevState);
+  const userListtoggle = () => setuserListOpen(prevState => !prevState);
+
+  const chatToggle = id => {
+    setchatVisible(false);
+    setTimeout(() => {
+      setchatVisible(true);  
+    }, 100);
+    dispatch(resetChats())
+    setId(id);
+  };
+  const chatHideCallback = value => {
+    setchatVisible(value);
+  };
 
   useEffect(() => {
     if (count === 0) {
@@ -37,36 +61,22 @@ const UserProfile = props => {
     }
   });
   const setMessageCount = () => {
+    setchatVisible(false);
     const data = { count: 0 };
-    dispatch(message_count(data));
-  };
-
-  const [chatVisible, setchatVisible] = useState(false);
-  const chatToggle = id => {
-    setchatVisible(!chatVisible);
-    setId(id);
-  };
-  const chatHideCallback = value => {
-    setchatVisible(value);
+    dispatch(message_count(data));    
   };
 
   let imagepath = DummyUserImage;
-  if (props.image && props.image.length) {
+  if (!props.image && props.image.length) {
     imagepath = `${apiUrl}/${props.image[0].path}`;
   }
 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [userListOpen, setuserListOpen] = useState(false);
-
-  const toggle = () => setDropdownOpen(prevState => !prevState);
-  const userListtoggle = () => setuserListOpen(prevState => !prevState);
   return (
     <div
       className={
         "user-profile-blc row m-0 align-items-center flex-shrink-0 " +
         props.className
-      }
-    >
+      }>
       <Dropdown
         onClick={() => setMessageCount()}
         isOpen={userListOpen}
@@ -213,11 +223,11 @@ const UserProfile = props => {
           </Link>
         </DropdownMenu>
       </Dropdown>
-      <Chat
+      {chatVisible?<Chat
         Id={recieverID}
         chatToggle={chatVisible}
         chatHideCallback={value => chatHideCallback(value)}
-      />
+      /> : null}
     </div>
   );
 };
