@@ -23,9 +23,9 @@ const Header = (props) => {
   useEffect(() => {
     document.addEventListener("click", bodyClickHandler);
     document.addEventListener("keydown", escFunction);
-    return(()=>{
-      document.removeEventListener("click",bodyClickHandler);
-      document.removeEventListener("keydown",escFunction)
+    return (() => {
+      document.removeEventListener("click", bodyClickHandler);
+      document.removeEventListener("keydown", escFunction)
     })
   }, []);
   const bodyClickHandler = () => {
