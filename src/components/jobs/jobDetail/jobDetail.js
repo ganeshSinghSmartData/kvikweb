@@ -14,6 +14,7 @@ import Paragraph from "../../commonUi/paragraph/paragraph";
 import JobCreatedBy from "./JobAddress/jobCreatedBy";
 import Proposal from "./proposal/proposal";
 import Breadcrumb from "../../commonUi/breadcrumb/breadcrumb";
+import TimeCounterComponent from "./timeCounterComponent";
 
 import { StringToDate, DaysBetween } from "./../../../utilities/common";
 import { JobStatus, BidStatus } from "../../../utilities/constants";
@@ -67,6 +68,15 @@ export default function JobDetail({
   let [timeleft, seTimeleft] = useState(
     datetimeDifference(new Date(), new Date(DaysBetween(job.jobStartDate)))
   );
+
+  /*   setInterval(() => {
+    const time = datetimeDifference(
+      new Date(),
+      new Date(DaysBetween(job.jobStartDate))
+    );
+    seTimeleft(time);
+  }, 1000); */
+
   job.images.length &&
     job.images.map(item => {
       const obj = {
@@ -515,12 +525,13 @@ export default function JobDetail({
                           />
                         </svg>
                       </span>
-                      <p>
+                      <TimeCounterComponent start_date={job.jobStartDate} />
+                      {/*                       <p>
                         <label>{`${timeleft.days} Days`}</label>
                         <label>{`${timeleft.hours} Hours`}</label>
                         <label>{`${timeleft.minutes} Mins`}</label>
                         <label>{`${timeleft.seconds} Secs`}</label>
-                      </p>
+                      </p> */}
                     </div>
                   </li>
                 </ul>

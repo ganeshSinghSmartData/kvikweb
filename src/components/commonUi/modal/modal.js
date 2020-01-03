@@ -763,4 +763,4 @@ const SignInModal = ({
     </div>
   );
 };
-export default SignInModal;
+export default React.memo(SignInModal);
