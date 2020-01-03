@@ -19,31 +19,32 @@ const AppRoute = ({
   type = private_type,
   ...rest
 }) => (
-  <Route
-    {...rest}
-    render={props => {
-      const isLogin = requireAuth(store);
-      if (type === public_type) {
-        return (
+    <Route
+      {...rest}
+      render={props => {
+        console.log('props.location.pathname', props.location.pathname)
+        const isLogin = requireAuth(store);
+        if (type === public_type) {
+          return (
+            <Layout>
+              <Component {...props} />
+            </Layout>
+          );
+        }
+        return isLogin || props.location.pathname === "/" ? (
           <Layout>
             <Component {...props} />
           </Layout>
-        );
-      }
-      return isLogin || props.location.pathname === "/" ? (
-        <Layout>
-          <Component {...props} />
-        </Layout>
-      ) : (
-        <Redirect
-          to={{
-            pathname: to,
-            state: { from: props.location }
-          }}
-        />
-      );
-    }}
-  />
-);
+        ) : (
+            <Redirect
+              to={{
+                pathname: to,
+                state: { from: props.location }
+              }}
+            />
+          );
+      }}
+    />
+  );
 
 export default AppRoute;
