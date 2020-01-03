@@ -178,9 +178,10 @@ export default function JobDetail({
   };
 
   setJobStatus(job.status);
-  let noImageClass = ''
+  let noImageClass = "";
   if (!job.images || job.images.length === 0) {
-    noImageClass = 'd-flex justify-content-center justify-content-center no-jobdetail-image'
+    noImageClass =
+      "d-flex justify-content-center justify-content-center no-jobdetail-image";
   }
 
   return (
@@ -204,11 +205,11 @@ export default function JobDetail({
                   alt="Job Post User"
                 />
               ) : (
-                  <img
-                    src={require("../../../assets/images/icons/no-job-icon3.svg")}
-                    alt="Job Post User"
-                  />
-                )}
+                <img
+                  src={require("../../../assets/images/icons/no-job-icon3.svg")}
+                  alt="Job Post User"
+                />
+              )}
             </div>
             <div className="d-flex justify-content-center">
               <div className="job-slider-track-inner">
@@ -225,8 +226,8 @@ export default function JobDetail({
                     ))}
                   </Slider>
                 ) : (
-                    ""
-                  )}
+                  ""
+                )}
               </div>
             </div>
           </Col>
@@ -325,7 +326,7 @@ export default function JobDetail({
                     <label
                       className={`job-detail-amnt margin flex-shrink-0 ${
                         path === "/job-proposal" ? "" : ""
-                        }`}
+                      }`}
                     >
                       {job.budget ? `$${job.budget}` : ""}
                     </label>
@@ -613,13 +614,13 @@ export default function JobDetail({
               {job.bidersLIstingcheck.map((item, key) => {
                 return (
                   <Proposal
-                    props={item}
+                    props={{ ...item, status: job.status }}
                     key={key}
                     jobId={job._id}
                     history={history}
                     isclick={
                       job.status === "not_started" ||
-                        job.status === "not_accepted"
+                      job.status === "not_accepted"
                         ? true
                         : false
                     }
