@@ -17,6 +17,10 @@
   margin-bottom: 11px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(139, 141, 144, 0.25);
+  cursor: pointer;
+  &:hover {
+    background: #fafafa;
+  }
 }
 .proposal-col-l,
 .proposal-col-m {

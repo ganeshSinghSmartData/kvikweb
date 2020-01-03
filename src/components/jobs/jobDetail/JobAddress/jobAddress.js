@@ -8,7 +8,6 @@ import UserImage from "../userImage/userImage";
 import { DaysBetween } from "./../../../../utilities/common";
 
 import "./jobAddress.scss";
-import { setTimeout } from "timers";
 
 const JobAddress = ({
   end_date = false,
@@ -21,7 +20,7 @@ const JobAddress = ({
     datetimeDifference(new Date(), new Date(DaysBetween(end_date)))
   );
 
-  /* setInterval(() => {
+  /*   setInterval(() => {
     const time = datetimeDifference(new Date(), new Date(end_date));
     seTimeleft(time);
   }, 1000); */
