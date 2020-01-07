@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import Countdown from "react-countdown-now";
 import datetimeDifference from "datetime-difference";
 import { Button, Row, Col } from "reactstrap";
 import Slider from "react-slick";
@@ -15,7 +16,11 @@ import JobCreatedBy from "./JobAddress/jobCreatedBy";
 import Proposal from "./proposal/proposal";
 import Breadcrumb from "../../commonUi/breadcrumb/breadcrumb";
 
-import { StringToDate, DaysBetween } from "./../../../utilities/common";
+import {
+  StringToDate,
+  DaysBetween,
+  AddOffset
+} from "./../../../utilities/common";
 import { JobStatus, BidStatus } from "../../../utilities/constants";
 import { apiUrl } from "./../../../environment";
 import {
@@ -65,7 +70,7 @@ export default function JobDetail({
 
   const thmbnails = [];
   let [timeleft, seTimeleft] = useState(
-    datetimeDifference(new Date(), new Date(DaysBetween(job.jobStartDate)))
+    datetimeDifference(new Date(), new Date(DaysBetween(job.jobEndDate)))
   );
   job.images.length &&
     job.images.map(item => {
@@ -451,7 +456,7 @@ export default function JobDetail({
                           />
                         </svg>
                       </span>
-                      <p>{StringToDate(job["created_at"])}</p>
+                      <p>{StringToDate(job["jobStartDate"])}</p>
                     </li>
                   )}
                   {job["phone"] && (
@@ -515,12 +520,26 @@ export default function JobDetail({
                           />
                         </svg>
                       </span>
-                      <p>
-                        <label>{`${timeleft.days} Days`}</label>
-                        <label>{`${timeleft.hours} Hours`}</label>
-                        <label>{`${timeleft.minutes} Mins`}</label>
-                        <label>{`${timeleft.seconds} Secs`}</label>
-                      </p>
+                      <Countdown
+                        date={new Date().getTime() + Number(job.jobEndDate)}
+                        renderer={({ hours, minutes, seconds, completed }) => {
+                          if (!completed) {
+                            return (
+                              <p>
+                                {timeleft.months ? (
+                                  <label>{`${timeleft.months} Months`}</label>
+                                ) : (
+                                  ""
+                                )}
+                                <label>{`${timeleft.days} Days`}</label>
+                                <label>{`${hours} Hours`}</label>
+                                <label>{`${minutes} Mins`}</label>
+                                <label>{`${seconds} Secs`}</label>
+                              </p>
+                            );
+                          }
+                        }}
+                      />
                     </div>
                   </li>
                 </ul>
@@ -572,6 +591,23 @@ export default function JobDetail({
                   </Button>
                 </div>
               )}
+            {user && !user.loggedIn && (
+              <div className="place-bid-rw text-center">
+                <Link
+                  className="place-bid-btn login-btn btn btn-info btn-secondary"
+                  to={`/login`}
+                >
+                  Login
+                </Link>
+                {/* <Button
+                    size="lg"
+                    color="secondary"
+                    className="place-bid-btn"
+                    onClick={() => setOpenModal(!openModal)}
+                  > */}
+                {/* </Button> */}
+              </div>
+            )}
           </Col>
         </Row>
         <PlaceYourBidModal
