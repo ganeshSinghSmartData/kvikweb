@@ -124,6 +124,11 @@
 .signup-link-rw {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
+  font-weight: 400;
+  a {
+    font-weight: 500;
+    text-decoration: underline;
+  }
   span {
     margin-right: 4px;
   }

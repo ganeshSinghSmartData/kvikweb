@@ -5,7 +5,7 @@ import Nav from "../nav/nav";
 import UserProfile from "./userProfile/userProfile";
 import Logo from "../commonUi/logo/logo";
 import "./header.scss";
-const Header = (props) => {
+const Header = props => {
   const { user } = useSelector(state => state);
 
   let imagepath = "";
@@ -23,10 +23,10 @@ const Header = (props) => {
   useEffect(() => {
     document.addEventListener("click", bodyClickHandler);
     document.addEventListener("keydown", escFunction);
-    return (() => {
+    return () => {
       document.removeEventListener("click", bodyClickHandler);
-      document.removeEventListener("keydown", escFunction)
-    })
+      document.removeEventListener("keydown", escFunction);
+    };
   }, []);
   const bodyClickHandler = () => {
     setnavVisible(false);
@@ -36,14 +36,16 @@ const Header = (props) => {
       setnavVisible(false);
     }
   };
-  const navClickCallback = (value) => {
-    setnavVisible(value)
-  }
+  const navClickCallback = value => {
+    setnavVisible(value);
+  };
   return (
     <header className="header d-flex flex-column flex-shrink-0">
       <Container>
         <Row>
-          <Col className={`d-flex header-inner ${!user.loggedIn && 'beforeLogin'}`}>
+          <Col
+            className={`d-flex header-inner ${!user.loggedIn && "beforeLogin"}`}
+          >
             <Button color="link" className="logo p-0 rounded-0">
               <Logo classname="m-0" navigate={true} />
             </Button>
