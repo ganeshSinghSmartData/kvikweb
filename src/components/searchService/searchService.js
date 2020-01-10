@@ -15,25 +15,18 @@ const SearchService = props => {
   const pathname = props.history.location.pathname;
 
   const _handleSearch = searchKey => {
-    dispatch(reset_job_products());
     if (pathname === "/" && searchKey.search) {
+      dispatch(reset_job_products());
       dispatch(getJobProduct({ page: pagination.page, search: searchKey }));
+      /* if (searchKey.search === "") {
+        console.log("I am calling in empty search");
+        dispatch(getJobProduct({ page: pagination.page }));
+      } else {
+        console.log("I am calling in string search");
+        dispatch(reset_job_products());
+        
+      } */
     }
-    if (searchKey.search === "") {
-      dispatch(getJobProduct({ page: pagination.page, search: "" }));
-    }
-    /* if (pathname === '/') {
-      dispatch(getJobProduct({ page: pagination.page, search: searchKey }));
-    }
-    if (pathname === '/') {
-      dispatch(getJobProduct({ page: pagination.page, search: searchKey }));
-    }
-    if (pathname === '/') {
-      dispatch(getJobProduct({ page: pagination.page, search: searchKey }));
-    }
-    if (pathname === '/') {
-      dispatch(getJobProduct({ page: pagination.page, search: searchKey }));
-    } */
   };
   return (
     <div className="src-service-blc d-flex flex-column flex-fill">

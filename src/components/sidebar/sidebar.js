@@ -30,12 +30,12 @@ const Sidebar = ({
   return (
     <aside className='sidebar'>
       <div className="sidebar-item">
-        <h3 className="d-flex">
+        <h3 className="d-flex" onClick={toggleCategory}>
           <label className="flex-fill m-0">SEARCH BY CATEGORY</label>
           <Button
             color="link"
-            className="item-toggle-btn d-flex flex-column flex-column align-items-end flex-shrink-0   btn btn-link p-0"
-            onClick={toggleCategory}
+            className="item-toggle-btn rounded-0 d-flex flex-column flex-column align-items-end flex-shrink-0   btn btn-link p-0"
+
           >
             <span className="d-flex align-items-center justify-content-center">
               <span className={`${isCategory ? "active" : ""} d-flex`}></span>
@@ -53,7 +53,7 @@ const Sidebar = ({
                       <Button
                         color="link"
                         block
-                        className={`d-flex flex-fill m-0 text-left`}
+                        className={`d-flex flex-fill m-0 text-left rounded-0`}
                         onClick={() => toggleCheckHandler(key)}
                       // className={`d-flex flex-fill m-0 text-left ${toggleCheck ? "active" : ""}`}
                       >
@@ -90,12 +90,12 @@ const Sidebar = ({
         </div>
       </div>
       <div className="sidebar-item">
-        <h3 className="d-flex">
+        <h3 className="d-flex" onClick={toggleFilter}>
           <label className="flex-fill m-0">FILTER BY</label>
           <Button
             color="link"
-            className="item-toggle-btn d-flex flex-column flex-column align-items-end flex-shrink-0 btn btn-link p-0"
-            onClick={toggleFilter}
+            className="item-toggle-btn rounded-0 d-flex flex-column flex-column align-items-end flex-shrink-0 btn btn-link p-0"
+
           >
             <span className="d-flex align-items-center justify-content-center">
               <span className={`${isFilter ? "active" : ""} d-flex`}></span>

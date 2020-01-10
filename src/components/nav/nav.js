@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "./../../actions/user";
 import "./nav.scss";
@@ -9,7 +9,6 @@ const Nav = props => {
     e.nativeEvent.stopImmediatePropagation();
   };
   const { user } = useSelector(state => state);
-  const dispatch = useDispatch();
 
   const navVisibleHander = () => {
     props.navVisibleProp(false)

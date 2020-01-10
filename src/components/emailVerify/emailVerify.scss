@@ -7,62 +7,60 @@
 .verify-email-wrapper {
   max-width: 550px;
   width: 100%;
-  table {
-    width: 100%;
-    margin: 0 auto;
-    background-color: #fff;
-    border-collapse: collapse;
-    border-spacing: 0;
-    .head-row {
-      td {
-        background-color: $primary-dark;
-        color: #fff;
-      }
-      .tag-line {
-        font-size: 18px;
-        font-weight: 500;
-      }
+  .email-header {
+    background-color: $primary-dark;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 20px;
+    @media (max-width: 480px) {
+      font-size: 15px;
     }
-    .head-row td,
-    .mid-row td,
-    .bottom-row > td {
-      padding: 20px;
-    }
-
-    .bottom-row {
-      table {
-        background: none;
-      }
-      .social-row {
-        a {
-          margin: 0 4px 0 0;
-        }
-        img {
-          border: 2px solid #fff;
-        }
-      }
-    }
-    .mid-row-data {
-      min-height: 250px;
-      p {
-        font-size: 16px;
-        font-weight: 400;
-        margin-bottom: 25px;
-      }
-    }
-    .bottom-row {
-      a {
-        color: #fff;
-      }
-      > td {
-        background-color: $primary-dark;
-        color: #fff;
-      }
-    }
-    .success-icon-row {
-      margin: 0 0 20px 0;
+    .email-logo {
+      max-width: 198px;
+      width: 100%;
       svg {
-        width: 70px;
+        width: 78px;
+      }
+    }
+  }
+  .email-inner-blc {
+    min-height: 250px;
+    p {
+      font-size: 16px;
+      font-weight: 400;
+      margin-bottom: 25px;
+    }
+  }
+
+  .success-icon-row {
+    margin: 0 0 20px 0;
+    svg {
+      width: 70px;
+    }
+  }
+  .email-social-icon {
+    a {
+      margin: 0 8px 0 0;
+      flex-shrink: 0;
+    }
+    img {
+      border: 2px solid #fff;
+    }
+  }
+  .email-footer {
+    background-color: $primary-dark;
+    @media (max-width: 480px) {
+      flex-direction: column !important;
+      padding: 5px !important;
+    }
+    a {
+      color: #fff;
+    }
+    .email-footer-col {
+      padding: 10px;
+      @media (max-width: 480px) {
+        padding: 6px;
       }
     }
   }

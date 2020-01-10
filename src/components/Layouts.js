@@ -14,9 +14,7 @@ import * as Scroll from "react-scroll";
 import Header from "./header/header";
 import Banner from "./banner/banner";
 import Footer from "./footer/footer";
-import Spinner from "./commonUi/spinner/spinner";
 
-let scroll = Scroll.animateScroll;
 
 /*************** Public Layout ***************/
 export const PublicLayout = props => {
@@ -38,15 +36,13 @@ export const PublicLayout = props => {
     wrapperRef.current.scroll({ top: 0, left: 0, behavior: "smooth" });
   };
   useEffect(() => {
-    document.addEventListener("click", bodyClickHandler);
     document.addEventListener("keydown", escFunction);
     window.addEventListener('resize', windowResize)
-    return(()=>{
-      document.removeEventListener("click",bodyClickHandler);
-      document.removeEventListener("keydown",escFunction);
-      document.removeEventListener("resize",windowResize)
+    return (() => {
+      document.removeEventListener("keydown", escFunction);
+      document.removeEventListener("resize", windowResize)
     })
-  },[]);
+  }, []);
   const windowResize = () => {
     const windowWidth = window.innerWidth;
     if (windowWidth <= 768) {
@@ -59,16 +55,13 @@ export const PublicLayout = props => {
       dispatch(sidebarToggleHandler(false))
     }
   };
-  const bodyClickHandler = () => {
-    dispatch(sidebarToggleHandler(false))
-  };
   return (
     <>
-      {sidebarToggleValue ? <Spinner className="with-overlay no-spin-icon" /> : null}
       <div className="main-wrapper d-flex flex-column flex-fill">
+
         <Header {...props} />
         <div
-          className="wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto"
+          className={`wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto ${!sidebarToggleValue ? 'active' : ''}`}
           ref={wrapperRef}
           onScroll={scrollCheck}
         >
@@ -102,17 +95,20 @@ export const PublicLayout = props => {
 
             </button>
             {(props.children.props.match.path === "/" &&
-              <Button className="d-flex align-items-center justify-content-center sidebar-toogle-btn text-right position-fixed rounded-left d-md-none flex-shrink-0"
+              <Button color="link" className="border-0 d-flex align-items-center sidebar-toogle-btn text-right position-fixed rounded-left d-md-none flex-shrink-0"
                 onClick={(e) => {
                   dispatch(sidebarToggleHandler(!sidebarToggleValue),
                     e.nativeEvent.stopImmediatePropagation()
                   )
                 }}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="257.569" height="451.847" viewBox="0 0 257.569 451.847">
-                  <g id="arrow-point-to-right" transform="translate(-97.139 0)">
-                    <path id="Path_1" data-name="Path 1" d="M345.441,248.292,151.154,442.573a31.641,31.641,0,0,1-44.75-44.744L278.318,225.92,106.409,54.017a31.642,31.642,0,0,1,44.75-44.748L345.446,203.553a31.638,31.638,0,0,1,0,44.739Z" />
-                  </g>
-                </svg>
+                <span className="btn btn btn-secondary d-inline-block">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="257.569" height="451.847" viewBox="0 0 257.569 451.847">
+                    <g id="arrow-point-to-right" transform="translate(-97.139 0)">
+                      <path id="Path_1" data-name="Path 1" d="M345.441,248.292,151.154,442.573a31.641,31.641,0,0,1-44.75-44.744L278.318,225.92,106.409,54.017a31.642,31.642,0,0,1,44.75-44.748L345.446,203.553a31.638,31.638,0,0,1,0,44.739Z" />
+                    </g>
+                  </svg>
+                </span>
+
               </Button>
             )}
           </Container>

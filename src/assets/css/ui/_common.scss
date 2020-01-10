@@ -46,9 +46,19 @@ body {
     border-color: $orange-200;
   }
   p {
-    word-break:break-word;
+    word-break: break-word;
   }
 }
+//smooth scrol style start
+.sidebar-col.active,
+.wrapper-inner.active,
+.overflow-auto.modal-body
+{
+  -webkit-overflow-scrolling: touch;
+}
+
+
+//smooth scrol style end
 .container {
   max-width: 1200px;
 }

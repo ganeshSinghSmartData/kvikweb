@@ -1,7 +1,9 @@
-.spinner-blc.position-absolute {
+.spinner-blc.position-absolute,
+.spinner-blc.position-fixed {
   z-index: 99;
 }
 .spinner-blc.position-absolute,
+.spinner-blc.position-fixed,
 .with-overlay:after {
   top: 0;
   right: 0;
@@ -12,7 +14,10 @@
   content: "";
   position: absolute;
   z-index: 0;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.nav-overlay:after {
+  background-color: rgba(0, 0, 0, 0);
 }
 .overlay-opacity {
   background-color: rgba(0, 0, 0, 0.3);

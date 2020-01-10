@@ -21,10 +21,19 @@
 }
 .sidebar-item {
   > h3 {
+    cursor: pointer;
     font-family: $secondary-font-family;
     font-size: 16px;
     font-weight: 600;
-    margin: 0 0 8px 0;
+    margin: 0 0 5px 0;
+    * {
+      cursor: pointer;
+    }
+    &:hover {
+      .btn-link {
+        color: $secondary-100;
+      }
+    }
   }
 }
 .sidebar-list-blc {
@@ -34,10 +43,10 @@
     position: relative;
     button {
       font-weight: 400;
+      padding: 0 0 12px;
       * {
         cursor: pointer;
       }
-      padding: 5px 0;
       input {
         top: 0;
         left: 0;
@@ -58,7 +67,6 @@
     }
     input:checked + label {
       display: flex;
-      margin-right: 11px;
     }
   }
 }
@@ -120,7 +128,7 @@
   margin: 0;
 }
 .sidebar-list-blc h5 {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .sidebar-list-blc h4 label,
 .sidebar-list-blc h5 label {
@@ -219,7 +227,7 @@
 .sidebar-list-blc h5.postal-head {
   font-family: $secondary-font-family;
   min-height: initial;
-  padding-bottom: 4px;
+  padding-bottom: 0;
 }
 .postal-head label {
   font-size: 12px;
@@ -247,7 +255,7 @@
   .sidebar-toogle-btn {
     // display: none;
     left: 0px;
-    width: 30px;
+    width: 50px;
     z-index: 4;
     margin-top: 0;
     padding: 9px 0;
@@ -256,6 +264,10 @@
       path {
         fill: white;
       }
+    }
+    span {
+      width: 35px;
+      border-radius:0 40px 40px 0; 
     }
   }
   .sidebar-toogle-btn.d-none {
