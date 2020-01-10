@@ -220,11 +220,11 @@ export default function JobDetail({
                   alt="Job Post User"
                 />
               ) : (
-                <img
-                  src={require("../../../assets/images/icons/no-job-icon3.svg")}
-                  alt="Job Post User"
-                />
-              )}
+                  <img
+                    src={require("../../../assets/images/icons/no-job-icon3.svg")}
+                    alt="Job Post User"
+                  />
+                )}
             </div>
             <div className="d-flex justify-content-center">
               <div className="job-slider-track-inner">
@@ -241,8 +241,8 @@ export default function JobDetail({
                     ))}
                   </Slider>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
               </div>
             </div>
           </Col>
@@ -341,7 +341,7 @@ export default function JobDetail({
                     <label
                       className={`job-detail-amnt margin flex-shrink-0 ${
                         path === "/job-proposal" ? "" : ""
-                      }`}
+                        }`}
                     >
                       {job.budget ? `$${job.budget}` : ""}
                     </label>
@@ -539,8 +539,8 @@ export default function JobDetail({
                                 {timeleft.months ? (
                                   <label>{`${timeleft.months} Months`}</label>
                                 ) : (
-                                  ""
-                                )}
+                                    ""
+                                  )}
                                 <label>{`${timeleft.days} Days`}</label>
                                 <label>{`${hours} Hours`}</label>
                                 <label>{`${minutes} Mins`}</label>
@@ -604,7 +604,7 @@ export default function JobDetail({
             {user && !user.loggedIn && (
               <div className="place-bid-rw text-center">
                 <Link
-                  className="place-bid-btn login-btn btn btn-info btn-secondary"
+                  className="place-bid-btn btn btn-secondary"
                   to={`/login`}
                 >
                   Login
@@ -666,7 +666,7 @@ export default function JobDetail({
                     history={history}
                     isclick={
                       job.status === "not_started" ||
-                      job.status === "not_accepted"
+                        job.status === "not_accepted"
                         ? true
                         : false
                     }
