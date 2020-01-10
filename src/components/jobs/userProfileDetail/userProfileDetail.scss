@@ -187,6 +187,10 @@
     max-height: 400px;
     overflow: auto;
     overflow-x: hidden;
+    @media(max-width:900px){
+      overflow: visible;
+      max-height: none;
+    }
     h2 {
       font-weight: 700;
       color: $dark-default;
@@ -303,11 +307,11 @@
   width: 100%;
   display: unset !important;
 }
-.CardDemo label {
-  width: 300px;
-  color: black;
-  margin-top: 10px;
-}
+// .CardDemo label {
+//   width: 300px;
+//   color: black;
+//   margin-top: 10px;
+// }
 .error {
   color: $danger;
 }

@@ -23,6 +23,11 @@
     box-shadow: 0 0 7px #d4d4d4;
   }
 }
+.job-list-icon {
+  @media(max-width:767px){
+    display:none !important;
+  }
+}
 .list-icon {
   svg path {
     fill: #b3b3b3;

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Container, Row, Col, Button } from "reactstrap";
+import Spinner from "../commonUi/spinner/spinner"
 import Nav from "../nav/nav";
 import UserProfile from "./userProfile/userProfile";
 import Logo from "../commonUi/logo/logo";
+
 import "./header.scss";
 const Header = props => {
   const { user } = useSelector(state => state);
@@ -50,6 +52,11 @@ const Header = props => {
               <Logo classname="m-0" navigate={true} />
             </Button>
             <div className="d-flex align-items-center ml-auto nav-wrapper">
+              {navVisible ?
+                <Spinner className="with-overlay no-spin-icon nav-overlay"
+                  onClickEvent={() => setnavVisible(false)}
+                />
+                : null}
               <Nav
                 {...props}
                 navVisibleProp={navClickCallback}

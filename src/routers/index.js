@@ -142,7 +142,7 @@ const Routers = store => {
           exact
           component={VerifyEmail}
           requireAuth={Authorization}
-          layout={commonLayout}
+          layout={PublicLayout}
           store={store}
           type={public_type}
         />

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Button } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { sidebarToggleHandler } from '../../actions/job';
 import smoothscroll from "smoothscroll-polyfill";
 
 import JobProduct from "./jobProduct/jobProduct";
@@ -8,7 +9,7 @@ import Sidebar from "../sidebar/sidebar";
 import Heading from "../../components/commonUi/heading/heading";
 import Paragraph from "../../components/commonUi/paragraph/paragraph";
 import { pagination } from "../../utilities/constants";
-import SpinnerOverlay from "../commonUi/spinner/spinnerOverlay/spinnerOverlay";
+import Spinner from "../commonUi/spinner/spinner"
 import NoData from "../commonUi/noData/noData";
 import "./jobs.scss";
 import { getJobProduct, reset_job_products } from "./../../actions/job";
@@ -181,15 +182,23 @@ const Job = ({
   const sidebarToggleValue = useSelector(state => {
     return state.job.sidebarToggle
   });
-  const stopPropagation =(e)=>{
+  const stopPropagation = (e) => {
     e.nativeEvent.stopImmediatePropagation()
   }
-
   return (
     <React.Fragment>
       {/* <SpinnerOverlay className="position-fixed" /> */}
       <section className="d-flex flex-column position-relative">
         <Row className="d-flex flex-nowrap position-relative">
+          {sidebarToggleValue ?
+            <Spinner className="with-overlay no-spin-icon"
+              onClickEvent={(e) => {
+                dispatch(sidebarToggleHandler(false)
+                )
+              }}
+
+            />
+            : null}
           {path === "" && (
             <Col className={`sidebar-col d-flex flex-column ${sidebarToggleValue ? 'active' : ''}`} onClick={stopPropagation}>
               <Sidebar
