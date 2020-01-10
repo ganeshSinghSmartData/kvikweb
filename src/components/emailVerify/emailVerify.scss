@@ -3,6 +3,7 @@
   flex: 1 1;
   align-items: center;
   justify-content: center;
+  background-color: #dcdcdc  ;
 }
 .verify-email-wrapper {
   max-width: 550px;
@@ -10,7 +11,7 @@
   .email-header {
     background-color: $primary-dark;
     color: #fff;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     padding: 20px;
     @media (max-width: 480px) {
@@ -23,9 +24,14 @@
         width: 78px;
       }
     }
+    .email-template-logo img {
+      width:150px;
+    }
   }
   .email-inner-blc {
     min-height: 250px;
+    background-color: #fff;
+    padding: 15px;
     p {
       font-size: 16px;
       font-weight: 400;
