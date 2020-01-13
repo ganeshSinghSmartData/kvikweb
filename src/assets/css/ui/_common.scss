@@ -52,11 +52,9 @@ body {
 //smooth scrol style start
 .sidebar-col.active,
 .wrapper-inner.active,
-.overflow-auto.modal-body
-{
+.overflow-auto.modal-body {
   -webkit-overflow-scrolling: touch;
 }
-
 
 //smooth scrol style end
 .container {
@@ -408,4 +406,12 @@ input[type="search"]::-webkit-search-decoration {
       }
     }
   }
+}
+
+//Badge style start
+.badge-counter {
+  font-weight: 400;
+  right: 10px;
+  top: 3px;
+  padding: 3px 5px;
 }
