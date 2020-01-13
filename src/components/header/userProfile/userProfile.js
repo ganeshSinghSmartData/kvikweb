@@ -40,7 +40,7 @@ const UserProfile = props => {
 
   const chatToggle = id => {
     dispatch(resetChats())
-    dispatch(toggleChat(true,id))
+    dispatch(toggleChat(true, id))
     // setId(id);
   };
   const chatHideCallback = value => {
@@ -57,7 +57,7 @@ const UserProfile = props => {
   const setMessageCount = () => {
     // setchatVisible(false);
     const data = { count: 0 };
-    dispatch(message_count(data));    
+    dispatch(message_count(data));
   };
 
   let imagepath = DummyUserImage;
@@ -156,7 +156,7 @@ const UserProfile = props => {
         />
       </Button>
       <Dropdown isOpen={dropdownOpen} toggle={toggle} className="user-dropdown">
-        <DropdownToggle caret color="link">
+        <DropdownToggle caret color="link" className="d-flex align-items-center">
           {user.loggedIn && (
             <label className="mb-0">{`${user.data.fname} ${user.data.lname}`}</label>
           )}

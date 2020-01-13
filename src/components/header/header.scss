@@ -16,6 +16,18 @@
       position: relative;
       width: 155px;
     }
+    @media (max-width: 550px) {
+      border-bottom: 1px solid rgba(256, 256, 256, 0.2);
+      margin: 0 -15px;
+      padding-bottom: 10px !important;
+    }
+  }
+  .beforeLogin .logo {
+    @media (max-width: 550px) {
+      border-bottom: none;
+      margin: 0;
+      padding: 0 !important;
+    }
   }
   .nav-toggle-btn {
     width: 40px;
@@ -45,7 +57,7 @@
       top: 23px;
     }
   }
-  @media (max-width: 480px) {
+  @media (max-width: 550px) {
     .header-inner:not(.beforeLogin) {
       flex-direction: column;
     }

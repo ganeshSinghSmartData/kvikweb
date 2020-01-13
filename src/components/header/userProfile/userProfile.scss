@@ -76,6 +76,9 @@
   height: 40px;
   margin-left: 1px;
   border: 3px solid white;
+  @media (max-width: 370px) {
+    display: none;
+  }
   img {
     object-fit: cover;
   }
@@ -91,6 +94,12 @@
     label {
       margin-right: 10px;
       cursor: pointer;
+      width: 154px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    &:focus {
+      text-decoration: none;
     }
   }
   .dropdown-toggle::after {
