@@ -81,11 +81,11 @@ const UserProfile = props => {
           className="user-mail position-relative"
           color="link"
         >
-          {messages && messages.count > 0 && (
-            <Badge className="position-absolute badge-danger">
-              {messages.count}
-            </Badge>
-          )}
+
+          <Badge className="position-absolute badge-danger badge-counter">
+            {messages.count}
+          </Badge>
+
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="146"
@@ -177,43 +177,61 @@ const UserProfile = props => {
         <DropdownMenu right className="overflow-auto">
           <DropdownItem header>General</DropdownItem>
           <DropdownItem divider />
-          {/* <Link className="dropdown-item" to={"/"} onClick={() => toggle()}>
+          {/* <Link className="dropdown-item d-flex justify-content-between align-items-center " to={"/"} onClick={() => toggle()}>
             Setting
           </Link> */}
           <Link
-            className="dropdown-item"
+            className="dropdown-item d-flex justify-content-between align-items-center "
             to={"/bid-list"}
             onClick={() => toggle()}
           >
-            Bids
+            <label className="mb-0">
+              Bids
+            </label>
+            <Badge className="badge-danger badge-counter">
+              100
+            </Badge>
           </Link>
           <Link
-            className="dropdown-item"
+            className="dropdown-item d-flex justify-content-between align-items-center "
             to={"/job-list"}
             onClick={() => toggle()}
           >
-            Jobs
+            <label className="mb-0">
+              Jobs
+            </label>
+            <Badge className="badge-danger badge-counter">
+              100
+            </Badge>
           </Link>
-          <Link className="dropdown-item" to={""} onClick={() => toggle()}>
-            Metrics
+          <Link className="dropdown-item d-flex justify-content-between align-items-center " to={""} onClick={() => toggle()}>
+            <label className="mb-0">
+              Metrics
+            </label>
           </Link>
           <DropdownItem header className="padd">
-            Profile
+            <label className="mb-0">
+              Profile
+            </label>
           </DropdownItem>
           <DropdownItem divider />
           <Link
-            className="dropdown-item"
+            className="dropdown-item d-flex justify-content-between align-items-center "
             to="/profile"
             onClick={() => toggle()}
           >
-            My Profile
+            <label className="mb-0">
+              My Profile
+            </label>
           </Link>
           <Link
-            className="dropdown-item"
+            className="dropdown-item d-flex justify-content-between align-items-center "
             to={""}
             onClick={() => dispatch(logout())}
           >
-            Logout
+            <label className="mb-0">
+              Logout
+            </label>
           </Link>
         </DropdownMenu>
       </Dropdown>
