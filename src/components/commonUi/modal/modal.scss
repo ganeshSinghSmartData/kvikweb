@@ -601,6 +601,9 @@
   background-color: #fff;
   box-shadow: 0 0 5px #c1c1c1;
   border-radius: 5px;
+  @media (max-width: 480px) {
+    width: 100%;
+  }
   &:hover {
     background-color: #fff;
     box-shadow: 0 0 10px #c1c1c1;
