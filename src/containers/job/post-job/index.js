@@ -90,6 +90,7 @@ class PostNewJob extends Component {
       formData.append("jobStartDate", newStartDate);
       formData.append("jobEndDate", newEndDate);
       formData.append("frequency", jobData.frequency);
+      console.log("this.state.pathname", this.state.pathname);
       if (this.state.pathname === "/post-job") {
         this.props.createNewJob(formData, callback => {
           if (callback) {
@@ -138,6 +139,7 @@ class PostNewJob extends Component {
             _selectedCategory={this.state.selectedCategory}
             path={this.state.pathname}
             dataload={this.state.dataload}
+            path={this.props.match.path}
           />
         )}
         {this.state.pathname === "/edit-job" &&
@@ -158,10 +160,11 @@ class PostNewJob extends Component {
               }
               path={this.state.pathname}
               dataload={this.state.dataload}
+              path={this.props.match.path}
             />
           ) : (
-            <SpinnerOverlay className="position-fixed" />
-          ))}
+              <SpinnerOverlay className="position-fixed" />
+            ))}
       </React.Fragment>
     );
   }
