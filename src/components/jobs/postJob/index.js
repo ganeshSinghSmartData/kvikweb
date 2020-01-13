@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { LocalForm, actions } from "react-redux-form";
 import DatePicker from "react-datepicker";
@@ -14,6 +14,7 @@ import { apiUrl } from "../../../environment";
 import { getJobCategory } from "./../../../actions/job";
 import InputCell from "../../commonUi/input/inputCell";
 import Loader from "../../../components/commonUi/loader/loader";
+import ReviewJob from '../postJob/reviewJob/reviewJob';
 
 export default ({
   _jobDetails = {},
@@ -462,6 +463,20 @@ export default ({
           </div>
         </LocalForm>
       </div>
+
+
+      <Modal isOpen={modal} toggle={toggle} className="job-review-wrapper">
+        {/* {dataload && <Loader loading={dataload} />}     */}
+        <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+        <ModalBody>
+          {/* <ReviewJob /> */}
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
+          <Button color="secondary" onClick={toggle}>Cancel</Button>
+        </ModalFooter>
+      </Modal>
+
     </div>
   );
 };

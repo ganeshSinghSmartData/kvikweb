@@ -46,11 +46,9 @@ const Header = props => {
       <Container>
         <Row>
           <Col
-            className={`d-flex header-inner ${!user.loggedIn && "beforeLogin"}`}
-          >
-            <Button color="link" className="logo p-0 rounded-0">
-              <Logo classname="m-0" navigate={true} />
-            </Button>
+            className={`d-flex flex-wrap header-inner ${!user.loggedIn && "beforeLogin"}`}>
+
+            <Logo navigate={true} />
             <div className="d-flex align-items-center ml-auto nav-wrapper">
               {navVisible ?
                 <Spinner className="with-overlay no-spin-icon nav-overlay"
