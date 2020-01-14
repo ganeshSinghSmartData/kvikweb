@@ -14,6 +14,7 @@ import { apiUrl } from "../../../environment";
 import { getJobCategory } from "./../../../actions/job";
 import InputCell from "../../commonUi/input/inputCell";
 import Loader from "../../../components/commonUi/loader/loader";
+import ReviewJob from "./reviewJob/reviewJob";
 
 export default ({
   _jobDetails = {},
@@ -23,9 +24,11 @@ export default ({
   _handleCategoryOnchange,
   _selectedCategory,
   dataload,
-  path
+  path,
+  previewData
 }) => {
   const [images, setImages] = useState([]);
+  const [openView, setOpenView] = useState(false);
   const [uploadedImages, setUploadedImages] = useState(
     _jobDetails && _jobDetails.images ? _jobDetails.images : []
   );
@@ -110,6 +113,14 @@ export default ({
     _uploadedImages.splice(index, 1);
     setUploadedImages(_uploadedImages);
   };
+
+  const _openPreviewData = index => {
+    setOpenView(true);
+  };
+  const closePrevieModal = index => {
+    setOpenView(false);
+  };
+
 
   /********** Change class on steps ************/
   const getClass = step => {
@@ -452,19 +463,38 @@ export default ({
               </Button>
           )}
           {_currentstage === 3 && (
-            <Button
-              color="secondary"
-              type="submit"
-              disabled={isImageLengthExist}
-            >
-              {path == '/post-job' ?
-                'POST NOW'
-                : 'UPDATE JOB'}
-            </Button>
+            <div>
+              <Button
+                color="secondary"
+                disabled={isImageLengthExist}
+                onClick={_openPreviewData}
+              >
+                View Job
+              </Button>
+              <Button
+                color="secondary"
+                type="submit"
+                disabled={isImageLengthExist}
+              >
+                {path == '/post-job' ?
+                  'POST NOW'
+                  : 'UPDATE JOB'}
+              </Button>
+            </div>
           )}
         </div>
         </LocalForm>
     </div>
+{openView ?
+    <ReviewJob
+      _jobDetails={previewData}
+      _selectedCategory={_selectedCategory}
+      CategoryItems={CategoryItems}
+      closePrevieModal={closePrevieModal}
+      images={images}
+    />
+    : null
+  }  
     </div >
   );
 };
