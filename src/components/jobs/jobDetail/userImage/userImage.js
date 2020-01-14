@@ -22,19 +22,19 @@ const UserImage = ({
     <div
       className={`job-user rounded-circle border-secondary-200 d-flex align-items-center justify-content-center flex-shrink-0 position-relative ${
         path ? "hidden" : ""
-      }`}
+        }`}
     >
       {edit && (
         <div className="update-cell position-absolute w-100 h-100">
           <span className="update-cell-inner position-absolute w-100 h-100 d-flex align-items-center justify-content-center">
             {imegeUploading && (
               <span
-                className="spinner-border spinner-border-sm"
+                className="spinner-border spinner-border-sm text-secondary"
                 role="status"
                 aria-hidden="true"
               ></span>
             )}
-            <span className="d-flex justify-content-center align-items-center udpate-image-btn position-absolute rounded-circle ">
+            <span className="d-flex justify-content-center align-items-center update-image-btn position-absolute rounded-circle ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="19.446"
