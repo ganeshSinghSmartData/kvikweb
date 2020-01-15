@@ -55,24 +55,24 @@ class PostNewJob extends Component {
     } else {
       let formData = new FormData();
       this.setState({ dataload: true });
-      const startdate = new Date(startDate);
-      const newStartDate =
-        startdate.getFullYear() +
-        "-" +
-        (startdate.getMonth() + 1) +
-        "-" +
-        startdate.getDate() +
-        " " +
-        startdate.toLocaleTimeString("en-US");
-      const enddate = new Date(endDate);
-      const newEndDate =
-        enddate.getFullYear() +
-        "-" +
-        (enddate.getMonth() + 1) +
-        "-" +
-        enddate.getDate() +
-        "ReviewJob " +
-        enddate.toLocaleTimeString("en-US");
+      const newStartDate = new Date(startDate);
+      // const newStartDate =
+      //   startdate.getFullYear() +
+      //   "-" +
+      //   (startdate.getMonth() + 1) +
+      //   "-" +
+      //   startdate.getDate() +
+      //   " " +
+      //   startdate.toLocaleTimeString("en-US");
+      const newEndDate = new Date(endDate);
+      // const newEndDate =
+      //   enddate.getFullYear() +
+      //   "-" +
+      //   (enddate.getMonth() + 1) +
+      //   "-" +
+      //   enddate.getDate() +
+      //   " " +
+      //   enddate.toLocaleTimeString("en-US");
       if (uploadedImages && uploadedImages.length !== 0) {
         formData.append("saved_images", JSON.stringify(uploadedImages));
       }
