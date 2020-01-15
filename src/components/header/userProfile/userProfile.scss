@@ -97,7 +97,8 @@
     label {
       margin-right: 10px;
       cursor: pointer;
-      width: 154px;
+      max-width: 154px;
+      width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
     }

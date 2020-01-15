@@ -201,7 +201,7 @@ const Job = ({
       {/* <SpinnerOverlay className="position-fixed" /> */}
       <section className="d-flex flex-column position-relative">
         <Row className="d-flex flex-nowrap position-relative">
-          {console.log('sidebarToggleValue', sidebarToggleValue)}
+          {/* {console.log('sidebarToggleValue', sidebarToggleValue)} */}
           {sidebarToggleValue ?
             <Spinner className="with-overlay no-spin-icon"
               onClickEvent={() => {
