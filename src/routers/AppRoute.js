@@ -22,7 +22,6 @@ const AppRoute = ({
     <Route
       {...rest}
       render={props => {
-        console.log('props.location.pathname', props.location.pathname)
         const isLogin = requireAuth(store);
         if (type === public_type) {
           return (

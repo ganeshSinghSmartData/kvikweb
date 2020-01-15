@@ -18,12 +18,16 @@ class PostNewJob extends Component {
       stage: 1,
       pathname: "",
       selectedCategory: "",
-      dataload: false
+      dataload: false,
+      previewData: null,
+      // openPreview: false
     };
 
     this.handleJobPost = this.handleJobPost.bind(this);
     this.handleJobUpdate = this.handleJobUpdate.bind(this);
     this.handleStageChange = this.handleStageChange.bind(this);
+    this.viewJob = this.viewJob.bind(this);
+    // this.openPreviewData = this.openPreviewData.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +51,7 @@ class PostNewJob extends Component {
   ) {
     if (currentstage !== 3) {
       this.handleStageChange(1);
+      if (currentstage === 2) this.setPreviewData(jobData);
     } else {
       let formData = new FormData();
       this.setState({ dataload: true });
@@ -66,7 +71,7 @@ class PostNewJob extends Component {
         (enddate.getMonth() + 1) +
         "-" +
         enddate.getDate() +
-        " " +
+        "ReviewJob " +
         enddate.toLocaleTimeString("en-US");
       if (uploadedImages && uploadedImages.length !== 0) {
         formData.append("saved_images", JSON.stringify(uploadedImages));
@@ -114,9 +119,21 @@ class PostNewJob extends Component {
     // this.props.createNewJob(jobData);
   }
 
+  //   Handling Job Preview
+  // openPreviewData() {
+  //   this.setState({ openPreview: true });
+  // }
   //   Handling Job state change
   handleStageChange(newstage) {
     this.setState({ stage: this.state.stage + newstage });
+  }
+
+  //  Set preview Job data
+  setPreviewData(data) {
+    this.setState({ previewData: data });
+  }
+  viewJob() {
+    this.setState({ testData: 1 });
   }
 
   render() {
@@ -127,6 +144,7 @@ class PostNewJob extends Component {
             _currentstage={this.state.stage}
             _handleStageChange={this.handleStageChange}
             _handleJobPost={this.handleJobPost}
+            viewJob={this.viewJob}
             _handleJobUpdate={this.handleJobUpdate}
             _handleCategoryOnchange={category =>
               this.setState({
@@ -138,6 +156,8 @@ class PostNewJob extends Component {
             _selectedCategory={this.state.selectedCategory}
             path={this.state.pathname}
             dataload={this.state.dataload}
+            path={this.props.match.path}
+            previewData={this.state.previewData}
           />
         )}
         {this.state.pathname === "/edit-job" &&
@@ -158,10 +178,11 @@ class PostNewJob extends Component {
               }
               path={this.state.pathname}
               dataload={this.state.dataload}
+              path={this.props.match.path}
             />
           ) : (
-            <SpinnerOverlay className="position-fixed" />
-          ))}
+              <SpinnerOverlay className="position-fixed" />
+            ))}
       </React.Fragment>
     );
   }
