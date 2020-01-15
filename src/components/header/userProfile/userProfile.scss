@@ -1,6 +1,12 @@
 @import "../../../assets/css/variables";
 .user-profile-blc {
   padding: 0;
+  .user-list-dropdown {
+    @media (max-width: 550px) {
+      left: 0 !important;
+      width: 194px;
+    }
+  }
 }
 .user-mail.btn {
   padding-right: 8px;
@@ -78,12 +84,18 @@
   width: 40px;
   height: 40px;
   margin-left: 1px;
+  margin-right: 10px;
   border: 3px solid white;
-  @media (max-width: 370px) {
-    display: none;
-  }
+  // @media (max-width: 370px) {
+  //   display: none;
+  // }
   img {
     object-fit: cover;
+  }
+}
+.username-cell {
+  @media (max-width: 550px) {
+    display: none !important;
   }
 }
 .user-pic:disabled {
@@ -91,8 +103,7 @@
 }
 .user-dropdown {
   .btn.dropdown-toggle {
-    padding-right: 20px;
-    padding-left: 10px;
+    padding: 0;
     color: #fff;
     label {
       margin-right: 10px;
@@ -116,11 +127,15 @@
     width: 12px;
     height: 12px;
     fill: #fff;
+    flex-shrink: 0;
   }
   .dropdown-menu {
     width: 180px;
     max-height: 280px;
     left: -15px !important;
+    @media (max-width: 550px) {
+      width: 220px;
+    }
   }
   .dropdown-header {
     padding: 0.5rem 1.5rem 0;

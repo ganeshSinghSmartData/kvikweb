@@ -163,31 +163,35 @@ const UserProfile = props => {
           />
         </svg>
       </Button> */}
-      <Button color="link" className="user-pic p-0 rounded-circle" disabled>
-        <img
-          className="rounded-circle w-100 h-100"
-          src={imagepath}
-          alt="User Profile"
-        />
-      </Button>
-      <Dropdown isOpen={dropdownOpen} toggle={toggle} className="user-dropdown">
+
+      <Dropdown isOpen={dropdownOpen} toggle={toggle} className="user-dropdown d-flex">
+
         <DropdownToggle caret color="link" className="d-flex align-items-center">
-          {user.loggedIn && (
-            <label className="mb-0">{`${user.data.fname} ${user.data.lname}`}</label>
-          )}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="81.309"
-            height="47.418"
-            viewBox="0 0 81.309 47.418"
-          >
-            <path
-              id="Forma_1"
-              data-name="Forma 1"
-              d="M80.341,4.679,76.268.606a2.562,2.562,0,0,0-3.748,0L40.5,32.625,8.481.607a2.562,2.562,0,0,0-3.748,0L.66,4.68a2.561,2.561,0,0,0,0,3.747L38.626,46.395a2.562,2.562,0,0,0,3.747,0L80.341,8.428a2.566,2.566,0,0,0,0-3.748Z"
-              transform="translate(0.154 0.209)"
+          <Button color="link" className="user-pic p-0 rounded-circle flex-shrink-0">
+            <img
+              className="rounded-circle w-100 h-100"
+              src={imagepath}
+              alt="User Profile"
             />
-          </svg>
+          </Button>
+          <span className="username-cell d-flex align-items-center">
+            {user.loggedIn && (
+              <label className="mb-0">{`${user.data.fname} ${user.data.lname}`}</label>
+            )}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="81.309"
+              height="47.418"
+              viewBox="0 0 81.309 47.418"
+            >
+              <path
+                id="Forma_1"
+                data-name="Forma 1"
+                d="M80.341,4.679,76.268.606a2.562,2.562,0,0,0-3.748,0L40.5,32.625,8.481.607a2.562,2.562,0,0,0-3.748,0L.66,4.68a2.561,2.561,0,0,0,0,3.747L38.626,46.395a2.562,2.562,0,0,0,3.747,0L80.341,8.428a2.566,2.566,0,0,0,0-3.748Z"
+                transform="translate(0.154 0.209)"
+              />
+            </svg>
+          </span>
         </DropdownToggle>
         <DropdownMenu right className="overflow-auto">
           <DropdownItem header>General</DropdownItem>

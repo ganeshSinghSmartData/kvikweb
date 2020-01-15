@@ -183,11 +183,14 @@ const Job = ({
     })
   }, []);
   const windowResize = () => {
-    const windowWidth = window.innerWidth;
-    if (windowWidth <= 768) {
-      dispatch(sidebarToggleHandler(false))
+    console.log('test reize')
+    if (sidebarToggleValue == true) {
+      const windowWidth = window.innerWidth;
+      console.log(windowWidth)
+      if (windowWidth > 767) {
+        dispatch(sidebarToggleHandler(false))
+      }
     }
-
   }
 
   const sidebarToggleValue = useSelector(state => {
