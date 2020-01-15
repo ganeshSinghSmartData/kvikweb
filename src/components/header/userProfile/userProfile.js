@@ -112,7 +112,7 @@ const UserProfile = props => {
           <DropdownItem divider />
           <div className="user-list-scroll overflow-auto">
             {messages &&
-              messages.chatUsers.length > 0 &&
+              messages.chatUsers.length > 0 ?
               messages.chatUsers.map((val, index) => {
                 return (
                   <DropdownItem
@@ -136,7 +136,15 @@ const UserProfile = props => {
                     </div>
                   </DropdownItem>
                 );
-              })}
+              }) : <div className="no-user-message d-flex align-items-center justify-content-center">
+
+                <span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="146" height="114.714" viewBox="0 0 146 114.714">
+                    <path id="Forma_1" data-name="Forma 1" d="M13.536,114.857a12.549,12.549,0,0,1-9.207-3.83A12.548,12.548,0,0,1,.5,101.82V37.131A43.159,43.159,0,0,0,8.729,44.22Q38.223,64.262,49.221,72.328q4.644,3.422,7.536,5.336a46.578,46.578,0,0,0,7.7,3.911,23.468,23.468,0,0,0,8.962,2h.165a23.46,23.46,0,0,0,8.96-2,46.506,46.506,0,0,0,7.7-3.911q2.893-1.913,7.537-5.336,13.848-10.022,40.572-28.108a44.921,44.921,0,0,0,8.149-7.088V101.82a13.076,13.076,0,0,1-13.036,13.037ZM73.5,73.14h-.082a12.933,12.933,0,0,1-4.074-.734,24.609,24.609,0,0,1-4.685-2.2q-2.487-1.465-4.238-2.647t-4.4-3.1q-2.649-1.913-3.462-2.484-7.414-5.214-21.346-14.868T14.513,35.5a40.441,40.441,0,0,1-9.533-9.41Q.5,20.106.5,14.971A16.45,16.45,0,0,1,3.881,4.378Q7.261.144,13.535.143H133.464a12.592,12.592,0,0,1,9.166,3.829,12.491,12.491,0,0,1,3.871,9.207,21.516,21.516,0,0,1-3.993,12.3A38.685,38.685,0,0,1,132.568,35.5Q101.935,56.767,94.44,61.98q-.815.571-3.463,2.484t-4.4,3.1q-1.752,1.181-4.236,2.647a24.608,24.608,0,0,1-4.685,2.2,12.933,12.933,0,0,1-4.074.734Z" transform="translate(-0.5 -0.143)" />
+                  </svg>
+                  <label>No Message Found!!</label>
+                </span>
+              </div>}
           </div>
         </DropdownMenu>
       </Dropdown>
@@ -247,9 +255,29 @@ const UserProfile = props => {
         chatToggle={chatVisible}
         chatHideCallback={value => chatHideCallback(value)}
       />
-      <Modal isOpen={openMetrics} toggle={openMetricsModal} className="metric-modal modal-lg">
-        <ModalHeader>User Metrics</ModalHeader>
-        <ModalBody>
+      <Modal isOpen={openMetrics} toggle={openMetricsModal} className="metric-modal modal-lg d-flex flex-column align-items-center justify-content-center">
+        <ModalHeader>
+          User Metrics
+        <Button
+            color="link"
+            className="close-btn btn2"
+            onClick={openMetricsModal}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="357"
+              height="357"
+              viewBox="0 0 357 357"
+            >
+              <path
+                id="Forma_1"
+                data-name="Forma 1"
+                d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+              />
+            </svg>
+          </Button>
+        </ModalHeader>
+        <ModalBody className="overflow-auto">
           <div className="metric-block d-flex flex-wrap">
             <Button color="link" className="metric-btn d-flex flex-column align-items-center">
               <span className="metric-icon">

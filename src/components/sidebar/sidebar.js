@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { LocalForm } from "react-redux-form";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { sidebarToggleHandler } from '../../actions/job';
 import { Button, Input } from "reactstrap";
 import { Collapse } from "reactstrap";
 import "react-input-range/lib/css/index.css";
@@ -25,6 +26,8 @@ const Sidebar = ({
   const toggleCategory = () => setIsCategory(!isCategory);
   const toggleFilter = () => setIsFilter(!isFilter);
   const toggleCheckHandler = () => setToggleCheck(!toggleCheck);
+
+  const dispatch = useDispatch();
 
 
   return (
@@ -138,6 +141,15 @@ const Sidebar = ({
           </div>
         </Collapse>
       </div>
+      <Button color="secondary" block
+        className="filter-search-btn"
+        onClick={() => {
+          dispatch(sidebarToggleHandler(false)
+          );
+        }}
+      >
+        Search
+      </Button>
     </aside>
   );
 };

@@ -28,6 +28,11 @@
     }
   }
 }
+
+.modal-dialog.metric-modal .modal-content .modal-body {
+  padding: 20px;
+}
+
 // signup Modal style start
 .modal-dialog.signup {
   max-width: 970px;
@@ -594,37 +599,35 @@
 // Payment modal style end
 
 //Metics Modal style
-.metric-btn {
-  width: calc(50% - 20px);
-  margin: 10px;
-  padding: 10px;
-  background-color: #fff;
-  box-shadow: 0 0 5px #c1c1c1;
-  border-radius: 5px;
-  @media (max-width: 480px) {
-    width: 100%;
-  }
-  &:hover {
+.metric-modal {
+  .metric-btn {
+    width: calc(50% - 20px);
+    margin: 10px;
+    padding: 10px;
     background-color: #fff;
-    box-shadow: 0 0 10px #c1c1c1;
-  }
-  &:focus {
-    text-decoration: none;
-  }
-  * {
-    cursor: pointer;
-  }
-  label {
-    margin: 10px 1px 0;
-    color: #545454;
-    font-size: 13px;
-    span {
-      font-size: 25px;
-      color: $secondary-200;
+    box-shadow: 0 0 5px #c1c1c1;
+    border-radius: 5px;
+    @media (max-width: 480px) {
+      width: 100%;
     }
-  }
-  svg {
-    width: 40px;
-    fill: #adadad;
+    &:focus {
+      text-decoration: none;
+    }
+    * {
+      cursor: pointer;
+    }
+    label {
+      margin: 10px 1px 0;
+      color: #545454;
+      font-size: 13px;
+      span {
+        font-size: 25px;
+        color: $secondary-200;
+      }
+    }
+    svg {
+      width: 40px;
+      fill: #adadad;
+    }
   }
 }

@@ -27,7 +27,7 @@ const InputCell = ({
   DefaultValue = "One-time",
   Length = "",
   HandleImageOnchange,
-  handlePostalCode = () => {},
+  handlePostalCode = () => { },
   Errors
 }) => {
   let ErrorsObject = {};
@@ -214,6 +214,7 @@ const InputCell = ({
             model={Model}
             className={"form-control"}
             errors={validation()}
+            disabled={Disabled}
           ></Control.textarea>
         )}
         {InputType === "file" && (
