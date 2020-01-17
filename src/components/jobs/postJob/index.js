@@ -342,7 +342,6 @@ export default ({
                 {images &&
                   images.length > 0 &&
                   images.slice(0, 5).map((item, key) => {
-                    console.log("item", item);
                     return (
                       <li key={key} className="position-relative">
                         <Button

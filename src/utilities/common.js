@@ -14,7 +14,10 @@ export const StringToDate = value => {
   );
 };
 export const dateTime = value => {
-  const newdate = moment(AddOffset(+value)).format("DD MMM YYYY hh:mm a");
+  let test = AddOffset(+value);
+
+  const newdate = moment(test).format("DD MMM YYYY hh:mm a");
+
   return newdate;
 };
 

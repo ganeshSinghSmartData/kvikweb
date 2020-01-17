@@ -55,7 +55,7 @@ export default function JobDetail({
   } else {
     workStatus = JobStatus;
   }
-  console.log("_isLoading", _isLoading);
+
   const [imageIndex, setImageIndex] = useState(0);
   const [openModal, setOpenModal] = useState(false);
   const [confirmStartModal, setConfirmStartModal] = useState(

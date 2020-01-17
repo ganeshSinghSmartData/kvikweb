@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import moment from "moment";
 
 import PostJob from "../../../components/jobs/postJob";
 import { getJobCategory } from "./../../../actions/job";
@@ -56,7 +57,8 @@ class PostNewJob extends Component {
     } else {
       let formData = new FormData();
       this.setState({ dataload: true });
-      const newStartDate = new Date(startDate);
+      console.log("startDate", startDate);
+      const newStartDate = moment(startDate).format('YYYY-MM-DD hh:mm a');
       // const newStartDate =
       //   startdate.getFullYear() +
       //   "-" +
@@ -65,7 +67,7 @@ class PostNewJob extends Component {
       //   startdate.getDate() +
       //   " " +
       //   startdate.toLocaleTimeString("en-US");
-      const newEndDate = new Date(endDate);
+      const newEndDate = moment(endDate).format('YYYY-MM-DD hh:mm a');
       // const newEndDate =
       //   enddate.getFullYear() +
       //   "-" +
@@ -74,6 +76,7 @@ class PostNewJob extends Component {
       //   enddate.getDate() +
       //   " " +
       //   enddate.toLocaleTimeString("en-US");
+      console.log("newEndDate newEndDate ", newEndDate, newStartDate)
       if (uploadedImages && uploadedImages.length !== 0) {
         formData.append("saved_images", JSON.stringify(uploadedImages));
       }
