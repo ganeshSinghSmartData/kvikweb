@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import Countdown from "react-countdown-now";
 import datetimeDifference from "datetime-difference";
 import { Button, Row, Col } from "reactstrap";
+import { toastAction } from "../../../actions/toast-actions";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 import "./jobDetail.scss";
 import "slick-carousel/slick/slick.css";
@@ -19,6 +21,7 @@ import TimeCounterComponent from "./timeCounterComponent";
 
 import {
   StringToDate,
+  dateTime,
   DaysBetween,
   AddOffset
 } from "./../../../utilities/common";
@@ -68,12 +71,11 @@ export default function JobDetail({
 
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
-
+  const { jobBidCheck = null } = useSelector(state => state.job);
   const thmbnails = [];
   let [timeleft, seTimeleft] = useState(
     datetimeDifference(new Date(), new Date(DaysBetween(job.jobEndDate)))
   );
-
   /*   setInterval(() => {
     const time = datetimeDifference(
       new Date(),
@@ -199,6 +201,14 @@ export default function JobDetail({
       "d-flex justify-content-center justify-content-center no-jobdetail-image";
   }
 
+  const openBidForm = status => {
+    if (jobBidCheck) {
+      toastAction(false, "You have already placed bid for this job");
+    } else {
+      setOpenModal(!openModal);
+    }
+  }
+
   return (
     <div className="job-detail-blc d-flex flex-column flex-fill">
       {_isLoading && <SpinnerOverlay className="position-fixed" />}
@@ -279,7 +289,7 @@ export default function JobDetail({
                   <div className="job-detail-hd-col d-flex flex-column flex-fill flex-wrap">
                     <h3 className="text-primary">{job.jobtitle}</h3>
                     <p className="m-0 w-100">
-                      bidding ends in: {StringToDate(job.jobEndDate)}
+                      Job starts on: {dateTime(job.jobStartDate)}
                     </p>
                     {path === "/job-proposal" && job.status === "not_started" && (
                       <div className="job-edit-btns d-flex">
@@ -513,7 +523,7 @@ export default function JobDetail({
                     </li>
                   )}
                   <li className="job-start-blc w-100">
-                    <h4>Jobs starts in:</h4>
+                    <h4>Bidding ends in:</h4>
                     <div className="d-flex job-start-rw">
                       <span className="svg-secondary-100 flex-shrink-0">
                         <svg
@@ -534,17 +544,19 @@ export default function JobDetail({
                         date={new Date().getTime() + Number(job.jobEndDate)}
                         renderer={({ hours, minutes, seconds, completed }) => {
                           if (!completed) {
+                            // let diff = datetimeDifference(new Date(), new Date(DaysBetween(AddOffset(+job.jobEndDate))));
+                            let diff = datetimeDifference(new Date, new Date(AddOffset(+job.jobEndDate)));
                             return (
                               <p>
-                                {timeleft.months ? (
+                                {/* {timeleft.months ? (
                                   <label>{`${timeleft.months} Months`}</label>
                                 ) : (
                                     ""
-                                  )}
-                                <label>{`${timeleft.days} Days`}</label>
-                                <label>{`${hours} Hours`}</label>
-                                <label>{`${minutes} Mins`}</label>
-                                <label>{`${seconds} Secs`}</label>
+                                  )} */}
+                                <label>{`${diff.days} Days`}</label>
+                                <label>{`${diff.hours} Hours`}</label>
+                                <label>{`${diff.minutes} Mins`}</label>
+                                <label>{`${diff.seconds} Secs`}</label>
                               </p>
                             );
                           }
@@ -555,7 +567,7 @@ export default function JobDetail({
                 </ul>
               </div>
               <div className="job-detail-desc">
-                <h4>Description</h4>
+                <h4>About</h4>
                 <Paragraph>{job.description}</Paragraph>
               </div>
               <div className="job-detail-form"></div>
@@ -578,6 +590,11 @@ export default function JobDetail({
                       _endJob(job._id, job.job_seeker_id._id, user.data._id)
                     }
                   >
+                    <span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="78.775" height="57.775" viewBox="0 0 78.775 57.775">
+                        <path id="Forma_1" data-name="Forma 1" d="M78.564,8.73,29.722,57.567a1.1,1.1,0,0,1-1.556,0L.433,29.836a1.1,1.1,0,0,1,0-1.555l6.739-6.738a1.1,1.1,0,0,1,1.556,0L28.945,41.757,70.27.436a1.1,1.1,0,0,1,1.555,0l6.739,6.738A1.1,1.1,0,0,1,78.564,8.73Z" transform="translate(-0.111 -0.114)" />
+                      </svg>
+                    </span>
                     Mark as Complete
                   </Button>
                 )}
@@ -593,9 +610,9 @@ export default function JobDetail({
                 <div className="place-bid-rw text-center">
                   <Button
                     size="lg"
-                    color="secondary"
-                    className="place-bid-btn"
-                    onClick={() => setOpenModal(!openModal)}
+                    color="link"
+                    className={`${jobBidCheck ? 'btn-dark' : "btn-secondary"} place-bid-btn`}
+                    onClick={() => openBidForm()}
                   >
                     Place a Bid
                   </Button>

@@ -1,0 +1,119 @@
+@import "../../../../assets/css/variables";
+.modal-dialog.job-review-modal {
+  height: calc(100% - 40px);
+  width: calc(100% - 40px);
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  .modal-header {
+    padding-left: 20px;
+    padding-right: 20px;
+    .modal-title {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      span {
+        margin-right: 15px;
+      }
+      .close-btn.btn2 {
+        margin-left: auto;
+      }
+    }
+  }
+  .modal-content {
+    max-height: 100%;
+    min-height: 250px;
+    border-radius: 7px;
+    .modal-body {
+      padding: 20px;
+      background-color: #eee;
+      border-radius: 7px;
+    }
+  }
+}
+
+.view-job-heading {
+  background: #fafafa;
+  border-bottom: 1px solid #ddd;
+  h2 {
+    font-size: 15px;
+    font-weight: 500;
+    margin-right: 15px;
+  }
+  .edit-job-btn {
+    margin-right: -15px;
+    svg {
+      width: 15px;
+      fill: $secondary-200;
+    }
+  }
+}
+.view-job-blc {
+  background: #fff;
+  margin: 0 0 15px 0;
+  border-radius: 7px;
+  overflow: hidden;
+  box-shadow: 0 0 4px #bfbfbf;
+  .form-control::placeholder {
+    color: #5d5b5b;
+  }
+  .view-job-inner {
+    padding: 12px 0;
+  }
+  .view-job-gallery {
+    ul {
+      margin: 0 15px;
+      white-space: nowrap;
+      li {
+        display: inline-block;
+        margin: 4px 15px 4px 4px;
+        border: 3px solid #fff;
+        box-shadow: 0 0 4px #b9b9b9;
+        &:last-child {
+          margin-right: 0;
+        }
+        img {
+          width: 150px;
+        }
+      }
+    }
+  }
+  .data-picker-cell {
+    .react-datepicker__input-container:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 2;
+      background-color: transparent;
+    }
+  }
+  .select-picker-cell {
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 2;
+      background-color: transparent;
+    }
+    .select-search-box::after {
+      z-index: 5;
+    }
+    .select-search-box__search {
+      color: #5d5b5b;
+      border: 1px solid #e6e5e5;
+      background: #f9f9f9;
+    }
+  }
+  .form-control:disabled,
+  .react-datepicker-wrapper input {
+    color: #5d5b5b;
+    border: 1px solid #e6e5e5;
+    background: #f9f9f9;
+  }
+}

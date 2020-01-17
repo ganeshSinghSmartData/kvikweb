@@ -37,6 +37,7 @@ export const ABOUT_US = "ABOUT_US";
 /************ Job *************/
 export const GET_JOB_PRODUCTS = "GET_JOB_PRODUCTS";
 export const GET_JOB_DETAILS = "GET_JOB_DETAILS";
+export const GET_JOB_BID_CHECK = "GET_JOB_BID_CHECK";
 export const POST_JOB_PRODUCTS = "POST_JOB_PRODUCTS";
 export const RESET_JOB_DETAILS = "RESET_JOB_DETAILS";
 export const RESET_JOB_PRODUCTS = "RESET_JOB_PRODUCTS";

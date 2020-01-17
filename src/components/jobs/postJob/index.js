@@ -14,6 +14,7 @@ import { apiUrl } from "../../../environment";
 import { getJobCategory } from "./../../../actions/job";
 import InputCell from "../../commonUi/input/inputCell";
 import Loader from "../../../components/commonUi/loader/loader";
+import ReviewJob from "./reviewJob/reviewJob";
 
 export default ({
   _jobDetails = {},
@@ -22,9 +23,13 @@ export default ({
   _handleJobPost,
   _handleCategoryOnchange,
   _selectedCategory,
-  dataload
+  dataload,
+  path,
+  previewData,
+  getPagesNumber
 }) => {
   const [images, setImages] = useState([]);
+  const [openView, setOpenView] = useState(false);
   const [uploadedImages, setUploadedImages] = useState(
     _jobDetails && _jobDetails.images ? _jobDetails.images : []
   );
@@ -75,6 +80,9 @@ export default ({
     document.body.classList.remove("datepicker");
   };
 
+  const getPagesNumbers = (data) => {
+    getPagesNumber(data);
+  };
   const handleImageOnchange = event => {
     files = event;
     setImageData({ ...imageData, ...files });
@@ -109,6 +117,14 @@ export default ({
     _uploadedImages.splice(index, 1);
     setUploadedImages(_uploadedImages);
   };
+
+  const _openPreviewData = index => {
+    setOpenView(true);
+  };
+  const closePrevieModal = index => {
+    setOpenView(false);
+  };
+
 
   /********** Change class on steps ************/
   const getClass = step => {
@@ -321,147 +337,169 @@ export default ({
           {/* Stage 3 */}
           {_currentstage === 3 && (
             <>
-              <div className="post-job-gallery d-flex justify-content-center">
-                <ul className="d-flex flex-wrap ml-auto mr-auto">
-                  {images &&
-                    images.length > 0 &&
-                    images.slice(0, 5).map((item, key) => {
-                      return (
-                        <li key={key} className="position-relative">
-                          <Button
-                            color="link"
-                            className="gallery-btn d-flex align-items-center justify-content-center position-absolute"
-                            onClick={() => removeImage(key)}
+            <div className="post-job-gallery d-flex justify-content-center">
+              <ul className="d-flex flex-wrap ml-auto mr-auto">
+                {images &&
+                  images.length > 0 &&
+                  images.slice(0, 5).map((item, key) => {
+                    return (
+                      <li key={key} className="position-relative">
+                        <Button
+                          color="link"
+                          className="gallery-btn d-flex align-items-center justify-content-center position-absolute"
+                          onClick={() => removeImage(key)}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="357"
+                            height="357"
+                            viewBox="0 0 357 357"
                           >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="357"
-                              height="357"
-                              viewBox="0 0 357 357"
-                            >
-                              <path
-                                id="Forma_1"
-                                data-name="Forma 1"
-                                d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
-                              />
-                            </svg>
-                          </Button>
-                          <img src={item} alt="Job Pic" />
-                        </li>
-                      );
-                    })}
-                  {uploadedImages &&
-                    uploadedImages.map((item, key) => {
-                      return (
-                        <li key={key} className="position-relative">
-                          <Button
-                            color="link"
-                            className="gallery-btn d-flex align-items-center justify-content-center"
-                            onClick={() => removeUploadedImage(key)}
+                            <path
+                              id="Forma_1"
+                              data-name="Forma 1"
+                              d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                            />
+                          </svg>
+                        </Button>
+                        <img src={item} alt="Job Pic" />
+                      </li>
+                    );
+                  })}
+                {uploadedImages &&
+                  uploadedImages.map((item, key) => {
+                    return (
+                      <li key={key} className="position-relative">
+                        <Button
+                          color="link"
+                          className="gallery-btn d-flex align-items-center justify-content-center"
+                          onClick={() => removeUploadedImage(key)}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="357"
+                            height="357"
+                            viewBox="0 0 357 357"
                           >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="357"
-                              height="357"
-                              viewBox="0 0 357 357"
-                            >
-                              <path
-                                id="Forma_1"
-                                data-name="Forma 1"
-                                d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
-                              />
-                            </svg>
-                          </Button>
-                          <img src={`${apiUrl}/${item.path}`} alt="Job Pic" />
-                        </li>
-                      );
-                    })}
+                            <path
+                              id="Forma_1"
+                              data-name="Forma 1"
+                              d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                            />
+                          </svg>
+                        </Button>
+                        <img src={`${apiUrl}/${item.path}`} alt="Job Pic" />
+                      </li>
+                    );
+                  })}
 
-                  <li>
-                    <Button
-                      color="primary"
-                      block
-                      className="add-gallery-btn position-relative"
-                      type="button"
+                <li>
+                  <Button
+                    color="primary"
+                    block
+                    className="add-gallery-btn position-relative"
+                    type="button"
+                  >
+                    <InputCell
+                      Name={"file"}
+                      Model=".images"
+                      InputType="file"
+                      Placeholder={"Image Upload"}
+                      Multiple="multiple"
+                      Errors={{ required: "" }}
+                      HandleImageOnchange={handleImageOnchange}
+                    />
+                    <svg
+                      id="_x38__3_"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="48"
+                      height="48"
+                      viewBox="0 0 48 48"
                     >
-                      <InputCell
-                        Name={"file"}
-                        Model=".images"
-                        InputType="file"
-                        Placeholder={"Image Upload"}
-                        Multiple="multiple"
-                        Errors={{ required: "" }}
-                        HandleImageOnchange={handleImageOnchange}
-                      />
-                      <svg
-                        id="_x38__3_"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="48"
-                        height="48"
-                        viewBox="0 0 48 48"
-                      >
-                        <g id="Group_512" data-name="Group 512">
-                          <path
-                            id="Path_902"
-                            data-name="Path 902"
-                            d="M24,0A24,24,0,1,0,48,24,24,24,0,0,0,24,0Zm0,45A21,21,0,1,1,45,24,21,21,0,0,1,24,45Zm9-22.5H25.5V15a1.5,1.5,0,1,0-3,0v7.5H15a1.5,1.5,0,1,0,0,3h7.5V33a1.5,1.5,0,0,0,3,0V25.5H33a1.5,1.5,0,0,0,0-3Z"
-                            fill="#fff"
-                          />
-                        </g>
-                      </svg>
-                    </Button>
-                  </li>
-                </ul>
-              </div>
+                      <g id="Group_512" data-name="Group 512">
+                        <path
+                          id="Path_902"
+                          data-name="Path 902"
+                          d="M24,0A24,24,0,1,0,48,24,24,24,0,0,0,24,0Zm0,45A21,21,0,1,1,45,24,21,21,0,0,1,24,45Zm9-22.5H25.5V15a1.5,1.5,0,1,0-3,0v7.5H15a1.5,1.5,0,1,0,0,3h7.5V33a1.5,1.5,0,0,0,3,0V25.5H33a1.5,1.5,0,0,0,0-3Z"
+                          fill="#fff"
+                        />
+                      </g>
+                    </svg>
+                  </Button>
+                </li>
+              </ul>
+            </div>
               {isImageLengthExist ? (
                 <div className="job-post-img-error text-danger text-center">
-                  You can't select more then 5 images
+            You can't select more then 5 images
                 </div>
-              ) : (
+          ) : (
                   ""
                 )}
             </>
-          )}
+        )}
 
           {/* Next, Save, Back and Cancel button */}
-          <div className="post-job-btns text-center d-flex justify-content-center">
-            {_currentstage === 1 && (
-              <Link
-                className="text-black btn-dark cancel btn btn-link"
-                to={"/"}
-              >
-                CANCEL
+        <div className="post-job-btns text-center d-flex justify-content-center">
+          {_currentstage === 1 && (
+            <Link
+              className="text-black btn-dark cancel btn btn-link"
+              to={"/"}
+            >
+              CANCEL
               </Link>
-            )}
-            {_currentstage !== 1 && (
+          )}
+          {_currentstage !== 1 && (
+            <Button
+              color="link"
+              className="btn-dark"
+              type="button"
+              onClick={() => {
+                _handleStageChange(-1);
+              }}
+            >
+              BACK
+              </Button>
+          )}
+          {_currentstage !== 3 && (
+            <Button type="submit" color="secondary">
+              NEXT
+              </Button>
+          )}
+          {_currentstage === 3 && (
+            <div>
               <Button
-                color="link"
-                className="btn-dark"
-                type="button"
-                onClick={() => {
-                  _handleStageChange(-1);
-                }}
+                color="secondary"
+                disabled={isImageLengthExist}
+                onClick={_openPreviewData}
               >
-                BACK
+                View Job
               </Button>
-            )}
-            {_currentstage !== 3 && (
-              <Button type="submit" color="secondary">
-                NEXT
-              </Button>
-            )}
-            {_currentstage === 3 && (
               <Button
                 color="secondary"
                 type="submit"
                 disabled={isImageLengthExist}
               >
-                POST NOW
+                {path == '/post-job' ?
+                  'POST NOW'
+                  : 'UPDATE JOB'}
               </Button>
-            )}
-          </div>
+            </div>
+          )}
+        </div>
         </LocalForm>
-      </div>
     </div>
+{openView ?
+    <ReviewJob
+      _jobDetails={previewData}
+      _selectedCategory={_selectedCategory}
+      CategoryItems={CategoryItems}
+      closePrevieModal={closePrevieModal}
+      images={images}
+      pagesCount={getPagesNumbers}
+    />
+    : null
+  }  
+    </div >
   );
 };

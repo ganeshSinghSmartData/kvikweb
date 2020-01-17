@@ -16,7 +16,7 @@ const RatingBlock = ({ rating = 4, ratingClick, disablestar = true }) => {
           key={key}
           classname={`rating-btn ${
             item <= ratingVal ? "svg-secondary-100" : ""
-          }`}
+            }`}
         />
       ))}
     </div>

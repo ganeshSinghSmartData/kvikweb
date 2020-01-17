@@ -177,7 +177,18 @@ const Job = ({
       dispatch(reset_job_products());
       dispatch(getJobProduct(reqData));
     }
+    window.addEventListener('resize', windowResize)
+    return (() => {
+      document.removeEventListener("resize", windowResize)
+    })
   }, []);
+  const windowResize = () => {
+    const windowWidth = window.innerWidth;
+    if (windowWidth <= 768) {
+      dispatch(sidebarToggleHandler(false))
+    }
+
+  }
 
   const sidebarToggleValue = useSelector(state => {
     return state.job.sidebarToggle
@@ -190,13 +201,13 @@ const Job = ({
       {/* <SpinnerOverlay className="position-fixed" /> */}
       <section className="d-flex flex-column position-relative">
         <Row className="d-flex flex-nowrap position-relative">
+          {/* {console.log('sidebarToggleValue', sidebarToggleValue)} */}
           {sidebarToggleValue ?
             <Spinner className="with-overlay no-spin-icon"
-              onClickEvent={(e) => {
+              onClickEvent={() => {
                 dispatch(sidebarToggleHandler(false)
-                )
+                );
               }}
-
             />
             : null}
           {path === "" && (
@@ -250,48 +261,50 @@ const Job = ({
                     </button>
                   </div>
                 )}
-                <div className="job-list-icon d-flex ml-auto">
-                  <Button
-                    color="link"
-                    className={"list-icon " + (listType ? "active" : "")}
-                    onClick={() => toggleListType(true)}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="21"
-                      height="11.667"
-                      viewBox="0 0 21 11.667"
+                {products && products.length !== 0 &&
+                  <div className="job-list-icon d-flex ml-auto">
+                    <Button
+                      color="link"
+                      className={"list-icon " + (listType ? "active" : "")}
+                      onClick={() => toggleListType(true)}
                     >
-                      <path
-                        id="Path_804"
-                        data-name="Path 804"
-                        d="M3,14H5.333V11.667H3Zm0,4.667H5.333V16.333H3ZM3,9.333H5.333V7H3ZM7.667,14H24V11.667H7.667Zm0,4.667H24V16.333H7.667ZM7.667,7V9.333H24V7Z"
-                        transform="translate(-3 -7)"
-                        fill="#b3b3b3"
-                      />
-                    </svg>
-                  </Button>
-                  <Button
-                    color="link"
-                    className={"list-icon " + (!listType ? "active" : "")}
-                    onClick={() => toggleListType(false)}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="17"
-                      height="13"
-                      viewBox="0 0 17 13"
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="21"
+                        height="11.667"
+                        viewBox="0 0 21 11.667"
+                      >
+                        <path
+                          id="Path_804"
+                          data-name="Path 804"
+                          d="M3,14H5.333V11.667H3Zm0,4.667H5.333V16.333H3ZM3,9.333H5.333V7H3ZM7.667,14H24V11.667H7.667Zm0,4.667H24V16.333H7.667ZM7.667,7V9.333H24V7Z"
+                          transform="translate(-3 -7)"
+                          fill="#b3b3b3"
+                        />
+                      </svg>
+                    </Button>
+                    <Button
+                      color="link"
+                      className={"list-icon " + (!listType ? "active" : "")}
+                      onClick={() => toggleListType(false)}
                     >
-                      <path
-                        id="Path_806"
-                        data-name="Path 806"
-                        d="M4,11H9V5H4Zm0,7H9V12H4Zm6,0h5V12H10Zm6,0h5V12H16Zm-6-7h5V5H10Zm6-6v6h5V5Z"
-                        transform="translate(-4 -5)"
-                        fill="#333"
-                      />
-                    </svg>
-                  </Button>
-                </div>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="17"
+                        height="13"
+                        viewBox="0 0 17 13"
+                      >
+                        <path
+                          id="Path_806"
+                          data-name="Path 806"
+                          d="M4,11H9V5H4Zm0,7H9V12H4Zm6,0h5V12H10Zm6,0h5V12H16Zm-6-7h5V5H10Zm6-6v6h5V5Z"
+                          transform="translate(-4 -5)"
+                          fill="#333"
+                        />
+                      </svg>
+                    </Button>
+                  </div>
+                }
               </div>
               <Row
                 className={"job-listing " + (listType ? "job-list-row" : "")}

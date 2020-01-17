@@ -1,6 +1,12 @@
 @import "../../../assets/css/variables";
 .user-profile-blc {
   padding: 0;
+  .user-list-dropdown {
+    @media (max-width: 550px) {
+      left: 0 !important;
+      width: 194px;
+    }
+  }
 }
 .user-mail.btn {
   padding-right: 8px;
@@ -17,12 +23,6 @@
   }
   &:after {
     border: none;
-  }
-  .badge {
-    font-weight: 400;
-    right: 10px;
-    top: 3px;
-    padding: 3px;
   }
 }
 .user-list-dropdown {
@@ -68,6 +68,15 @@
   }
   .user-list-scroll {
     max-height: 300px;
+    .no-user-message {
+      height: 70px;
+      color: #666;
+      svg {
+        width: 16px;
+        margin: 0 5px 0 0;
+        fill: #666;
+      }
+    }
   }
 }
 
@@ -75,9 +84,18 @@
   width: 40px;
   height: 40px;
   margin-left: 1px;
+  margin-right: 10px;
   border: 3px solid white;
+  // @media (max-width: 370px) {
+  //   display: none;
+  // }
   img {
     object-fit: cover;
+  }
+}
+.username-cell {
+  @media (max-width: 550px) {
+    display: none !important;
   }
 }
 .user-pic:disabled {
@@ -85,12 +103,21 @@
 }
 .user-dropdown {
   .btn.dropdown-toggle {
-    padding-right: 20px;
-    padding-left: 10px;
+    padding: 0;
     color: #fff;
     label {
       margin-right: 10px;
       cursor: pointer;
+      max-width: 154px;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    &:focus {
+      text-decoration: none;
+    }
+    .dropdown-item label {
+      margin-right: 10px;
     }
   }
   .dropdown-toggle::after {
@@ -100,18 +127,23 @@
     width: 12px;
     height: 12px;
     fill: #fff;
+    flex-shrink: 0;
   }
   .dropdown-menu {
     width: 180px;
     max-height: 280px;
     left: -15px !important;
+    @media (max-width: 550px) {
+      width: 220px;
+    }
   }
   .dropdown-header {
+    padding: 0.5rem 1.5rem 0;
     &:focus {
       outline: none;
     }
   }
   .dropdown-header.padd {
-    padding-top: 0.8rem;
+    padding-top: 15px;
   }
 }

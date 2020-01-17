@@ -10,11 +10,13 @@ import "./header.scss";
 const Header = props => {
   const { user } = useSelector(state => state);
 
-  let imagepath = "";
+  let imagepath = "", metricsData;
   if (user.data && user.data.image && user.data.image.length) {
     imagepath = user.data.image;
   }
-
+  if (user.data && user.userDetails) {
+    metricsData = user.userDetails;
+  }
   const [navVisible, setnavVisible] = useState(false);
   const navToggle = e => {
     e.nativeEvent.stopImmediatePropagation();
@@ -46,11 +48,9 @@ const Header = props => {
       <Container>
         <Row>
           <Col
-            className={`d-flex header-inner ${!user.loggedIn && "beforeLogin"}`}
-          >
-            <Button color="link" className="logo p-0 rounded-0">
-              <Logo classname="m-0" navigate={true} />
-            </Button>
+            className={`d-flex flex-wrap header-inner align-items-center ${!user.loggedIn && "beforeLogin"}`}>
+
+            <Logo navigate={true} />
             <div className="d-flex align-items-center ml-auto nav-wrapper">
               {navVisible ?
                 <Spinner className="with-overlay no-spin-icon nav-overlay"
@@ -64,7 +64,7 @@ const Header = props => {
                   "d-sm-none d-md-block nav " + (navVisible ? "active" : "")
                 }
               />
-              {user.loggedIn && <UserProfile image={imagepath} />}
+              {user.loggedIn && <UserProfile image={imagepath} metricsData={metricsData} />}
               <Button
                 color="link"
                 className={

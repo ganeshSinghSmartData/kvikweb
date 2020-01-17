@@ -32,7 +32,7 @@ export const getCustomPageDetails = (page_name, callback) => {
     ApiClient.fetch(`${apiUrl}/content/${page_name}`).then(response => {
       if (response.status === 200) {
         callback(true);
-        toastAction(true, response.msg);
+        // toastAction(true, response.msg);
         dispatch(about_us(response.data));
       } else if (response.status === 401) {
         callback(false);

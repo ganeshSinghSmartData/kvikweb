@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { LocalForm } from "react-redux-form";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { sidebarToggleHandler } from '../../actions/job';
 import { Button, Input } from "reactstrap";
 import { Collapse } from "reactstrap";
 import "react-input-range/lib/css/index.css";
+import { getJobCategory } from "../../actions/job";
 
 // onChangeComplete
 
 import FilterBlock from "../sidebar/filterBlock/filterBlock";
-import { CategoryItems } from "../../utilities/constants";
 import InputCell from "../commonUi/input/inputCell";
 import "./sidebar.scss";
 
@@ -26,6 +27,21 @@ const Sidebar = ({
   const toggleFilter = () => setIsFilter(!isFilter);
   const toggleCheckHandler = () => setToggleCheck(!toggleCheck);
 
+  const dispatch = useDispatch();
+  let { job } = useSelector(state => state);
+  useEffect(() => {
+    if (!job.category || job.category.length === 0) {
+      dispatch(getJobCategory());
+    }
+  });
+  let CategoryItems = [];
+  job.category &&
+    job.category.length &&
+    job.category.map(item => {
+      if (item) {
+        CategoryItems.push({ name: item.title, value: item.title });
+      }
+    });
 
   return (
     <aside className='sidebar'>
@@ -138,6 +154,15 @@ const Sidebar = ({
           </div>
         </Collapse>
       </div>
+      <Button color="secondary" block
+        className="filter-search-btn"
+        onClick={() => {
+          dispatch(sidebarToggleHandler(false)
+          );
+        }}
+      >
+        Search
+      </Button>
     </aside>
   );
 };

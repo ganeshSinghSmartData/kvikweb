@@ -15,6 +15,12 @@
   border: 1px solid #e2e5e7;
   padding: 17px 20px 94px;
   border-radius: 10px;
+  .filter-search-btn {
+    display: none;
+    @media (max-width: 767px) {
+      display: block;
+    }
+  }
 }
 .sidebar-item {
   margin: 0 0 10px 0;
@@ -252,25 +258,24 @@
   .sidebar-col.active {
     transform: translateX(0);
   }
-  .sidebar-toogle-btn {
-    // display: none;
-    left: 0px;
-    width: 50px;
-    z-index: 4;
-    margin-top: 0;
-    padding: 9px 0;
-    svg {
-      width: 9px;
-      path {
-        fill: white;
-      }
-    }
-    span {
-      width: 35px;
-      border-radius:0 40px 40px 0; 
-    }
-  }
-  .sidebar-toogle-btn.d-none {
-    display: block;
-  }
+  // .sidebar-toogle-btn {
+  //   left: 0px;
+  //   width: 50px;
+  //   z-index: 4;
+  //   margin-top: 0;
+  //   padding: 9px 0;
+  //   svg {
+  //     width: 9px;
+  //     path {
+  //       fill: white;
+  //     }
+  //   }
+  //   span {
+  //     width: 35px;
+  //     border-radius: 0 40px 40px 0;
+  //   }
+  // }
+  // .sidebar-toogle-btn.d-none {
+  //   display: block;
+  // }
 }
