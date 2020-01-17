@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Button } from "reactstrap";
+import { Row, Col, Button, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { sidebarToggleHandler } from '../../actions/job';
-
-
 import JobProduct from "./jobProduct/jobProduct";
 import Sidebar from "../sidebar/sidebar";
 import Heading from "../../components/commonUi/heading/heading";
@@ -23,6 +21,8 @@ const Job = ({
 }) => {
   const dispatch = useDispatch();
   const [listType, setlistType] = useState(false);
+  const [dropdownOpen, setOpen] = useState(false);
+  const toggle = () => setOpen(!dropdownOpen);
   let [selectedCategory, setCategory] = useState([]);
   let [postalCode, setPostalCode] = useState("");
   let [distance, setDistance] = useState("");
@@ -267,7 +267,62 @@ const Job = ({
                   <div className="job-list-icon d-flex ml-auto">
                     <Button
                       color="link"
-                      className={"list-icon " + (listType ? "active" : "")}
+                      className="list-icon filter sidebar-toogle-btn d-md-none"
+                      onClick={(e) => {
+                        dispatch(sidebarToggleHandler(!sidebarToggleValue),
+                        e.nativeEvent.stopImmediatePropagation()
+                          )
+                        }}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="511.973" height="511.999" viewBox="0 0 511.973 511.999">
+                        <path id="filter" d="M492.477,0H20.5A20,20,0,0,0,.5,20,195.331,195.331,0,0,0,66,165.871l87.59,77.852a71.265,71.265,0,0,1,23.9,53.223V491.977a20.01,20.01,0,0,0,31.09,16.637l118-78.66a20,20,0,0,0,8.906-16.641V296.945a71.265,71.265,0,0,1,23.9-53.223l87.586-77.852A195.331,195.331,0,0,0,512.473,20,20,20,0,0,0,492.477,0ZM420.395,135.973l-87.586,77.855a111.3,111.3,0,0,0-37.324,83.113V402.609l-78,52V296.945a111.3,111.3,0,0,0-37.324-83.117L92.578,135.977A155.356,155.356,0,0,1,41.793,40H471.18A155.317,155.317,0,0,1,420.395,135.973Zm0,0" transform="translate(-0.5)" />
+                      </svg>
+                    </Button>
+                    {/* <Button
+                      color="link"
+                      className="list-icon sort"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="427.648" height="448" viewBox="0 0 427.648 448">
+                        <g id="sort_1_" data-name="sort (1)" transform="translate(-0.5)">
+                          <path id="Path_1" data-name="Path 1" d="M118.324,393.375V0h-32V393.375l-63.2-63.2L.5,352.8l90.512,90.512a16,16,0,0,0,22.625,0L204.148,352.8l-22.625-22.625Zm0,0" />
+                          <path id="Path_2" data-name="Path 2" d="M428.148,95.2,337.637,4.688a16,16,0,0,0-22.625,0L224.5,95.2l22.625,22.625,63.2-63.2V448h32V54.625l63.2,63.2Zm0,0" />
+                        </g>
+                      </svg>
+                    </Button> */}
+                    <ButtonDropdown isOpen={dropdownOpen} toggle={toggle} className="sort-dropdown ">
+                      <DropdownToggle color="link" 
+                      className="list-icon sort">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="427.648" height="448" viewBox="0 0 427.648 448">
+                          <g id="sort_1_" data-name="sort (1)" transform="translate(-0.5)">
+                            <path id="Path_1" data-name="Path 1" d="M118.324,393.375V0h-32V393.375l-63.2-63.2L.5,352.8l90.512,90.512a16,16,0,0,0,22.625,0L204.148,352.8l-22.625-22.625Zm0,0" />
+                            <path id="Path_2" data-name="Path 2" d="M428.148,95.2,337.637,4.688a16,16,0,0,0-22.625,0L224.5,95.2l22.625,22.625,63.2-63.2V448h32V54.625l63.2,63.2Zm0,0" />
+                          </g>
+                        </svg>
+                      </DropdownToggle>
+                      <DropdownMenu right className="overflow-auto">
+                        <DropdownItem>
+                          Budget -  high to low
+                        </DropdownItem>
+                        <DropdownItem>
+                          Budget -  low to high
+                        </DropdownItem>
+                        <DropdownItem>
+                          Create Date
+                        </DropdownItem>
+                        <DropdownItem>
+                          Title (a-z)
+                        </DropdownItem>
+                        <DropdownItem>
+                          Job Start Date
+                        </DropdownItem>
+                        <DropdownItem>
+                          Bid Deadline Date
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </ButtonDropdown>
+                    <Button
+                      color="link"
+                      className={"list-icon listing " + (listType ? "active" : "")}
                       onClick={() => toggleListType(true)}
                     >
                       <svg
@@ -287,7 +342,7 @@ const Job = ({
                     </Button>
                     <Button
                       color="link"
-                      className={"list-icon " + (!listType ? "active" : "")}
+                      className={"list-icon listing " + (!listType ? "active" : "")}
                       onClick={() => toggleListType(false)}
                     >
                       <svg

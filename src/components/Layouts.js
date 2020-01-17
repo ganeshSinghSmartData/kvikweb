@@ -6,9 +6,9 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  sidebarToggleHandler
-} from "./../actions/job";
+// import {
+//   sidebarToggleHandler
+// } from "./../actions/job";
 import smoothscroll from "smoothscroll-polyfill";
 import { Container, Button } from "reactstrap";
 import * as Scroll from "react-scroll";
@@ -84,7 +84,7 @@ export const PublicLayout = props => {
               </svg>
 
             </button>
-            {(props.children.props.match.path === "/" &&
+            {/* {(props.children.props.match.path === "/" &&
               <Button color="link" className="border-0 d-flex align-items-center sidebar-toogle-btn text-right position-fixed rounded-left d-md-none flex-shrink-0"
                 onClick={(e) => {
                   dispatch(sidebarToggleHandler(!sidebarToggleValue),
@@ -100,7 +100,7 @@ export const PublicLayout = props => {
                 </span>
 
               </Button>
-            )}
+            )} */}
           </Container>
           {!custom_class ?
             <Footer />
