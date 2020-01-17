@@ -24,8 +24,8 @@
   }
 }
 .job-list-icon {
-  @media(max-width:767px){
-    display:none !important;
+  @media (max-width: 767px) {
+    display: none !important;
   }
 }
 .list-icon {
@@ -55,7 +55,7 @@
   width: 57px;
   height: 57px;
   background-color: rgba(163, 163, 163, 0.45);
-  bottom: 123px;
+  bottom: 143px;
   right: 30px;
   opacity: 0;
   transition: all ease 0.3s 0s;
@@ -73,5 +73,4 @@
 }
 .scroll-tp-btn.on {
   opacity: 1;
-  bottom: 143px;
 }

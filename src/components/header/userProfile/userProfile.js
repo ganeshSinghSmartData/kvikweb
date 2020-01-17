@@ -167,13 +167,13 @@ const UserProfile = props => {
       <Dropdown isOpen={dropdownOpen} toggle={toggle} className="user-dropdown d-flex">
 
         <DropdownToggle caret color="link" className="d-flex align-items-center">
-          <Button color="link" className="user-pic p-0 rounded-circle flex-shrink-0">
+          <span color="link" className="user-pic p-0 rounded-circle flex-shrink-0 d-inline-block">
             <img
               className="rounded-circle w-100 h-100"
               src={imagepath}
               alt="User Profile"
             />
-          </Button>
+          </span>
           <span className="username-cell d-flex align-items-center">
             {user.loggedIn && (
               <label className="mb-0">{`${user.data.fname} ${user.data.lname}`}</label>

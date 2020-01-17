@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Button } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { sidebarToggleHandler } from '../../actions/job';
-import smoothscroll from "smoothscroll-polyfill";
+
 
 import JobProduct from "./jobProduct/jobProduct";
 import Sidebar from "../sidebar/sidebar";
@@ -13,7 +13,6 @@ import Spinner from "../commonUi/spinner/spinner"
 import NoData from "../commonUi/noData/noData";
 import "./jobs.scss";
 import { getJobProduct, reset_job_products } from "./../../actions/job";
-smoothscroll.polyfill();
 
 const Job = ({
   path = "",

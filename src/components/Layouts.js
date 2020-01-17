@@ -9,13 +9,14 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   sidebarToggleHandler
 } from "./../actions/job";
+import smoothscroll from "smoothscroll-polyfill";
 import { Container, Button } from "reactstrap";
 import * as Scroll from "react-scroll";
 import Header from "./header/header";
 import Banner from "./banner/banner";
 import Footer from "./footer/footer";
 
-
+smoothscroll.polyfill();
 /*************** Public Layout ***************/
 export const PublicLayout = props => {
   const sidebarToggleValue = useSelector(state => state.job.sidebarToggle);
@@ -26,8 +27,10 @@ export const PublicLayout = props => {
   const scrollCheck = () => {
     let scrollTopCheck = wrapperRef.current.scrollTop;
     if (scrollTopCheck > 300) {
+      console.log('> 300')
       setscrollVisible(true);
     } else {
+      console.log('< 300')
       setscrollVisible(false);
     }
   };
