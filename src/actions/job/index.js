@@ -102,7 +102,6 @@ export const getJobBidCheck = job_id => {
       data: { token }
     } = getState().user;
     ApiClient.get(`${apiUrl}/bid/check_user_bid/${job_id}`, {}, token).then(response => {
-      console.log("response", response);
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(get_job_bid_check(response.data));
@@ -110,6 +109,7 @@ export const getJobBidCheck = job_id => {
         toastAction(false, response.msg);
       } else {
         dispatch(is_fetching(false));
+        dispatch(get_job_bid_check(response.data));
       }
     });
   };

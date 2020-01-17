@@ -86,10 +86,12 @@ const UserProfile = props => {
           className="user-mail position-relative"
           color="link"
         >
-
-          <Badge className="position-absolute badge-danger badge-counter">
-            {messages.count}
-          </Badge>
+          {messages.count ?
+            <Badge className="position-absolute badge-danger badge-counter">
+              {messages.count}
+            </Badge>
+            : null
+          }
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -205,9 +207,9 @@ const UserProfile = props => {
             <label className="mb-0">
               Bids
             </label>
-            <Badge className="badge-danger badge-counter">
+            {/* <Badge className="badge-danger badge-counter">
               100
-            </Badge>
+            </Badge> */}
           </Link>
           <Link
             className="dropdown-item d-flex justify-content-between align-items-center "
@@ -217,9 +219,9 @@ const UserProfile = props => {
             <label className="mb-0">
               Jobs
             </label>
-            <Badge className="badge-danger badge-counter">
+            {/* <Badge className="badge-danger badge-counter">
               100
-            </Badge>
+            </Badge> */}
           </Link>
           <Link className="dropdown-item d-flex justify-content-between align-items-center " to={""} onClick={() => openMetricsModal()}>
             <label className="mb-0">

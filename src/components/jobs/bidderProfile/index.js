@@ -40,7 +40,7 @@ const BidderProfile = ({ user_id, review }) => {
               <JobAddress job_seeker_id={biderDetails} />
             </div>
             <div className="bidder-profl-r ml-auto d-flex flex-column">
-              <div className="profile-bar ml-auto">
+              {/* <div className="profile-bar ml-auto">
                 <span className="profile-percentage">95%</span>
                 <div className="progress">
                   <div
@@ -52,7 +52,7 @@ const BidderProfile = ({ user_id, review }) => {
                 <span className="d-block profile-bar-txt text-left">
                   Profile Completion
                   </span>
-              </div>
+              </div> */}
               {/* <div className="mark-btn mt-auto">
                 <Button color="secondary" block>
                   Mark as Done

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Countdown from "react-countdown-now";
 import datetimeDifference from "datetime-difference";
 import { Button, Row, Col } from "reactstrap";
+import { toastAction } from "../../../actions/toast-actions";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
 import moment from "moment";
@@ -54,7 +55,7 @@ export default function JobDetail({
   } else {
     workStatus = JobStatus;
   }
-
+  console.log("_isLoading", _isLoading);
   const [imageIndex, setImageIndex] = useState(0);
   const [openModal, setOpenModal] = useState(false);
   const [confirmStartModal, setConfirmStartModal] = useState(
@@ -70,7 +71,7 @@ export default function JobDetail({
 
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
-
+  const { jobBidCheck = null } = useSelector(state => state.job);
   const thmbnails = [];
   let [timeleft, seTimeleft] = useState(
     datetimeDifference(new Date(), new Date(DaysBetween(job.jobEndDate)))
@@ -198,6 +199,14 @@ export default function JobDetail({
   if (!job.images || job.images.length === 0) {
     noImageClass =
       "d-flex justify-content-center justify-content-center no-jobdetail-image";
+  }
+
+  const openBidForm = status => {
+    if (jobBidCheck) {
+      toastAction(false, "You have already placed bid for this job");
+    } else {
+      setOpenModal(!openModal);
+    }
   }
 
   return (
@@ -601,9 +610,9 @@ export default function JobDetail({
                 <div className="place-bid-rw text-center">
                   <Button
                     size="lg"
-                    color="secondary"
-                    className="place-bid-btn"
-                    onClick={() => setOpenModal(!openModal)}
+                    color="link"
+                    className={`${jobBidCheck ? 'btn-dark' : "btn-secondary"} place-bid-btn`}
+                    onClick={() => openBidForm()}
                   >
                     Place a Bid
                   </Button>

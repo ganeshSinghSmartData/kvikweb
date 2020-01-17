@@ -49,15 +49,13 @@ const UserPayment = props => {
     if (user && user.cards && user.cards.length === 0) {
       dispatch(GetCards());
     }
-  });
+  }, []);
 
   console.log("front_image :", front_image);
 
   const handleBankSubmit = e => {
-    console.log("e", e);
     setIsLoading(true);
 
-    console.log(front_image);
     stripe
       .createToken("bank_account", {
         country: "DE",
@@ -68,7 +66,6 @@ const UserPayment = props => {
         account_holder_type: "individual"
       })
       .then(paymentMethod => {
-        console.log("Received Stripe PaymentMethod:", paymentMethod);
         if (paymentMethod && paymentMethod.token) {
           let formData = new FormData();
           formData.append("front", front_image.file);
@@ -158,9 +155,36 @@ const UserPayment = props => {
     setIsSelect(!isSelect);
   };
 
+  const _removeImage = type => {
+    if (type === "front_image") {
+      setFrontImage({});
+    }
+    if (type === "back_image") {
+      setBackImage({});
+    }
+    if (type === "additional_back") {
+      setAdditionalBack({});
+    }
+    if (type === "additional_front") {
+      setAdditionalFront({});
+    }
+  };
+
+
   const onDobChange = e => {
     setDate(e._d);
   };
+  const openBankDetails = e => {
+    if (paymentType === "credit") {
+      setPaymentType("bank");
+    } else {
+      setPaymentType("credit");
+      setFrontImage({});
+      setBackImage({});
+      setAdditionalBack({});
+      setAdditionalFront({});
+    }
+  }
 
   const _removeCard = card_id => {
     confirmAlert({
@@ -232,9 +256,7 @@ const UserPayment = props => {
               <Button
                 color="link"
                 onClick={() =>
-                  paymentType === "credit"
-                    ? setPaymentType("bank")
-                    : setPaymentType("credit")
+                  openBankDetails()
                 }
               >
                 + Add {paymentType === "credit" ? "Bank" : "Card"}
@@ -390,335 +412,347 @@ const UserPayment = props => {
                               </h4>
                               <div className="payment-upload-list d-flex justify-content-center flex-wrap">
                                 <div className="payment-pic-btn-cell text-center d-flex flex-column">
-                                  <Button
+                                  <div
                                     color="link"
                                     className="position-relative payment-pic-btn p-0 d-flex flex-column"
                                   >
                                     {/* payment-upload-pic */}
-                                    <span className="payment-upload-pic position-absolute h-100 w-100 flex-fill">
-                                      <img
-                                        src={
-                                          front_image.url !== ""
-                                            ? front_image.url
-                                            : require("../../../assets/images/job-user.jpg")
-                                        }
-                                        alt="User"
-                                        className="rounded-circle"
-                                      />
-                                      <span
-                                        color="link"
-                                        className="position-absolute rounded-circle payment-upload-pic-btn"
-                                      >
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          width="357"
-                                          height="357"
-                                          viewBox="0 0 357 357"
-                                        >
-                                          <path
-                                            id="Forma_1"
-                                            data-name="Forma 1"
-                                            d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                                    {front_image.url &&
+                                      <span className="d-flex flex-column justify-content-center align-items-center payment-upload-pic position-absolute h-100 w-100 flex-fill">
+                                        <div className="position-relative">
+                                          <img
+                                            src={front_image.url}
+                                            alt="User"
+                                            className="rounded-circle"
                                           />
-                                        </svg>
+                                          <span
+                                            color="link"
+                                            className="position-absolute rounded-circle payment-upload-pic-btn"
+                                            onClick={() => _removeImage("front_image")}
+                                          >
+                                            <svg
+                                              xmlns="http://www.w3.org/2000/svg"
+                                              width="357"
+                                              height="357"
+                                              viewBox="0 0 357 357"
+                                            >
+                                              <path
+                                                id="Forma_1"
+                                                data-name="Forma 1"
+                                                d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                                              />
+                                            </svg>
+                                          </span>
+                                        </div>
                                       </span>
-                                    </span>
+                                    }
                                     {/* payment-upload-pic */}
 
                                     {/* payment-upload-btn */}
-                                    <span className="payment-upload-btn d-flex align-items-center justify-content-center flex-fill position-absolute h-100 w-100">
-                                      <input
-                                        type="file"
-                                        className="position-absolute w-100"
-                                        onChange={event =>
-                                          handleImageOnchange(
-                                            "front_image",
-                                            event.target.files
-                                          )
-                                        }
-                                      />
-                                      <span className="payment-upload-btn-icn w-100 h-100 d-flex align-items-center justify-content-center">
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          width="91"
-                                          height="91"
-                                          viewBox="0 0 91 91"
-                                        >
-                                          <g
-                                            id="Group_1"
-                                            data-name="Group 1"
-                                            transform="translate(-1079.5 -358)"
+                                    {!front_image.url &&
+                                      <span className="payment-upload-btn d-flex align-items-center justify-content-center flex-fill position-absolute h-100 w-100">
+                                        <input
+                                          type="file"
+                                          className="position-absolute w-100"
+                                          onChange={event =>
+                                            handleImageOnchange(
+                                              "front_image",
+                                              event.target.files
+                                            )
+                                          }
+                                        />
+                                        <span className="payment-upload-btn-icn w-100 h-100 d-flex align-items-center justify-content-center">
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="91"
+                                            height="91"
+                                            viewBox="0 0 91 91"
                                           >
-                                            <rect
-                                              id="Rectangle_1"
-                                              data-name="Rectangle 1"
-                                              width="14"
-                                              height="91"
-                                              rx="7"
-                                              transform="translate(1170.5 396.5) rotate(90)"
-                                            />
-                                            <rect
-                                              id="Rectangle_2"
-                                              data-name="Rectangle 2"
-                                              width="14"
-                                              height="91"
-                                              rx="7"
-                                              transform="translate(1118 358)"
-                                            />
-                                          </g>
-                                        </svg>
+                                            <g
+                                              id="Group_1"
+                                              data-name="Group 1"
+                                              transform="translate(-1079.5 -358)"
+                                            >
+                                              <rect
+                                                id="Rectangle_1"
+                                                data-name="Rectangle 1"
+                                                width="14"
+                                                height="91"
+                                                rx="7"
+                                                transform="translate(1170.5 396.5) rotate(90)"
+                                              />
+                                              <rect
+                                                id="Rectangle_2"
+                                                data-name="Rectangle 2"
+                                                width="14"
+                                                height="91"
+                                                rx="7"
+                                                transform="translate(1118 358)"
+                                              />
+                                            </g>
+                                          </svg>
+                                        </span>
                                       </span>
-                                    </span>
-                                  </Button>
+                                    }
+                                  </div>
                                   <label>Front</label>
                                 </div>
                                 <div className="payment-pic-btn-cell text-center d-flex flex-column">
-                                  <Button
+                                  <div
                                     color="link"
                                     className="position-relative payment-pic-btn p-0 d-flex flex-column"
                                   >
                                     {/* payment-upload-pic */}
-                                    <span className="payment-upload-pic position-absolute h-100 w-100 flex-fill">
-                                      <img
-                                        src={
-                                          back_image.url !== ""
-                                            ? back_image.url
-                                            : require("../../../assets/images/job-user.jpg")
-                                        }
-                                        alt="User"
-                                        className="rounded-circle"
-                                      />
-                                      <span
-                                        color="link"
-                                        className="position-absolute rounded-circle payment-upload-pic-btn"
-                                      >
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          width="357"
-                                          height="357"
-                                          viewBox="0 0 357 357"
-                                        >
-                                          <path
-                                            id="Forma_1"
-                                            data-name="Forma 1"
-                                            d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                                    {back_image.url &&
+                                      <span className="d-flex flex-column justify-content-center align-items-center payment-upload-pic position-absolute h-100 w-100 flex-fill">
+                                        <div className="position-relative">
+                                          <img
+                                            src={back_image.url}
+                                            alt="User"
+                                            className="rounded-circle"
                                           />
-                                        </svg>
+                                          <span
+                                            color="link"
+                                            className="position-absolute rounded-circle payment-upload-pic-btn"
+                                            onClick={() => _removeImage("back_image")}
+                                          >
+                                            <svg
+                                              xmlns="http://www.w3.org/2000/svg"
+                                              width="357"
+                                              height="357"
+                                              viewBox="0 0 357 357"
+                                            >
+                                              <path
+                                                id="Forma_1"
+                                                data-name="Forma 1"
+                                                d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                                              />
+                                            </svg>
+                                          </span>
+                                        </div>
                                       </span>
-                                    </span>
+                                    }
                                     {/* payment-upload-pic */}
 
                                     {/* payment-upload-btn */}
-                                    <span className="payment-upload-btn d-flex align-items-center justify-content-center flex-fill position-absolute h-100 w-100">
-                                      <input
-                                        type="file"
-                                        className="position-absolute w-100"
-                                        onChange={event =>
-                                          handleImageOnchange(
-                                            "back_image",
-                                            event.target.files
-                                          )
-                                        }
-                                      />
-                                      <span className="payment-upload-btn-icn w-100 h-100 d-flex align-items-center justify-content-center">
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          width="91"
-                                          height="91"
-                                          viewBox="0 0 91 91"
-                                        >
-                                          <g
-                                            id="Group_1"
-                                            data-name="Group 1"
-                                            transform="translate(-1079.5 -358)"
+                                    {!back_image.url &&
+                                      <span className="payment-upload-btn d-flex align-items-center justify-content-center flex-fill position-absolute h-100 w-100">
+                                        <input
+                                          type="file"
+                                          className="position-absolute w-100"
+                                          onChange={event =>
+                                            handleImageOnchange(
+                                              "back_image",
+                                              event.target.files
+                                            )
+                                          }
+                                        />
+                                        <span className="payment-upload-btn-icn w-100 h-100 d-flex align-items-center justify-content-center">
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="91"
+                                            height="91"
+                                            viewBox="0 0 91 91"
                                           >
-                                            <rect
-                                              id="Rectangle_1"
-                                              data-name="Rectangle 1"
-                                              width="14"
-                                              height="91"
-                                              rx="7"
-                                              transform="translate(1170.5 396.5) rotate(90)"
-                                            />
-                                            <rect
-                                              id="Rectangle_2"
-                                              data-name="Rectangle 2"
-                                              width="14"
-                                              height="91"
-                                              rx="7"
-                                              transform="translate(1118 358)"
-                                            />
-                                          </g>
-                                        </svg>
+                                            <g
+                                              id="Group_1"
+                                              data-name="Group 1"
+                                              transform="translate(-1079.5 -358)"
+                                            >
+                                              <rect
+                                                id="Rectangle_1"
+                                                data-name="Rectangle 1"
+                                                width="14"
+                                                height="91"
+                                                rx="7"
+                                                transform="translate(1170.5 396.5) rotate(90)"
+                                              />
+                                              <rect
+                                                id="Rectangle_2"
+                                                data-name="Rectangle 2"
+                                                width="14"
+                                                height="91"
+                                                rx="7"
+                                                transform="translate(1118 358)"
+                                              />
+                                            </g>
+                                          </svg>
+                                        </span>
                                       </span>
-                                    </span>
-                                  </Button>
+                                    }
+                                  </div>
                                   <label>Back</label>
                                 </div>
                                 <div className="payment-pic-btn-cell text-center d-flex flex-column">
-                                  <Button
+                                  <div
                                     color="link"
                                     className="position-relative payment-pic-btn p-0 d-flex flex-column"
                                   >
                                     {/* payment-upload-pic */}
-                                    <span className="payment-upload-pic position-absolute h-100 w-100 flex-fill">
-                                      <img
-                                        src={
-                                          additional_front.url !== ""
-                                            ? additional_front.url
-                                            : require("../../../assets/images/job-user.jpg")
-                                        }
-                                        alt="User"
-                                        className="rounded-circle"
-                                      />
-                                      <span
-                                        color="link"
-                                        className="position-absolute rounded-circle payment-upload-pic-btn"
-                                      >
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          width="357"
-                                          height="357"
-                                          viewBox="0 0 357 357"
-                                        >
-                                          <path
-                                            id="Forma_1"
-                                            data-name="Forma 1"
-                                            d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                                    {additional_front.url &&
+                                      <span className="d-flex flex-column justify-content-center align-items-center payment-upload-pic position-absolute h-100 w-100 flex-fill">
+                                        <div className="position-relative">
+                                          <img
+                                            src={additional_front.url}
+                                            alt="User"
+                                            className="rounded-circle"
                                           />
-                                        </svg>
+                                          <span
+                                            color="link"
+                                            className="position-absolute rounded-circle payment-upload-pic-btn"
+                                            onClick={() => _removeImage("additional_front")}
+                                          >
+                                            <svg
+                                              xmlns="http://www.w3.org/2000/svg"
+                                              width="357"
+                                              height="357"
+                                              viewBox="0 0 357 357"
+                                            >
+                                              <path
+                                                id="Forma_1"
+                                                data-name="Forma 1"
+                                                d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                                              />
+                                            </svg>
+                                          </span>
+                                        </div>
                                       </span>
-                                    </span>
+                                    }
                                     {/* payment-upload-pic */}
 
                                     {/* payment-upload-btn */}
-                                    <span className="payment-upload-btn d-flex align-items-center justify-content-center flex-fill position-absolute h-100 w-100">
-                                      <input
-                                        type="file"
-                                        className="position-absolute w-100"
-                                        onChange={event =>
-                                          handleImageOnchange(
-                                            "additional_front",
-                                            event.target.files
-                                          )
-                                        }
-                                      />
-                                      <span className="payment-upload-btn-icn w-100 h-100 d-flex align-items-center justify-content-center">
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          width="91"
-                                          height="91"
-                                          viewBox="0 0 91 91"
-                                        >
-                                          <g
-                                            id="Group_1"
-                                            data-name="Group 1"
-                                            transform="translate(-1079.5 -358)"
+                                    {!additional_front.url &&
+                                      <span className="payment-upload-btn d-flex align-items-center justify-content-center flex-fill position-absolute h-100 w-100">
+                                        <input
+                                          type="file"
+                                          className="position-absolute w-100"
+                                          onChange={event =>
+                                            handleImageOnchange(
+                                              "additional_front",
+                                              event.target.files
+                                            )
+                                          }
+                                        />
+                                        <span className="payment-upload-btn-icn w-100 h-100 d-flex align-items-center justify-content-center">
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="91"
+                                            height="91"
+                                            viewBox="0 0 91 91"
                                           >
-                                            <rect
-                                              id="Rectangle_1"
-                                              data-name="Rectangle 1"
-                                              width="14"
-                                              height="91"
-                                              rx="7"
-                                              transform="translate(1170.5 396.5) rotate(90)"
-                                            />
-                                            <rect
-                                              id="Rectangle_2"
-                                              data-name="Rectangle 2"
-                                              width="14"
-                                              height="91"
-                                              rx="7"
-                                              transform="translate(1118 358)"
-                                            />
-                                          </g>
-                                        </svg>
+                                            <g
+                                              id="Group_1"
+                                              data-name="Group 1"
+                                              transform="translate(-1079.5 -358)"
+                                            >
+                                              <rect
+                                                id="Rectangle_1"
+                                                data-name="Rectangle 1"
+                                                width="14"
+                                                height="91"
+                                                rx="7"
+                                                transform="translate(1170.5 396.5) rotate(90)"
+                                              />
+                                              <rect
+                                                id="Rectangle_2"
+                                                data-name="Rectangle 2"
+                                                width="14"
+                                                height="91"
+                                                rx="7"
+                                                transform="translate(1118 358)"
+                                              />
+                                            </g>
+                                          </svg>
+                                        </span>
                                       </span>
-                                    </span>
-                                  </Button>
+                                    }
+                                  </div>
                                   <label>Additional Front</label>
                                 </div>
                                 <div className="payment-pic-btn-cell text-center d-flex flex-column">
-                                  <Button
+                                  <div
                                     color="link"
                                     className="position-relative payment-pic-btn p-0 d-flex flex-column"
                                   >
                                     {/* payment-upload-pic */}
-                                    <span className="payment-upload-pic position-absolute h-100 w-100 flex-fill">
-                                      <img
-                                        src={
-                                          additional_back.url !== ""
-                                            ? additional_back.url
-                                            : require("../../../assets/images/job-user.jpg")
-                                        }
-                                        alt="User"
-                                        className="rounded-circle"
-                                      />
-                                      <span
-                                        color="link"
-                                        className="position-absolute rounded-circle payment-upload-pic-btn"
-                                      >
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          width="357"
-                                          height="357"
-                                          viewBox="0 0 357 357"
-                                        >
-                                          <path
-                                            id="Forma_1"
-                                            data-name="Forma 1"
-                                            d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                                    {additional_back.url &&
+                                      <span className="d-flex flex-column justify-content-center align-items-center payment-upload-pic position-absolute h-100 w-100 flex-fill">
+                                        <div className="position-relative">
+                                          <img
+                                            src={additional_back.url}
+                                            alt="User"
+                                            className="rounded-circle"
                                           />
-                                        </svg>
+                                          <span
+                                            color="link"
+                                            className="position-absolute rounded-circle payment-upload-pic-btn"
+                                            onClick={() => _removeImage("additional_back")}
+                                          >
+                                            <svg
+                                              xmlns="http://www.w3.org/2000/svg"
+                                              width="357"
+                                              height="357"
+                                              viewBox="0 0 357 357"
+                                            >
+                                              <path
+                                                id="Forma_1"
+                                                data-name="Forma 1"
+                                                d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                                              />
+                                            </svg>
+                                          </span>
+                                        </div>
                                       </span>
-                                    </span>
+                                    }
                                     {/* payment-upload-pic */}
 
                                     {/* payment-upload-btn */}
-                                    <span className="payment-upload-btn d-flex align-items-center justify-content-center flex-fill position-absolute h-100 w-100">
-                                      <input
-                                        type="file"
-                                        className="position-absolute w-100"
-                                        onChange={event =>
-                                          handleImageOnchange(
-                                            "additional_back",
-                                            event.target.files
-                                          )
-                                        }
-                                      />
-                                      <span className="payment-upload-btn-icn w-100 h-100 d-flex align-items-center justify-content-center">
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          width="91"
-                                          height="91"
-                                          viewBox="0 0 91 91"
-                                        >
-                                          <g
-                                            id="Group_1"
-                                            data-name="Group 1"
-                                            transform="translate(-1079.5 -358)"
+                                    {!additional_back.url &&
+                                      <span className="payment-upload-btn d-flex align-items-center justify-content-center flex-fill position-absolute h-100 w-100">
+                                        <input
+                                          type="file"
+                                          className="position-absolute w-100"
+                                          onChange={event =>
+                                            handleImageOnchange(
+                                              "additional_back",
+                                              event.target.files
+                                            )
+                                          }
+                                        />
+                                        <span className="payment-upload-btn-icn w-100 h-100 d-flex align-items-center justify-content-center">
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="91"
+                                            height="91"
+                                            viewBox="0 0 91 91"
                                           >
-                                            <rect
-                                              id="Rectangle_1"
-                                              data-name="Rectangle 1"
-                                              width="14"
-                                              height="91"
-                                              rx="7"
-                                              transform="translate(1170.5 396.5) rotate(90)"
-                                            />
-                                            <rect
-                                              id="Rectangle_2"
-                                              data-name="Rectangle 2"
-                                              width="14"
-                                              height="91"
-                                              rx="7"
-                                              transform="translate(1118 358)"
-                                            />
-                                          </g>
-                                        </svg>
+                                            <g
+                                              id="Group_1"
+                                              data-name="Group 1"
+                                              transform="translate(-1079.5 -358)"
+                                            >
+                                              <rect
+                                                id="Rectangle_1"
+                                                data-name="Rectangle 1"
+                                                width="14"
+                                                height="91"
+                                                rx="7"
+                                                transform="translate(1170.5 396.5) rotate(90)"
+                                              />
+                                              <rect
+                                                id="Rectangle_2"
+                                                data-name="Rectangle 2"
+                                                width="14"
+                                                height="91"
+                                                rx="7"
+                                                transform="translate(1118 358)"
+                                              />
+                                            </g>
+                                          </svg>
+                                        </span>
                                       </span>
-                                    </span>
-                                  </Button>
+                                    }
+                                  </div>
                                   <label>Additional Back</label>
                                 </div>
                               </div>

@@ -116,7 +116,7 @@ const CardForm = injectStripe(_CardForm);
 export default class CardDemo extends Component {
   render() {
     return (
-      <StripeProvider apiKey="pk_test_DwzVvw7dIyntcsbXh6OsNVS200eXzmTfcz">
+      <StripeProvider apiKey="pk_test_d1UROWtZYJBNTCKAPLSjjY1x00Vbn25a9Q">
         <Elements>
           <CardForm handleResult={this.props.handleResult} />
         </Elements>
