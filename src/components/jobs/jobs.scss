@@ -23,16 +23,61 @@
     box-shadow: 0 0 7px #d4d4d4;
   }
 }
-.job-list-icon {
-  @media(max-width:767px){
-    display:none !important;
+.list-icon.listing {
+  @media (max-width: 767px) {
+    display: none !important;
   }
 }
 .list-icon {
-  svg path {
-    fill: #b3b3b3;
+  svg {
+    width: 20px;
+    path {
+      fill: #888;
+    }
   }
 }
+.filter {
+  display: none;
+  @media (max-width: 767px) {
+    display: block !important;
+  }
+  svg {
+    path {
+      fill: #888;
+    }
+  }
+}
+.sort-dropdown {
+  button {
+    font-size: 12px;
+    padding: 6px 12px;
+    color: #333;
+  }
+  .sort {
+    svg {
+      width: 18px;
+      path {
+        fill: #888;
+      }
+    }
+  }
+
+  .dropdown-menu {
+    max-height: 200px;
+    border: 1px solid #fff;
+    box-shadow: 0 0 4px #b7b7b7;
+  }
+}
+.sort-dropdown.show {
+  .sort {
+    svg {
+      path {
+        fill: #333;
+      }
+    }
+  }
+}
+
 .list-icon.active {
   svg path {
     fill: #333;
@@ -55,7 +100,7 @@
   width: 57px;
   height: 57px;
   background-color: rgba(163, 163, 163, 0.45);
-  bottom: 123px;
+  bottom: 143px;
   right: 30px;
   opacity: 0;
   transition: all ease 0.3s 0s;
@@ -69,9 +114,9 @@
   &:hover,
   &:focus {
     background-color: $secondary;
+    box-shadow:none;
   }
 }
 .scroll-tp-btn.on {
   opacity: 1;
-  bottom: 143px;
 }
