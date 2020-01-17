@@ -13,6 +13,10 @@ export const StringToDate = value => {
     newdate.getFullYear()
   );
 };
+export const dateTime = value => {
+  const newdate = moment(AddOffset(+value)).format("DD MMM YYYY hh:mm a");
+  return newdate;
+};
 
 export const DaysBetween = (myDate) => {
   const newdate = new Date(Number(myDate));
@@ -20,9 +24,9 @@ export const DaysBetween = (myDate) => {
 };
 
 export const AddOffset = value => {
-  var userOffset = new Date(value).getTimezoneOffset();
-  var userOffsetMilli = (userOffset * 60) / 1000;
-  var dateInMilli = moment(value).unix() * 1000;
-  var dateInUtc = dateInMilli + userOffsetMilli;
+  let userOffset = new Date(value).getTimezoneOffset();
+  let userOffsetMilli = (userOffset * 60) / 1000;
+  let dateInMilli = moment(value).unix() * 1000;
+  let dateInUtc = dateInMilli + userOffsetMilli;
   return dateInUtc;
 };

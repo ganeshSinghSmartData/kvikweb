@@ -23,7 +23,7 @@ const Proposal = ({ props, jobId, history, isclick = false }) => {
     if (usercards.length === 0) {
       dispatch(GetCards());
     }
-  });
+  },[]);
 
   let imagepath = [];
   let username = "Dummy User";

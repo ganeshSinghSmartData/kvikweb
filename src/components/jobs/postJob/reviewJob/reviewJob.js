@@ -25,7 +25,8 @@ const ReviewModal = (props) => {
         _selectedCategory,
         CategoryItems,
         closePrevieModal,
-        images
+        images,
+        pagesCount
     } = props;
 
     const [modal, setModal] = useState(true);
@@ -64,7 +65,13 @@ const ReviewModal = (props) => {
     const handleOnClickOutsideEvent = () => {
         document.body.classList.remove("datepicker");
     };
-
+    const pagesNumber = (numb) => {
+        pagesCount(numb);
+        setModal(false);
+        setTimeout(function () {
+            closePrevieModal();
+        }, 300);
+    };
     return (
         <div>
             <Modal isOpen={modal} toggle={toggle} className="modal-lg job-review-modal d-flex flex-column align-items-center justify-content-center">
@@ -99,6 +106,7 @@ const ReviewModal = (props) => {
                                 <Button
                                     color="link"
                                     className="edit-job-btn"
+                                    onClick={() => pagesNumber(1)}
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="528.899" height="526.321" viewBox="0 0 528.899 526.321">
                                         <g id="pencil-edit-button" transform="translate(0 -1.289)">
@@ -178,6 +186,7 @@ const ReviewModal = (props) => {
                                 <Button
                                     color="link"
                                     className="edit-job-btn"
+                                    onClick={() => pagesNumber(2)}
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="528.899" height="526.321" viewBox="0 0 528.899 526.321">
                                         <g id="pencil-edit-button" transform="translate(0 -1.289)">
@@ -282,36 +291,37 @@ const ReviewModal = (props) => {
                             </div>
                         </div>
 
-
-                        <div className="post-job-gallery view-job-blc">
-                            <div className="view-job-heading d-flex w-100 align-items-center col-sm-12">
-                                <h2 className="flex-fill mb-0 mr-3">Step 3</h2>
-                                <Button
-                                    color="link"
-                                    className="edit-job-btn"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="528.899" height="526.321" viewBox="0 0 528.899 526.321">
-                                        <g id="pencil-edit-button" transform="translate(0 -1.289)">
-                                            <path id="Path_3559" data-name="Path 3559" d="M328.883,89.125l107.59,107.589-272.34,272.34L56.6,361.465Zm189.23-25.948L470.132,15.2a47.614,47.614,0,0,0-67.259,0L356.912,61.157,464.5,168.747l53.611-53.611A36.679,36.679,0,0,0,518.113,63.177ZM.3,512.69a12.243,12.243,0,0,0,14.811,14.565L135,498.186,27.473,390.6Z" />
-                                        </g>
-                                    </svg>
-                                </Button>
+                        {images && images.length > 0 ?
+                            <div className="post-job-gallery view-job-blc">
+                                <div className="view-job-heading d-flex w-100 align-items-center col-sm-12">
+                                    <h2 className="flex-fill mb-0 mr-3">Step 3</h2>
+                                    <Button
+                                        color="link"
+                                        className="edit-job-btn"
+                                        onClick={() => pagesNumber(3)}
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="528.899" height="526.321" viewBox="0 0 528.899 526.321">
+                                            <g id="pencil-edit-button" transform="translate(0 -1.289)">
+                                                <path id="Path_3559" data-name="Path 3559" d="M328.883,89.125l107.59,107.589-272.34,272.34L56.6,361.465Zm189.23-25.948L470.132,15.2a47.614,47.614,0,0,0-67.259,0L356.912,61.157,464.5,168.747l53.611-53.611A36.679,36.679,0,0,0,518.113,63.177ZM.3,512.69a12.243,12.243,0,0,0,14.811,14.565L135,498.186,27.473,390.6Z" />
+                                            </g>
+                                        </svg>
+                                    </Button>
+                                </div>
+                                <div className="view-job-inner view-job-gallery">
+                                    <ul className="overflow-auto">
+                                        {images &&
+                                            images.length > 0 &&
+                                            images.slice(0, 5).map((item, key) => {
+                                                return (
+                                                    <li key={key} className="position-relative">
+                                                        <img src={item} alt="Job Pic" />
+                                                    </li>
+                                                );
+                                            })}
+                                    </ul>
+                                </div>
                             </div>
-                            <div className="view-job-inner view-job-gallery">
-                                <ul className="overflow-auto">
-                                    {images &&
-                                        images.length > 0 &&
-                                        images.slice(0, 5).map((item, key) => {
-                                            return (
-                                                <li key={key} className="position-relative">
-                                                    <img src={item} alt="Job Pic" />
-                                                </li>
-                                            );
-                                        })}
-                                </ul>
-                            </div>
-                        </div>
-
+                            : null}
                     </LocalForm>
                 </ModalBody>
                 {/* <ModalFooter>

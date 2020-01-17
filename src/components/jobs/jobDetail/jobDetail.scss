@@ -16,7 +16,7 @@
     li {
       margin-bottom: 11px;
       padding-right: 12px;
-      width: 100%;
+      width: 50%;
       @media (max-width: 640px) {
         width: 100%;
       }
@@ -303,6 +303,7 @@
   .place-bid-btn {
     max-width: 327px;
     width: 100%;
+    color:#fff;
   }
 }
 @media (max-width: 767px) {

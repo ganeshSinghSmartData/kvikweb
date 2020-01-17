@@ -23,8 +23,6 @@ import {
   notifications, toggleChat
 } from "../../../actions/messages";
 
-
-
 const UserProfile = props => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [userListOpen, setuserListOpen] = useState(false);
@@ -88,10 +86,12 @@ const UserProfile = props => {
           className="user-mail position-relative"
           color="link"
         >
-
-          <Badge className="position-absolute badge-danger badge-counter">
-            {messages.count}
-          </Badge>
+          {messages.count ?
+            <Badge className="position-absolute badge-danger badge-counter">
+              {messages.count}
+            </Badge>
+            : null
+          }
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -207,9 +207,9 @@ const UserProfile = props => {
             <label className="mb-0">
               Bids
             </label>
-            <Badge className="badge-danger badge-counter">
+            {/* <Badge className="badge-danger badge-counter">
               100
-            </Badge>
+            </Badge> */}
           </Link>
           <Link
             className="dropdown-item d-flex justify-content-between align-items-center "
@@ -219,9 +219,9 @@ const UserProfile = props => {
             <label className="mb-0">
               Jobs
             </label>
-            <Badge className="badge-danger badge-counter">
+            {/* <Badge className="badge-danger badge-counter">
               100
-            </Badge>
+            </Badge> */}
           </Link>
           <Link className="dropdown-item d-flex justify-content-between align-items-center " to={""} onClick={() => openMetricsModal()}>
             <label className="mb-0">
@@ -292,15 +292,15 @@ const UserProfile = props => {
               <label className=" d-flex flex-column">
                 Job Completed
               <span>
-                  5000
-              </span>
+                  {props.metricsData && props.metricsData.total_jobs ? props.metricsData.total_jobs : 0}
+                </span>
 
               </label>
               {/* <span className="metric-view-btn mt-auto">
                 View All
               </span> */}
             </Button>
-            <Button color="link" className="metric-btn d-flex flex-column align-items-center">
+            {/* <Button color="link" className="metric-btn d-flex flex-column align-items-center">
               <span className="metric-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="479.779" height="479.976" viewBox="0 0 479.779 479.976">
                   <g id="auction2" transform="translate(-0.098)">
@@ -340,13 +340,10 @@ const UserProfile = props => {
               <label className=" d-flex flex-column">
                 Bid Completed
               <span>
-                  6000
-              </span>
+                  {props.metricsData && props.metricsData.total_jobs ? props.metricsData.total_jobs : 0}
+                </span>
               </label>
-              {/* <span className="metric-view-btn mt-auto">
-                View All
-              </span> */}
-            </Button>
+            </Button> */}
             <Button color="link" className="metric-btn d-flex flex-column align-items-center">
 
               <span className="metric-icon">
@@ -418,8 +415,8 @@ const UserProfile = props => {
               <label className=" d-flex flex-column">
                 Total Earning
               <span>
-                  $40,000
-              </span>
+                  {props.metricsData && props.metricsData.total_earnings ? props.metricsData.total_earnings : 0}
+                </span>
               </label>
               {/* <span className="metric-view-btn mt-auto">
                 View All
@@ -444,8 +441,8 @@ const UserProfile = props => {
               <label className=" d-flex flex-column">
                 Rating
               <span>
-                  5500
-              </span>
+                  {props.metricsData && props.metricsData.average_rating ? props.metricsData.average_rating : 0}
+                </span>
               </label>
               {/* <span className="metric-view-btn mt-auto">
                 View All
