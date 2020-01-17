@@ -92,7 +92,7 @@ class _CardForm extends Component {
           <label>
             <CardElement
               onChange={this.handleChange}
-              {...createOptions()}
+              {...createOptions() }
             />
             {/* <UserPayment></UserPayment> */}
           </label>

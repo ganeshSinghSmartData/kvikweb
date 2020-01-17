@@ -25,7 +25,8 @@ export default ({
   _selectedCategory,
   dataload,
   path,
-  previewData
+  previewData,
+  getPagesNumber
 }) => {
   const [images, setImages] = useState([]);
   const [openView, setOpenView] = useState(false);
@@ -79,6 +80,9 @@ export default ({
     document.body.classList.remove("datepicker");
   };
 
+  const getPagesNumbers = (data) => {
+    getPagesNumber(data);
+  };
   const handleImageOnchange = event => {
     files = event;
     setImageData({ ...imageData, ...files });
@@ -492,6 +496,7 @@ export default ({
       CategoryItems={CategoryItems}
       closePrevieModal={closePrevieModal}
       images={images}
+      pagesCount={getPagesNumbers}
     />
     : null
   }  

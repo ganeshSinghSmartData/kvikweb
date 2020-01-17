@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import datetimeDifference from "datetime-difference";
 import Countdown from "react-countdown-now";
 
 import { StringToDate, DaysBetween } from "./../../../utilities/common";
 import { apiUrl } from "./../../../environment";
 import { JobStatus, BidStatus } from "../../../utilities/constants";
+import { getJobBidCheck } from "./../../../actions/job";
 
 import "./jobProduct.scss";
 
@@ -72,7 +74,11 @@ const JobProduct = ({ product, listType, path }) => {
     imageclass =
       "no-job-image-blc d-flex align-items-center justify-content-center";
   }
-  console.log("product", product);
+  const { loggedIn = false } = useSelector(state => state.user);
+  const dispatch = useDispatch();
+  const jobDetails = id => {
+    if (loggedIn) dispatch(getJobBidCheck(id));
+  };
   return (
     <div
       className={
@@ -84,6 +90,7 @@ const JobProduct = ({ product, listType, path }) => {
         <Link
           className={`text-black flex-fill position-relative ${imageclass}`}
           to={`${pathname}${product._id}`}
+          onClick={() => jobDetails(product._id)}
         >
           {/* <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" /> */}
           {product.images && product.images.length !== 0 ? (

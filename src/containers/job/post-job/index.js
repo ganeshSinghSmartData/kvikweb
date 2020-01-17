@@ -27,7 +27,7 @@ class PostNewJob extends Component {
     this.handleJobUpdate = this.handleJobUpdate.bind(this);
     this.handleStageChange = this.handleStageChange.bind(this);
     this.viewJob = this.viewJob.bind(this);
-    // this.openPreviewData = this.openPreviewData.bind(this);
+    this._getPagesNumber = this._getPagesNumber.bind(this);
   }
 
   componentDidMount() {
@@ -49,6 +49,7 @@ class PostNewJob extends Component {
     uploadedImages,
     currentstage
   ) {
+    let categories = this.props.category;
     if (currentstage !== 3) {
       this.handleStageChange(1);
       if (currentstage === 2) this.setPreviewData(jobData);
@@ -83,7 +84,7 @@ class PostNewJob extends Component {
           }
         }
       }
-      formData.append("category", this.state.selectedCategory);
+      formData.append("category", this.state.selectedCategory ? this.state.selectedCategory : categories && categories.length ? categories[0].title : "");
       formData.append("jobtitle", jobData.jobtitle);
       formData.append("description", jobData.description);
       if (jobData.budget) {
@@ -135,7 +136,9 @@ class PostNewJob extends Component {
   viewJob() {
     this.setState({ testData: 1 });
   }
-
+  _getPagesNumber(numb) {
+    this.setState({ stage: numb });
+  }
   render() {
     return (
       <React.Fragment>
@@ -145,6 +148,7 @@ class PostNewJob extends Component {
             _handleStageChange={this.handleStageChange}
             _handleJobPost={this.handleJobPost}
             viewJob={this.viewJob}
+            getPagesNumber={this._getPagesNumber}
             _handleJobUpdate={this.handleJobUpdate}
             _handleCategoryOnchange={category =>
               this.setState({

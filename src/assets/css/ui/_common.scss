@@ -384,6 +384,7 @@ input[type="search"]::-webkit-search-decoration {
 
 // Tab focus style
 .dropdown-header {
+  color: #555;
   &:focus {
     outline: none;
   }

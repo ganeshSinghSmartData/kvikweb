@@ -11,6 +11,7 @@ export const reset_job_products = () => ({ type: TYPE.RESET_JOB_PRODUCTS });
 export const reset_active_job = () => ({ type: TYPE.RESET_ACTIVE_JOB });
 export const reset_completed_job = () => ({ type: TYPE.RESET_COMPLETED_JOB });
 export const get_job_details = data => ({ type: TYPE.GET_JOB_DETAILS, data });
+export const get_job_bid_check = data => ({ type: TYPE.GET_JOB_BID_CHECK, data });
 export const get_category = data => ({ type: TYPE.GET_CATEGORY, data });
 export const post_job_products = data => ({
   type: TYPE.POST_JOB_PRODUCTS,
@@ -93,6 +94,27 @@ export const getJobDetails = job_id => {
     });
   };
 };
+
+/****** action creator for job bid check ********/
+export const getJobBidCheck = job_id => {
+  return (dispatch, getState) => {
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient.get(`${apiUrl}/bid/check_user_bid/${job_id}`, {}, token).then(response => {
+      console.log("response", response);
+      if (response.status === 200) {
+        dispatch(is_fetching(false));
+        dispatch(get_job_bid_check(response.data));
+      } else if (response.status === 404) {
+        toastAction(false, response.msg);
+      } else {
+        dispatch(is_fetching(false));
+      }
+    });
+  };
+};
+
 
 /****** action creator for get jobs ********/
 export const createNewJob = (params, callback) => {

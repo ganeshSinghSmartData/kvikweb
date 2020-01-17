@@ -31,6 +31,11 @@ export default function reducer(state = initialState, action) {
         ...state,
         jobDetails: action.data
       };
+    case TYPE.GET_JOB_BID_CHECK:
+      return {
+        ...state,
+        jobBidCheck: action.data
+      };
     case TYPE.GET_ACTIVE_JOB:
       return {
         ...state,
