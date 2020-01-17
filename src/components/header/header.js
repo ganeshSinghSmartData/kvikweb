@@ -46,7 +46,7 @@ const Header = props => {
       <Container>
         <Row>
           <Col
-            className={`d-flex flex-wrap header-inner ${!user.loggedIn && "beforeLogin"}`}>
+            className={`d-flex flex-wrap header-inner align-items-center ${!user.loggedIn && "beforeLogin"}`}>
 
             <Logo navigate={true} />
             <div className="d-flex align-items-center ml-auto nav-wrapper">
