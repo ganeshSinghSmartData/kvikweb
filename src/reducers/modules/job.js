@@ -19,6 +19,7 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
+  console.log("action", action);
   switch (action.type) {
     case TYPE.GET_JOB_PRODUCTS:
       return {
@@ -30,6 +31,11 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         jobDetails: action.data
+      };
+    case TYPE.GET_JOB_BID_CHECK:
+      return {
+        ...state,
+        jobBidCheck: action.data
       };
     case TYPE.GET_ACTIVE_JOB:
       return {
