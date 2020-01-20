@@ -496,18 +496,20 @@
 .payment-confirm-blc > h2 {
   font-size: 14px;
   margin-bottom: 15px;
-  storng {
+  strong {
     margin-right: 4px;
   }
 }
 .payment-confirm {
-  border: 1px solid #d2d2d2;
-  background: #f3f3f3;
+  background: #333;
   padding: 12px;
   border-radius: 10px;
   box-shadow: 0 0 4px #c5c5c5;
 }
 .payment-confirm-check {
+  * {
+    cursor: pointer;
+  }
   position: absolute;
   top: 6px;
   right: 6px;
@@ -516,7 +518,7 @@
   text-align: center;
   cursor: pointer;
   // background: $primary-dark;
-  border: 2px solid $primary-dark;
+  border: 2px solid $primary;
   border-radius: 26px;
 
   input {
@@ -530,7 +532,7 @@
     display: none;
     svg {
       width: 15px;
-      fill: $primary-dark;
+      fill: $primary;
     }
   }
   input:checked + .card-check-cell {
@@ -558,18 +560,24 @@
 .card-confirm-pic2 {
   margin-right: 0;
 }
-.card-confirm-pic img .card-confirm-pic2 img {
+.card-confirm-pic img {
   width: 35px;
+  height: 30px;
+}
+.card-confirm-pic2 img {
+  width: 46px;
+  height: 30px;
 }
 .payment-confirm .form-control {
   height: 35px;
   padding: 0px 8px;
   border-radius: 4px;
   font-size: 13px;
-  background-color: #fff;
-  color: #666;
+  background-color: transparent;
+  border: 1px solid #545454;
+  color: #fff;
   &::placeholder {
-    color: #666;
+    color: #eee;
   }
 }
 .payment-confirm-col.cvv {
