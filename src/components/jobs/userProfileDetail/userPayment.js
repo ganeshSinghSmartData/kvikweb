@@ -263,10 +263,10 @@ const UserPayment = props => {
               </Button>
             </div>
             <div className="user-cards-rw card-detail">
-              <div style={{ marginBottom: "10px" }}>
+              <div>
                 <h2>
                   Type your {paymentType === "credit" ? "Card" : "Bank"} details
-              </h2>
+                </h2>
                 {paymentType === "credit" ? (
                   <StripeCard handleResult={handleResult} />
                 ) : (
@@ -771,97 +771,98 @@ const UserPayment = props => {
                     </div>
                   )}
               </div>
-              {paymentType === "credit" &&
-                usercards &&
-                usercards.length !== 0 &&
-                usercards.map((val, count) => {
-                  return (
-                    <div className="user-cards-rw" key={count}>
-                      <div className="card-chip position-relative">
-                        <Button
-                          color="link"
-                          className="d-flex align-items-center justify-content-center card-del-btn position-absolute p-0"
+            </div>
+
+            {paymentType === "credit" &&
+              usercards &&
+              usercards.length !== 0 &&
+              usercards.map((val, count) => {
+                return (
+                  <div className="user-cards-rw" key={count}>
+                    <div className="card-chip position-relative">
+                      <Button
+                        color="link"
+                        className="d-flex align-items-center justify-content-center card-del-btn position-absolute p-0"
+                      >
+                        <span
+                          className="rounded-circle d-flex align-items-center justify-content-center"
+                          onClick={() => _removeCard(val.id)}
                         >
-                          <span
-                            className="rounded-circle d-flex align-items-center justify-content-center"
-                            onClick={() => _removeCard(val.id)}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="357"
+                            height="357"
+                            viewBox="0 0 357 357"
                           >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="357"
-                              height="357"
-                              viewBox="0 0 357 357"
-                            >
-                              <path
-                                id="Forma_1"
-                                data-name="Forma 1"
-                                d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
-                              />
-                            </svg>
-                          </span>
-                        </Button>
-                        <div className="card-chip-hd d-flex justify-content-end">
-                          <div className="card-confirm-pic2">
-                            {val.type == "visa" ? (
-                              <img
-                                src={require("../../../assets/images/icons/payment-icon/visa.svg")}
-                                alt="Visa Card"
-                              />
-                            ) : val.type == "amex" ? (
-                              <img
-                                src={require("../../../assets/images/icons/payment-icon/amex.svg")}
-                                alt="Visa Card"
-                              />
-                            ) : val.type == "mastercard" ? (
-                              <img
-                                src={require("../../../assets/images/icons/payment-icon/master-card.svg")}
-                                alt="Visa Card"
-                              />
-                            ) : val.type == "discover" ? (
-                              <img
-                                src={require("../../../assets/images/icons/payment-icon/discover.svg")}
-                                alt="Visa Card"
-                              />
-                            ) : val.type == "jcb" ? (
-                              <img
-                                src={require("../../../assets/images/icons/payment-icon/jcb.svg")}
-                                alt="Visa Card"
-                              />
-                            ) : (
-                                        <img
-                                          src={require("../../../assets/images/icons/payment-icon/master-card.svg")}
-                                          alt="Visa Card"
-                                        />
-                                      )}
-                          </div>
+                            <path
+                              id="Forma_1"
+                              data-name="Forma 1"
+                              d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                            />
+                          </svg>
+                        </span>
+                      </Button>
+                      <div className="card-chip-hd d-flex justify-content-end">
+                        <div className="card-confirm-pic2">
+                          {val.type == "visa" ? (
+                            <img
+                              src={require("../../../assets/images/icons/payment-icon/visa.svg")}
+                              alt="Visa Card"
+                            />
+                          ) : val.type == "amex" ? (
+                            <img
+                              src={require("../../../assets/images/icons/payment-icon/amex.svg")}
+                              alt="Visa Card"
+                            />
+                          ) : val.type == "mastercard" ? (
+                            <img
+                              src={require("../../../assets/images/icons/payment-icon/master-card.svg")}
+                              alt="Visa Card"
+                            />
+                          ) : val.type == "discover" ? (
+                            <img
+                              src={require("../../../assets/images/icons/payment-icon/discover.svg")}
+                              alt="Visa Card"
+                            />
+                          ) : val.type == "jcb" ? (
+                            <img
+                              src={require("../../../assets/images/icons/payment-icon/jcb.svg")}
+                              alt="Visa Card"
+                            />
+                          ) : (
+                                      <img
+                                        src={require("../../../assets/images/icons/payment-icon/master-card.svg")}
+                                        alt="Visa Card"
+                                      />
+                                    )}
                         </div>
-                        <div className="card-chip-no">
-                          <span>XXXX</span>
-                          <span>XXXX</span>
-                          <span>
-                            XXX<span className="grey-digit">X</span>
-                          </span>
-                          <span className="last-digit grey-digit">
-                            {val.last4}
-                          </span>
+                      </div>
+                      <div className="card-chip-no">
+                        <span>XXXX</span>
+                        <span>XXXX</span>
+                        <span>
+                          XXX<span className="grey-digit">X</span>
+                        </span>
+                        <span className="last-digit grey-digit">
+                          {val.last4}
+                        </span>
+                      </div>
+                      <div className="card-chip-btm d-flex">
+                        <div className="card-chip-col flex-fill">
+                          <h2>
+                            {val.acHolderName ? val.acHolderName : "----"}
+                          </h2>
+                          <h3>-----</h3>
                         </div>
-                        <div className="card-chip-btm d-flex">
-                          <div className="card-chip-col flex-fill">
-                            <h2>
-                              {val.acHolderName ? val.acHolderName : "----"}
-                            </h2>
-                            <h3>-----</h3>
-                          </div>
-                          <div className="card-chip-col rt">
-                            <h2>VALID THRU</h2>
-                            <h3 className="mb-0">{val.cardValidity}</h3>
-                          </div>
+                        <div className="card-chip-col rt">
+                          <h2>VALID THRU</h2>
+                          <h3 className="mb-0">{val.cardValidity}</h3>
                         </div>
                       </div>
                     </div>
-                  );
-                })}
-            </div>
+                  </div>
+                );
+              })}
           </React.Fragment>
         )}
     </div>
@@ -873,11 +874,11 @@ export default class CardDemo extends Component {
   render() {
     return (
       <>
-      <StripeProvider apiKey={stripeKey}>
-        <Elements>
-          <CardForm handleResult={this.props.handleResult} />
-        </Elements>
-      </StripeProvider>
+        <StripeProvider apiKey={stripeKey}>
+          <Elements>
+            <CardForm handleResult={this.props.handleResult} />
+          </Elements>
+        </StripeProvider>
       </>
     );
   }
