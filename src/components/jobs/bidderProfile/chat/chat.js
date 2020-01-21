@@ -17,6 +17,7 @@ const ROOT_CSS = css({
 let chatId = "";
 let messagesEnd = null;
 const Chat = props => {
+  console.log("props", props);
   const [message, setMessage] = useState("");
   const user = useSelector(state => state.user);
   const messages = useSelector(state => state.messages);
@@ -56,6 +57,7 @@ const Chat = props => {
         recieverId: props.Id,
         senderId: user.data._id
       });
+    console.log("props.Id", props.Id, "user.data._id", user.data._id);
     setMessage("");
     scrollToBottom()
     dispatch(messages_list({ id: props.Id, limit: 10, skip: 0 }));
