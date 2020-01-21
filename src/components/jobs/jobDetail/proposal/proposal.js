@@ -23,7 +23,7 @@ const Proposal = ({ props, jobId, history, isclick = false }) => {
     if (usercards.length === 0) {
       dispatch(GetCards());
     }
-  },[]);
+  }, []);
 
   let imagepath = [];
   let username = "Dummy User";
@@ -130,6 +130,7 @@ const Proposal = ({ props, jobId, history, isclick = false }) => {
       </div>
       {props.job_provider_id && (
         <AcceptProposalModal
+          _jobStatus={props.status}
           _isOpen={openModal}
           _toggleModal={() => {
             setAcceptProposal(false);

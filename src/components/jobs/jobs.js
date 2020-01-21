@@ -71,6 +71,9 @@ const Job = ({
       count = bids.completedBidsCount;
     }
   } else {
+
+
+
     products = jobs.jobProduct;
     count = jobs.count;
   }
@@ -164,6 +167,19 @@ const Job = ({
       budget: budget,
       zip_code: postalCode,
       miles: value
+    };
+    dispatch(reset_job_products());
+    dispatch(getJobProduct(reqData));
+  };
+
+  const sortBy = value => {
+    setDistance(value);
+    const reqData = {
+      page: page,
+      category: selectedCategory,
+      budget: budget,
+      zip_code: value,
+      miles: distance
     };
     dispatch(reset_job_products());
     dispatch(getJobProduct(reqData));
@@ -304,22 +320,22 @@ const Job = ({
                         </svg>
                       </DropdownToggle>
                       <DropdownMenu right className="overflow-auto">
-                        <DropdownItem>
+                        <DropdownItem onClick={() => sortBy()}>
                           Budget -  high to low
                         </DropdownItem>
-                        <DropdownItem>
+                        <DropdownItem onClick={() => sortBy()}>
                           Budget -  low to high
                         </DropdownItem>
-                        <DropdownItem>
+                        <DropdownItem onClick={() => sortBy()}>
                           Create Date
                         </DropdownItem>
-                        <DropdownItem>
+                        <DropdownItem onClick={() => sortBy()}>
                           Title (a-z)
                         </DropdownItem>
-                        <DropdownItem>
+                        <DropdownItem onClick={() => sortBy()}>
                           Job Start Date
                         </DropdownItem>
-                        <DropdownItem>
+                        <DropdownItem onClick={() => sortBy()}>
                           Bid Deadline Date
                         </DropdownItem>
                       </DropdownMenu>
