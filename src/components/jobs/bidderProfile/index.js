@@ -19,12 +19,18 @@ const BidderProfile = ({ user_id, review }) => {
     }
   }, []);
   const [chatVisible, setchatVisible] = useState(false);
+  const [recieverID, setId] = useState("");
   const chatToggle = () => {
     setchatVisible(!chatVisible);
   };
   const chatHideCallback = value => {
     setchatVisible(value);
   };
+  const { location } = useSelector(state => state.router);
+  let params = location.pathname.split("/"), statusCheck;
+  if (params && params.length) {
+    statusCheck = params[params.length - 1]
+  }
 
   return (
     <>
@@ -88,11 +94,10 @@ const BidderProfile = ({ user_id, review }) => {
           {review.length === 0 && <h6>No review found.</h6>}
         </div>
 
-
         {/* customchatbtn */}
         <Button
           color="primary"
-          className={`chat-btn bidder-profile rounded-circle position-fixed ${!chatVisible && 'active'}`}
+          className={`chat-btn bidder-profile rounded-circle position-fixed ${!chatVisible && statusCheck && statusCheck !== "not_started" && 'active'}`}
           onClick={chatToggle}
         >
           <svg
@@ -113,7 +118,14 @@ const BidderProfile = ({ user_id, review }) => {
             </g>
           </svg>
         </Button>
-        <Chat />
+        {chatVisible ?
+          <Chat
+            Id={biderDetails._id}
+            chatToggle={chatVisible}
+            chatHideCallback={value => chatHideCallback(value)}
+            recieversName={biderDetails.fname + " " + biderDetails.lname}
+          />
+          : null}
       </div>
     </div>
     </>

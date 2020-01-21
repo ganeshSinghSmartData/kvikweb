@@ -55,7 +55,8 @@ export const getJobProduct = ({
   miles = "",
   long = "",
   lat = "",
-  category = []
+  category = [],
+  sort = ""
 }) => {
   return dispatch => {
     const skip = (page - 1) * pagination.limit;
@@ -64,7 +65,7 @@ export const getJobProduct = ({
       pagination.limit
       }&budget=${budget}&zip_code=${zip_code}&miles=${miles}&search=${
       search ? (search.search ? search.search : "") : ""
-      }`,
+      }&sort=${JSON.stringify(sort)}`,
       {}
     ).then(response => {
       if (response.status === 200) {

@@ -33,7 +33,7 @@ class JobDetails extends Component {
         },
         {
           label: "No",
-          onClick: () => {}
+          onClick: () => { }
         }
       ]
     });
@@ -50,7 +50,7 @@ class JobDetails extends Component {
         },
         {
           label: "No",
-          onClick: () => {}
+          onClick: () => { }
         }
       ]
     });
@@ -121,6 +121,7 @@ class JobDetails extends Component {
         jobDetails = this.props.userJobDetails;
       }
     }
+    console.log("jobs", this.props.jobs);
     return (
       <React.Fragment>
         {Object.keys(jobDetails).length ? (
@@ -138,8 +139,8 @@ class JobDetails extends Component {
             _isStatusLoading={this.state.isStatusLoading}
           ></JobDetail>
         ) : (
-          <SpinnerOverlay className="position-fixed" />
-        )}
+            <SpinnerOverlay className="position-fixed" />
+          )}
       </React.Fragment>
     );
   }

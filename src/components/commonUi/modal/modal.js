@@ -40,7 +40,7 @@ const SignInModal = ({
 
   let [isForgot, setForgot] = useState(false);
   let [bidderRating, setBidderrating] = useState(1);
-
+  console.log("_jobStatus", props._jobStatus);
   return (
     <div>
       <Modal
@@ -389,7 +389,7 @@ const SignInModal = ({
                       <h2>
                         <Link
                           className="user-detail-link"
-                          to={`/bidder-profile/${props._propsDetails.job_provider_id._id}`}
+                          to={`/bidder-profile/${props._propsDetails.job_provider_id._id}/${props._jobStatus}`}
                         >
                           {`${props._propsDetails.job_provider_id.fname} ${props._propsDetails.job_provider_id.lname}`}
                         </Link>
