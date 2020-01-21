@@ -65,7 +65,7 @@ export const getJobProduct = ({
       pagination.limit
       }&budget=${budget}&zip_code=${zip_code}&miles=${miles}&search=${
       search ? (search.search ? search.search : "") : ""
-      }&sort=${sort}`,
+      }&sort=${JSON.stringify(sort)}`,
       {}
     ).then(response => {
       if (response.status === 200) {
