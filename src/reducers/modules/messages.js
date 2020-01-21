@@ -11,8 +11,8 @@ const initialState = {
     data: [],
     count: 0,
     chatUsers: [],
-    showChat:false,
-    chatId:""
+    showChat: false,
+    chatId: ""
 };
 
 
@@ -21,6 +21,7 @@ export default function reducer(state = initialState, action) {
         case TYPE.MESSAGES_LIST:
             return { ...state, data: action.data.reverse() };
         case TYPE.GET_MESSAGE:
+            console.log("action.data", action.data);
             state.data.push(action.data);
             return state;
         case TYPE.MESSAGE_COUNT:
@@ -28,7 +29,7 @@ export default function reducer(state = initialState, action) {
         case TYPE.CHAT_USERS:
             return { ...state, chatUsers: action.data };
         case TYPE.TOGGLE_CHAT:
-            return { ...state, showChat:action.chat?action.chat.toggle:false, chatId:action.chat?action.chat.chatId:""  };
+            return { ...state, showChat: action.chat ? action.chat.toggle : false, chatId: action.chat ? action.chat.chatId : "" };
         case TYPE.LOGOUT_USERS:
             return initialState;
         default:

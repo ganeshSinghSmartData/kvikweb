@@ -17,15 +17,15 @@ export const chat_users = data => ({ type: TYPE.CHAT_USERS, data });
 
 
 /****** action creator for reset message list ********/
-export const resetChats = ()=>dispatch =>dispatch(list([]));
-export const toggleChat = (toggle=false,chatId="") => dispatch => dispatch({type:TYPE.TOGGLE_CHAT, chat:{toggle,chatId}})
+export const resetChats = () => dispatch => dispatch(list([]));
+export const toggleChat = (toggle = false, chatId = "") => dispatch => dispatch({ type: TYPE.TOGGLE_CHAT, chat: { toggle, chatId } })
 /****** action creator for getting messages********/
 export const messages_list = (params, callback) => {
   return (dispatch, getState) => {
     const {
       data: { token, _id }
     } = getState().user;
-    return new Promise(res=>
+    return new Promise(res =>
       ApiClient.get(
         `${apiUrl}/chat/chat/${params.id}/${_id}?limit=${params.limit}&skip=${params.skip}}`,
         {},
@@ -38,9 +38,9 @@ export const messages_list = (params, callback) => {
         } else {
           dispatch(is_fetching(false));
         }
-        res({test:true})
+        res({ test: true })
       })
-  )
+    )
   };
 };
 /****** action creator for message count********/

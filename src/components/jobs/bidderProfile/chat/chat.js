@@ -22,17 +22,21 @@ const Chat = props => {
   const messages = useSelector(state => state.messages);
   const dispatch = useDispatch();
   const scrollToBottom = () => {
-    messagesEnd&&messagesEnd.scrollIntoView({ behavior: "smooth" });
+    messagesEnd && messagesEnd.scrollIntoView({ behavior: "smooth" });
+  }
+  let displayMessages = [];
+  if (messages && messages.data && messages.data.length) {
+    displayMessages = [...new Set(messages.data)];
   }
   useEffect(() => {
     loadChatData(messages.chatId)
-}, [messages.chatId])
+  }, [messages.chatId])
 
-  const loadChatData = async Id =>{
-    if(Id){
+  const loadChatData = async Id => {
+    if (Id) {
       SocketClient.eventHandler(GET_MESSAGE, { user_id: user.data._id });
       await dispatch(messages_list({ id: Id, limit: 10, skip: 0 }));
-        scrollToBottom()
+      scrollToBottom()
     }
   }
 
@@ -40,15 +44,18 @@ const Chat = props => {
   const onHandleChange = e => {
     setMessage(e.target.value);
   };
-
+  const closeChat = e => {
+    dispatch(toggleChat(false, ""));
+    props.chatHideCallback(false);
+  }
   /*********************** Handle message send ************************************** */
   const handleMessage = val => {
-    if(message)
-    SocketClient.eventHandler(SEND_MESSAGE, {
-      message: message,
-      recieverId: props.Id,
-      senderId: user.data._id
-    });
+    if (message)
+      SocketClient.eventHandler(SEND_MESSAGE, {
+        message: message,
+        recieverId: props.Id,
+        senderId: user.data._id
+      });
     setMessage("");
     scrollToBottom()
     dispatch(messages_list({ id: props.Id, limit: 10, skip: 0 }));
@@ -57,18 +64,19 @@ const Chat = props => {
   const chatHide = () => {
     props.chatHideCallback(false);
   };
+
   return (
     <div
       className={`chat-block d-flex flex-column ${
-        messages.showChat ? "on" : ""
-      }`}
+        props.chatToggle ? "on" : ""
+        }`}
     >
       <div className="chat-head d-flex flex-shrink-0">
-        <h2>CHAT</h2>
+        <h2>{props.recieversName ? props.recieversName : 'CHAT'}</h2>
         <Button
           color="primary"
           className="chat-btn rounded-circle position-static ml-auto"
-          onClick={()=>dispatch(toggleChat(false,""))}
+          onClick={() => closeChat()}
         >
           <svg
             id="chat"
@@ -92,12 +100,12 @@ const Chat = props => {
       <div className="chat-inner overflow-auto flex-fill">
         {/* <ScrollToBottom className={ROOT_CSS}> */}
         <ScrollToBottom>
-          {messages &&
-            messages.data.length > 0 &&
-            messages.data.map((val, index) => {
+          {displayMessages &&
+            displayMessages.length > 0 &&
+            displayMessages.map((val, index) => {
               return (
                 <React.Fragment key={index}>
-                  {val.senderId === !user.data._id ? (
+                  {val.senderId == user.data._id ? (
                     <div className="chat-row d-flex justify-content-end">
                       <div ref={(el) => { messagesEnd = el; }} className="chat-txt admin">
                         <p>{val.message}</p>
@@ -105,14 +113,14 @@ const Chat = props => {
                       </div>
                     </div>
                   ) : (
-                    <div className="chat-row d-flex">
-                    <div ref={(el) => { messagesEnd = el; }} className="chat-txt user">
-                      <p>{val.message}</p>
-                      <span className="d-block chat-time">
-                        {moment(val.createdAt).format("LT")}
-                      </span>
-                    </div>
-                  </div>
+                      <div className="chat-row d-flex">
+                        <div ref={(el) => { messagesEnd = el; }} className="chat-txt user">
+                          <p>{val.message}</p>
+                          <span className="d-block chat-time">
+                            {moment(val.createdAt).format("LT")}
+                          </span>
+                        </div>
+                      </div>
                     )}
                 </React.Fragment>
               );

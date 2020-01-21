@@ -27,6 +27,7 @@ const UserProfile = props => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [userListOpen, setuserListOpen] = useState(false);
   const [openMetrics, setopenMetrics] = useState(false);
+  const [bidersName, setBidersName] = useState("");
   const dispatch = useDispatch();
   const { user } = useSelector(state => state);
   const messages = useSelector(state => state.messages);
@@ -38,9 +39,11 @@ const UserProfile = props => {
 
   const userListtoggle = () => setuserListOpen(prevState => !prevState);
 
-  const chatToggle = id => {
+  const chatToggle = chat => {
+    setBidersName(chat.fname + ' ' + chat.lname)
+    setchatVisible(true);
     dispatch(resetChats())
-    dispatch(toggleChat(true, id))
+    dispatch(toggleChat(true, chat._id))
     // setId(id);
   };
   const chatHideCallback = value => {
@@ -116,7 +119,7 @@ const UserProfile = props => {
               messages.chatUsers.map((val, index) => {
                 return (
                   <DropdownItem
-                    onClick={() => chatToggle(val._id)}
+                    onClick={() => chatToggle(val)}
                     className="d-flex align-items-center"
                     key={index}
                   >
@@ -254,11 +257,14 @@ const UserProfile = props => {
           </Link>
         </DropdownMenu>
       </Dropdown>
-      <Chat
-        Id={recieverID}
-        chatToggle={chatVisible}
-        chatHideCallback={value => chatHideCallback(value)}
-      />
+      {chatVisible ?
+        <Chat
+          Id={recieverID}
+          chatToggle={chatVisible}
+          chatHideCallback={value => chatHideCallback(value)}
+          recieversName={bidersName}
+        />
+        : null}
       <Modal isOpen={openMetrics} toggle={openMetricsModal} className="metric-modal modal-lg d-flex flex-column align-items-center justify-content-center">
         <ModalHeader>
           User Metrics

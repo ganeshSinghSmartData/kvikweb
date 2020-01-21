@@ -156,7 +156,7 @@ const Routers = store => {
           type={private_type}
         />
         <AppRoute
-          path="/bidder-profile/:user_id"
+          path="/bidder-profile/:user_id/:status"
           exact
           component={BidderProfile}
           requireAuth={Authorization}
