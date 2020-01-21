@@ -97,7 +97,7 @@ const BidderProfile = ({ user_id, review }) => {
         {/* customchatbtn */}
         <Button
           color="primary"
-          className={`chat-btn bidder-profile rounded-circle position-fixed ${!chatVisible && statusCheck && statusCheck !== "not_started" && 'active'}`}
+          className={`chat-btn bidder-profile rounded-circle position-fixed ${!chatVisible && statusCheck && statusCheck != "not_started" && 'active'}`}
           onClick={chatToggle}
         >
           <svg
