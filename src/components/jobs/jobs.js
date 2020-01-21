@@ -26,6 +26,7 @@ const Job = ({
   const [listType, setlistType] = useState(false);
   let [selectedCategory, setCategory] = useState([]);
   let [postalCode, setPostalCode] = useState("");
+  let [sort, setSortBy] = useState("");
   let [distance, setDistance] = useState("");
   let [budget, setBudget] = useState("");
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -126,7 +127,8 @@ const Job = ({
       category: newSelectedCategory,
       budget: budget,
       zip_code: postalCode,
-      miles: distance
+      miles: distance,
+      sort: sort
     };
 
     dispatch(reset_job_products());
@@ -140,7 +142,8 @@ const Job = ({
       category: selectedCategory,
       budget: budget,
       zip_code: value,
-      miles: distance
+      miles: distance,
+      sort: sort
     };
     dispatch(reset_job_products());
     dispatch(getJobProduct(reqData));
@@ -153,7 +156,8 @@ const Job = ({
       category: selectedCategory,
       budget: value,
       zip_code: postalCode,
-      miles: distance
+      miles: distance,
+      sort: sort
     };
     dispatch(reset_job_products());
     dispatch(getJobProduct(reqData));
@@ -166,20 +170,22 @@ const Job = ({
       category: selectedCategory,
       budget: budget,
       zip_code: postalCode,
-      miles: value
+      miles: value,
+      sort: sort
     };
     dispatch(reset_job_products());
     dispatch(getJobProduct(reqData));
   };
 
   const sortBy = value => {
-    setDistance(value);
+    setSortBy(value);
     const reqData = {
       page: page,
       category: selectedCategory,
       budget: budget,
-      zip_code: value,
-      miles: distance
+      zip_code: postalCode,
+      miles: distance,
+      sort: value
     };
     dispatch(reset_job_products());
     dispatch(getJobProduct(reqData));
@@ -202,7 +208,6 @@ const Job = ({
     })
   }, []);
   const windowResize = () => {
-    console.log('resize')
     const windowWidth = window.innerWidth;
     if (windowWidth > 767) {
       if (jobs.sidebarToggle === true) {
@@ -320,22 +325,22 @@ const Job = ({
                         </svg>
                       </DropdownToggle>
                       <DropdownMenu right className="overflow-auto">
-                        <DropdownItem onClick={() => sortBy()}>
+                        <DropdownItem onClick={() => sortBy({ budget: 1 })}>
                           Budget -  high to low
                         </DropdownItem>
-                        <DropdownItem onClick={() => sortBy()}>
+                        <DropdownItem onClick={() => sortBy({ budget: -1 })}>
                           Budget -  low to high
                         </DropdownItem>
-                        <DropdownItem onClick={() => sortBy()}>
+                        <DropdownItem onClick={() => sortBy({ created_at: 1 })}>
                           Create Date
                         </DropdownItem>
-                        <DropdownItem onClick={() => sortBy()}>
+                        <DropdownItem onClick={() => sortBy({ jobtitle: 1 })}>
                           Title (a-z)
                         </DropdownItem>
-                        <DropdownItem onClick={() => sortBy()}>
+                        <DropdownItem onClick={() => sortBy({ jobStartDate: 1 })}>
                           Job Start Date
                         </DropdownItem>
-                        <DropdownItem onClick={() => sortBy()}>
+                        <DropdownItem onClick={() => sortBy({ jobEndDate: 1 })}>
                           Bid Deadline Date
                         </DropdownItem>
                       </DropdownMenu>
