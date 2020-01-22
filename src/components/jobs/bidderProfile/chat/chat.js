@@ -111,7 +111,7 @@ const Chat = props => {
                     <div className="chat-row d-flex justify-content-end">
                       <div ref={(el) => { messagesEnd = el; }} className="chat-txt admin">
                         <p>{val.message}</p>
-                        <span className="d-block chat-time">09:20PM</span>
+                        <span className="d-block chat-time">{moment(val.createdAt).format("LT")}</span>
                       </div>
                     </div>
                   ) : (

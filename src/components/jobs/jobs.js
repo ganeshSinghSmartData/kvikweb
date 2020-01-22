@@ -314,38 +314,39 @@ const Job = ({
                         </g>
                       </svg>
                     </Button> */}
-                    <ButtonDropdown isOpen={dropdownOpen} toggle={toggle} className="sort-dropdown ">
-                      <DropdownToggle color="link"
-                        className="list-icon sort">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="427.648" height="448" viewBox="0 0 427.648 448">
-                          <g id="sort_1_" data-name="sort (1)" transform="translate(-0.5)">
-                            <path id="Path_1" data-name="Path 1" d="M118.324,393.375V0h-32V393.375l-63.2-63.2L.5,352.8l90.512,90.512a16,16,0,0,0,22.625,0L204.148,352.8l-22.625-22.625Zm0,0" />
-                            <path id="Path_2" data-name="Path 2" d="M428.148,95.2,337.637,4.688a16,16,0,0,0-22.625,0L224.5,95.2l22.625,22.625,63.2-63.2V448h32V54.625l63.2,63.2Zm0,0" />
-                          </g>
-                        </svg>
-                      </DropdownToggle>
-                      <DropdownMenu right className="overflow-auto">
-                        <DropdownItem onClick={() => sortBy({ budget: 1 })}>
-                          Budget -  high to low
+                    {path === "" ?
+                      <ButtonDropdown isOpen={dropdownOpen} toggle={toggle} className="sort-dropdown ">
+                        <DropdownToggle color="link"
+                          className="list-icon sort">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="427.648" height="448" viewBox="0 0 427.648 448">
+                            <g id="sort_1_" data-name="sort (1)" transform="translate(-0.5)">
+                              <path id="Path_1" data-name="Path 1" d="M118.324,393.375V0h-32V393.375l-63.2-63.2L.5,352.8l90.512,90.512a16,16,0,0,0,22.625,0L204.148,352.8l-22.625-22.625Zm0,0" />
+                              <path id="Path_2" data-name="Path 2" d="M428.148,95.2,337.637,4.688a16,16,0,0,0-22.625,0L224.5,95.2l22.625,22.625,63.2-63.2V448h32V54.625l63.2,63.2Zm0,0" />
+                            </g>
+                          </svg>
+                        </DropdownToggle>
+                        <DropdownMenu right className="overflow-auto">
+                          <DropdownItem onClick={() => sortBy({ budget: 1 })}>
+                            Budget -  high to low
                         </DropdownItem>
-                        <DropdownItem onClick={() => sortBy({ budget: -1 })}>
-                          Budget -  low to high
+                          <DropdownItem onClick={() => sortBy({ budget: -1 })}>
+                            Budget -  low to high
                         </DropdownItem>
-                        <DropdownItem onClick={() => sortBy({ created_at: 1 })}>
-                          Create Date
+                          <DropdownItem onClick={() => sortBy({ created_at: 1 })}>
+                            Create Date
                         </DropdownItem>
-                        <DropdownItem onClick={() => sortBy({ jobtitle: 1 })}>
-                          Title (a-z)
+                          <DropdownItem onClick={() => sortBy({ jobtitle: 1 })}>
+                            Title (a-z)
                         </DropdownItem>
-                        <DropdownItem onClick={() => sortBy({ jobStartDate: 1 })}>
-                          Job Start Date
+                          <DropdownItem onClick={() => sortBy({ jobStartDate: 1 })}>
+                            Job Start Date
                         </DropdownItem>
-                        <DropdownItem onClick={() => sortBy({ jobEndDate: 1 })}>
-                          Bid Deadline Date
+                          <DropdownItem onClick={() => sortBy({ jobEndDate: 1 })}>
+                            Bid Deadline Date
                         </DropdownItem>
-                      </DropdownMenu>
-                    </ButtonDropdown>
-
+                        </DropdownMenu>
+                      </ButtonDropdown> : null
+                    }
                     <Button
                       color="link"
                       className={"list-icon " + (listType ? "active" : "")}
