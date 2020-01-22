@@ -40,11 +40,12 @@ const UserProfile = props => {
   const userListtoggle = () => setuserListOpen(prevState => !prevState);
 
   const chatToggle = chat => {
+    console.log("chat", chat);
     setBidersName(chat.fname + ' ' + chat.lname)
     setchatVisible(true);
     dispatch(resetChats())
     dispatch(toggleChat(true, chat._id))
-    // setId(id);
+    setId(chat._id);
   };
   const chatHideCallback = value => {
     setchatVisible(value);

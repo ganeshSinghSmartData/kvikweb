@@ -98,8 +98,7 @@ const BidderProfile = ({ user_id, review }) => {
           <Button
             color="primary"
             className={`chat-btn bidder-profile rounded-circle position-fixed ${!chatVisible && statusCheck && statusCheck !== "not_started" && 'active'}`}
-            onClick={chatToggle}
-          >
+            onClick={chatToggle}>
             <svg
               id="chat"
               xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +125,7 @@ const BidderProfile = ({ user_id, review }) => {
             recieversName={biderDetails.fname + " " + biderDetails.lname}
           />
         </div>
-      </div>
+      </div >
     </>
   );
 };
