@@ -348,7 +348,7 @@ const Job = ({
 
                     <Button
                       color="link"
-                      className={"list-icon " + (listType ? "active" : "")}
+                      className={"list-icon listTypes " + (listType ? "active" : "")}
                       onClick={() => toggleListType(true)}
                     >
                       <svg
@@ -368,7 +368,7 @@ const Job = ({
                     </Button>
                     <Button
                       color="link"
-                      className={"list-icon " + (!listType ? "active" : "")}
+                      className={"list-icon listTypes " + (!listType ? "active" : "")}
                       onClick={() => toggleListType(false)}
                     >
                       <svg
