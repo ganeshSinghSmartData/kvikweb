@@ -299,11 +299,14 @@
   }
 }
 .place-bid-rw {
-  margin-top: 20px;
+  margin-top: 40px;
+  @media (max-width: 767px) {
+    margin-top: 25px;
+  }
   .place-bid-btn {
     max-width: 327px;
     width: 100%;
-    color:#fff;
+    color: #fff;
   }
 }
 @media (max-width: 767px) {

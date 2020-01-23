@@ -5,6 +5,19 @@
   margin-bottom: 30px;
   background: #fff;
   overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #c1c1c1;
+  transition: all ease 0.3s 0s;
+  * {
+    cursor: pointer;
+  }
+  &:hover {
+    background: #fafafa;
+    box-shadow: 0 0 18px #8e8e8e;
+    img {
+      transform: scale(1.2);
+    }
+  }
 }
 .job-inner {
   padding: 0 6px;
@@ -43,15 +56,21 @@
   }
 }
 .job-pic {
+  background: #f7f7f7;
   height: 250px;
   overflow: hidden;
   transition: all ease 0.3s 0s;
   a {
     border: 1px solid #eee;
+    border-radius: 10px;
+    overflow: hidden;
   }
   img {
     width: 100%;
     height: 100% !important;
+    border-radius: 10px;
+    transition: all ease 0.3s 0s;
+    transform: scale(1);
   }
 }
 .job-inner {
@@ -91,11 +110,12 @@
     display: flex !important;
     flex-direction: row !important;
     flex: 1 !important;
-    padding: 32px 20px;
+    padding: 10px;
   }
   .job-pic {
     width: 234px;
-    margin-right: 43px;
+    height: 175px;
+    margin-right: 20px;
   }
   .job-inner {
     flex: 1;
@@ -106,7 +126,7 @@
     line-height: 1;
     span {
       margin-right: initial !important;
-      font-size: 33px;
+      font-size: 27px;
       margin-bottom: 18px;
     }
     label {
@@ -158,6 +178,7 @@
   left: 0;
   color: #fff;
   padding: 3px 10px;
+  border-radius: 0 0 10px 10px;
 }
 
 // Bid has been accepted
@@ -199,6 +220,11 @@
   opacity: 0.1;
   height: auto !important;
   margin-bottom: 27px;
+}
+.job-list-row {
+  .no-job-image-blc img {
+    max-width: 130px !important;
+  }
 }
 .no-jobdetail-image img {
   max-width: 220px !important;
