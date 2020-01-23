@@ -416,3 +416,27 @@ input[type="search"]::-webkit-search-decoration {
   top: 3px;
   padding: 3px 5px;
 }
+
+// Profile completion style start
+.profile-bar {
+  width: 215px;
+  text-align: right;
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+  .profile-percentage {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .progress {
+    height: 6px;
+    .progress-bar {
+      border-radius: 5px;
+    }
+  }
+  .profile-bar-txt {
+    font-weight: 300;
+    color: #000;
+    margin: 4px 0 0 0;
+  }
+}

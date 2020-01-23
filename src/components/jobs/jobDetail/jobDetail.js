@@ -602,12 +602,12 @@ export default function JobDetail({
             </div>
             <JobCreatedBy job_seeker_id={job.job_seeker_id} />
 
-            {path !== "/bid-details" &&
+            {/* {path !== "/bid-details" &&
               path !== "/job-proposal" &&
               user &&
               user.loggedIn &&
               user.data._id != job.job_seeker_id._id && (
-                <div className="place-bid-rw text-center">
+                <div className="place-bid-rw text-center w-100">
                   <Button
                     size="lg"
                     color="link"
@@ -626,16 +626,35 @@ export default function JobDetail({
                 >
                   Login
                 </Link>
-                {/* <Button
-                    size="lg"
-                    color="secondary"
-                    className="place-bid-btn"
-                    onClick={() => setOpenModal(!openModal)}
-                  > */}
-                {/* </Button> */}
+              </div>
+            )} */}
+          </Col>
+          {path !== "/bid-details" &&
+            path !== "/job-proposal" &&
+            user &&
+            user.loggedIn &&
+            user.data._id != job.job_seeker_id._id && (
+              <div className="place-bid-rw text-center w-100">
+                <Button
+                  size="lg"
+                  color="link"
+                  className={`${jobBidCheck ? 'btn-dark' : "btn-secondary"} place-bid-btn`}
+                  onClick={() => openBidForm()}
+                >
+                  Place a Bid
+                  </Button>
               </div>
             )}
-          </Col>
+          {user && !user.loggedIn && (
+            <div className="place-bid-rw text-center w-100">
+              <Link
+                className="place-bid-btn btn btn-secondary"
+                to={`/login`}
+              >
+                Login
+                </Link>
+            </div>
+          )}
         </Row>
         <PlaceYourBidModal
           _isOpen={openModal}

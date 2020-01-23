@@ -128,7 +128,7 @@ const JobProduct = ({ product, listType, path }) => {
           <label className={"flex-fill m-0 " + (listType ? "order-2" : "")}>
             {product.jobtitle || ""}
           </label>
-          <span className="text-primary flex-shrink-0 ml-auto">
+          <span className="text-primary flex-shrink-0">
             {product.budget ? `$${product.budget}` : ""}
           </span>
         </div>
@@ -217,7 +217,7 @@ const JobProduct = ({ product, listType, path }) => {
           </label>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 
