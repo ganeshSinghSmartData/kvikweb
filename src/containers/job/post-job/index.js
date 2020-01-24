@@ -11,6 +11,7 @@ import {
   getJobDetails
 } from "./../../../actions/job";
 import SpinnerOverlay from "../../../components/commonUi/spinner/spinnerOverlay/spinnerOverlay";
+import ReviewJob from "../../../components/jobs/postJob/reviewJob/reviewJob";
 
 class PostNewJob extends Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class PostNewJob extends Component {
       selectedCategory: "",
       dataload: false,
       previewData: null,
+      openView: false
       // openPreview: false
     };
 
@@ -34,7 +36,6 @@ class PostNewJob extends Component {
   componentDidMount() {
     this.props.getJobCategory();
     if (this.props.match.params.job_id) {
-      console.log("90000000000000000000")
       this.props.getJobDetails(this.props.match.params.job_id);
       this.setState({ pathname: "/edit-job" });
     } else {
@@ -54,8 +55,9 @@ class PostNewJob extends Component {
     let categories = this.props.category;
     if (currentstage !== 3) {
       this.handleStageChange(1);
-      if (currentstage === 2) this.setPreviewData(jobData);
+      // if (currentstage === 2) this.setPreviewData(jobData);
     } else {
+      this.setState({ openView: true });
       let formData = new FormData();
       this.setState({ dataload: true });
       console.log("startDate", startDate);
@@ -143,7 +145,13 @@ class PostNewJob extends Component {
   _getPagesNumber(numb) {
     this.setState({ stage: numb });
   }
+  closePrevieModal = index => {
+    this.setState({ openView: false });
+  };
   render() {
+    let props = {
+      closePrevieModal: this.closePrevieModal.bind(this)
+    }
     return (
       <React.Fragment>
         {this.state.pathname === "/post-job" && (
@@ -191,6 +199,20 @@ class PostNewJob extends Component {
           ) : (
               <SpinnerOverlay className="position-fixed" />
             ))}
+        {this.state.openView ?
+          <ReviewJob
+            _jobDetails={this.state.previewData}
+            _selectedCategory={this.state.selectedCategory !== ""
+              ? this.state.selectedCategory
+              : this.props.jobDetails.category}
+            CategoryItems={this.props.category}
+            closePrevieModal={" "}
+            images={""}
+            pagesCount={this._getPagesNumber}
+            {...props}
+          />
+          : null
+        }
       </React.Fragment>
     );
   }

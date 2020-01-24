@@ -121,6 +121,7 @@ export default ({
   const _openPreviewData = index => {
     setOpenView(true);
   };
+
   const closePrevieModal = index => {
     setOpenView(false);
   };
@@ -446,7 +447,7 @@ export default ({
               className="text-black btn-dark cancel btn btn-link"
               to={"/"}
             >
-              CANCEL
+              Cancel
               </Link>
           )}
           {_currentstage !== 1 && (
@@ -458,12 +459,12 @@ export default ({
                 _handleStageChange(-1);
               }}
             >
-              BACK
+              Back
               </Button>
           )}
           {_currentstage !== 3 && (
             <Button type="submit" color="secondary">
-              NEXT
+              Next
               </Button>
           )}
           {_currentstage === 3 && (
@@ -481,8 +482,8 @@ export default ({
                 disabled={isImageLengthExist}
               >
                 {path == '/post-job' ?
-                  'POST NOW'
-                  : 'UPDATE JOB'}
+                  'Post Now'
+                  : 'Update Job'}
               </Button>
             </div>
           )}
