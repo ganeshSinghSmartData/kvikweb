@@ -103,7 +103,7 @@ export default function JobDetail({
     slidesToShow: 3,
     slidesToScroll: 1
   };
-
+  console.log("job", job)
   const handleSubmit = (values, rate = "") => {
     setModalLoading(true);
     if (values.frequency) {
@@ -220,7 +220,7 @@ export default function JobDetail({
     seImagePath(path);
     setImageModal(!ImageModal)
   }
-  console.log("job", job)
+
   return (
     <div className="job-detail-blc d-flex flex-column flex-fill">
       {_isLoading && <SpinnerOverlay className="position-fixed" />}
@@ -278,7 +278,7 @@ export default function JobDetail({
                 {(path === "/bid-details" || path === "/job-proposal") && (
                   <div className="bid_status_blc d-flex flex-wrap align-items-center">
                     <label className="mb-2 my-bid-rate mr-3 flex-fill">
-                      My Bid: $1500
+                      {/* {path === "/bid-details" ? 'My Bid: $1500' : ""} */}
                     </label>
                     <span
                       className={`mb-2 bid_status d-flex justify-content-center align-items-center ${classname}`}
@@ -559,28 +559,30 @@ export default function JobDetail({
                           />
                         </svg>
                       </span>
-                      <Countdown
-                        date={new Date().getTime() + Number(job.jobEndDate)}
-                        renderer={({ hours, minutes, seconds, completed }) => {
-                          if (!completed) {
-                            // let diff = datetimeDifference(new Date(), new Date(DaysBetween(AddOffset(+job.jobEndDate))));
-                            let diff = datetimeDifference(new Date, new Date(AddOffset(+job.jobEndDate)));
-                            return (
-                              <p>
-                                {/* {timeleft.months ? (
+                      {job && job.jobEndDate ?
+                        <Countdown
+                          date={new Date().getTime() + Number(job.jobEndDate)}
+                          renderer={({ hours, minutes, seconds, completed }) => {
+                            if (!completed) {
+                              // let diff = datetimeDifference(new Date(), new Date(DaysBetween(AddOffset(+job.jobEndDate))));
+                              let diff = datetimeDifference(new Date, new Date(AddOffset(+job.jobEndDate)));
+                              return (
+                                <p>
+                                  {/* {timeleft.months ? (
                                   <label>{`${timeleft.months} Months`}</label>
                                 ) : (
                                     ""
                                   )} */}
-                                <label>{`${diff.days} Days`}</label>
-                                <label>{`${diff.hours} Hours`}</label>
-                                <label>{`${diff.minutes} Mins`}</label>
-                                <label>{`${diff.seconds} Secs`}</label>
-                              </p>
-                            );
-                          }
-                        }}
-                      />
+                                  <label>{`${diff.days} Days`}</label>
+                                  <label>{`${diff.hours} Hours`}</label>
+                                  <label>{`${diff.minutes} Mins`}</label>
+                                  <label>{`${diff.seconds} Secs`}</label>
+                                </p>
+                              );
+                            }
+                          }}
+                        />
+                        : null}
                     </div>
                   </li>
                 </ul>
