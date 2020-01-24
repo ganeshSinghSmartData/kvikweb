@@ -12,7 +12,7 @@ export const ImageView = ({ ImageVisible = false, imageViewHandlerProp }) => {
                     Image Preview
                     <Button
                         color="link"
-                        className="close-btn btn2"
+                        className="close-btn btn2 flex-shrink-0"
                         onClick={toggle}
                     >
                         <svg
