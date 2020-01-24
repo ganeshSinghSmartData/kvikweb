@@ -11,6 +11,7 @@ import Paragraph from "../../components/commonUi/paragraph/paragraph";
 import { pagination } from "../../utilities/constants";
 import Spinner from "../commonUi/spinner/spinner"
 import NoData from "../commonUi/noData/noData";
+import SpinnerOverlay from "../commonUi/spinner/spinnerOverlay/spinnerOverlay";
 import "./jobs.scss";
 import { getJobProduct, reset_job_products } from "./../../actions/job";
 smoothscroll.polyfill();
@@ -42,9 +43,10 @@ const Job = ({
   };
 
   let jobs = useSelector(state => state.job);
+  const{ isFetching} = useSelector(state => state.loader);
   let bids = useSelector(state => state.bid);
-
   let products = [];
+  let newProductsArray=[];
   let count = 0;
   let active = "Active";
   let complete = "Complete";
@@ -53,31 +55,32 @@ const Job = ({
     active = `${active} Job`;
     complete = `${complete} Job`;
     if (jobType === "active") {
-      products = jobs.activeJobProduct;
+      newProductsArray = jobs.activeJobProduct;
       count = jobs.activeJobsCount;
     }
     if (jobType === "completed") {
-      products = jobs.completedJobProduct;
+      newProductsArray = jobs.completedJobProduct;
       count = jobs.completedJobsCount;
     }
   } else if (path === "/bid-list") {
     active = `${active} Bid`;
     complete = `${complete} Bid`;
     if (jobType === "active") {
-      products = bids.activeBid;
+      newProductsArray = bids.activeBid;
       count = bids.activeBidsCount;
     }
     if (jobType === "completed") {
-      products = bids.completedBid;
+      newProductsArray = bids.completedBid;
       count = bids.completedBidsCount;
     }
   } else {
 
 
 
-    products = jobs.jobProduct;
+    newProductsArray = jobs.jobProduct;
     count = jobs.count;
   }
+  products = newProductsArray.reverse();
   const showMoreProduct = page => {
     setPage(page);
     if (path === "/job-list") {
@@ -349,7 +352,7 @@ const Job = ({
                     }
                     <Button
                       color="link"
-                      className={"list-icon " + (listType ? "active" : "")}
+                      className={"list-icon listTypes " + (listType ? "active" : "")}
                       onClick={() => toggleListType(true)}
                     >
                       <svg
@@ -369,7 +372,7 @@ const Job = ({
                     </Button>
                     <Button
                       color="link"
-                      className={"list-icon " + (!listType ? "active" : "")}
+                      className={"list-icon listTypes " + (!listType ? "active" : "")}
                       onClick={() => toggleListType(false)}
                     >
                       <svg
@@ -393,8 +396,9 @@ const Job = ({
               <Row
                 className={"job-listing " + (listType ? "job-list-row" : "")}
               >
-                {products && products.length === 0 && <NoData />}
-                {products &&
+                {isFetching ? <SpinnerOverlay/> : null}
+                {!isFetching && products && products.length === 0 && <NoData />}
+                {!isFetching && products &&
                   products.map((item, key) => {
                     let prodItem = { ...item };
                     if (path === "/bid-list") {
@@ -411,7 +415,7 @@ const Job = ({
                     );
                   })}
               </Row>
-              {products && products.length !== 0 && products.length < count && (
+              {!isFetching && products && products.length !== 0 && products.length < count && (
                 <Row className="joblist-more">
                   <Col className="d-flex justify-content-center">
                     <Button
