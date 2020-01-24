@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import datetimeDifference from "datetime-difference";
 import Countdown from "react-countdown-now";
 
-import { StringToDate, DaysBetween } from "./../../../utilities/common";
+import { StringToDate, DaysBetween, AddOffset } from "./../../../utilities/common";
 import { apiUrl } from "./../../../environment";
 import { JobStatus, BidStatus } from "../../../utilities/constants";
 import { getJobBidCheck } from "./../../../actions/job";
@@ -195,26 +195,27 @@ const JobProduct = ({ product, listType, path }) => {
           </div>
         ) : null}
         <div className="job-time d-flex space-bet justify-content-between mt-auto">
+          <label className="d-flex flex-column text-left">
+            Date
+            <span>{StringToDate(product.jobStartDate)}</span>
+          </label>
           <label className="d-flex flex-column">
-            Time Left
+            Bidding ends in:
             {product && product.jobEndDate ?
               <Countdown
                 date={new Date().getTime() + Number(product.jobEndDate)}
                 renderer={({ hours, minutes, completed }) => {
                   if (!completed) {
-                    let diffTime = datetimeDifference(new Date(), new Date(DaysBetween(product.jobEndDate)));
+                    let diffTime = datetimeDifference(new Date(), new Date(AddOffset(+product.jobEndDate)));
                     return (
-                      < span > {`${diffTime.days}d ${diffTime.hours}h ${diffTime.minutes}m`}</span>
+                      < span style={{ color: "#00b700" }}> {`${diffTime.days}d ${diffTime.hours}h ${diffTime.minutes}m`}</span>
                     );
                   }
                 }}
               />
               : null}
           </label>
-          <label className="d-flex flex-column text-left">
-            Date
-            <span>{StringToDate(product.jobStartDate)}</span>
-          </label>
+
         </div>
       </div>
     </div >
