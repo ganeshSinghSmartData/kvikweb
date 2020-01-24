@@ -25,7 +25,7 @@ export const DaysBetween = (myDate) => {
 
 export const AddOffset = value => {
   let userOffset = new Date(value).getTimezoneOffset();
-  let userOffsetMilli = (userOffset * 60) / 1000;
+  let userOffsetMilli = (userOffset * 60) * 1000;
   let dateInMilli = moment(value).unix() * 1000;
   let dateInUtc = dateInMilli + userOffsetMilli;
   return dateInUtc;

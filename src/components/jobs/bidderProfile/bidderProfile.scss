@@ -27,28 +27,6 @@
       margin-left: 0 !important;
       max-width: none;
     }
-    .profile-bar {
-      width: 215px;
-      text-align: right;
-      @media (max-width: 767px) {
-        width: 100%;
-      }
-      .profile-percentage {
-        font-size: 16px;
-        font-weight: bold;
-      }
-      .progress {
-        height: 6px;
-        .progress-bar {
-          border-radius: 5px;
-        }
-      }
-      .profile-bar-txt {
-        font-weight: 300;
-        color: #000;
-        margin: 4px 0 0 0;
-      }
-    }
 
     .mark-btn {
       padding-top: 15px;

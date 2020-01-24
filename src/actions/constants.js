@@ -6,6 +6,7 @@
 
 /************ Loading *************/
 export const IS_FETCHING = "IS_FETCHING";
+export const MAIN_LOADER = "MAIN_LOADER";
 export const IS_STATUS = "IS_STATUS";
 
 /************ User *************/
@@ -17,6 +18,7 @@ export const GET_USER_DETAILS = "GET_USER_DETAILS";
 export const UPDATE_USER_DETAILS = "UPDATE_USER_DETAILS";
 export const UPDATE_USER_PROFILE = "UPDATE_USER_PROFILE";
 export const UPDATE_USER_IMAGE = "UPDATE_USER_IMAGE";
+export const UPDATE_CHAT_IMAGE = "UPDATE_CHAT_IMAGE";
 
 /************Bid*********************/
 export const BID_LIST = "BID_LIST";

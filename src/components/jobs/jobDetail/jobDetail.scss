@@ -181,6 +181,7 @@
     height: 330px;
     padding: 8px;
     border: 1px solid rgba(163, 163, 163, 0.4);
+    cursor: pointer;
     img {
       width: 100%;
       height: 100% !important;
@@ -230,7 +231,13 @@
 }
 
 .bid_status_blc {
-  margin: 0 0 20px 0;
+  margin: 0 0 26px 0;
+  border-bottom: 1px solid #eee;
+  .my-bid-rate {
+    font-size: 20px;
+    font-weight: 700;
+    color: $orange-200;
+  }
 }
 .bid-status-btns {
   margin: 15px 0 0;
@@ -252,21 +259,21 @@
   margin-right: 0;
 }
 @mixin danger-opacity($danger, $opacity: 1) {
-  background-color: $danger;
-  background-color: rgba($danger, $opacity);
+  background-color: transparent;
+  // background-color: rgba($danger, $opacity);
 }
 
 .bid_status {
   font-weight: 500;
-  padding: 6px 10px 6px 10px;
-  font-size: 16px;
+  font-size: 17px;
+  font-weight: 700;
   border: 1px solid #fff;
   border-radius: 5px;
   span {
     display: inline-block;
     width: 34px;
     height: 34px;
-    margin-right: 8px;
+    margin-right: 5px;
   }
   svg {
     width: 10px;
@@ -275,35 +282,42 @@
   }
 }
 .status-danger {
+  color: $danger;
   @include danger-opacity($danger, 0.15);
   span {
     background: $danger;
   }
 }
 .status-primary {
+  color: $primary;
   @include danger-opacity($primary, 0.15);
   span {
     background: $primary;
   }
 }
 .status-success {
+  color: $success;
   @include danger-opacity($success, 0.15);
   span {
     background: $success;
   }
 }
 .status-secondary {
+  color: $secondary;
   @include danger-opacity($secondary, 0.3);
   span {
     background: $secondary;
   }
 }
 .place-bid-rw {
-  margin-top: 20px;
+  margin-top: 40px;
+  @media (max-width: 767px) {
+    margin-top: 25px;
+  }
   .place-bid-btn {
     max-width: 327px;
     width: 100%;
-    color:#fff;
+    color: #fff;
   }
 }
 @media (max-width: 767px) {

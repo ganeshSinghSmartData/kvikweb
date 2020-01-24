@@ -25,16 +25,23 @@ const ReviewModal = (props) => {
         _selectedCategory,
         CategoryItems,
         closePrevieModal,
+        submitJobData,
         images,
         pagesCount
     } = props;
-
     const [modal, setModal] = useState(true);
 
     const toggle = () => {
         setModal(false);
         setTimeout(function () {
             closePrevieModal();
+        }, 300);
+    }
+
+    const saveJobData = () => {
+        setModal(false);
+        setTimeout(function () {
+            submitJobData();
         }, 300);
     }
 
@@ -77,7 +84,7 @@ const ReviewModal = (props) => {
             <Modal isOpen={modal} toggle={toggle} className="modal-lg job-review-modal d-flex flex-column align-items-center justify-content-center">
                 <ModalHeader>
                     View Job Details
-                    <Button
+                    {/* <Button
                         color="link"
                         className="close-btn btn2"
                         onClick={toggle}
@@ -94,7 +101,8 @@ const ReviewModal = (props) => {
                                 d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
                             />
                         </svg>
-                    </Button>
+                    </Button> */}
+                    <Button color="secondary" className="close-btn btn2" onClick={saveJobData}>Submit</Button>
                 </ModalHeader>
                 <ModalBody className="overflow-auto">
                     <LocalForm

@@ -21,7 +21,6 @@ export default function reducer(state = initialState, action) {
         case TYPE.MESSAGES_LIST:
             return { ...state, data: action.data.reverse() };
         case TYPE.GET_MESSAGE:
-            console.log("action.data", action.data);
             state.data.push(action.data);
             return state;
         case TYPE.MESSAGE_COUNT:
@@ -32,6 +31,11 @@ export default function reducer(state = initialState, action) {
             return { ...state, showChat: action.chat ? action.chat.toggle : false, chatId: action.chat ? action.chat.chatId : "" };
         case TYPE.LOGOUT_USERS:
             return initialState;
+        case TYPE.UPDATE_CHAT_IMAGE:
+            return {
+                ...state,
+                chatImage: action.data.image
+            };
         default:
             return state;
     }
