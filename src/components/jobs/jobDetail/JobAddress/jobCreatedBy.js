@@ -17,16 +17,16 @@ const JobCreatedBy = ({
     <div className="job-address d-flex">
       <Link to={`/bidder-profile/${job_seeker_id._id}/${jobStatus}`}
       >
-      <UserImage
-        image={job_seeker_id.image}
-        handleImageUpload={handleImageUpload}
-        edit={editimage}
-      />
+        <UserImage
+          image={job_seeker_id.image}
+          handleImageUpload={handleImageUpload}
+          edit={editimage}
+        />
       </Link>
       {job_seeker_id && (
         <div className="job-user-info flex-fill">
           <div className="job-user-rw d-flex flex-wrap">
-            <div className="job-user-r">  
+            <div className="job-user-r">
               <RatingBlock rating={job_seeker_id.average_rating} />
             </div>
           </div>

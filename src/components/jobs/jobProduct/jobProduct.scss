@@ -56,12 +56,12 @@
   }
 }
 .job-pic {
-  background: #f7f7f7;
+  // background: #f7f7f7;
   height: 250px;
   overflow: hidden;
   transition: all ease 0.3s 0s;
   a {
-    border: 1px solid #eee;
+    // border: 1px solid #eee;
     border-radius: 10px;
     overflow: hidden;
   }
@@ -114,8 +114,12 @@
   }
   .job-pic {
     width: 234px;
-    height: 175px;
+    height: auto;
     margin-right: 20px;
+    align-items: center;
+    a {
+      height: 150px;
+    }
   }
   .job-inner {
     flex: 1;
@@ -219,7 +223,7 @@
   width: 170px !important;
   opacity: 0.1;
   height: auto !important;
-  margin-bottom: 27px;
+  // margin-bottom: 27px;
 }
 .job-list-row {
   .no-job-image-blc img {

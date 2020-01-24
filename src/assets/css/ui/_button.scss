@@ -45,7 +45,7 @@
 }
 
 .btn-secondary {
-  @include secondary-gradient($orange, $orange-100);
+  @include secondary-gradient($orange-100, $orange);
   border: none;
   &:hover {
     @include secondary-gradient-hover($orange-hover, $orange-200);
@@ -122,8 +122,8 @@
 }
 
 .btn-dark {
-  background-color: $dark-default !important;
-  border-color: $dark-default !important;
+  background-color: $dark-default-light-200 !important;
+  border-color: $dark-default-light-200 !important;
 }
 
 .btn-dark {

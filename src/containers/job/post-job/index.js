@@ -22,7 +22,8 @@ class PostNewJob extends Component {
       selectedCategory: "",
       dataload: false,
       previewData: null,
-      openView: false
+      openView: false,
+      uploadedImages: []
       // openPreview: false
     };
 
@@ -31,6 +32,7 @@ class PostNewJob extends Component {
     this.handleStageChange = this.handleStageChange.bind(this);
     this.viewJob = this.viewJob.bind(this);
     this._getPagesNumber = this._getPagesNumber.bind(this);
+    this.submitJobData = this.submitJobData.bind(this);
   }
 
   componentDidMount() {
@@ -52,72 +54,17 @@ class PostNewJob extends Component {
     uploadedImages,
     currentstage
   ) {
-    let categories = this.props.category;
     if (currentstage !== 3) {
       this.handleStageChange(1);
-      // if (currentstage === 2) this.setPreviewData(jobData);
     } else {
-      this.setState({ openView: true });
-      let formData = new FormData();
-      this.setState({ dataload: true });
-      console.log("startDate", startDate);
-      const newStartDate = moment(startDate).format('YYYY-MM-DD hh:mm a');
-      // const newStartDate =
-      //   startdate.getFullYear() +
-      //   "-" +
-      //   (startdate.getMonth() + 1) +
-      //   "-" +
-      //   startdate.getDate() +
-      //   " " +
-      //   startdate.toLocaleTimeString("en-US");
-      const newEndDate = moment(endDate).format('YYYY-MM-DD hh:mm a');
-      // const newEndDate =
-      //   enddate.getFullYear() +
-      //   "-" +
-      //   (enddate.getMonth() + 1) +
-      //   "-" +
-      //   enddate.getDate() +
-      //   " " +
-      //   enddate.toLocaleTimeString("en-US");
-      console.log("newEndDate newEndDate ", newEndDate, newStartDate)
-      if (uploadedImages && uploadedImages.length !== 0) {
-        formData.append("saved_images", JSON.stringify(uploadedImages));
-      }
-      if (imageData && imageData.length !== 0) {
-        for (var key in imageData) {
-          if (!Number(imageData[key])) {
-            formData.append("file", imageData[key]);
-          }
-        }
-      }
-      formData.append("category", this.state.selectedCategory ? this.state.selectedCategory : categories && categories.length ? categories[0].title : "");
-      formData.append("jobtitle", jobData.jobtitle);
-      formData.append("description", jobData.description);
-      if (jobData.budget) {
-        formData.append("budget", jobData.budget);
-      }
-      formData.append("street", jobData.street);
-      formData.append("city", jobData.city);
-      formData.append("location", jobData.location);
-      formData.append("jobStartDate", newStartDate);
-      formData.append("jobEndDate", newEndDate);
-      formData.append("frequency", jobData.frequency);
-      if (this.state.pathname === "/post-job") {
-        this.props.createNewJob(formData, callback => {
-          if (callback) {
-            this.setState({ dataload: false });
-            this.props.history.push("/");
-          }
-        });
-      } else {
-        formData.append("job_id", this.props.match.params.job_id);
-        this.props.updateExistingJob(formData, callback => {
-          if (callback) {
-            this.setState({ dataload: false });
-            this.props.history.push("/job-list");
-          }
-        });
-      }
+      this.setState({
+        openView: true,
+        uploadedImages: uploadedImages,
+        previewData: jobData,
+        imageData: imageData,
+        startDate: startDate,
+        endDate: endDate
+      });
     }
   }
 
@@ -146,14 +93,84 @@ class PostNewJob extends Component {
     this.setState({ stage: numb });
   }
   closePrevieModal = index => {
-    this.setState({ openView: false });
+    this.setState({ openView: false, uploadedImages: [] });
+  };
+
+  submitJobData() {
+    let jobData = this.state.previewData;
+    let startDate = this.state.startDate;
+    let endDate = this.state.endDate;
+    let imageData = this.state.imageData;
+    let uploadedImages = this.state.uploadedImages;
+    let categories = this.props.category;
+    console.log("uploadedImages", uploadedImages, "imageData", imageData);
+    this.setState({ openView: false, uploadedImages: [] });
+    let formData = new FormData();
+    this.setState({ dataload: true });
+    const newStartDate = moment(startDate).format('YYYY-MM-DD hh:mm a');
+    const newEndDate = moment(endDate).format('YYYY-MM-DD hh:mm a');
+    if (uploadedImages && uploadedImages.length !== 0) {
+      formData.append("saved_images", JSON.stringify(uploadedImages));
+    }
+    if (imageData && imageData.length !== 0) {
+      for (var key in imageData) {
+        if (!Number(imageData[key])) {
+          formData.append("file", imageData[key]);
+        }
+      }
+    }
+    formData.append("category", this.state.selectedCategory ? this.state.selectedCategory : categories && categories.length ? categories[0].title : "");
+    formData.append("jobtitle", jobData.jobtitle);
+    formData.append("description", jobData.description);
+    if (jobData.budget) {
+      formData.append("budget", jobData.budget);
+    }
+    formData.append("street", jobData.street);
+    formData.append("city", jobData.city);
+    formData.append("location", jobData.location);
+    formData.append("jobStartDate", newStartDate);
+    formData.append("jobEndDate", newEndDate);
+    formData.append("frequency", jobData.frequency);
+    if (this.state.pathname === "/post-job") {
+      this.props.createNewJob(formData, callback => {
+        if (callback) {
+          this.setState({ dataload: false });
+          this.props.history.push("/");
+        }
+      });
+    } else {
+      formData.append("job_id", this.props.match.params.job_id);
+      this.props.updateExistingJob(formData, callback => {
+        if (callback) {
+          this.setState({ dataload: false });
+          this.props.history.push("/job-list");
+        }
+      });
+    }
   };
   render() {
-    let props = {
-      closePrevieModal: this.closePrevieModal.bind(this)
-    }
+    let CategoryItems = [];
+    this.props.category &&
+      this.props.category.length &&
+      this.props.category.map(item => {
+        if (item) {
+          CategoryItems.push({ name: item.title, value: item.title });
+        }
+      });
     return (
       <React.Fragment>
+        {this.state.openView ?
+          <ReviewJob
+            _jobDetails={this.state.previewData}
+            _selectedCategory={this.state.selectedCategory}
+            CategoryItems={CategoryItems}
+            closePrevieModal={this.closePrevieModal}
+            submitJobData={this.submitJobData}
+            images={this.state.uploadedImages}
+            pagesCount={this._getPagesNumber}
+          />
+          : null
+        }
         {this.state.pathname === "/post-job" && (
           <PostJob
             _currentstage={this.state.stage}
@@ -199,20 +216,6 @@ class PostNewJob extends Component {
           ) : (
               <SpinnerOverlay className="position-fixed" />
             ))}
-        {this.state.openView ?
-          <ReviewJob
-            _jobDetails={this.state.previewData}
-            _selectedCategory={this.state.selectedCategory !== ""
-              ? this.state.selectedCategory
-              : this.props.jobDetails.category}
-            CategoryItems={this.props.category}
-            closePrevieModal={" "}
-            images={""}
-            pagesCount={this._getPagesNumber}
-            {...props}
-          />
-          : null
-        }
       </React.Fragment>
     );
   }

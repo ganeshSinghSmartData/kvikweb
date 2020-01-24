@@ -82,7 +82,6 @@ const Chat = props => {
     props.chatHideCallback(false);
   };
   const handleImageUpload = (data) => {
-    console.log("data", data)
     let formData = new FormData();
     formData.append("images", data[0]);
     dispatch(uploadChatImage(formData, { recieverId: props.Id, senderId: user.data._id }));
@@ -147,10 +146,10 @@ const Chat = props => {
                       }
 
                           {/* media row  start*/ }
-                          {  val.type == "image" ?
-                      < div className="d-flex flex-wrap chat-row justify-content-end">
-                      <div className="user-media-cell user d-flex overflow-auto user">
-                        <div>
+                          {val.type == "image" ?
+                            <div className="d-flex flex-wrap chat-row justify-content-end">
+                      <div className="user-media-cell 001 user d-flex overflow-auto">
+                        <div className="user-media-cell-inner">
                           <div className="user-media-pic position-relative flex-shrink-0">
                             {imageLoader ? <Spinner /> : null}
                             <Button color="link" className="p-0 rounded-0" onClick={() => closeimageViewHandlerViewChat(`${apiUrl}/${val.path}`)}>
@@ -181,8 +180,8 @@ const Chat = props => {
               {/* media row  start*/}
               {val.type == "image" ?
                 <div className="d-flex flex-wrap chat-row">
-                  <div className="user-media-cell user d-flex overflow-auto admin">
-                    <div>
+                  <div className="user-media-cell 002 d-flex overflow-auto admin">
+                    <div className="user-media-cell-inner">
                       <div className="user-media-pic position-relative flex-shrink-0">
                         {imageLoader ? <Spinner /> : null}
                         <Button color="link" className="p-0 rounded-0" onClick={() => closeimageViewHandlerViewChat(`${apiUrl}/${val.path}`)}>

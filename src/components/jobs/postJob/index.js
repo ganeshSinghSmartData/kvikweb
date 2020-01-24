@@ -34,8 +34,8 @@ export default ({
     _jobDetails && _jobDetails.images ? _jobDetails.images : []
   );
   const [imageData, setImageData] = useState({});
+  console.log("imageData", imageData);
   let { job } = useSelector(state => state);
-
   const dispatch = useDispatch();
   useEffect(() => {
     if (!job.category || job.category.length === 0) {
@@ -178,7 +178,7 @@ export default ({
               startDate,
               endDate,
               imageData,
-              uploadedImages,
+              images,
               _currentstage
             )
           }
@@ -469,13 +469,13 @@ export default ({
           )}
           {_currentstage === 3 && (
             <div>
-              <Button
+              {/* <Button
                 color="secondary"
                 disabled={isImageLengthExist}
                 onClick={_openPreviewData}
               >
                 View Job
-              </Button>
+              </Button> */}
               <Button
                 color="secondary"
                 type="submit"
