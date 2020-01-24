@@ -244,7 +244,7 @@ export default function JobDetail({
                   alt="Job Post User"
                   onClick={() => closeimageViewHandlerViewChat(`${apiUrl}/${job.images[imageIndex]["original"]}`)}
                 />
-               
+
               ) : (
                   <img
                     src={require("../../../assets/images/icons/no-job-icon3.svg")}
@@ -276,9 +276,12 @@ export default function JobDetail({
             <div className="job-detail-tp">
               <div className="job-detail-hd">
                 {(path === "/bid-details" || path === "/job-proposal") && (
-                  <div className="bid_status_blc">
+                  <div className="bid_status_blc d-flex flex-wrap align-items-center">
+                    <label className="mb-2 my-bid-rate mr-3 flex-fill">
+                      My Bid: $1500
+                    </label>
                     <span
-                      className={`bid_status d-flex justify-content-center align-items-center ${classname}`}
+                      className={`mb-2 bid_status d-flex justify-content-center align-items-center ${classname}`}
                     >
                       <span className="rounded-circle d-flex justify-content-center align-items-center">
                         <svg
@@ -616,7 +619,7 @@ export default function JobDetail({
                 )}
               </div>
             </div>
-            <JobCreatedBy job_seeker_id={job.job_seeker_id} jobStatus={job.status}/>
+            <JobCreatedBy job_seeker_id={job.job_seeker_id} jobStatus={job.status} />
 
             {/* {path !== "/bid-details" &&
               path !== "/job-proposal" &&
@@ -704,7 +707,7 @@ export default function JobDetail({
           _handleSubmit={handleSubmit}
           history={history}
         />
-        { (path === "/job-proposal" || path === "/job-details") &&
+        {(path === "/job-proposal" || path === "/job-details") &&
           job && job.job_seeker_id && user && user.data && user.data._id == job.job_seeker_id._id &&
           job.bidersLIstingcheck.length !== 0 && (
             <div className="proposal-blc flex-shrink-0">
