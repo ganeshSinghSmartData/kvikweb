@@ -7,6 +7,7 @@ import { toastAction } from "../../../actions/toast-actions";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { ImageView } from '../bidderProfile/chat/ImageView/ImageView';
 
 import "./jobDetail.scss";
 import "slick-carousel/slick/slick.css";
@@ -55,7 +56,8 @@ export default function JobDetail({
   } else {
     workStatus = JobStatus;
   }
-
+  const [imagePath, seImagePath] = useState("");
+  const [ImageModal, setImageModal] = useState(false)
   const [imageIndex, setImageIndex] = useState(0);
   const [openModal, setOpenModal] = useState(false);
   const [confirmStartModal, setConfirmStartModal] = useState(
@@ -209,9 +211,20 @@ export default function JobDetail({
     }
   }
 
+  const imageViewHandler = () => {
+    seImagePath("");
+    setImageModal(!ImageModal)
+  }
+
+  const closeimageViewHandlerViewChat = (path) => {
+    seImagePath(path);
+    setImageModal(!ImageModal)
+  }
+  console.log("job", job)
   return (
     <div className="job-detail-blc d-flex flex-column flex-fill">
       {_isLoading && <SpinnerOverlay className="position-fixed" />}
+      <ImageView imagePath={imagePath} ImageVisible={ImageModal} imageViewHandlerProp={imageViewHandler} />
       <div className="job-detail-hd d-flex align-items-center">
         <h2 className="flex-fill">Job Details</h2>
         <Breadcrumb path={path} />
@@ -225,10 +238,13 @@ export default function JobDetail({
                 <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" />
               )}
               {apiUrl && job.images && job.images.length !== 0 ? (
+
                 <img
                   src={`${apiUrl}/${job.images[imageIndex]["original"]}`}
                   alt="Job Post User"
+                  onClick={() => closeimageViewHandlerViewChat(`${apiUrl}/${job.images[imageIndex]["original"]}`)}
                 />
+               
               ) : (
                   <img
                     src={require("../../../assets/images/icons/no-job-icon3.svg")}
@@ -600,7 +616,7 @@ export default function JobDetail({
                 )}
               </div>
             </div>
-            <JobCreatedBy job_seeker_id={job.job_seeker_id} />
+            <JobCreatedBy job_seeker_id={job.job_seeker_id} jobStatus={job.status}/>
 
             {/* {path !== "/bid-details" &&
               path !== "/job-proposal" &&
@@ -688,8 +704,8 @@ export default function JobDetail({
           _handleSubmit={handleSubmit}
           history={history}
         />
-        {path === "/job-proposal" &&
-          job &&
+        { (path === "/job-proposal" || path === "/job-details") &&
+          job && job.job_seeker_id && user && user.data && user.data._id == job.job_seeker_id._id &&
           job.bidersLIstingcheck.length !== 0 && (
             <div className="proposal-blc flex-shrink-0">
               <h4>PROPOSALS</h4>

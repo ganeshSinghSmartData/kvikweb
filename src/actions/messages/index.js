@@ -7,6 +7,8 @@ import * as TYPE from "../constants";
 import ApiClient from "../../api-client";
 import { apiUrl } from "../../environment";
 import { toastAction, toastErrorAction } from "../toast-actions";
+import SocketClient from "../../config/socket";
+import { SEND_MESSAGE } from "../constants";
 
 //**** Thunk Action Creators For Api ****//
 export const is_fetching = status => ({ type: TYPE.IS_FETCHING, status });
@@ -14,6 +16,7 @@ export const list = data => ({ type: TYPE.MESSAGES_LIST, data });
 export const get_message = data => ({ type: TYPE.GET_MESSAGE, data });
 export const message_count = data => ({ type: TYPE.MESSAGE_COUNT, data });
 export const chat_users = data => ({ type: TYPE.CHAT_USERS, data });
+export const update_chat_image = data => ({ type: TYPE.UPDATE_CHAT_IMAGE, data });
 
 
 /****** action creator for reset message list ********/
@@ -82,5 +85,25 @@ export const notifications = (params, callback) => {
         dispatch(is_fetching(false));
       }
     });
+  };
+};
+
+/****** action creator for upload chat picture ********/
+export const uploadChatImage = (params, data, callback) => {
+  return (dispatch, getState) => {
+    const {
+      data: { token }
+    } = getState().user;
+    ApiClient._postFormData(`${apiUrl}/commonImageUpload`, params, token).then(
+      response => {
+        SocketClient.eventHandler(SEND_MESSAGE, {
+          type: "image",
+          message: 'Image',
+          recieverId: data.recieverId,
+          senderId: data.senderId,
+          path: response.imagepath && response.imagepath.original ? response.imagepath.original : ""
+        });
+      }
+    );
   };
 };

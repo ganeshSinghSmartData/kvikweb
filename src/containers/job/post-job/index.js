@@ -34,6 +34,7 @@ class PostNewJob extends Component {
   componentDidMount() {
     this.props.getJobCategory();
     if (this.props.match.params.job_id) {
+      console.log("90000000000000000000")
       this.props.getJobDetails(this.props.match.params.job_id);
       this.setState({ pathname: "/edit-job" });
     } else {

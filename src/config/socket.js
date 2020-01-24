@@ -60,20 +60,31 @@ class SocketClient {
         }
         break;
       case TYPE.SEND_MESSAGE:
-        console.log("data.recieverId data.recieverId sockets>> ", data)
         if (this.socket) {
-          this.socket.emit(`${data.senderId}-send_message`, {
-            recieverId: data.recieverId, // message reciever
-            senderId: data.senderId, // your id
-            type: "text", // text/image
-            message: data.message
-          });
+          if (data && data.type == "text") {
+            this.socket.emit(`${data.senderId}-send_message`, {
+              recieverId: data.recieverId, // message reciever
+              senderId: data.senderId, // your id
+              type: "text", // text/image
+              message: data.message
+            });
+          }
+          if (data && data.type == "image") {
+
+            this.socket.emit(`${data.senderId}-send_message`, {
+              recieverId: data.recieverId, // message reciever
+              senderId: data.senderId, // your id
+              type: "image", // text/image
+              message: 'image',
+              path: data.path
+            });
+          }
         }
       case TYPE.GET_MESSAGE:
-        console.log("454545454", data)
         if (this.socket) {
+          this.dispatch(get_message(data));
+          this.dispatch(messages_count());
           this.socket.on(`${data.senderId}-get_message`, res => {
-            console.log("res", res);
             this.dispatch(get_message(res));
             this.dispatch(messages_count());
           });

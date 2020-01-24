@@ -14,6 +14,7 @@ import { contactUs } from "./../../actions/common";
 import SpinnerOverlay from "../../components/commonUi/spinner/spinnerOverlay/spinnerOverlay";
 import { socketUrl } from "../../environment";
 import SocketClient from "../../config/socket";
+import { toastAction } from "../../actions/toast-actions";
 
 class Home extends Component {
   constructor(props) {
@@ -49,11 +50,14 @@ class Home extends Component {
       });
     } else if (values.message) {
       this.props.contactUs(values, callback => {
+        console.log("values, callback", values, callback);
         if (callback) {
+           toastAction(true, "Your message has sent to the admin successfully");
           this.setState({ isLoading: false });
           this.props.history.push("/");
         } else {
           this.setState({ isLoading: false });
+          toastAction(false, "Error while sending message to the admin");
           this.props.history.push("/");
         }
       });
