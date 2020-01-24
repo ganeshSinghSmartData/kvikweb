@@ -102,9 +102,9 @@ export const getJobDetails = job_id => {
 export const getJobBidCheck = job_id => {
   return (dispatch, getState) => {
     const {
-      data: { token }
+      data: { token, _id }
     } = getState().user;
-    ApiClient.get(`${apiUrl}/bid/check_user_bid/${job_id}`, {}, token).then(response => {
+    ApiClient.get(`${apiUrl}/bid/check_user_bid/${job_id}/${_id}`, {}, token).then(response => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(get_job_bid_check(response.data));
@@ -174,15 +174,18 @@ export const placeYourBid = (params, callback) => {
       data: { token }
     } = getState().user;
     ApiClient.post(`${apiUrl}/bid/post_bid`, params, token).then(response => {
+      console.log("response", response);
       if (response.status === 200) {
         dispatch(is_fetching(false));
         // dispatch(post_job_products(response.data));
         toastAction(true, response.msg);
         callback(true);
       } else if (response.status === 402) {
+        dispatch(is_fetching(false));
         callback(false);
         toastAction(false, response.msg);
       } else {
+        dispatch(is_fetching(false));
         callback(false);
         toastErrorAction(dispatch, response.msg);
       }
