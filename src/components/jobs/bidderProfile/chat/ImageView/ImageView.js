@@ -3,11 +3,11 @@ import { Modal, ModalHeader, ModalBody, Button } from "reactstrap";
 import Spinner from "../../../../commonUi/spinner/spinner";
 import "./ImageView.scss";
 
-export const ImageView = ({ ImageVisible = false, imageViewHandlerProp }) => {
+export const ImageView = ({ ImageVisible = false, imageViewHandlerProp, imagePath = "" }) => {
     const toggle = () => imageViewHandlerProp(!ImageVisible);
     return (
         <>
-            <Modal isOpen={ImageVisible} toggle={toggle} className="image-view-mdl align-items-center justify-content-center d-flex flex-column">
+            <Modal isOpen={ImageVisible} toggle={toggle} className="image-view-mdl align-items-center justify-content-center d-flex flex-column modal-lg">
                 <ModalHeader>
                     Image Preview
                     <Button
@@ -29,10 +29,10 @@ export const ImageView = ({ ImageVisible = false, imageViewHandlerProp }) => {
                         </svg>
                     </Button>
                 </ModalHeader>
-                <ModalBody>
+                <ModalBody className="overflow-auto">
                     <>
-                        <Spinner />
-                        <img src={require('../../../../../assets/images/joblist/image1.jpg')} alt="File Preview" />
+                        {/* <Spinner /> */}
+                        <img src={imagePath} alt="File Preview" />
                     </>
                 </ModalBody>
             </Modal>

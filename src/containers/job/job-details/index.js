@@ -96,7 +96,7 @@ class JobDetails extends Component {
     const params = this.props.match.params.job_id;
     if (params) {
       if (this.props.match.path.includes("/job-details")) {
-        this.props.getJobDetails(params);
+        this.props.getUserJobDetails({ jobId: params });
         this.setState({ pathname: "/job-details" });
       }
       if (this.props.match.path.includes("/bid-details")) {
@@ -112,21 +112,21 @@ class JobDetails extends Component {
   }
 
   render() {
-    let jobDetails = {};
-    if (Object.keys(this.props.jobDetails).length) {
-      jobDetails = this.props.jobDetails;
+    let userJobDetails = {};
+    if (Object.keys(this.props.userJobDetails).length) {
+      userJobDetails = this.props.userJobDetails;
     }
     if (this.props.match.path.includes("/bid-details")) {
       if (Object.keys(this.props.userJobDetails).length) {
-        jobDetails = this.props.userJobDetails;
+        userJobDetails = this.props.userJobDetails;
       }
     }
     console.log("jobs", this.props.jobs);
     return (
       <React.Fragment>
-        {Object.keys(jobDetails).length ? (
+        {Object.keys(userJobDetails).length ? (
           <JobDetail
-            job={jobDetails}
+            job={userJobDetails}
             history={this.props.history}
             path={this.state.pathname}
             _startJob={(jobId, jobSeekerId, userId) =>

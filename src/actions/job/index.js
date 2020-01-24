@@ -59,6 +59,7 @@ export const getJobProduct = ({
   sort = ""
 }) => {
   return dispatch => {
+    dispatch(is_fetching(true));
     const skip = (page - 1) * pagination.limit;
     ApiClient.get(
       `${apiUrl}/api/job_listing?lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${
@@ -72,6 +73,7 @@ export const getJobProduct = ({
         dispatch(is_fetching(false));
         dispatch(get_job_products(response));
       } else if (response.status === 401) {
+        dispatch(is_fetching(false));
         // toastErrorAction(dispatch, response.message);
       } else {
         dispatch(is_fetching(false));
@@ -84,6 +86,7 @@ export const getJobProduct = ({
 export const getJobDetails = job_id => {
   return dispatch => {
     ApiClient.get(`${apiUrl}/api/job_detail/${job_id}`, {}).then(response => {
+      console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrr", response)
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(get_job_details(response.data));

@@ -39,6 +39,7 @@ export const getBidList = (params, callback) => {
 export const getUserBidDetails = (params, callback) => {
   return dispatch => {
     ApiClient.post(`${apiUrl}/bid/user_job_detail`, params).then(response => {
+      console.log("response11111111111111111", response)
       if (response.status === 200) {
         dispatch(bid_details(response));
         callback(true);

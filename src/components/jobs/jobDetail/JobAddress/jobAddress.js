@@ -43,6 +43,7 @@ const JobAddress = ({
               </h4>
             </div>
             <div className="job-user-r">
+              {console.log(job_seeker_id.average_rating, "111111111111111")}
               <RatingBlock rating={job_seeker_id.average_rating} />
             </div>
           </div>

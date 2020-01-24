@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Input, FormGroup } from "reactstrap";
 import "./chat.scss";
-import { messages_list, toggleChat } from "../../../../actions/messages";
+import { messages_list, toggleChat, uploadChatImage, get_message } from "../../../../actions/messages";
 import { LocalForm, Control } from "react-redux-form";
 import SocketClient from "../../../../config/socket";
 import { SEND_MESSAGE, GET_MESSAGE } from "../../../../actions/constants";
@@ -11,6 +11,7 @@ import { css } from "glamor";
 import Spinner from "../../../commonUi/spinner/spinner";
 import { ImageView } from './ImageView/ImageView';
 import moment from "moment";
+import { apiUrl } from "../../../../environment";
 
 const ROOT_CSS = css({
   height: 400,
@@ -19,8 +20,9 @@ const ROOT_CSS = css({
 let chatId = "";
 let messagesEnd = null;
 const Chat = props => {
-  console.log("props", props);
   const [message, setMessage] = useState("");
+  const [imagePath, seImagePath] = useState("");
+  const [imageLoader, setImageLoader] = useState(true);
   const user = useSelector(state => state.user);
   const messages = useSelector(state => state.messages);
   const dispatch = useDispatch();
@@ -45,6 +47,12 @@ const Chat = props => {
 
   const [ImageModal, setImageModal] = useState(false)
   const imageViewHandler = () => {
+    seImagePath("");
+    setImageModal(!ImageModal)
+  }
+
+  const closeimageViewHandlerViewChat = (path) => {
+    seImagePath(path);
     setImageModal(!ImageModal)
   }
   /*********************** Handle message input ************************************** */
@@ -61,9 +69,10 @@ const Chat = props => {
       SocketClient.eventHandler(SEND_MESSAGE, {
         message: message,
         recieverId: props.Id,
-        senderId: user.data._id
+        senderId: user.data._id,
+        type: "text",
       });
-    console.log("props.Id", props.Id, "user.data._id", user.data._id);
+
     setMessage("");
     scrollToBottom()
     dispatch(messages_list({ id: props.Id, limit: 10, skip: 0 }));
@@ -72,10 +81,18 @@ const Chat = props => {
   const chatHide = () => {
     props.chatHideCallback(false);
   };
-
+  const handleImageUpload = (data) => {
+    console.log("data", data)
+    let formData = new FormData();
+    formData.append("images", data[0]);
+    dispatch(uploadChatImage(formData, { recieverId: props.Id, senderId: user.data._id }));
+  };
+  const chatLoader = () => {
+    setImageLoader(false);
+  };
   return (
     <>
-      <ImageView ImageVisible={ImageModal} imageViewHandlerProp={imageViewHandler} />
+      <ImageView imagePath={imagePath} ImageVisible={ImageModal} imageViewHandlerProp={imageViewHandler} />
       <div
         className={`chat-block d-flex flex-column ${
           props.chatToggle ? "on" : ""
@@ -109,7 +126,7 @@ const Chat = props => {
         </div>
         <div className="chat-inner overflow-auto flex-fill position-relative chat-no-data">
           <>
-            <Spinner />
+            {/* <Spinner /> */}
             <ScrollToBottom>
               {displayMessages &&
                 displayMessages.length > 0 &&
@@ -118,166 +135,66 @@ const Chat = props => {
                     <React.Fragment key={index}>
                       {val.senderId == user.data._id ? (
                         <>
-                          <div className="chat-row d-flex justify-content-end">
-                            <div ref={(el) => { messagesEnd = el; }} className="chat-txt user">
-                              <p>{val.message}</p>
-                              <span className="d-block chat-time">09:20PM</span>
-                            </div>
-                          </div>
+                          {
+                            val.type == "text" ?
+                              <div className="chat-row d-flex justify-content-end">
+                                <div ref={(el) => { messagesEnd = el; }} className="chat-txt user">
+                                  <p>{val.message}</p>
+                                  <span className="d-block chat-time">{moment(val.createdAt).format("LT")}</span>
+                                </div>
+                              </div>
+                              : null
+                          }
 
                           {/* media row  start*/}
-                          <div className="d-flex flex-wrap chat-row justify-content-end">
-                            <div className="user-media-cell user d-flex overflow-auto user">
-                              <div>
-                                <div className="user-media-pic position-relative flex-shrink-0">
-                                  {/* <Spinner /> */}
-                                  <Button color="link" className="p-0 rounded-0" onClick={imageViewHandler}>
-                                    <img src={require('../../../../assets/images/job-gallery/1.jpg')} alt="Media File" />
-                                  </Button>
+                          {val.type == "image" ?
+                            <div className="d-flex flex-wrap chat-row justify-content-end">
+                              <div className="user-media-cell 001 user d-flex overflow-auto">
+                                <div className="user-media-cell-inner">
+                                  <div className="user-media-pic position-relative flex-shrink-0">
+                                    {imageLoader ? <Spinner /> : null}
+                                    <Button color="link" className="p-0 rounded-0" onClick={() => closeimageViewHandlerViewChat(`${apiUrl}/${val.path}`)}>
+
+                                      <img src={`${apiUrl}/${val.path}`} onLoad={(e) => chatLoader(e)} alt="Media File" />
+                                    </Button>
+                                  </div>
+                                  <span className="d-block chat-time">{moment(val.createdAt).format("LT")}</span>
                                 </div>
-                                <span className="d-block chat-time">09:20PM</span>
                               </div>
-                              {/* exttra code */}
-                              <div>
-                                <div className="user-media-pic position-relative flex-shrink-0">
-                                  {/* <Spinner /> */}
-                                  <Button color="link" className="p-0 rounded-0" onClick={imageViewHandler}>
-                                    <img src={require('../../../../assets/images/job-gallery/1.jpg')} alt="Media File" />
-                                  </Button>
-                                </div>
-                                <span className="d-block chat-time">09:20PM</span>
-                              </div>
-                              <div>
-                                <div className="user-media-pic position-relative flex-shrink-0">
-                                  {/* <Spinner /> */}
-                                  <Button color="link" className="p-0 rounded-0" onClick={imageViewHandler}>
-                                    <img src={require('../../../../assets/images/job-gallery/1.jpg')} alt="Media File" />
-                                  </Button>
-                                </div>
-                                <span className="d-block chat-time">09:20PM</span>
-                              </div>
-                              <div>
-                                <div className="user-media-pic position-relative flex-shrink-0">
-                                  {/* <Spinner /> */}
-                                  <Button color="link" className="p-0 rounded-0" onClick={imageViewHandler}>
-                                    <img src={require('../../../../assets/images/job-gallery/1.jpg')} alt="Media File" />
-                                  </Button>
-                                </div>
-                                <span className="d-block chat-time">09:20PM</span>
-                              </div>
-                              <div>
-                                <div className="user-media-pic position-relative flex-shrink-0">
-                                  {/* <Spinner /> */}
-                                  <Button color="link" className="p-0 rounded-0" onClick={imageViewHandler}>
-                                    <img src={require('../../../../assets/images/job-gallery/1.jpg')} alt="Media File" />
-                                  </Button>
-                                </div>
-                                <span className="d-block chat-time">09:20PM</span>
-                              </div>
-                              <div>
-                                <div className="user-media-pic position-relative flex-shrink-0">
-                                  {/* <Spinner /> */}
-                                  <Button color="link" className="p-0 rounded-0" onClick={imageViewHandler}>
-                                    <img src={require('../../../../assets/images/job-gallery/1.jpg')} alt="Media File" />
-                                  </Button>
-                                </div>
-                                <span className="d-block chat-time">09:20PM</span>
-                              </div>
-                              <div>
-                                <div className="user-media-pic position-relative flex-shrink-0">
-                                  {/* <Spinner /> */}
-                                  <Button color="link" className="p-0 rounded-0" onClick={imageViewHandler}>
-                                    <img src={require('../../../../assets/images/job-gallery/1.jpg')} alt="Media File" />
-                                  </Button>
-                                </div>
-                                <span className="d-block chat-time">09:20PM</span>
-                              </div>
-                              {/* exttra code */}
                             </div>
-                          </div>
+                            : null}
                           {/* media row  end*/}
                         </>
                       ) : (
                           <>
-                            <div className="chat-row d-flex">
-                              <div ref={(el) => { messagesEnd = el; }} className="chat-txt admin">
-                                <p>{val.message}</p>
-                                <span className="d-block chat-time">
-                                  {moment(val.createdAt).format("LT")}
-                                </span>
+                            {val.type == "text" ?
+                              <div className="chat-row d-flex">
+                                <div ref={(el) => { messagesEnd = el; }} className="chat-txt admin">
+                                  <p>{val.message}</p>
+                                  <span className="d-block chat-time">
+                                    {moment(val.createdAt).format("LT")}
+                                  </span>
+                                </div>
                               </div>
-                            </div>
+                              : null}
 
                             {/* media row  start*/}
-                            <div className="d-flex flex-wrap chat-row">
-                              <div className="user-media-cell user d-flex overflow-auto admin">
-                                <div>
-                                  <div className="user-media-pic position-relative flex-shrink-0">
-                                    {/* <Spinner /> */}
-                                    <Button color="link" className="p-0 rounded-0" onClick={imageViewHandler}>
-                                      <img src={require('../../../../assets/images/job-gallery/1.jpg')} alt="Media File" />
-                                    </Button>
+                            {val.type == "image" ?
+                              <div className="d-flex flex-wrap chat-row">
+                                <div className="user-media-cell 002 d-flex overflow-auto admin">
+                                  <div className="user-media-cell-inner">
+                                    <div className="user-media-pic position-relative flex-shrink-0">
+                                      {imageLoader ? <Spinner /> : null}
+                                      <Button color="link" className="p-0 rounded-0" onClick={() => closeimageViewHandlerViewChat(`${apiUrl}/${val.path}`)}>
+                                        <img src={`${apiUrl}/${val.path}`} onLoad={(e) => chatLoader(e)} alt="Media File" />
+                                      </Button>
+                                    </div>
+                                    <span className="d-block chat-time">{moment(val.createdAt).format("LT")}</span>
                                   </div>
-                                  <span className="d-block chat-time">09:20PM</span>
+
                                 </div>
-                                {/* exttra code */}
-                                <div>
-                                  <div className="user-media-pic position-relative flex-shrink-0">
-                                    {/* <Spinner /> */}
-                                    <Button color="link" className="p-0 rounded-0" onClick={imageViewHandler}>
-                                      <img src={require('../../../../assets/images/job-gallery/1.jpg')} alt="Media File" />
-                                    </Button>
-                                  </div>
-                                  <span className="d-block chat-time">09:20PM</span>
-                                </div>
-                                <div>
-                                  <div className="user-media-pic position-relative flex-shrink-0">
-                                    {/* <Spinner /> */}
-                                    <Button color="link" className="p-0 rounded-0" onClick={imageViewHandler}>
-                                      <img src={require('../../../../assets/images/job-gallery/1.jpg')} alt="Media File" />
-                                    </Button>
-                                  </div>
-                                  <span className="d-block chat-time">09:20PM</span>
-                                </div>
-                                <div>
-                                  <div className="user-media-pic position-relative flex-shrink-0">
-                                    {/* <Spinner /> */}
-                                    <Button color="link" className="p-0 rounded-0" onClick={imageViewHandler}>
-                                      <img src={require('../../../../assets/images/job-gallery/1.jpg')} alt="Media File" />
-                                    </Button>
-                                  </div>
-                                  <span className="d-block chat-time">09:20PM</span>
-                                </div>
-                                <div>
-                                  <div className="user-media-pic position-relative flex-shrink-0">
-                                    {/* <Spinner /> */}
-                                    <Button color="link" className="p-0 rounded-0" onClick={imageViewHandler}>
-                                      <img src={require('../../../../assets/images/job-gallery/1.jpg')} alt="Media File" />
-                                    </Button>
-                                  </div>
-                                  <span className="d-block chat-time">09:20PM</span>
-                                </div>
-                                <div>
-                                  <div className="user-media-pic position-relative flex-shrink-0">
-                                    {/* <Spinner /> */}
-                                    <Button color="link" className="p-0 rounded-0" onClick={imageViewHandler}>
-                                      <img src={require('../../../../assets/images/job-gallery/1.jpg')} alt="Media File" />
-                                    </Button>
-                                  </div>
-                                  <span className="d-block chat-time">09:20PM</span>
-                                </div>
-                                <div>
-                                  <div className="user-media-pic position-relative flex-shrink-0">
-                                    {/* <Spinner /> */}
-                                    <Button color="link" className="p-0 rounded-0" onClick={imageViewHandler}>
-                                      <img src={require('../../../../assets/images/job-gallery/1.jpg')} alt="Media File" />
-                                    </Button>
-                                  </div>
-                                  <span className="d-block chat-time">09:20PM</span>
-                                </div>
-                                {/* exttra code */}
                               </div>
-                            </div>
+                              : null}
                             {/* media row end*/}
                           </>
                         )}
@@ -310,7 +227,7 @@ const Chat = props => {
                 color="link"
                 className="rounded-circle p-0 attach-btn svg-seconary-100-hover position-relative"
               >
-                <Input type="file" name="file" className="position-absolute" />
+                <Input type="file" name="file" className="position-absolute" onChange={event => handleImageUpload(event.target.files)} />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="36.307"
@@ -349,7 +266,7 @@ const Chat = props => {
             </div>
           </LocalForm>
         </div>
-      </div>
+      </div >
     </>
   );
 };

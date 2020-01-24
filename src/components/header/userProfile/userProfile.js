@@ -258,14 +258,14 @@ const UserProfile = props => {
           </Link>
         </DropdownMenu>
       </Dropdown>
-
-      <Chat
-        Id={recieverID}
-        chatToggle={chatVisible}
-        chatHideCallback={value => chatHideCallback(value)}
-        recieversName={bidersName}
-      />
-
+      {chatVisible ?
+        <Chat
+          Id={recieverID}
+          chatToggle={chatVisible}
+          chatHideCallback={value => chatHideCallback(value)}
+          recieversName={bidersName}
+        />
+        : null}
       <Modal isOpen={openMetrics} toggle={openMetricsModal} className="metric-modal modal-lg d-flex flex-column align-items-center justify-content-center">
         <ModalHeader>
           User Metrics
