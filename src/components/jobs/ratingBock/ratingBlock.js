@@ -3,7 +3,6 @@ import Rating from "./rating/rating";
 import "./ratingBlock.scss";
 
 const RatingBlock = ({ rating = 1, ratingClick, disablestar = true }) => {
-  console.log("rating", rating);
   const [ratingVal, setRatingVal] = useState(rating);
   return (
     <div className="rating-blc d-flex align-items-start bidder">

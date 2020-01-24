@@ -4,11 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import datetimeDifference from "datetime-difference";
 import Countdown from "react-countdown-now";
 
-import { StringToDate, DaysBetween, AddOffset } from "./../../../utilities/common";
+import { StringToDate, DaysBetween } from "./../../../utilities/common";
 import { apiUrl } from "./../../../environment";
 import { JobStatus, BidStatus } from "../../../utilities/constants";
 import { getJobBidCheck } from "./../../../actions/job";
-import Spinner from "../../commonUi/spinner/spinner";
 
 import "./jobProduct.scss";
 
@@ -18,8 +17,6 @@ const JobProduct = ({ product, listType, path }) => {
   const [timeleft, seTimeleft] = useState(
     datetimeDifference(new Date(), new Date(DaysBetween(product.jobEndDate)))
   );
-
-  const [setLoader, setLoaderFalse] = useState(true);
 
   var intervalId = setInterval(() => {
     const time = datetimeDifference(
@@ -95,14 +92,13 @@ const JobProduct = ({ product, listType, path }) => {
           to={`${pathname}${product._id}`}
           onClick={() => jobDetails(product._id)}
         >
-          {setLoader ? <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" />: null }
+          {/* <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" /> */}
           {product.images && product.images.length !== 0 ? (
-            <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" onLoad={()=>setLoaderFalse(false)}/>
+            <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />
           ) : (
               <img
                 src={require("../../../assets/images/icons/no-job-icon3.svg")}
                 alt="Job"
-                onLoad={()=>setLoaderFalse(false)}
               />
             )}
           {path === "/bid-list" && (
@@ -132,7 +128,7 @@ const JobProduct = ({ product, listType, path }) => {
           <label className={"flex-fill m-0 " + (listType ? "order-2" : "")}>
             {product.jobtitle || ""}
           </label>
-          <span className="text-primary flex-shrink-0">
+          <span className="text-primary flex-shrink-0 ml-auto">
             {product.budget ? `$${product.budget}` : ""}
           </span>
         </div>
@@ -206,7 +202,7 @@ const JobProduct = ({ product, listType, path }) => {
                 date={new Date().getTime() + Number(product.jobEndDate)}
                 renderer={({ hours, minutes, completed }) => {
                   if (!completed) {
-                    let diffTime = datetimeDifference(new Date, new Date(AddOffset(+product.jobEndDate)));
+                    let diffTime = datetimeDifference(new Date(), new Date(DaysBetween(product.jobEndDate)));
                     return (
                       < span > {`${diffTime.days}d ${diffTime.hours}h ${diffTime.minutes}m`}</span>
                     );
@@ -221,7 +217,7 @@ const JobProduct = ({ product, listType, path }) => {
           </label>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

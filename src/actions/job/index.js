@@ -56,7 +56,7 @@ export const getJobProduct = ({
   long = "",
   lat = "",
   category = [],
-  sort = ""
+  sort = {}
 }) => {
   return dispatch => {
     dispatch(is_fetching(true));
@@ -86,7 +86,6 @@ export const getJobProduct = ({
 export const getJobDetails = job_id => {
   return dispatch => {
     ApiClient.get(`${apiUrl}/api/job_detail/${job_id}`, {}).then(response => {
-      console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrr", response)
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(get_job_details(response.data));
