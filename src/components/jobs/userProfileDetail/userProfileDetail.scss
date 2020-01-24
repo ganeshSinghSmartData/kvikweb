@@ -25,7 +25,12 @@
     }
   }
 }
-
+.progress.user-profile {
+  margin: 0 0 20px 0;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 40px;
+}
 .user-profl-l {
   .job-address {
     margin-top: 0;
@@ -43,7 +48,6 @@
   .edit-btn {
     background-color: #fff;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-    min-width: 106px;
     font-size: 12px;
     font-weight: 300;
     span {
@@ -300,6 +304,9 @@
       }
     }
   }
+}
+.user-profile-bar {
+  margin-bottom: 20px;
 }
 // devloper css start
 .StripeElement {
