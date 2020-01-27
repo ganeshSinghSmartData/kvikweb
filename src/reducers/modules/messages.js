@@ -21,7 +21,6 @@ export default function reducer(state = initialState, action) {
         case TYPE.MESSAGES_LIST:
             return { ...state, data: action.data.reverse() };
         case TYPE.GET_MESSAGE:
-            console.log("11111111111111")
             state.data.push(action.data);
             return state;
         case TYPE.MESSAGE_COUNT:

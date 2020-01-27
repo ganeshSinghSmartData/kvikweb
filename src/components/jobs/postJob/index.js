@@ -34,8 +34,8 @@ export default ({
     _jobDetails && _jobDetails.images ? _jobDetails.images : []
   );
   const [imageData, setImageData] = useState({});
+  console.log("imageData", imageData);
   let { job } = useSelector(state => state);
-
   const dispatch = useDispatch();
   useEffect(() => {
     if (!job.category || job.category.length === 0) {
@@ -121,6 +121,7 @@ export default ({
   const _openPreviewData = index => {
     setOpenView(true);
   };
+
   const closePrevieModal = index => {
     setOpenView(false);
   };
@@ -177,7 +178,7 @@ export default ({
               startDate,
               endDate,
               imageData,
-              uploadedImages,
+              images,
               _currentstage
             )
           }
@@ -446,7 +447,7 @@ export default ({
               className="text-black btn-dark cancel btn btn-link"
               to={"/"}
             >
-              CANCEL
+              Cancel
               </Link>
           )}
           {_currentstage !== 1 && (
@@ -458,31 +459,31 @@ export default ({
                 _handleStageChange(-1);
               }}
             >
-              BACK
+              Back
               </Button>
           )}
           {_currentstage !== 3 && (
             <Button type="submit" color="secondary">
-              NEXT
+              Next
               </Button>
           )}
           {_currentstage === 3 && (
             <div>
-              <Button
+              {/* <Button
                 color="secondary"
                 disabled={isImageLengthExist}
                 onClick={_openPreviewData}
               >
                 View Job
-              </Button>
+              </Button> */}
               <Button
                 color="secondary"
                 type="submit"
                 disabled={isImageLengthExist}
               >
                 {path == '/post-job' ?
-                  'POST NOW'
-                  : 'UPDATE JOB'}
+                  'Post Now'
+                  : 'Update Job'}
               </Button>
             </div>
           )}

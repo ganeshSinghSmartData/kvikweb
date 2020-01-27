@@ -43,10 +43,9 @@ const Job = ({
   };
 
   let jobs = useSelector(state => state.job);
-  const{ isFetching} = useSelector(state => state.loader);
+  const { isFetching } = useSelector(state => state.loader);
   let bids = useSelector(state => state.bid);
   let products = [];
-  let newProductsArray=[];
   let count = 0;
   let active = "Active";
   let complete = "Complete";
@@ -55,32 +54,31 @@ const Job = ({
     active = `${active} Job`;
     complete = `${complete} Job`;
     if (jobType === "active") {
-      newProductsArray = jobs.activeJobProduct;
+      products = jobs.activeJobProduct;
       count = jobs.activeJobsCount;
     }
     if (jobType === "completed") {
-      newProductsArray = jobs.completedJobProduct;
+      products = jobs.completedJobProduct;
       count = jobs.completedJobsCount;
     }
   } else if (path === "/bid-list") {
     active = `${active} Bid`;
     complete = `${complete} Bid`;
     if (jobType === "active") {
-      newProductsArray = bids.activeBid;
+      products = bids.activeBid;
       count = bids.activeBidsCount;
     }
     if (jobType === "completed") {
-      newProductsArray = bids.completedBid;
+      products = bids.completedBid;
       count = bids.completedBidsCount;
     }
   } else {
 
 
 
-    newProductsArray = jobs.jobProduct;
+    products = jobs.jobProduct;
     count = jobs.count;
   }
-  products = newProductsArray.reverse();
   const showMoreProduct = page => {
     setPage(page);
     if (path === "/job-list") {
@@ -257,10 +255,7 @@ const Job = ({
                   Welcome to QvikTask
                 </Heading>
                 <Paragraph>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Pellentesque leo ipsum, consequat a tellus pharetra, commodo
-                  bibendum dui. In rhoncus lacus ut justo lacinia, id tempus
-                  ligula convallis.
+                  Our objective is to provide a platform where service providers and service seeker can come interact and exchange services on the bases of requirements.
                 </Paragraph>
               </React.Fragment>
             )}
@@ -329,22 +324,22 @@ const Job = ({
                           </svg>
                         </DropdownToggle>
                         <DropdownMenu right className="overflow-auto">
-                          <DropdownItem onClick={() => sortBy({ budget: 1 })}>
+                          <DropdownItem onClick={() => sortBy({ budget: -1 })}>
                             Budget -  high to low
                         </DropdownItem>
-                          <DropdownItem onClick={() => sortBy({ budget: -1 })}>
+                          <DropdownItem onClick={() => sortBy({ budget: 1 })}>
                             Budget -  low to high
                         </DropdownItem>
-                          <DropdownItem onClick={() => sortBy({ created_at: 1 })}>
+                          <DropdownItem onClick={() => sortBy({ created_at: -1 })}>
                             Create Date
                         </DropdownItem>
                           <DropdownItem onClick={() => sortBy({ jobtitle: 1 })}>
                             Title (a-z)
                         </DropdownItem>
-                          <DropdownItem onClick={() => sortBy({ jobStartDate: 1 })}>
+                          <DropdownItem onClick={() => sortBy({ jobStartDate: -1 })}>
                             Job Start Date
                         </DropdownItem>
-                          <DropdownItem onClick={() => sortBy({ jobEndDate: 1 })}>
+                          <DropdownItem onClick={() => sortBy({ jobEndDate: -1 })}>
                             Bid Deadline Date
                         </DropdownItem>
                         </DropdownMenu>
@@ -396,7 +391,7 @@ const Job = ({
               <Row
                 className={"job-listing " + (listType ? "job-list-row" : "")}
               >
-                {isFetching ? <SpinnerOverlay/> : null}
+                {isFetching ? <SpinnerOverlay /> : null}
                 {!isFetching && products && products.length === 0 && <NoData />}
                 {!isFetching && products &&
                   products.map((item, key) => {
