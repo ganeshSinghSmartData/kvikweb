@@ -431,9 +431,44 @@ const UserProfile = ({
             {!isEdit && <UserInfo description={user.about} />}
             <div className="bidder-profl-rw bidder-profile-desc bidder-profile-l-padd">
               <h3>Skills</h3>
-              <p>
-                Dummy text is text that is used in the publishing industry or by web designers to occupy the space which will later be filled with 'real' content. This is required when, for example, the final text is not yet available.
-              </p>
+              <div className="skils-blc">
+               <span>
+               Laundry Service
+               </span>
+               <span>
+               Painting
+               </span>
+               <span>
+               Gardening
+               </span>
+               <span>
+               Laundry Service
+               </span>
+               <span>
+               Painting
+               </span>
+               <span>
+               Gardening
+               </span>
+               <span>
+               Laundry Service
+               </span>
+               <span>
+               Painting
+               </span>
+               <span>
+               Gardening
+               </span>
+               <span>
+               Laundry Service
+               </span>
+               <span>
+               Painting
+               </span>
+               <span>
+               Gardening
+               </span>
+              </div>
             </div>
           </div>
           <UserPayment />
