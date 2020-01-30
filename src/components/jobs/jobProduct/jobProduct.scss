@@ -34,9 +34,16 @@
 }
 .job-time {
   padding-top: 22px;
+  .job-time-icn {
+    display: none;
+  }
 }
 .job-location {
   padding: 12px 0 0;
+  span {
+    width: 15px;
+    margin: 0 5px 0 0;
+  }
   label {
     margin-top: 2px;
   }
@@ -64,6 +71,7 @@
     // border: 1px solid #eee;
     border-radius: 10px;
     overflow: hidden;
+    background: #f3f3f3;
   }
   img {
     width: 100%;
@@ -85,7 +93,7 @@
   font-size: 12px;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.5);
-  span {
+  span:not(.job-time-icn) {
     color: #000;
     line-height: 1;
     margin-top: 3px;
@@ -95,7 +103,15 @@
   svg {
     width: 13px;
     height: 18px;
-    margin: 0 5px 0 0;
+  }
+}
+.job-status-rw {
+  font-size: 12px;
+  border-top: 1px solid #ddd;
+  margin: 10px -16px -10px;
+  padding: 6px 16px 6px;
+  label {
+    margin: 0 10px 0 0;
   }
 }
 // List row style start
@@ -119,17 +135,19 @@
     align-items: center;
     a {
       height: 150px;
+      background-color: transparent;
     }
   }
   .job-inner {
     flex: 1;
+    padding-right: 16px;
   }
   .job-title {
     padding-left: 0;
     padding-top: 0;
     line-height: 1;
     span {
-      margin-right: initial !important;
+      margin-left: initial !important;
       font-size: 27px;
       margin-bottom: 18px;
     }
@@ -143,24 +161,32 @@
     color: #24231f;
     justify-content: flex-start !important;
     margin-top: initial !important;
-    padding-left: 6px;
-    span {
+    padding: 0;
+    span:not(.job-time-icn) {
       padding-top: 5px;
       font-weight: 500;
       color: #24231f;
     }
-    label {
+    .job-time-icn {
+      margin-right: 14px;
+      svg {
+        width: 15px;
+        fill: $secondary-100;
+      }
+    }
+    .job-time-col {
       width: 44%;
-      border-left: 1px solid #24231f;
-      padding-left: 20px;
       line-height: 1;
+    }
+    .job-time-icn {
+      display: block;
     }
   }
   .job-location {
     font-weight: 300;
     color: #24231f;
     margin-bottom: 10px;
-    svg {
+    span {
       margin-right: 14px;
     }
   }
@@ -169,6 +195,10 @@
     font-weight: 300;
     margin-left: 27px;
     color: #24231f;
+  }
+  .job-status-rw {
+    margin: 10px 0 0;
+    padding: 6px 0 0;
   }
 }
 
@@ -184,7 +214,6 @@
   padding: 3px 10px;
   border-radius: 0 0 10px 10px;
 }
-
 // Bid has been accepted
 .job-primary-bar {
   @include color-opacity($primary, 0.1);
@@ -219,21 +248,22 @@
   right: 0;
 }
 
-.no-job-image-blc img {
-  width: 170px !important;
-  opacity: 0.1;
-  height: auto !important;
-  // margin-bottom: 27px;
+.no-job-image-blc {
+  img {
+    width: 140px !important;
+    opacity: 0.8;
+    height: auto !important;
+  }
 }
 .job-list-row {
   .no-job-image-blc img {
-    max-width: 130px !important;
+    max-width: 110px !important;
   }
 }
 .no-jobdetail-image img {
   max-width: 220px !important;
   width: 100% !important;
-  opacity: 0.1;
+  opacity: 0.8;
   height: auto !important;
   margin-bottom: 0;
 }
@@ -261,9 +291,6 @@
     }
     .job-title {
       padding-left: 0;
-    }
-    .job-time {
-      padding: 0 0 0 6px;
     }
   }
 }

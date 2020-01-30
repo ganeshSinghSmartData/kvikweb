@@ -102,7 +102,10 @@ const ReviewModal = (props) => {
                             />
                         </svg>
                     </Button> */}
-                    <Button color="secondary" className="close-btn btn2" onClick={saveJobData}>Submit</Button>
+                    {/* <Button color="secondary" className="close-btn btn2" onClick={saveJobData}>Submit</Button> */}
+                    <Button color="secondary" className="review-job-btn ml-auto" onClick={saveJobData}>
+                        Submit
+                    </Button>
                 </ModalHeader>
                 <ModalBody className="overflow-auto">
                     <LocalForm
