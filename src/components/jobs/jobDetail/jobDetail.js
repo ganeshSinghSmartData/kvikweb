@@ -44,11 +44,12 @@ export default function JobDetail({
   history,
   job = {},
   path = "",
-  _deleteJob,
-  _startJob,
-  _endJob,
+  _deleteJob=()=>{},
+  _startJob=()=>{},
+  _endJob=()=>{},
   _isLoading = false,
-  _isStatusLoading = false
+  _isStatusLoading = false,
+  hideHeader=false
 }) {
   let workStatus = {};
   if (path === "/bid-details") {
@@ -66,17 +67,12 @@ export default function JobDetail({
       : false
   );
 
-  const [rateBidder, setRateBidder] = useState(false);
-
-  const [imageLoad, setImageLoad] = useState(false);
-  const [isModalLoading, setModalLoading] = useState(false);
-
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
   const { jobBidCheck = null } = useSelector(state => state.job);
   const thmbnails = [];
   let [timeleft, seTimeleft] = useState(
-    datetimeDifference(new Date(), new Date(DaysBetween(job.jobEndDate)))
+    datetimeDifference(new Date(), new Date(DaysBetween(job.jobEndDate|| job.endDate)))
   );
   /*   setInterval(() => {
     const time = datetimeDifference(
@@ -105,7 +101,7 @@ export default function JobDetail({
   };
   console.log("job", job)
   const handleSubmit = (values, rate = "") => {
-    setModalLoading(true);
+    // setModalLoading(true);
     if (values.frequency) {
       const reqData = {
         jobtitle: job.jobtitle,
@@ -119,12 +115,12 @@ export default function JobDetail({
       dispatch(
         placeYourBid(reqData, callback => {
           if (callback) {
-            setModalLoading(false);
+            // setModalLoading(false);
             setOpenModal(!openModal);
             history.push("/bid-list");
           } else {
             setOpenModal(!openModal);
-            setModalLoading(false);
+            // setModalLoading(false);
           }
         })
       );
@@ -148,18 +144,18 @@ export default function JobDetail({
               dispatch(
                 addBidderReview(reqData, callback => {
                   if (callback) {
-                    setModalLoading(false);
+                    // setModalLoading(false);
                     setOpenModal(!openModal);
                     history.push("/job-list");
                   } else {
                     setOpenModal(!openModal);
-                    setModalLoading(false);
+                    // setModalLoading(false);
                   }
                 })
               );
             } else {
               setOpenModal(!openModal);
-              setModalLoading(false);
+              // setModalLoading(false);
               history.push("/job-list");
             }
           }
@@ -225,18 +221,18 @@ export default function JobDetail({
     <div className="job-detail-blc d-flex flex-column flex-fill">
       {_isLoading && <SpinnerOverlay className="position-fixed" />}
       <ImageView imagePath={imagePath} ImageVisible={ImageModal} imageViewHandlerProp={imageViewHandler} />
-      <div className="job-detail-hd d-flex align-items-center">
+      {!hideHeader && <div className="job-detail-hd d-flex align-items-center">
         <h2 className="flex-fill">Job Details</h2>
         <Breadcrumb path={path} />
-      </div>
+      </div>}
 
       <div className="job-detail-inner d-flex flex-column flex-fill overflow-auto">
         <Row className="job-detail-rw row flex-shrink-0">
           <Col md="4" className="job-detail-pic-col">
             <div className={`job-detail-pic position-relative ${noImageClass}`}>
-              {imageLoad && (
+              {/* {imageLoad && (
                 <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" />
-              )}
+              )} */}
               {apiUrl && job.images && job.images.length !== 0 ? (
 
                 <img
@@ -308,7 +304,7 @@ export default function JobDetail({
                   <div className="job-detail-hd-col d-flex flex-column flex-fill flex-wrap">
                     <h3 className="text-primary">{job.jobtitle}</h3>
                     <p className="m-0 w-100">
-                      Job starts on: {dateTime(job.jobStartDate)}
+                      Job starts on: {dateTime(job.jobStartDate|| job.startDate)}
                     </p>
                     {path === "/job-proposal" && job.status === "not_started" && (
                       <div className="job-edit-btns d-flex">
@@ -380,7 +376,7 @@ export default function JobDetail({
                         <Button
                           color="secondary"
                           onClick={() => {
-                            setRateBidder(!rateBidder);
+                            // setRateBidder(!rateBidder);
                           }}
                         >
                           Mark as Done
@@ -479,7 +475,7 @@ export default function JobDetail({
                       <p>{job.job_seeker_id["email"]}</p>
                     </li>
                   )}
-                  {job["jobStartDate"] && (
+                  {job["jobStartDate"||"startDate"] && (
                     <li className="d-flex">
                       <span className="svg-secondary-100 flex-shrink-0">
                         <svg
@@ -495,7 +491,7 @@ export default function JobDetail({
                           />
                         </svg>
                       </span>
-                      <p>{StringToDate(job["jobStartDate"])}</p>
+                      <p>{StringToDate(job["jobStartDate"||"startDate"])}</p>
                     </li>
                   )}
                   {job["phone"] && (
@@ -559,13 +555,13 @@ export default function JobDetail({
                           />
                         </svg>
                       </span>
-                      {job && job.jobEndDate ?
+                      {job && ( job.jobEndDate || job.endDate) ?
                         <Countdown
-                          date={new Date().getTime() + Number(job.jobEndDate)}
+                          date={new Date().getTime() + Number(job.jobEndDate|| job.endDate)}
                           renderer={({ hours, minutes, seconds, completed }) => {
                             if (!completed) {
                               // let diff = datetimeDifference(new Date(), new Date(DaysBetween(AddOffset(+job.jobEndDate))));
-                              let diff = datetimeDifference(new Date, new Date(AddOffset(+job.jobEndDate)));
+                              let diff = datetimeDifference(new Date, new Date(AddOffset(+job.jobEndDate|| job.endDate)));
                               return (
                                 <p>
                                   {/* {timeleft.months ? (
@@ -683,7 +679,7 @@ export default function JobDetail({
           _modalType={"Place your bid"}
           _handleSubmit={handleSubmit}
           _frequency={job.frequency}
-          _loading={isModalLoading}
+          // _loading={isModalLoading}
         />
         <ConfirmJobStartModal
           _isOpen={confirmStartModal}
@@ -697,15 +693,15 @@ export default function JobDetail({
         />
 
         <RateBidderWorkModal
-          _isOpen={rateBidder}
-          _toggleModal={() => setRateBidder(!rateBidder)}
+          // _isOpen={rateBidder}
+          // _toggleModal={() => setRateBidder(!rateBidder)}
           _modalType={"Rate Bidder"}
           _bidderName={
             job.bidersLIstingcheck &&
             job.bidersLIstingcheck.length &&
             `${job.bidersLIstingcheck[0].job_provider_id.fname} ${job.bidersLIstingcheck[0].job_provider_id.lname}`
           }
-          _loading={isModalLoading}
+          // _loading={isModalLoading}
           _handleSubmit={handleSubmit}
           history={history}
         />

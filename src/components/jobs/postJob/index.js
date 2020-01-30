@@ -16,24 +16,27 @@ import InputCell from "../../commonUi/input/inputCell";
 import Loader from "../../../components/commonUi/loader/loader";
 import ReviewJob from "./reviewJob/reviewJob";
 
-export default ({
-  _jobDetails = {},
-  _currentstage,
-  _handleStageChange,
-  _handleJobPost,
-  _handleCategoryOnchange,
-  _selectedCategory,
-  dataload,
-  path,
-  previewData,
-  getPagesNumber
-}) => {
+export default (props) => {
+  let {
+    _jobDetails = {},
+    _currentstage,
+    _handleStageChange,
+    _handleJobPost,
+    _handleCategoryOnchange,
+    _selectedCategory,
+    dataload,
+    path,
+    previewData,
+    getPagesNumber
+  }=props;
   const [images, setImages] = useState([]);
   const [openView, setOpenView] = useState(false);
   const [uploadedImages, setUploadedImages] = useState(
     _jobDetails && _jobDetails.images ? _jobDetails.images : []
   );
   const [imageData, setImageData] = useState({});
+  console.log("inside postjob=======>",props,uploadedImages);
+
   console.log("imageData", imageData);
   let { job } = useSelector(state => state);
   const dispatch = useDispatch();
@@ -172,7 +175,12 @@ export default ({
       >
         <LocalForm
           initialState={_jobDetails}
-          onSubmit={values =>
+          onSubmit={values =>{
+            console.log("sending data to next page===>",values, startDate,
+            endDate,
+            imageData,
+            images,
+            _currentstage)
             _handleJobPost(
               values,
               startDate,
@@ -180,7 +188,7 @@ export default ({
               imageData,
               images,
               _currentstage
-            )
+            )}
           }
           getDispatch={dispatch => dispatch(actions.change(_jobDetails))}
         >
@@ -343,6 +351,8 @@ export default ({
                 {images &&
                   images.length > 0 &&
                   images.slice(0, 5).map((item, key) => {
+                    console.log("item here",item);
+                    
                     return (
                       <li key={key} className="position-relative">
                         <Button
@@ -369,6 +379,7 @@ export default ({
                   })}
                 {uploadedImages &&
                   uploadedImages.map((item, key) => {
+                    
                     return (
                       <li key={key} className="position-relative">
                         <Button
@@ -492,6 +503,7 @@ export default ({
     </div>
 {openView ?
     <ReviewJob
+    history={props.history}
       _jobDetails={previewData}
       _selectedCategory={_selectedCategory}
       CategoryItems={CategoryItems}
