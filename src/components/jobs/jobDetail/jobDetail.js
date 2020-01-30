@@ -7,7 +7,7 @@ import { toastAction } from "../../../actions/toast-actions";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import { ImageView } from '../bidderProfile/chat/ImageView/ImageView';
+import { ImageView } from "../bidderProfile/chat/ImageView/ImageView";
 
 import "./jobDetail.scss";
 import "slick-carousel/slick/slick.css";
@@ -44,12 +44,12 @@ export default function JobDetail({
   history,
   job = {},
   path = "",
-  _deleteJob=()=>{},
-  _startJob=()=>{},
-  _endJob=()=>{},
+  _deleteJob = () => {},
+  _startJob = () => {},
+  _endJob = () => {},
   _isLoading = false,
   _isStatusLoading = false,
-  hideHeader=false
+  hideHeader = false
 }) {
   let workStatus = {};
   if (path === "/bid-details") {
@@ -58,7 +58,7 @@ export default function JobDetail({
     workStatus = JobStatus;
   }
   const [imagePath, seImagePath] = useState("");
-  const [ImageModal, setImageModal] = useState(false)
+  const [ImageModal, setImageModal] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
   const [openModal, setOpenModal] = useState(false);
   const [confirmStartModal, setConfirmStartModal] = useState(
@@ -67,12 +67,15 @@ export default function JobDetail({
       : false
   );
 
-  const user = useSelector(state => state.user);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const { jobBidCheck = null } = useSelector(state => state.job);
+  const { jobBidCheck = null } = useSelector((state) => state.job);
   const thmbnails = [];
   let [timeleft, seTimeleft] = useState(
-    datetimeDifference(new Date(), new Date(DaysBetween(job.jobEndDate|| job.endDate)))
+    datetimeDifference(
+      new Date(),
+      new Date(DaysBetween(job.jobEndDate || job.endDate))
+    )
   );
   /*   setInterval(() => {
     const time = datetimeDifference(
@@ -83,7 +86,7 @@ export default function JobDetail({
   }, 1000); */
 
   job.images.length &&
-    job.images.map(item => {
+    job.images.map((item) => {
       const obj = {
         src: `${apiUrl}/${item.path}`,
         altText: "Slide 1",
@@ -99,7 +102,7 @@ export default function JobDetail({
     slidesToShow: 3,
     slidesToScroll: 1
   };
-  console.log("job", job)
+  console.log("job", job);
   const handleSubmit = (values, rate = "") => {
     // setModalLoading(true);
     if (values.frequency) {
@@ -113,7 +116,7 @@ export default function JobDetail({
         name: `${user.data.fname} ${user.data.lname}`
       };
       dispatch(
-        placeYourBid(reqData, callback => {
+        placeYourBid(reqData, (callback) => {
           if (callback) {
             // setModalLoading(false);
             setOpenModal(!openModal);
@@ -139,10 +142,10 @@ export default function JobDetail({
             job_provider_id: job.job_provider_id,
             job_id: job._id
           },
-          callback => {
+          (callback) => {
             if (callback) {
               dispatch(
-                addBidderReview(reqData, callback => {
+                addBidderReview(reqData, (callback) => {
                   if (callback) {
                     // setModalLoading(false);
                     setOpenModal(!openModal);
@@ -165,7 +168,7 @@ export default function JobDetail({
   };
 
   let classname = "";
-  const setJobStatus = status => {
+  const setJobStatus = (status) => {
     switch (status) {
       case "not_started":
         if (path === "/bid-details" && job.status === "not_started") {
@@ -199,32 +202,38 @@ export default function JobDetail({
       "d-flex justify-content-center justify-content-center no-jobdetail-image";
   }
 
-  const openBidForm = status => {
+  const openBidForm = (status) => {
     if (jobBidCheck) {
       toastAction(false, "You have already placed bid for this job");
     } else {
       setOpenModal(!openModal);
     }
-  }
+  };
 
   const imageViewHandler = () => {
     seImagePath("");
-    setImageModal(!ImageModal)
-  }
+    setImageModal(!ImageModal);
+  };
 
   const closeimageViewHandlerViewChat = (path) => {
     seImagePath(path);
-    setImageModal(!ImageModal)
-  }
+    setImageModal(!ImageModal);
+  };
 
   return (
     <div className="job-detail-blc d-flex flex-column flex-fill">
       {_isLoading && <SpinnerOverlay className="position-fixed" />}
-      <ImageView imagePath={imagePath} ImageVisible={ImageModal} imageViewHandlerProp={imageViewHandler} />
-      {!hideHeader && <div className="job-detail-hd d-flex align-items-center">
-        <h2 className="flex-fill">Job Details</h2>
-        <Breadcrumb path={path} />
-      </div>}
+      <ImageView
+        imagePath={imagePath}
+        ImageVisible={ImageModal}
+        imageViewHandlerProp={imageViewHandler}
+      />
+      {!hideHeader && (
+        <div className="job-detail-hd d-flex align-items-center">
+          <h2 className="flex-fill">Job Details</h2>
+          <Breadcrumb path={path} />
+        </div>
+      )}
 
       <div className="job-detail-inner d-flex flex-column flex-fill overflow-auto">
         <Row className="job-detail-rw row flex-shrink-0">
@@ -234,28 +243,30 @@ export default function JobDetail({
                 <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" />
               )} */}
               {apiUrl && job.images && job.images.length !== 0 ? (
-
                 <img
-                  src={`${apiUrl}/${job.images[imageIndex]["original"]}`}
+                  src={URL.createObjectURL(job.images[imageIndex])}
                   alt="Job Post User"
-                  onClick={() => closeimageViewHandlerViewChat(`${apiUrl}/${job.images[imageIndex]["original"]}`)}
+                  onClick={() =>
+                    closeimageViewHandlerViewChat(
+                      `${apiUrl}/${job.images[imageIndex]["original"]}`
+                    )
+                  }
                 />
-
               ) : (
-                  <img
-                    src={require("../../../assets/images/icons/no-job-icon3.svg")}
-                    alt="Job Post User"
-                  />
-                )}
+                <img
+                  src={require("../../../assets/images/icons/no-job-icon3.svg")}
+                  alt="Job Post User"
+                />
+              )}
             </div>
             <div className="d-flex justify-content-center">
               <div className="job-slider-track-inner">
                 {job.images && job.images.length !== 0 ? (
                   <Slider {...settings}>
-                    {thmbnails.map((item, key) => (
+                    {job.images.map((item, key) => (
                       <div key={key}>
                         <img
-                          src={item.src}
+                          src={URL.createObjectURL(item)}
                           alt="Job Post User"
                           onClick={() => setImageIndex(key)}
                         />
@@ -263,8 +274,8 @@ export default function JobDetail({
                     ))}
                   </Slider>
                 ) : (
-                    ""
-                  )}
+                  ""
+                )}
               </div>
             </div>
           </Col>
@@ -304,7 +315,8 @@ export default function JobDetail({
                   <div className="job-detail-hd-col d-flex flex-column flex-fill flex-wrap">
                     <h3 className="text-primary">{job.jobtitle}</h3>
                     <p className="m-0 w-100">
-                      Job starts on: {dateTime(job.jobStartDate|| job.startDate)}
+                      Job starts on:{" "}
+                      {dateTime(job.jobStartDate || job.startDate)}
                     </p>
                     {path === "/job-proposal" && job.status === "not_started" && (
                       <div className="job-edit-btns d-flex">
@@ -366,7 +378,7 @@ export default function JobDetail({
                     <label
                       className={`job-detail-amnt margin flex-shrink-0 ${
                         path === "/job-proposal" ? "" : ""
-                        }`}
+                      }`}
                     >
                       {job.budget ? `$${job.budget}` : ""}
                     </label>
@@ -475,7 +487,7 @@ export default function JobDetail({
                       <p>{job.job_seeker_id["email"]}</p>
                     </li>
                   )}
-                  {job["jobStartDate"||"startDate"] && (
+                  {job["jobStartDate" || "startDate"] && (
                     <li className="d-flex">
                       <span className="svg-secondary-100 flex-shrink-0">
                         <svg
@@ -491,7 +503,7 @@ export default function JobDetail({
                           />
                         </svg>
                       </span>
-                      <p>{StringToDate(job["jobStartDate"||"startDate"])}</p>
+                      <p>{StringToDate(job["jobStartDate" || "startDate"])}</p>
                     </li>
                   )}
                   {job["phone"] && (
@@ -555,13 +567,26 @@ export default function JobDetail({
                           />
                         </svg>
                       </span>
-                      {job && ( job.jobEndDate || job.endDate) ?
+                      {job && (job.jobEndDate || job.endDate) ? (
                         <Countdown
-                          date={new Date().getTime() + Number(job.jobEndDate|| job.endDate)}
-                          renderer={({ hours, minutes, seconds, completed }) => {
+                          date={
+                            new Date().getTime() +
+                            Number(job.jobEndDate || job.endDate)
+                          }
+                          renderer={({
+                            hours,
+                            minutes,
+                            seconds,
+                            completed
+                          }) => {
                             if (!completed) {
                               // let diff = datetimeDifference(new Date(), new Date(DaysBetween(AddOffset(+job.jobEndDate))));
-                              let diff = datetimeDifference(new Date, new Date(AddOffset(+job.jobEndDate|| job.endDate)));
+                              let diff = datetimeDifference(
+                                new Date(),
+                                new Date(
+                                  AddOffset(+job.jobEndDate || job.endDate)
+                                )
+                              );
                               return (
                                 <p>
                                   {/* {timeleft.months ? (
@@ -578,7 +603,7 @@ export default function JobDetail({
                             }
                           }}
                         />
-                        : null}
+                      ) : null}
                     </div>
                   </li>
                 </ul>
@@ -608,8 +633,18 @@ export default function JobDetail({
                     }
                   >
                     <span>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="78.775" height="57.775" viewBox="0 0 78.775 57.775">
-                        <path id="Forma_1" data-name="Forma 1" d="M78.564,8.73,29.722,57.567a1.1,1.1,0,0,1-1.556,0L.433,29.836a1.1,1.1,0,0,1,0-1.555l6.739-6.738a1.1,1.1,0,0,1,1.556,0L28.945,41.757,70.27.436a1.1,1.1,0,0,1,1.555,0l6.739,6.738A1.1,1.1,0,0,1,78.564,8.73Z" transform="translate(-0.111 -0.114)" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="78.775"
+                        height="57.775"
+                        viewBox="0 0 78.775 57.775"
+                      >
+                        <path
+                          id="Forma_1"
+                          data-name="Forma 1"
+                          d="M78.564,8.73,29.722,57.567a1.1,1.1,0,0,1-1.556,0L.433,29.836a1.1,1.1,0,0,1,0-1.555l6.739-6.738a1.1,1.1,0,0,1,1.556,0L28.945,41.757,70.27.436a1.1,1.1,0,0,1,1.555,0l6.739,6.738A1.1,1.1,0,0,1,78.564,8.73Z"
+                          transform="translate(-0.111 -0.114)"
+                        />
                       </svg>
                     </span>
                     Mark as Complete
@@ -617,7 +652,10 @@ export default function JobDetail({
                 )}
               </div>
             </div>
-            <JobCreatedBy job_seeker_id={job.job_seeker_id} jobStatus={job.status} />
+            <JobCreatedBy
+              job_seeker_id={job.job_seeker_id}
+              jobStatus={job.status}
+            />
 
             {/* {path !== "/bid-details" &&
               path !== "/job-proposal" &&
@@ -655,21 +693,20 @@ export default function JobDetail({
                 <Button
                   size="lg"
                   color="link"
-                  className={`${jobBidCheck ? 'btn-dark' : "btn-secondary"} place-bid-btn`}
+                  className={`${
+                    jobBidCheck ? "btn-dark" : "btn-secondary"
+                  } place-bid-btn`}
                   onClick={() => openBidForm()}
                 >
                   Place a Bid
-                  </Button>
+                </Button>
               </div>
             )}
           {user && !user.loggedIn && (
             <div className="place-bid-rw text-center w-100">
-              <Link
-                className="place-bid-btn btn btn-secondary"
-                to={`/login`}
-              >
+              <Link className="place-bid-btn btn btn-secondary" to={`/login`}>
                 Login
-                </Link>
+              </Link>
             </div>
           )}
         </Row>
@@ -706,7 +743,11 @@ export default function JobDetail({
           history={history}
         />
         {(path === "/job-proposal" || path === "/job-details") &&
-          job && job.job_seeker_id && user && user.data && user.data._id == job.job_seeker_id._id &&
+          job &&
+          job.job_seeker_id &&
+          user &&
+          user.data &&
+          user.data._id == job.job_seeker_id._id &&
           job.bidersLIstingcheck.length !== 0 && (
             <div className="proposal-blc flex-shrink-0">
               <h4>PROPOSALS</h4>
@@ -719,7 +760,7 @@ export default function JobDetail({
                     history={history}
                     isclick={
                       job.status === "not_started" ||
-                        job.status === "not_accepted"
+                      job.status === "not_accepted"
                         ? true
                         : false
                     }
