@@ -11,7 +11,8 @@ const UserImage = ({
   handleImageUpload,
   imegeUploading,
   edit = false,
-  path
+  path,
+  className
 }) => {
   let imagepath = DummyUserImage;
   if (image && image.length !== 0) {
@@ -20,9 +21,12 @@ const UserImage = ({
 
   return (
     <div
-      className={`job-user rounded-circle border-secondary-200 d-flex align-items-center justify-content-center flex-shrink-0 position-relative ${
+      className={`job-user rounded-circle border-secondary-200 d-flex align-items-center justify-content-center flex-shrink-0 position-relative 
+      ${
         path ? "hidden" : ""
-        }`}
+        }
+        ${className}
+        `}
     >
       {edit && (
         <div className="update-cell position-absolute w-100 h-100">

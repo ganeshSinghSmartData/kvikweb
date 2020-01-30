@@ -18,8 +18,10 @@
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(139, 141, 144, 0.25);
   cursor: pointer;
+  transition: all ease 0.3s 0s;
+  transform: scale(1);
   &:hover {
-    background: #fafafa;
+    box-shadow: 0 0 15px rgba(139, 141, 144, 0.5);
   }
 }
 .proposal-col-l,

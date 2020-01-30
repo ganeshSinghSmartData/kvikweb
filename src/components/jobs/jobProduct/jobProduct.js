@@ -97,7 +97,7 @@ const JobProduct = ({ product, listType, path }) => {
             <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />
           ) : (
               <img
-                src={require("../../../assets/images/icons/no-job-icon3.svg")}
+                src={require("../../../assets/images/icons/default-job-image.svg")}
                 alt="Job"
               />
             )}
@@ -195,30 +195,59 @@ const JobProduct = ({ product, listType, path }) => {
           </div>
         ) : null}
         <div className="job-time d-flex space-bet justify-content-between mt-auto">
-          <label className="d-flex flex-column text-left">
-            Date
+          <div className="job-time-col d-flex">
+            <span className="job-time-icn">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="15.002"
+                height="16.001"
+                viewBox="0 0 15.002 16.001"
+              >
+                <path
+                  id="Forma_1"
+                  data-name="Forma 1"
+                  d="M1.375,0A1.413,1.413,0,0,0,0,1.443V12.786a1.414,1.414,0,0,0,1.335,1.433V12.284A1.549,1.549,0,0,1,2.854,10.7h.959a1.557,1.557,0,0,1,1.528,1.58v1.942h4.32V12.284a1.557,1.557,0,0,1,1.528-1.58h.958a1.549,1.549,0,0,1,1.519,1.58v1.936A1.414,1.414,0,0,0,15,12.786V1.443A1.415,1.415,0,0,0,13.627,0Zm.379,8.008V2.149a.608.608,0,0,1,.595-.62H12.627a.608.608,0,0,1,.595.62h0V8.008a.608.608,0,0,1-.594.62H2.349A.608.608,0,0,1,1.754,8.008ZM9.93,2.376a.356.356,0,0,0-.348.363V4.006a.356.356,0,0,0,.348.363h1.215a.356.356,0,0,0,.348-.363V2.739a.356.356,0,0,0-.348-.363Zm-3.037,0a.356.356,0,0,0-.348.363V4.006a.356.356,0,0,0,.348.363H8.109a.356.356,0,0,0,.348-.363V2.739a.356.356,0,0,0-.348-.363Zm-3.037,0a.356.356,0,0,0-.348.363V4.006a.356.356,0,0,0,.348.363H5.071a.356.356,0,0,0,.348-.363V2.739a.356.356,0,0,0-.348-.363ZM9.93,5.543a.356.356,0,0,0-.348.363V7.173a.356.356,0,0,0,.348.363h1.215a.356.356,0,0,0,.348-.363V5.906a.356.356,0,0,0-.348-.363Zm-3.037,0a.356.356,0,0,0-.348.363V7.173a.356.356,0,0,0,.348.363H8.109a.356.356,0,0,0,.348-.363V5.906a.356.356,0,0,0-.348-.363Zm-3.037,0a.356.356,0,0,0-.348.363V7.173a.356.356,0,0,0,.348.363H5.071a.356.356,0,0,0,.348-.363V5.906a.356.356,0,0,0-.348-.363Zm7.321,6.2a.532.532,0,0,0-.521.543v3.173a.532.532,0,0,0,.521.543h.948a.532.532,0,0,0,.521-.543V12.284a.532.532,0,0,0-.521-.543Zm-8.326,0a.532.532,0,0,0-.521.543v3.173A.532.532,0,0,0,2.851,16H3.8a.532.532,0,0,0,.521-.543V12.284a.532.532,0,0,0-.521-.543Z"
+                />
+              </svg>
+            </span>
+            <label className="d-flex flex-column text-left">
+              Date
             <span>{StringToDate(product.jobStartDate)}</span>
-          </label>
-          <label className="d-flex flex-column">
-            Bidding ends in:
+            </label>
+          </div>
+          <div className="job-time-col d-flex">
+            <span className="job-time-icn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="23.003" height="23.003" viewBox="0 0 23.003 23.003">
+                <path id="Forma_1" data-name="Forma 1" d="M0,11.5A11.5,11.5,0,1,1,11.5,23,11.514,11.514,0,0,1,0,11.5Zm2.447,0A9.054,9.054,0,1,0,11.5,2.446,9.065,9.065,0,0,0,2.445,11.5Zm8.933,1.539a.947.947,0,0,1-.947-.947V4.93a.947.947,0,0,1,1.894,0v6.215h5.168a.947.947,0,1,1,0,1.894Z" transform="translate(0.002 0.002)" />
+              </svg>
+            </span>
+            <label className="d-flex flex-column">
+              Bidding ends in:
             {product && product.jobEndDate ?
-              <Countdown
-                date={new Date().getTime() + Number(product.jobEndDate)}
-                renderer={({ hours, minutes, completed }) => {
-                  if (!completed) {
-                    let diffTime = datetimeDifference(new Date(), new Date(AddOffset(+product.jobEndDate)));
-                    return (
-                      < span style={{ color: "#00b700" }}> {`${diffTime.days}d ${diffTime.hours}h ${diffTime.minutes}m`}</span>
-                    );
-                  }
-                }}
-              />
-              : null}
-          </label>
+                <Countdown
+                  date={new Date().getTime() + Number(product.jobEndDate)}
+                  renderer={({ hours, minutes, completed }) => {
+                    if (!completed) {
+                      let diffTime = datetimeDifference(new Date(), new Date(AddOffset(+product.jobEndDate)));
+                      return (
+                        <span className="text-success"> {`${diffTime.days}d ${diffTime.hours}h ${diffTime.minutes}m`}</span>
+                      );
+                    }
+                  }}
+                />
+                : null}
+            </label>
+          </div>
 
         </div>
+        <div className="job-status-rw d-flex mt-auto0">
+          <label className="flex-fill mb-0 text-primary-dark text-danger text-success">
+            Open
+          </label>
+          <span>Your bid : $150</span>
+        </div>
       </div>
-    </div >
+    </div>
   );
 };
 

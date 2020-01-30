@@ -1,6 +1,9 @@
 .text-primary {
   color: $primary !important;
 }
+.text-primary-dark {
+  color: $primary-dark !important;
+}
 .text-primary-hover {
   &:hover {
     color: $primary !important;
