@@ -231,7 +231,7 @@ const Job = ({
         <Row className="d-flex flex-nowrap position-relative">
           {/* {console.log('sidebarToggleValue', sidebarToggleValue)} */}
           {sidebarToggleValue ?
-            <Spinner className="with-overlay no-spin-icon"
+            <Spinner className="with-overlay no-spin-icon position-fixed"
               onClickEvent={() => {
                 dispatch(sidebarToggleHandler(false)
                 );

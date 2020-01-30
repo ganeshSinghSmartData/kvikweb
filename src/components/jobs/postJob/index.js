@@ -292,7 +292,7 @@ export default ({
                   />
                 </div>
                 <div className="col-md-4">
-                  <label className="input-title">Start Date</label>
+                  <label className="input-title">Job Start Date</label>
                   <DatePicker
                     selected={startDate}
                     onChange={date => {

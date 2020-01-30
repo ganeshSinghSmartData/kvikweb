@@ -337,6 +337,7 @@
 }
 .users-review-card {
   margin: 8px 8px;
+  padding: 10px;
   .users-review-hd {
     margin-right: 12px;
     justify-content: center;
@@ -380,6 +381,16 @@
   }
   .linkImage {
     cursor: pointer;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  .users-review-txt {
+    p {
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 }
 //Users Review Style End
