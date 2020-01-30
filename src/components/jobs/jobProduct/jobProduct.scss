@@ -144,15 +144,16 @@
   }
   .job-title {
     padding-left: 0;
-    padding-top: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
     line-height: 1;
     span {
-      margin-left: initial !important;
-      font-size: 27px;
-      margin-bottom: 18px;
+      font-size: 17px;
     }
     label {
+      font-size: 17px;
       color: #24231f;
+      order: 0;
     }
   }
   .job-time {
@@ -279,11 +280,6 @@
 }
 @media (max-width: 767px) {
   .job-list-row {
-    .job-title {
-      span {
-        font-size: 28px;
-      }
-    }
     .job-wrapper {
       .job-pic {
         margin-right: 10px;
