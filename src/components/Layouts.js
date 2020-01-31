@@ -25,12 +25,15 @@ export const PublicLayout = props => {
   const wrapperRef = useRef(null);
   const [scrollVisible, setscrollVisible] = useState(false);
   const scrollCheck = () => {
+
     let scrollTopCheck = wrapperRef.current.scrollTop;
+    console.log("current scrool top value====>",scrollTopCheck);
+    
     if (scrollTopCheck > 300) {
-      console.log('> 300')
+      // console.log('> 300',scrollTopCheck)
       setscrollVisible(true);
     } else {
-      console.log('< 300')
+      // console.log('< 300',scrollTopCheck)
       setscrollVisible(false);
     }
   };
