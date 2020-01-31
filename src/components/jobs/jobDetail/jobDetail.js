@@ -223,11 +223,11 @@ export default function JobDetail({
   return (
     <div className="job-detail-blc d-flex flex-column flex-fill">
       {_isLoading && <SpinnerOverlay className="position-fixed" />}
-      <ImageView
+      {/* <ImageView
         imagePath={imagePath}
         ImageVisible={ImageModal}
         imageViewHandlerProp={imageViewHandler}
-      />
+      /> */}
       {!hideHeader && (
         <div className="job-detail-hd d-flex align-items-center">
           <h2 className="flex-fill">Job Details</h2>
