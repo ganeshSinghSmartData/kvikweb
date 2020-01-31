@@ -273,7 +273,15 @@
               width: 10px;
               fill: white;
             }
+            * {
+              cursor: pointer;
+            }
           }
+        }
+      }
+      .image-container {
+        * {
+          cursor: default;
         }
       }
       .payment-upload-btn {
