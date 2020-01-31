@@ -3,7 +3,6 @@ import { Row, Col, Button, ButtonDropdown, DropdownToggle, DropdownMenu, Dropdow
 import { useDispatch, useSelector } from "react-redux";
 import { sidebarToggleHandler } from '../../actions/job';
 import smoothscroll from "smoothscroll-polyfill";
-
 import JobProduct from "./jobProduct/jobProduct";
 import Sidebar from "../sidebar/sidebar";
 import Heading from "../../components/commonUi/heading/heading";
@@ -14,6 +13,7 @@ import NoData from "../commonUi/noData/noData";
 import SpinnerOverlay from "../commonUi/spinner/spinnerOverlay/spinnerOverlay";
 import "./jobs.scss";
 import { getJobProduct, reset_job_products } from "./../../actions/job";
+import { filterRange } from "../../actions/filter";
 smoothscroll.polyfill();
 
 const Job = ({
@@ -193,6 +193,7 @@ const Job = ({
   };
 
   useEffect(() => {
+    dispatch(filterRange());
     if (path !== "/job-list") {
       const reqData = {
         page: page,

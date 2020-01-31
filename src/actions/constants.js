@@ -64,3 +64,8 @@ export const REMOVE_CARD = "REMOVE_CARD";
 
 /*************Sidebar Toggle*********************************/
 export const SIDEBAR_TOGGLE = "SIDEBAR_TOGGLE";
+
+/************Filter *********************************/
+export const FILTER_REQUEST = "FILTER_REQUEST";
+export const FILTER_SUCCESS = "FILTER_SUCCESS";
+export const FILTER_FAIL = "FILTER_FAIL";

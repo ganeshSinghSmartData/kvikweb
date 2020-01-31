@@ -15,7 +15,8 @@ const initialState = {
   count: 0,
   activeJobsCount: 0,
   completedJobsCount: 0,
-  sidebarToggle: false
+  sidebarToggle: false,
+  filter:{}
 };
 
 export default function reducer(state = initialState, action) {
@@ -72,6 +73,8 @@ export default function reducer(state = initialState, action) {
       return { ...state, completedJobProduct: [] };
     case TYPE.RESET_JOB_DETAILS:
       return { ...state, jobDetails: {} };
+      case TYPE.FILTER_SUCCESS:
+      return { ...state, filter:action.payload };  
     default:
       return state;
   }

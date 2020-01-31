@@ -6,7 +6,6 @@ import { Button, Input } from "reactstrap";
 import { Collapse } from "reactstrap";
 import "react-input-range/lib/css/index.css";
 import { getJobCategory } from "../../actions/job";
-
 // onChangeComplete
 
 import FilterBlock from "../sidebar/filterBlock/filterBlock";
@@ -145,11 +144,13 @@ const Sidebar = ({
               handleBudgetRange={val => _handleBudget(val)}
               handleDistanceRange={val => _handleDistance(val)}
               budgetFilter={false}
+              maxValue={job.filter && job.filter.budget}
             />
             <FilterBlock
               handleBudgetRange={val => _handleBudget(val)}
               handleDistanceRange={val => _handleDistance(val)}
               budgetFilter={true}
+              maxValue={job.filter && job.filter.budget}
             />
           </div>
         </Collapse>
