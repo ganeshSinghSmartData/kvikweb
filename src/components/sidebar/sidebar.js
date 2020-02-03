@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createRef } from "react";
+import ReactDOM from "react-dom";
 import { LocalForm } from "react-redux-form";
 import { useDispatch, useSelector } from "react-redux";
 import { sidebarToggleHandler } from '../../actions/job';
@@ -6,7 +7,6 @@ import { Button, Input } from "reactstrap";
 import { Collapse } from "reactstrap";
 import "react-input-range/lib/css/index.css";
 import { getJobCategory } from "../../actions/job";
-
 // onChangeComplete
 
 import FilterBlock from "../sidebar/filterBlock/filterBlock";
@@ -19,6 +19,7 @@ const Sidebar = ({
   _handleDistance,
   _handleBudget
 }) => {
+  const sidebarRef=createRef()
   const [isCategory, setIsCategory] = useState(true);
   const [isFilter, setIsFilter] = useState(true);
   const [toggleCheck, setToggleCheck] = useState(false);
@@ -30,6 +31,7 @@ const Sidebar = ({
   const dispatch = useDispatch();
   let { job } = useSelector(state => state);
   useEffect(() => {
+   
     if (!job.category || job.category.length === 0) {
       dispatch(getJobCategory());
     }
@@ -42,9 +44,13 @@ const Sidebar = ({
         CategoryItems.push({ name: item.title, value: item.title });
       }
     });
+   
 
   return (
-    <aside className='sidebar'>
+    <aside className='sidebar' ref={sidebarRef} onScroll={()=>{
+      let sidebar = ReactDOM.findDOMNode(sidebarRef.current)
+      console.log("aside-side",sidebar.scrollTop); 
+    }}>
       <div className="sidebar-item">
         <h3 className="d-flex" onClick={toggleCategory}>
           <label className="flex-fill m-0">SEARCH BY CATEGORY</label>
@@ -145,11 +151,13 @@ const Sidebar = ({
               handleBudgetRange={val => _handleBudget(val)}
               handleDistanceRange={val => _handleDistance(val)}
               budgetFilter={false}
+              maxValue={job.filter && job.filter.budget}
             />
             <FilterBlock
               handleBudgetRange={val => _handleBudget(val)}
               handleDistanceRange={val => _handleDistance(val)}
               budgetFilter={true}
+              maxValue={job.filter && job.filter.budget}
             />
           </div>
         </Collapse>

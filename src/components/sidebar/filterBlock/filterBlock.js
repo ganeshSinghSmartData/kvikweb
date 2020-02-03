@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import InputRange from "react-input-range";
 import "../filterBlock/filterBlock";
 import "./filterBlock.scss";
-const FilterBlock = ({
+const FilterBlock = ({ 
   handleDistanceRange,
   handleBudgetRange,
-  budgetFilter = false
+  budgetFilter = false,
+  maxValue
 }) => {
   const [distanceRange, setDistanceRange] = useState(0);
   const [budgetRange, setBudgetRange] = useState(0);
@@ -16,7 +17,8 @@ const FilterBlock = ({
         <label className="flex-fill m-0">
           {budgetFilter ? "Budget" : "Distance"}
         </label>
-        <span>{budgetFilter ? "$150" : "10 mile"}</span>
+        {/* <span>{budgetFilter ? "$150" : "10 mile"}</span> */}
+        <span>${budgetFilter?budgetRange:distanceRange}</span>
       </h5>
       <div
         className={
@@ -29,7 +31,7 @@ const FilterBlock = ({
             <InputRange
               // step={2}
               allowSameValues={true}
-              maxValue={150}
+              maxValue={maxValue} /////////////////////////////////////////////////////
               minValue={0}
               value={budgetRange}
               onChange={value => setBudgetRange(value)}

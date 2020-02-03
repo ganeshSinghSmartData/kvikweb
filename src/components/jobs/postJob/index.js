@@ -18,24 +18,27 @@ import ReviewJob from "./reviewJob/reviewJob";
 import JobDetail from "../jobDetail/jobDetail";
 
 
-export default ({
-  _jobDetails = {},
-  _currentstage,
-  _handleStageChange,
-  _handleJobPost,
-  _handleCategoryOnchange,
-  _selectedCategory,
-  dataload,
-  path,
-  previewData,
-  getPagesNumber
-}) => {
+export default (props) => {
+  let {
+    _jobDetails = {},
+    _currentstage,
+    _handleStageChange,
+    _handleJobPost,
+    _handleCategoryOnchange,
+    _selectedCategory,
+    dataload,
+    path,
+    previewData,
+    getPagesNumber
+  }=props;
   const [images, setImages] = useState([]);
   const [openView, setOpenView] = useState(false);
   const [uploadedImages, setUploadedImages] = useState(
     _jobDetails && _jobDetails.images ? _jobDetails.images : []
   );
   const [imageData, setImageData] = useState({});
+  console.log("inside postjob=======>",props,uploadedImages);
+
   console.log("imageData", imageData);
   let { job } = useSelector(state => state);
   const dispatch = useDispatch();
@@ -150,32 +153,50 @@ export default ({
   const toggle = () => setModal(!modal);
 
   return (
-    <>
-      <div className="post-wrapper data-block ml-auto mr-auto position-relative">
-        {dataload && <Loader loading={dataload} />}
-        <div className="post-job-nav d-flex justify-content-center">
-          <ul className="d-flex">
-            <li className={getClass(1)}>
-              <Button color="link" className="disabled">
-                <span>1</span>
-              </Button>
-            </li>
-            <li className={getClass(2)}>
-              <Button color="link" className="disabled">
-                <span>2</span>
-              </Button>
-            </li>
-            <li className={getClass(3)}>
-              <Button color="link" className="disabled">
-                <span>3</span>
-              </Button>
-            </li>
-          </ul>
-        </div>
-        <div
-          className={`post-job-inner ${
-            _currentstage === 3 ? "gallery-block" : ""
-            }`}
+    <div className="post-wrapper data-block ml-auto mr-auto position-relative">
+      {dataload && <Loader loading={dataload} />}
+      <div className="post-job-nav d-flex justify-content-center">
+        <ul className="d-flex">
+          <li className={getClass(1)}>
+            <Button color="link" className="disabled">
+              <span>1</span>
+            </Button>
+          </li>
+          <li className={getClass(2)}>
+            <Button color="link" className="disabled">
+              <span>2</span>
+            </Button>
+          </li>
+          <li className={getClass(3)}>
+            <Button color="link" className="disabled">
+              <span>3</span>
+            </Button>
+          </li>
+        </ul>
+      </div>
+      <div
+        className={`post-job-inner ${
+          _currentstage === 3 ? "gallery-block" : ""
+          }`}
+      >
+        <LocalForm
+          initialState={_jobDetails}
+          onSubmit={values =>{
+            console.log("sending data to next page===>",values, startDate,
+            endDate,
+            imageData,
+            images,
+            _currentstage)
+            _handleJobPost(
+              values,
+              startDate,
+              endDate,
+              imageData,
+              images,
+              _currentstage
+            )}
+          }
+          getDispatch={dispatch => dispatch(actions.change(_jobDetails))}
         >
           <LocalForm
             initialState={_jobDetails}
@@ -341,88 +362,51 @@ export default ({
                   />
                 </div>
               </div>
-            )}
-            {/* Stage 3 */}
-            {_currentstage === 3 && (
-              <>
-                <div className="post-job-gallery d-flex justify-content-center">
-                  <ul className="d-flex flex-wrap ml-auto mr-auto">
-                    {images &&
-                      images.length > 0 &&
-                      images.slice(0, 5).map((item, key) => {
-                        return (
-                          <li key={key} className="position-relative">
-                            <Button
-                              color="link"
-                              className="gallery-btn d-flex align-items-center justify-content-center position-absolute"
-                              onClick={() => removeImage(key)}
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="357"
-                                height="357"
-                                viewBox="0 0 357 357"
-                              >
-                                <path
-                                  id="Forma_1"
-                                  data-name="Forma 1"
-                                  d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
-                                />
-                              </svg>
-                            </Button>
-                            <img src={item} alt="Job Pic" />
-                          </li>
-                        );
-                      })}
-                    {uploadedImages &&
-                      uploadedImages.map((item, key) => {
-                        return (
-                          <li key={key} className="position-relative">
-                            <Button
-                              color="link"
-                              className="gallery-btn d-flex align-items-center justify-content-center"
-                              onClick={() => removeUploadedImage(key)}
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="357"
-                                height="357"
-                                viewBox="0 0 357 357"
-                              >
-                                <path
-                                  id="Forma_1"
-                                  data-name="Forma 1"
-                                  d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
-                                />
-                              </svg>
-                            </Button>
-                            <img src={`${apiUrl}/${item.path}`} alt="Job Pic" />
-                          </li>
-                        );
-                      })}
-
-                    <li>
-                      <Button
-                        color="primary"
-                        block
-                        className="add-gallery-btn position-relative"
-                        type="button"
-                      >
-                        <InputCell
-                          Name={"file"}
-                          Model=".images"
-                          InputType="file"
-                          Placeholder={"Image Upload"}
-                          Multiple="multiple"
-                          Errors={{ required: "" }}
-                          HandleImageOnchange={handleImageOnchange}
-                        />
-                        <svg
-                          id="_x38__3_"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="48"
-                          height="48"
-                          viewBox="0 0 48 48"
+            </div>
+          )}
+          {/* Stage 3 */}
+          {_currentstage === 3 && (
+            <>
+            <div className="post-job-gallery d-flex justify-content-center">
+              <ul className="d-flex flex-wrap ml-auto mr-auto">
+                {images &&
+                  images.length > 0 &&
+                  images.slice(0, 5).map((item, key) => {
+                    console.log("item here",item);
+                    
+                    return (
+                      <li key={key} className="position-relative">
+                        <Button
+                          color="link"
+                          className="gallery-btn d-flex align-items-center justify-content-center position-absolute"
+                          onClick={() => removeImage(key)}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="357"
+                            height="357"
+                            viewBox="0 0 357 357"
+                          >
+                            <path
+                              id="Forma_1"
+                              data-name="Forma 1"
+                              d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                            />
+                          </svg>
+                        </Button>
+                        <img src={item} alt="Job Pic" />
+                      </li>
+                    );
+                  })}
+                {uploadedImages &&
+                  uploadedImages.map((item, key) => {
+                    
+                    return (
+                      <li key={key} className="position-relative">
+                        <Button
+                          color="link"
+                          className="gallery-btn d-flex align-items-center justify-content-center"
+                          onClick={() => removeUploadedImage(key)}
                         >
                           <g id="Group_512" data-name="Group 512">
                             <path
@@ -497,50 +481,20 @@ export default ({
             </div>
           </LocalForm>
         </div>
-        {openView ?
-          <ReviewJob
-            _jobDetails={previewData}
-            _selectedCategory={_selectedCategory}
-            CategoryItems={CategoryItems}
-            closePrevieModal={closePrevieModal}
-            images={images}
-            pagesCount={getPagesNumbers}
-          />
-          : null
-        }
-      </div>
-
-      {/* ViewJob Modal Start */}
-      {/* <Modal isOpen={modal} toggle={toggle} size="lg" 
-      className="d-flex flex-column align-items-center  
-     justify-content-center users-review-mdl">
-     <Spinner className="position-absolute w-100 h-100 d-flex justify-content-center align-items-center with-overlay overlay-opacity" />
-     <ModalHeader>
-       User Reviews
-       <Button
-         color="link"
-         className="close-btn btn2"
-         onClick={toggle}
-       >
-         <svg
-           xmlns="http://www.w3.org/2000/svg"
-           width="357"
-           height="357"
-           viewBox="0 0 357 357"
-         >
-           <path
-             id="Forma_1"
-             data-name="Forma 1"
-             d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
-           />
-         </svg>
-       </Button>
-     </ModalHeader>
-     <ModalBody className="job-view-blc overflow-auto">  
-       
-     </ModalBody>
-   </Modal> */}
-      {/* ViewJob Modal Ends */}
-    </>
+        </LocalForm>
+    </div>
+{openView ?
+    <ReviewJob
+    history={props.history}
+      _jobDetails={previewData}
+      _selectedCategory={_selectedCategory}
+      CategoryItems={CategoryItems}
+      closePrevieModal={closePrevieModal}
+      images={images}
+      pagesCount={getPagesNumbers}
+    />
+    : null
+  }  
+    </div >
   );
 };
