@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
 import Job from "./../../../components/jobs/jobs";
 import { pagination } from "../../..//utilities/constants";
@@ -77,13 +76,13 @@ const mapStateToProps = state => ({
   completedJobs: state.job.completedJobProduct
 });
 
-const mapDispatchToProps = dispatch => ({
-  getUserActiveJob: bindActionCreators(getUserActiveJob, dispatch),
-  getUserCompletedJob: bindActionCreators(getUserCompletedJob, dispatch),
-  reset_active_job: bindActionCreators(reset_active_job, dispatch),
-  reset_completed_job: bindActionCreators(reset_completed_job, dispatch),
-  reset_job_details: bindActionCreators(reset_job_details, dispatch),
-  reset_user_job_details: bindActionCreators(reset_user_job_details, dispatch)
-});
+const mapDispatchToProps ={
+  getUserActiveJob,
+  getUserCompletedJob,
+  reset_active_job,
+  reset_completed_job,
+  reset_job_details,
+  reset_user_job_details,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(JobList);

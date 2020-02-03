@@ -10,11 +10,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import { routerMiddleware } from "connected-react-router";
 import reducers from "../reducers";
-
-const logger = store => next => action => {
-  return next(action);
-};
-
+import logger from 'redux-logger';
 export default history => {
   const store = createStore(
     reducers,

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import moment from "moment";
-
 import PostJob from "../../../components/jobs/postJob";
 import { getJobCategory } from "./../../../actions/job";
 import {
@@ -60,7 +59,15 @@ class PostNewJob extends Component {
       this.setState({
         openView: true,
         uploadedImages: uploadedImages,
-        previewData: jobData,
+        previewData: {
+          ...jobData,
+          startDate,
+          endDate,
+          imageData,
+          uploadedImages,
+          job_seeker_id:{...this.props.user},
+          status:"Pending"
+        },
         imageData: imageData,
         startDate: startDate,
         endDate: endDate
@@ -149,6 +156,7 @@ class PostNewJob extends Component {
     }
   };
   render() {
+    console.log("Post job states", this.state)
     let CategoryItems = [];
     this.props.category &&
       this.props.category.length &&
@@ -161,6 +169,7 @@ class PostNewJob extends Component {
       <React.Fragment>
         {this.state.openView ?
           <ReviewJob
+            history={this.props.history}
             _jobDetails={this.state.previewData}
             _selectedCategory={this.state.selectedCategory}
             CategoryItems={CategoryItems}
@@ -173,6 +182,7 @@ class PostNewJob extends Component {
         }
         {this.state.pathname === "/post-job" && (
           <PostJob
+            history={this.props.history}
             _currentstage={this.state.stage}
             _handleStageChange={this.handleStageChange}
             _handleJobPost={this.handleJobPost}
@@ -223,7 +233,8 @@ class PostNewJob extends Component {
 
 const mapStateToProps = state => ({
   jobDetails: state.job.jobDetails,
-  category: state.job.category
+  category: state.job.category,
+  user:state.user.data,
 });
 
 const mapDispatchToProps = dispatch => ({
