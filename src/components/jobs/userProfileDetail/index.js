@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Label } from "reactstrap";
+import { Button, Label, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { LocalForm, actions } from "react-redux-form";
 
 import Heading from "../../commonUi/heading/heading";
@@ -9,6 +9,8 @@ import InputCell from "../../commonUi/input/inputCell";
 import UserImage from "../jobDetail/userImage/userImage";
 import UserPayment from "./userPayment";
 import "./userProfileDetail.scss";
+import RatingBlock from '../ratingBock/ratingBlock';
+import Spinner from "../../commonUi/spinner/spinner";
 
 const UserProfile = ({
   user,
@@ -17,8 +19,11 @@ const UserProfile = ({
   isEdit,
   handleSubmit,
   loading,
-  _toggleEdit
+  _toggleEdit,
+  job_seeker_id
 }) => {
+  const [modal, setModal] = useState(false);
+  const toggle = () => setModal(!modal);
   return (
     <div className="job-detail-blc d-flex flex-column flex-fill">
       <div className="detail-blc-hd d-flex align-items-center mb-3">
@@ -185,6 +190,205 @@ const UserProfile = ({
               </div>
               {!isEdit && (
                 <div className="flex-shrink-0">
+                  <div className="user-review-blc d-flex flex-column align-items-end">
+                    <RatingBlock />
+                    <Button color="link"
+                      className="user-rating-btn p-0 text-primary"
+                      onClick={toggle}
+                    >
+                      See your Reviews
+                    </Button>
+                    {/* Review Modal Start */}
+                    <Modal isOpen={modal} toggle={toggle} size="lg" className="d-flex flex-column align-items-center  
+                      justify-content-center users-review-mdl">
+                      {/* <Spinner className="position-absolute w-100 h-100 d-flex justify-content-center align-items-center with-overlay overlay-opacity" /> */}
+                      <ModalHeader>
+                        User Reviews
+                        <Button
+                          color="link"
+                          className="close-btn btn2"
+                          onClick={toggle}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="357"
+                            height="357"
+                            viewBox="0 0 357 357"
+                          >
+                            <path
+                              id="Forma_1"
+                              data-name="Forma 1"
+                              d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                            />
+                          </svg>
+                        </Button>
+                      </ModalHeader>
+                      <ModalBody className="users-review-blc overflow-auto">
+                      <div className="users-review-card d-flex shadow-sm bg-white">
+                          <div className="users-review-hd">
+                            <UserImage className="linkImage" />
+                          </div>
+                          <div className="users-review-inner">
+                            <div className="users-review-cell">
+                              <div className="review-lbl-cell d-flex flex-column align-items-start">
+                                <Button color="link" className="p-0 review-lbl-1">
+                                  Chandigarh Painting
+                               </Button>
+                              </div>
+                              <RatingBlock className="users-review-rating" />
+                              <label className="users-review-time d-block mb-0">
+                                Jan 2016
+                               </label>
+                            </div>
+                            <div className="users-review-txt">
+                            <p>
+                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                            </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="users-review-card d-flex shadow-sm bg-white">
+                          <div className="users-review-hd">
+                            <UserImage className="linkImage" />
+                          </div>
+                          <div className="users-review-inner">
+                            <div className="users-review-cell">
+                              <div className="review-lbl-cell d-flex flex-column align-items-start">
+                                <Button color="link" className="p-0 review-lbl-1">
+                                  Chandigarh Painting
+                               </Button>
+                              </div>
+                              <RatingBlock className="users-review-rating" />
+                              <label className="users-review-time d-block mb-0">
+                                Jan 2016
+                               </label>
+                            </div>
+                            <div className="users-review-txt">
+                            <p>
+                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                            </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="users-review-card d-flex shadow-sm bg-white">
+                          <div className="users-review-hd">
+                            <UserImage className="linkImage" />
+                          </div>
+                          <div className="users-review-inner">
+                            <div className="users-review-cell">
+                              <div className="review-lbl-cell d-flex flex-column align-items-start">
+                                <Button color="link" className="p-0 review-lbl-1">
+                                  Chandigarh Painting
+                               </Button>
+                              </div>
+                              <RatingBlock className="users-review-rating" />
+                              <label className="users-review-time d-block mb-0">
+                                Jan 2016
+                               </label>
+                            </div>
+                            <div className="users-review-txt">
+                            <p>
+                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                            </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="users-review-card d-flex shadow-sm bg-white">
+                          <div className="users-review-hd">
+                            <UserImage className="linkImage" />
+                          </div>
+                          <div className="users-review-inner">
+                            <div className="users-review-cell">
+                              <div className="review-lbl-cell d-flex flex-column align-items-start">
+                                <Button color="link" className="p-0 review-lbl-1">
+                                  Chandigarh Painting
+                               </Button>
+                              </div>
+                              <RatingBlock className="users-review-rating" />
+                              <label className="users-review-time d-block mb-0">
+                                Jan 2016
+                               </label>
+                            </div>
+                            <div className="users-review-txt">
+                            <p>
+                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                            </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="users-review-card d-flex shadow-sm bg-white">
+                          <div className="users-review-hd">
+                            <UserImage className="linkImage" />
+                          </div>
+                          <div className="users-review-inner">
+                            <div className="users-review-cell">
+                              <div className="review-lbl-cell d-flex flex-column align-items-start">
+                                <Button color="link" className="p-0 review-lbl-1">
+                                  Chandigarh Painting
+                               </Button>
+                              </div>
+                              <RatingBlock className="users-review-rating" />
+                              <label className="users-review-time d-block mb-0">
+                                Jan 2016
+                               </label>
+                            </div>
+                            <div className="users-review-txt">
+                            <p>
+                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                            </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="users-review-card d-flex shadow-sm bg-white">
+                          <div className="users-review-hd">
+                            <UserImage className="linkImage" />
+                          </div>
+                          <div className="users-review-inner">
+                            <div className="users-review-cell">
+                              <div className="review-lbl-cell d-flex flex-column align-items-start">
+                                <Button color="link" className="p-0 review-lbl-1">
+                                  Chandigarh Painting
+                               </Button>
+                              </div>
+                              <RatingBlock className="users-review-rating" />
+                              <label className="users-review-time d-block mb-0">
+                                Jan 2016
+                               </label>
+                            </div>
+                            <div className="users-review-txt">
+                            <p>
+                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                            </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="users-review-card d-flex shadow-sm bg-white">
+                          <div className="users-review-hd">
+                            <UserImage className="linkImage" />
+                          </div>
+                          <div className="users-review-inner">
+                            <div className="users-review-cell">
+                              <div className="review-lbl-cell d-flex flex-column align-items-start">
+                                <Button color="link" className="p-0 review-lbl-1">
+                                  Chandigarh Painting
+                               </Button>
+                              </div>
+                              <RatingBlock className="users-review-rating" />
+                              <label className="users-review-time d-block mb-0">
+                                Jan 2016
+                               </label>
+                            </div>
+                            <div className="users-review-txt">
+                            <p>
+                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                            </p>
+                            </div>
+                          </div>
+                        </div>
+                      </ModalBody>
+                    </Modal>
+                    {/* Review Modal Ends */}
+                  </div>
                   <div className="profile-bar ml-auto user-profile-bar">
                     <span className="profile-percentage">95%</span>
                     <div className="progress">
@@ -225,6 +429,47 @@ const UserProfile = ({
               )}
             </div>
             {!isEdit && <UserInfo description={user.about} />}
+            <div className="bidder-profl-rw bidder-profile-desc bidder-profile-l-padd">
+              <h3>Skills</h3>
+              <div className="skils-blc">
+               <span>
+               Laundry Service
+               </span>
+               <span>
+               Painting
+               </span>
+               <span>
+               Gardening
+               </span>
+               <span>
+               Laundry Service
+               </span>
+               <span>
+               Painting
+               </span>
+               <span>
+               Gardening
+               </span>
+               <span>
+               Laundry Service
+               </span>
+               <span>
+               Painting
+               </span>
+               <span>
+               Gardening
+               </span>
+               <span>
+               Laundry Service
+               </span>
+               <span>
+               Painting
+               </span>
+               <span>
+               Gardening
+               </span>
+              </div>
+            </div>
           </div>
           <UserPayment />
         </div>
