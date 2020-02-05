@@ -2,7 +2,7 @@ import React, { useState, useEffect, createRef } from "react";
 import ReactDOM from "react-dom";
 import { LocalForm } from "react-redux-form";
 import { useDispatch, useSelector } from "react-redux";
-import { sidebarToggleHandler } from '../../actions/job';
+import { sidebarToggleHandler } from "../../actions/job";
 import { Button, Input } from "reactstrap";
 import { Collapse } from "reactstrap";
 import "react-input-range/lib/css/index.css";
@@ -19,7 +19,7 @@ const Sidebar = ({
   _handleDistance,
   _handleBudget
 }) => {
-  const sidebarRef=createRef()
+  const sidebarRef = createRef();
   const [isCategory, setIsCategory] = useState(true);
   const [isFilter, setIsFilter] = useState(true);
   const [toggleCheck, setToggleCheck] = useState(false);
@@ -29,9 +29,8 @@ const Sidebar = ({
   const toggleCheckHandler = () => setToggleCheck(!toggleCheck);
 
   const dispatch = useDispatch();
-  let { job } = useSelector(state => state);
+  let { job } = useSelector((state) => state);
   useEffect(() => {
-   
     if (!job.category || job.category.length === 0) {
       dispatch(getJobCategory());
     }
@@ -39,25 +38,27 @@ const Sidebar = ({
   let CategoryItems = [];
   job.category &&
     job.category.length &&
-    job.category.map(item => {
+    job.category.map((item) => {
       if (item) {
         CategoryItems.push({ name: item.title, value: item.title });
       }
     });
-   
 
   return (
-    <aside className='sidebar' ref={sidebarRef} onScroll={()=>{
-      let sidebar = ReactDOM.findDOMNode(sidebarRef.current)
-      console.log("aside-side",sidebar.scrollTop); 
-    }}>
+    <aside
+      className="sidebar"
+      ref={sidebarRef}
+      onScroll={() => {
+        let sidebar = ReactDOM.findDOMNode(sidebarRef.current);
+        console.log("aside-side", sidebar.scrollTop);
+      }}
+    >
       <div className="sidebar-item">
         <h3 className="d-flex" onClick={toggleCategory}>
           <label className="flex-fill m-0">SEARCH BY CATEGORY</label>
           <Button
             color="link"
             className="item-toggle-btn rounded-0 d-flex flex-column flex-column align-items-end flex-shrink-0   btn btn-link p-0"
-
           >
             <span className="d-flex align-items-center justify-content-center">
               <span className={`${isCategory ? "active" : ""} d-flex`}></span>
@@ -77,7 +78,7 @@ const Sidebar = ({
                         block
                         className={`d-flex flex-fill m-0 text-left rounded-0`}
                         onClick={() => toggleCheckHandler(key)}
-                      // className={`d-flex flex-fill m-0 text-left ${toggleCheck ? "active" : ""}`}
+                        // className={`d-flex flex-fill m-0 text-left ${toggleCheck ? "active" : ""}`}
                       >
                         {item.name}
                         <input
@@ -117,7 +118,6 @@ const Sidebar = ({
           <Button
             color="link"
             className="item-toggle-btn rounded-0 d-flex flex-column flex-column align-items-end flex-shrink-0 btn btn-link p-0"
-
           >
             <span className="d-flex align-items-center justify-content-center">
               <span className={`${isFilter ? "active" : ""} d-flex`}></span>
@@ -148,25 +148,28 @@ const Sidebar = ({
               </LocalForm>
             </div>
             <FilterBlock
-              handleBudgetRange={val => _handleBudget(val)}
-              handleDistanceRange={val => _handleDistance(val)}
-              budgetFilter={false}
+              handleRange={(val) => _handleDistance(val)}
               maxValue={job.filter && job.filter.budget}
+              title="Distance"
+              containerClass="distance-row"
+              inputClass="primary-bg-bar"
             />
             <FilterBlock
-              handleBudgetRange={val => _handleBudget(val)}
-              handleDistanceRange={val => _handleDistance(val)}
-              budgetFilter={true}
+              handleRange={(val) => _handleBudget(val)}
               maxValue={job.filter && job.filter.budget}
+              title="Budget"
+              containerClass="budget-row"
+              inputClass="secondary-bg-bar"
             />
           </div>
         </Collapse>
       </div>
-      <Button color="secondary" block
+      <Button
+        color="secondary"
+        block
         className="filter-search-btn"
         onClick={() => {
-          dispatch(sidebarToggleHandler(false)
-          );
+          dispatch(sidebarToggleHandler(false));
         }}
       >
         Search

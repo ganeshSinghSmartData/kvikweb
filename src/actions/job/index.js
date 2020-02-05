@@ -74,9 +74,9 @@ export const getJobProduct = ({
     const skip = (page - 1) * pagination.limit;
     ApiClient.get(
       `${apiUrl}/api/job_listing?userId=${_id}&&lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${
-      pagination.limit
+        pagination.limit
       }&budget=${budget}&zip_code=${zip_code}&miles=${miles}&search=${
-      search ? (search.search ? search.search : "") : ""
+        search ? (search.search ? search.search : "") : ""
       }&sort=${JSON.stringify(sort)}`,
       {}
     ).then((response) => {
@@ -340,9 +340,32 @@ export const sidebarToggleHandler = (data) => ({
   data
 });
 
-
-
 export const filterToggleHandler = (data) => ({
   type: TYPE.FILTER_TOGGLE,
   data
 });
+
+/********************** Get Simmilar Jobs**************************** */
+export const getSimilarProduct = (page, category = []) => {
+  return (dispatch, getState) => {
+    dispatch(is_fetching(true));
+    if (page == 1) {
+      dispatch({ type: TYPE.CLEAR_SIMILAR_JOBS });
+    }
+    const skip = (page - 1) * 20;
+    ApiClient.get(
+      `${apiUrl}/api/job_listing?category=${category}&skip=${skip}&limit=${pagination.limit}}`,
+      {}
+    ).then((response) => {
+      if (response.status === 200) {
+        dispatch(is_fetching(false));
+        dispatch({ type: TYPE.SIMILAR_JOBS, data: response });
+      } else if (response.status === 401) {
+        dispatch(is_fetching(false));
+        // toastErrorAction(dispatch, response.message);
+      } else {
+        dispatch(is_fetching(false));
+      }
+    });
+  };
+};

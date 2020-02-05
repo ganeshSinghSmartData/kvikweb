@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Countdown from "react-countdown-now";
 import datetimeDifference from "datetime-difference";
@@ -31,7 +31,8 @@ import { apiUrl } from "./../../../environment";
 import {
   placeYourBid,
   addBidderReview,
-  approvedBidWork
+  approvedBidWork,
+  getSimilarProduct
 } from "./../../../actions/job";
 import Spinner from "../../commonUi/spinner/spinner";
 import SpinnerOverlay from "../../commonUi/spinner/spinnerOverlay/spinnerOverlay";
@@ -41,17 +42,19 @@ import ConfirmJobStartModal from "../../commonUi/modal/modal";
 import RateBidderWorkModal from "../../commonUi/modal/modal";
 import UserImage from "../../jobs/jobDetail/userImage/userImage";
 import JobAddress from "../jobDetail/JobAddress/jobAddress";
-
+import RenderSimilarProducts from "./RenderSimilarProducts";
+import StatusBar from "./StatusBar";
 export default function JobDetail({
   history,
   job = {},
   path = "",
-  _deleteJob = () => { },
-  _startJob = () => { },
-  _endJob = () => { },
+  _deleteJob = () => {},
+  _startJob = () => {},
+  _endJob = () => {},
   _isLoading = false,
   _isStatusLoading = false,
-  hideHeader = false
+  hideHeader = false,
+  reviewModal
 }) {
   let workStatus = {};
   if (path === "/bid-details") {
@@ -59,6 +62,8 @@ export default function JobDetail({
   } else {
     workStatus = JobStatus;
   }
+  const similarProducts = useSelector((state) => state.job.similarProducts);
+  const similarCount = useSelector((state) => state.job.similarCount);
   const [imagePath, seImagePath] = useState("");
   const [ImageModal, setImageModal] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
@@ -68,7 +73,7 @@ export default function JobDetail({
       ? true
       : false
   );
-
+  const [initial, setInitial] = useState(true);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const { jobBidCheck } = useSelector((state) => state.job);
@@ -104,7 +109,7 @@ export default function JobDetail({
     slidesToShow: 3,
     slidesToScroll: 1
   };
-  console.log("job", job);
+
   const handleSubmit = (values, rate = "") => {
     // setModalLoading(true);
     if (values.frequency) {
@@ -169,47 +174,18 @@ export default function JobDetail({
     }
   };
 
-  let classname = "";
-  const setJobStatus = (status) => {
-    switch (status) {
-      case "not_started":
-        if (path === "/bid-details" && job.status === "not_started") {
-          return (classname = "status-secondary");
-        } else {
-          return (classname = "status-danger");
-        }
-      case "not_accepted":
-        return (classname = "status-secondary");
-      case "expired":
-        return (classname = "status-danger");
-      case "rejected":
-        return (classname = "status-danger");
-      case "approved":
-        return (classname = "status-primary");
-      case "accepted":
-        return (classname = "status-primary");
-      case "completed":
-        return (classname = "status-success");
-      case "in_progress":
-        return (classname = "status-secondary");
-      default:
-        return (classname = "status-secondary");
-    }
-  };
-
-  setJobStatus(job.status);
   let noImageClass = "";
   if (!job.images || job.images.length === 0) {
     noImageClass =
       "d-flex justify-content-center justify-content-center no-jobdetail-image";
   }
 
-  const openBidForm = (status) => {
-    // if (jobBidCheck) {
-    //   toastAction(false, "You have already placed bid for this job");
-    // } else {
-    setOpenModal(!openModal);
-    // }
+  const openBidForm = () => {
+    if (jobBidCheck.length) {
+      toastAction(false, "You have already placed bid for this job");
+    } else {
+      setOpenModal(!openModal);
+    }
   };
 
   const imageViewHandler = () => {
@@ -221,6 +197,17 @@ export default function JobDetail({
     seImagePath(path);
     setImageModal(!ImageModal);
   };
+
+  useEffect(() => {
+    if (initial) {
+      dispatch(getSimilarProduct(1, [job.category]));
+      setInitial(false);
+    }
+  }, [dispatch, initial, job.category]);
+
+  console.log("====================================");
+  console.log("job here", job);
+  console.log("====================================");
   return (
     <>
       <div className="job-detail-blc d-flex flex-column flex-fill">
@@ -239,67 +226,22 @@ export default function JobDetail({
 
         <div className="job-detail-inner d-flex flex-fill">
           <div className="job-detail-rw job-detail-lft flex-fill">
-            <div className="job-step-rw">
-              <ul className="d-flex">
-                <li className="d-flex justify-content-center position-relative complete">
-                  {/* <span className="step-bar position-absolute">
-                  </span> */}
-                  <label className="d-flex flex-column align-items-center position-relative mb-0">
-                    <span className="step-cell d-flex flex-column align-items-center justify-content-center rounded-circle">
-                      <span className="inline-block rounded-circle"></span>
-                    </span>
-                    <span className="step-label">
-                      Open
-                    </span>
-                  </label>
-                </li>
-                <li className="d-flex justify-content-center  position-relative complete">
-                  <span className="step-bar position-absolute">
-                  </span>
-                  <label className="d-flex flex-column align-items-center position-relative mb-0">
-                    <span className="step-cell d-flex flex-column align-items-center justify-content-center rounded-circle">
-                      <span className="inline-block rounded-circle"></span>
-                    </span>
-                    <span className="step-label">
-                      Accepted
-                    </span>
-                  </label>
-                </li>
-                <li className="d-flex justify-content-center position-relative active-step">
-                  <span className="step-bar position-absolute">
-                  </span>
-                  <label className="d-flex flex-column align-items-center position-relative mb-0">
-                    <span className="step-cell d-flex flex-column align-items-center justify-content-center rounded-circle">
-                      <span className="inline-block rounded-circle"></span>
-                    </span>
-                    <span className="step-label">
-                      In Progress
-                    </span>
-                  </label>
-                </li>
-                <li className="d-flex justify-content-center position-relative">
-                  <span className="step-bar position-absolute">
-                  </span>
-                  <label className="d-flex flex-column align-items-center position-relative mb-0">
-                    <span className="step-cell d-flex flex-column align-items-center justify-content-center rounded-circle">
-                      <span className="inline-block rounded-circle"></span>
-                    </span>
-                    <span className="step-label">
-                      Completed
-                    </span>
-                  </label>
-                </li>
-              </ul>
-            </div>
+            <StatusBar visible={!reviewModal} />
             <div className="d-flex job-detail-top">
               <div className="job-detail-pic-col">
-                <div className={`job-detail-pic position-relative ${noImageClass}`}>
+                <div
+                  className={`job-detail-pic position-relative ${noImageClass}`}
+                >
                   {/* {imageLoad && (
                 <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" />
               )} */}
                   {apiUrl && job.images && job.images.length !== 0 ? (
                     <img
-                      src={job.images[imageIndex]["original"] ? `${apiUrl}/${job.images[imageIndex]["original"]}` : URL.createObjectURL(job.images[imageIndex])}
+                      src={
+                        job.images[imageIndex]["original"]
+                          ? `${apiUrl}/${job.images[imageIndex]["original"]}`
+                          : URL.createObjectURL(job.images[imageIndex])
+                      }
                       alt="Job Post User"
                       onClick={() =>
                         closeimageViewHandlerViewChat(
@@ -308,11 +250,11 @@ export default function JobDetail({
                       }
                     />
                   ) : (
-                      <img
-                        src={require("../../../assets/images/icons/default-job-image.svg")}
-                        alt="Job Post User"
-                      />
-                    )}
+                    <img
+                      src={require("../../../assets/images/icons/default-job-image.svg")}
+                      alt="Job Post User"
+                    />
+                  )}
                 </div>
                 <div className="d-flex justify-content-center">
                   <div className="job-slider-track-inner">
@@ -321,7 +263,11 @@ export default function JobDetail({
                         {job.images.map((item, key) => (
                           <div key={key}>
                             <img
-                              src={item.path ? `${apiUrl}/${item["original"]}` : URL.createObjectURL(item)}
+                              src={
+                                item.path
+                                  ? `${apiUrl}/${item["original"]}`
+                                  : URL.createObjectURL(item)
+                              }
                               alt="Job Post User"
                               onClick={() => setImageIndex(key)}
                             />
@@ -329,8 +275,8 @@ export default function JobDetail({
                         ))}
                       </Slider>
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                   </div>
                 </div>
               </div>
@@ -344,90 +290,85 @@ export default function JobDetail({
                           Job starts on:{" "}
                           {dateTime(job.jobStartDate || job.startDate)}
                         </p>
-                        {path === "/job-proposal" && job.status === "not_started" && (
-                          <div className="job-edit-btns d-flex">
-                            <Link
-                              className="btn d-flex justify-content-center align-items-center p-0 job-edit-btn"
-                              to={`/edit-job/${job._id}`}
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="528.899"
-                                height="526.321"
-                                viewBox="0 0 528.899 526.321"
+                        {path === "/job-proposal" &&
+                          job.status === "not_started" && (
+                            <div className="job-edit-btns d-flex">
+                              <Link
+                                className="btn d-flex justify-content-center align-items-center p-0 job-edit-btn"
+                                to={`/edit-job/${job._id}`}
                               >
-                                <g
-                                  id="pencil-edit-button"
-                                  transform="translate(0 -1.289)"
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="528.899"
+                                  height="526.321"
+                                  viewBox="0 0 528.899 526.321"
+                                >
+                                  <g
+                                    id="pencil-edit-button"
+                                    transform="translate(0 -1.289)"
+                                  >
+                                    <path
+                                      id="Path_3559"
+                                      data-name="Path 3559"
+                                      d="M328.883,89.125l107.59,107.589-272.34,272.34L56.6,361.465Zm189.23-25.948L470.132,15.2a47.614,47.614,0,0,0-67.259,0L356.912,61.157,464.5,168.747l53.611-53.611A36.679,36.679,0,0,0,518.113,63.177ZM.3,512.69a12.243,12.243,0,0,0,14.811,14.565L135,498.186,27.473,390.6Z"
+                                    />
+                                  </g>
+                                </svg>
+                              </Link>
+                              <Button
+                                className="d-flex justify-content-center align-items-center p-0 job-delete-btn"
+                                color="link"
+                                onClick={() => _deleteJob(job._id)}
+                              >
+                                <svg
+                                  id="delete"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="310.398"
+                                  height="407"
+                                  viewBox="0 0 310.398 407"
                                 >
                                   <path
                                     id="Path_3559"
                                     data-name="Path 3559"
-                                    d="M328.883,89.125l107.59,107.589-272.34,272.34L56.6,361.465Zm189.23-25.948L470.132,15.2a47.614,47.614,0,0,0-67.259,0L356.912,61.157,464.5,168.747l53.611-53.611A36.679,36.679,0,0,0,518.113,63.177ZM.3,512.69a12.243,12.243,0,0,0,14.811,14.565L135,498.186,27.473,390.6Z"
+                                    d="M89.2,37c0-12.133,9.469-21,21.6-21h88.8c12.129,0,21.6,8.867,21.6,21V60h16V37c0-20.953-16.645-37-37.6-37H110.8C89.848,0,73.2,16.047,73.2,37V60h16Zm0,0"
                                   />
-                                </g>
-                              </svg>
-                            </Link>
-                            <Button
-                              className="d-flex justify-content-center align-items-center p-0 job-delete-btn"
-                              color="link"
-                              onClick={() => _deleteJob(job._id)}
-                            >
-                              <svg
-                                id="delete"
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="310.398"
-                                height="407"
-                                viewBox="0 0 310.398 407"
-                              >
-                                <path
-                                  id="Path_3559"
-                                  data-name="Path 3559"
-                                  d="M89.2,37c0-12.133,9.469-21,21.6-21h88.8c12.129,0,21.6,8.867,21.6,21V60h16V37c0-20.953-16.645-37-37.6-37H110.8C89.848,0,73.2,16.047,73.2,37V60h16Zm0,0"
-                                />
-                                <path
-                                  id="Path_3560"
-                                  data-name="Path 3560"
-                                  d="M60.6,407H249.8c18.242,0,32.4-16.047,32.4-36V124H28.2V371C28.2,390.953,42.355,407,60.6,407ZM206.2,162.2a8,8,0,0,1,16,0v189a8,8,0,0,1-16,0Zm-59,0a8,8,0,0,1,16,0v189a8,8,0,0,1-16,0Zm-59,0a8,8,0,0,1,16,0v189a8,8,0,0,1-16,0Zm0,0"
-                                />
-                                <path
-                                  id="Path_3561"
-                                  data-name="Path 3561"
-                                  d="M20,108H290.4a20,20,0,0,0,0-40H20a20,20,0,0,0,0,40Zm0,0"
-                                />
-                              </svg>
-                            </Button>
-                          </div>
-                        )}
+                                  <path
+                                    id="Path_3560"
+                                    data-name="Path 3560"
+                                    d="M60.6,407H249.8c18.242,0,32.4-16.047,32.4-36V124H28.2V371C28.2,390.953,42.355,407,60.6,407ZM206.2,162.2a8,8,0,0,1,16,0v189a8,8,0,0,1-16,0Zm-59,0a8,8,0,0,1,16,0v189a8,8,0,0,1-16,0Zm-59,0a8,8,0,0,1,16,0v189a8,8,0,0,1-16,0Zm0,0"
+                                  />
+                                  <path
+                                    id="Path_3561"
+                                    data-name="Path 3561"
+                                    d="M20,108H290.4a20,20,0,0,0,0-40H20a20,20,0,0,0,0,40Zm0,0"
+                                  />
+                                </svg>
+                              </Button>
+                            </div>
+                          )}
                       </div>
                       <div className="job-detail-col-rt d-flex flex-column">
                         <label
                           className={`job-detail-amnt margin flex-shrink-0 ${
                             path === "/job-proposal" ? "" : ""
-                            }`}
+                          }`}
                         >
                           {job.budget ? `$${job.budget}` : ""}
                         </label>
-                        <span className="sub-heading">
-                          Weekly
-                      </span>
+                        <span className="sub-heading">Weekly</span>
                       </div>
                     </div>
                   </div>
                   <div className="job-desc-list">
                     <ul className="d-flex flex-column">
-                      {job["category"] && (
+                      {job["job_seeker_id"] && (
                         <li className="d-flex">
                           <span className="flex-shrink-0 job-desc-userImg">
                             <UserImage />
                           </span>
                           <p>
-                            <label>
-                              Job Posted by
-                          </label>
-                            <span>
-                              {job["category"]}
-                            </span>
+                            <label>Job Posted by</label>
+                            <span>{`${job["job_seeker_id"]["fname"]} ${job["job_seeker_id"]["lname"]}`}</span>
                           </p>
                         </li>
                       )}
@@ -451,9 +392,7 @@ export default function JobDetail({
                             </svg>
                           </span>
                           <p>
-                            <label>
-                              Location
-                        </label>
+                            <label>Location</label>
                             <span className="sub-heading">
                               {`${job["street"]}, ${job["city"]}, ${job["location"]}`}
                             </span>
@@ -478,9 +417,7 @@ export default function JobDetail({
                             </svg>
                           </span>
                           <p>
-                            <label>
-                              Job starts on
-                        </label>
+                            <label>Job starts on</label>
                             <span className="sub-heading">
                               {StringToDate(job["jobStartDate" || "startDate"])}
                             </span>
@@ -489,7 +426,6 @@ export default function JobDetail({
                       )}
                     </ul>
                   </div>
-
                 </div>
                 <div className="bid-status-btns">
                   {job.status === "accepted" && path !== "/job-proposal" && (
@@ -500,7 +436,7 @@ export default function JobDetail({
                       }
                     >
                       Start Job
-                  </Button>
+                    </Button>
                   )}
                   {job.status === "in_progress" && path !== "/job-proposal" && (
                     <Button
@@ -525,7 +461,7 @@ export default function JobDetail({
                         </svg>
                       </span>
                       Mark as Complete
-                  </Button>
+                    </Button>
                   )}
                 </div>
               </div>
@@ -535,20 +471,49 @@ export default function JobDetail({
                 <h3 className="d-flex justify-content-center">
                   <label className="d-flex">
                     <span className="d-flex align-items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="23.003" height="23.003" viewBox="0 0 23.003 23.003">
-                        <path id="Forma_1" data-name="Forma 1" d="M0,11.5A11.5,11.5,0,1,1,11.5,23,11.514,11.514,0,0,1,0,11.5Zm2.447,0A9.054,9.054,0,1,0,11.5,2.446,9.065,9.065,0,0,0,2.445,11.5Zm8.933,1.539a.947.947,0,0,1-.947-.947V4.93a.947.947,0,0,1,1.894,0v6.215h5.168a.947.947,0,1,1,0,1.894Z" transform="translate(0.002 0.002)" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="23.003"
+                        height="23.003"
+                        viewBox="0 0 23.003 23.003"
+                      >
+                        <path
+                          id="Forma_1"
+                          data-name="Forma 1"
+                          d="M0,11.5A11.5,11.5,0,1,1,11.5,23,11.514,11.514,0,0,1,0,11.5Zm2.447,0A9.054,9.054,0,1,0,11.5,2.446,9.065,9.065,0,0,0,2.445,11.5Zm8.933,1.539a.947.947,0,0,1-.947-.947V4.93a.947.947,0,0,1,1.894,0v6.215h5.168a.947.947,0,1,1,0,1.894Z"
+                          transform="translate(0.002 0.002)"
+                        />
                       </svg>
                     </span>
                     Bidding ends in
                   </label>
                 </h3>
                 <div className="job-detail-bid d-flex justify-content-center">
-                  <div className="job-detail-bid-inner">
-                    <label className="mb-0 position-relative">00<span>D</span></label>
-                    <label className="mb-0 position-relative">00<span>H</span></label>
-                    <label className="mb-0 position-relative">00<span>M</span></label>
-                    <label className="mb-0 position-relative">00<span>S</span></label>
-                  </div>
+                  <Countdown
+                    date={new Date(job.jobEndDate || job.endDate)}
+                    intervalDelay={0}
+                    precision={3}
+                    renderer={(props) => (
+                      <div className="job-detail-bid-inner">
+                        <label className="mb-0 position-relative">
+                          {props.days}
+                          <span>D</span>
+                        </label>
+                        <label className="mb-0 position-relative">
+                          {props.hours}
+                          <span>H</span>
+                        </label>
+                        <label className="mb-0 position-relative">
+                          {props.minutes}
+                          <span>M</span>
+                        </label>
+                        <label className="mb-0 position-relative">
+                          {props.seconds}
+                          <span>S</span>
+                        </label>
+                      </div>
+                    )}
+                  />
                 </div>
               </div>
               <div className="job-detail-desc">
@@ -557,14 +522,9 @@ export default function JobDetail({
               </div>
               {path === "/job-proposal" && job.status === "completed" && (
                 <div className="place-bid-rw text-center w-100 job-detail-action-btns">
-                  <Button
-                    size="lg"
-                    color="secondary"
-                    onClick={() => {
-                    }}
-                  >
+                  <Button size="lg" color="secondary" onClick={() => {}}>
                     Mark as Done
-              </Button>
+                  </Button>
                 </div>
               )}
               {path !== "/bid-details" &&
@@ -577,26 +537,31 @@ export default function JobDetail({
                       size="lg"
                       color="link"
                       className={`${
-                        jobBidCheck ? "btn-dark" : "btn-secondary"
-                        } place-bid-btn`}
+                        jobBidCheck.length ? "btn-dark" : "btn-secondary"
+                      } place-bid-btn`}
                       onClick={() => openBidForm()}
                     >
                       Place a Bid
-                </Button>
+                    </Button>
                   </div>
                 )}
               {user && !user.loggedIn && (
                 <div className="place-bid-rw text-center w-100 job-detail-action-btns">
-                  <Link className="place-bid-btn btn btn-secondary btn-lg" to={`/login`}>
+                  <Link
+                    className="place-bid-btn btn btn-secondary btn-lg"
+                    to={`/login`}
+                  >
                     Login
-                </Link>
+                  </Link>
                 </div>
               )}
 
-
-
               {(path === "/job-proposal" || path === "/job-details") &&
-                job && job.job_seeker_id && user && user.data && user.data._id == job.job_seeker_id._id &&
+                job &&
+                job.job_seeker_id &&
+                user &&
+                user.data &&
+                user.data._id == job.job_seeker_id._id &&
                 job.bidersLIstingcheck.length !== 0 && (
                   <div className="proposal-blc flex-shrink-0">
                     <h4>PROPOSALS</h4>
@@ -609,7 +574,7 @@ export default function JobDetail({
                           history={history}
                           isclick={
                             job.status === "not_started" ||
-                              job.status === "not_accepted"
+                            job.status === "not_accepted"
                               ? true
                               : false
                           }
@@ -620,40 +585,16 @@ export default function JobDetail({
                 )}
             </div>
           </div>
-          <div className="job-listing-blc">
-            <Button block color="link" className="new-joblist-btn">
-              View 150 New Tasks
-            </Button>
-            <div className="job-list-bx bg-white">
-              <div className="job-list-bx-rw d-flex">
-                <UserImage />
-                <div className="job-list-bx-rt">
-                  <h2 className="d-flex">
-                    Air conditioner repair
-                 <span className="ml-auto">
-                      $750.00
-                 </span>
-                  </h2>
-                  <JobAddress
-                    job_seeker_id={''}
-                    handleImageUpload={null}
-                    imegeUploading={null}
-                    editimage={false}
-                    jobListings={false}
-                  />
-                </div>
-              </div>
-              <div className="job-list-status text-right">
-                <label className="mb-0">
-                  <span>OPEN</span>
-                  10 offers
-                  </label>
-              </div>
+          {!reviewModal && (
+            <div className="job-listing-blc">
+              <Button block color="link" className="new-joblist-btn">
+                View {similarCount} New Tasks
+              </Button>
+              <RenderSimilarProducts data={similarProducts} />
             </div>
-          </div>
+          )}
         </div>
       </div>
-
 
       <PlaceYourBidModal
         _isOpen={openModal}
@@ -661,7 +602,7 @@ export default function JobDetail({
         _modalType={"Place your bid"}
         _handleSubmit={handleSubmit}
         _frequency={job.frequency}
-      // _loading={isModalLoading}
+        // _loading={isModalLoading}
       />
       <ConfirmJobStartModal
         _isOpen={confirmStartModal}
@@ -687,7 +628,6 @@ export default function JobDetail({
         _handleSubmit={handleSubmit}
         history={history}
       />
-
     </>
   );
 }

@@ -326,8 +326,10 @@ export default (props) => {
                   selected={endDate}
                   onChange={(date) => setEndDate(date)}
                   timeInputLabel="Time:"
-                  minDate={new Date()}
-                  maxDate={startDate}
+                  minDate={moment()}
+                  maxDate={moment(startDate)
+                    .clone()
+                    .subtract(5, "minutes")}
                   dateFormat="MM/dd/yyyy h:mm aa"
                   onInputClick={() => handleOnInputClick()}
                   onClickOutsideEvent={handleOnClickOutsideEvent()}
