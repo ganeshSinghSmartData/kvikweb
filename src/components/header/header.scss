@@ -3,18 +3,18 @@
   padding: 18px 0;
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/$primary-dark+0,2db7fe+100 */
   background: $primary-dark; /* Old browsers */
-  background: -moz-linear-gradient(left, $primary-dark 0%, $primary 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(left, $primary-dark 0%, $primary 100%); /* Chrome10-25,Safari5.1-6 */
+  background: -moz-linear-gradient(left, $primary-dark 0%, $primary-light1 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, $primary-dark 0%, $primary-light1 100%); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(
     to right,
     $primary-dark 0%,
-    $primary 100%
+    $primary-light1 100%
   ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$primary-dark', endColorstr='$primary',GradientType=1 ); /* IE6-9 */
   .logo {
     img {
       position: relative;
-      width: 155px;
+      width: 125px;
     }
     // @media (max-width: 550px) {
     //   border-bottom: 1px solid rgba(256, 256, 256, 0.2);
@@ -92,6 +92,18 @@
   @media (max-width: 480px) {
     padding: 12px 0;
   }
+}
+.header-home {
+  background: none;
+  left: 0;
+  right: 0;
+  padding-left: 15px;
+  padding-right: 15px;
+  z-index: 9999;
+}
+.header-home {
+  background-color: $primary-dark;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
 .nav-toggle-btn.active {

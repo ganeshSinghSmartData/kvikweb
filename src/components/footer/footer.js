@@ -3,7 +3,7 @@ import "./footer.scss";
 import { Container, Row, Col, Button } from "reactstrap";
 const Footer = () => {
   return (
-    <footer className="footer position-relative mt-auto">
+    <footer className="footer position-relative mt-auto" id="footer">
       <Container>
         <Row>
           <Col>
@@ -76,7 +76,7 @@ const Footer = () => {
                   <Button color="link">Services</Button>
                 </li>
                 <li className="d-flex align-items-center">
-                  <Button color="link">Contact</Button>
+                  <Button color="link">Contact Us</Button>
                 </li>
                 <li className="d-flex align-items-center">
                   <Button color="link">Terms &amp; Conditions</Button>

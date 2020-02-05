@@ -6,9 +6,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import {
-//   sidebarToggleHandler
-// } from "./../actions/job";
+import { sidebarToggleHandler } from "./../actions/job";
 import smoothscroll from "smoothscroll-polyfill";
 import { Container, Button } from "reactstrap";
 import * as Scroll from "react-scroll";
@@ -19,22 +17,32 @@ import Footer from "./footer/footer";
 smoothscroll.polyfill();
 /*************** Public Layout ***************/
 export const PublicLayout = props => {
-  const sidebarToggleValue = useSelector(state => state.job.sidebarToggle);
+  const sidebarToggleValue = useSelector((state) => state.job.sidebarToggle);
   const dispatch = useDispatch();
   window.scrollTo(0, 0);
   const wrapperRef = useRef(null);
   const [scrollVisible, setscrollVisible] = useState(false);
   const scrollCheck = () => {
+    if (window.location.pathname !== "/") return;
+    let header = document.getElementById("main_container");
+    let sidebar = document.getElementById("sideBar");
+    let home = document.getElementById("home");
 
-    let scrollTopCheck = wrapperRef.current.scrollTop;
-    console.log("current scrool top value====>",scrollTopCheck);
-    
-    if (scrollTopCheck > 300) {
-      // console.log('> 300',scrollTopCheck)
+    if (
+      window.pageYOffset + sidebar &&
+      sidebar.getBoundingClientRect().top <= header.offsetTop
+    ) {
       setscrollVisible(true);
-    } else {
-      // console.log('< 300',scrollTopCheck)
+      !sidebarToggleValue && dispatch(sidebarToggleHandler(true));
+      return;
+    }
+    if (
+      window.pageYOffset + home &&
+      home.getBoundingClientRect().top >= header.offsetTop
+    ) {
       setscrollVisible(false);
+      sidebarToggleValue && dispatch(sidebarToggleHandler(false));
+      return;
     }
   };
   const scrollTopFunction = () => {
@@ -49,11 +57,12 @@ export const PublicLayout = props => {
   }
   return (
     <>
-      <div className={`main-wrapper d-flex flex-column flex-fill ${custom_class}`}>
+      <div className={`main-wrapper d-flex flex-column flex-fill ${custom_class}`} onLoadStart={() => dispatch(sidebarToggleHandler(false))}>
         {!custom_class ?
           <Header {...props} />
           : null}
         <div
+          id="main_container"
           className={`wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto ${!sidebarToggleValue ? 'active' : ''}`}
           ref={wrapperRef}
           onScroll={scrollCheck}

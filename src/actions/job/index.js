@@ -4,37 +4,43 @@ import { apiUrl } from "../../environment";
 import { toastAction, toastErrorAction } from "../toast-actions";
 import { pagination } from "../../utilities/constants";
 
-export const is_fetching = status => ({ type: TYPE.IS_FETCHING, status });
-export const is_search = status => ({ type: TYPE.IS_STATUS, status });
-export const get_job_products = data => ({ type: TYPE.GET_JOB_PRODUCTS, data });
+export const is_fetching = (status) => ({ type: TYPE.IS_FETCHING, status });
+export const is_search = (status) => ({ type: TYPE.IS_STATUS, status });
+export const get_job_products = (data) => ({
+  type: TYPE.GET_JOB_PRODUCTS,
+  data
+});
 export const reset_job_products = () => ({ type: TYPE.RESET_JOB_PRODUCTS });
 export const reset_active_job = () => ({ type: TYPE.RESET_ACTIVE_JOB });
 export const reset_completed_job = () => ({ type: TYPE.RESET_COMPLETED_JOB });
-export const get_job_details = data => ({ type: TYPE.GET_JOB_DETAILS, data });
-export const get_job_bid_check = data => ({ type: TYPE.GET_JOB_BID_CHECK, data });
-export const get_category = data => ({ type: TYPE.GET_CATEGORY, data });
-export const post_job_products = data => ({
+export const get_job_details = (data) => ({ type: TYPE.GET_JOB_DETAILS, data });
+export const get_job_bid_check = (data) => ({
+  type: TYPE.GET_JOB_BID_CHECK,
+  data
+});
+export const get_category = (data) => ({ type: TYPE.GET_CATEGORY, data });
+export const post_job_products = (data) => ({
   type: TYPE.POST_JOB_PRODUCTS,
   data
 });
-export const get_active_job = data => ({ type: TYPE.GET_ACTIVE_JOB, data });
-export const get_completed_job = data => ({
+export const get_active_job = (data) => ({ type: TYPE.GET_ACTIVE_JOB, data });
+export const get_completed_job = (data) => ({
   type: TYPE.GET_COMPLETED_JOB,
   data
 });
-export const reset_job_details = data => ({
+export const reset_job_details = (data) => ({
   type: TYPE.RESET_JOB_DETAILS,
   data
 });
-export const approved_bid_work = data => ({
+export const approved_bid_work = (data) => ({
   type: TYPE.APPROVED_BID_WORK,
   data
 });
 
 /****** action creator for get categories ********/
 export const getJobCategory = () => {
-  return dispatch => {
-    ApiClient.get(`${apiUrl}/categories`, {}).then(response => {
+  return (dispatch) => {
+    ApiClient.get(`${apiUrl}/categories`, {}).then((response) => {
       if (response.status === 200) {
         dispatch(get_category(response.data));
       } else if (response.status === 404) {
@@ -58,17 +64,22 @@ export const getJobProduct = ({
   category = [],
   sort = {}
 }) => {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch(is_fetching(true));
+    const {
+      user: {
+        data: { _id }
+      }
+    } = getState();
     const skip = (page - 1) * pagination.limit;
     ApiClient.get(
-      `${apiUrl}/api/job_listing?lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${
+      `${apiUrl}/api/job_listing?userId=${_id}&&lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${
       pagination.limit
       }&budget=${budget}&zip_code=${zip_code}&miles=${miles}&search=${
       search ? (search.search ? search.search : "") : ""
       }&sort=${JSON.stringify(sort)}`,
       {}
-    ).then(response => {
+    ).then((response) => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(get_job_products(response));
@@ -83,9 +94,9 @@ export const getJobProduct = ({
 };
 
 /****** action creator for get jobs ********/
-export const getJobDetails = job_id => {
-  return dispatch => {
-    ApiClient.get(`${apiUrl}/api/job_detail/${job_id}`, {}).then(response => {
+export const getJobDetails = (job_id) => {
+  return (dispatch) => {
+    ApiClient.get(`${apiUrl}/api/job_detail/${job_id}`, {}).then((response) => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(get_job_details(response.data));
@@ -99,12 +110,16 @@ export const getJobDetails = job_id => {
 };
 
 /****** action creator for job bid check ********/
-export const getJobBidCheck = job_id => {
+export const getJobBidCheck = (job_id) => {
   return (dispatch, getState) => {
     const {
       data: { token, _id }
     } = getState().user;
-    ApiClient.get(`${apiUrl}/bid/check_user_bid/${job_id}/${_id}`, {}, token).then(response => {
+    ApiClient.get(
+      `${apiUrl}/bid/check_user_bid/${job_id}/${_id}`,
+      {},
+      token
+    ).then((response) => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(get_job_bid_check(response.data));
@@ -118,7 +133,6 @@ export const getJobBidCheck = job_id => {
   };
 };
 
-
 /****** action creator for get jobs ********/
 export const createNewJob = (params, callback) => {
   return (dispatch, getState) => {
@@ -126,7 +140,7 @@ export const createNewJob = (params, callback) => {
       data: { token }
     } = getState().user;
     ApiClient._postFormData(`${apiUrl}/api/add_job`, params, token).then(
-      response => {
+      (response) => {
         if (response.status === 200) {
           dispatch(is_fetching(false));
           dispatch(post_job_products(response.data));
@@ -150,7 +164,7 @@ export const updateExistingJob = (params, callback) => {
       data: { token }
     } = getState().user;
     ApiClient._putFormData(`${apiUrl}/api/job_update`, params, token).then(
-      response => {
+      (response) => {
         if (response.status === 200) {
           dispatch(is_fetching(false));
           dispatch(post_job_products(response.data));
@@ -173,7 +187,7 @@ export const placeYourBid = (params, callback) => {
     const {
       data: { token }
     } = getState().user;
-    ApiClient.post(`${apiUrl}/bid/post_bid`, params, token).then(response => {
+    ApiClient.post(`${apiUrl}/bid/post_bid`, params, token).then((response) => {
       console.log("response", response);
       if (response.status === 200) {
         dispatch(is_fetching(false));
@@ -207,7 +221,7 @@ export const getUserActiveJob = (
       `${apiUrl}/api/user_active_job?lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${pagination.limit}&search=${search}`,
       {},
       token
-    ).then(response => {
+    ).then((response) => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(get_active_job(response));
@@ -237,7 +251,7 @@ export const getUserCompletedJob = (
       `${apiUrl}/api/user_completed_job?lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${pagination.limit}&search=${search}`,
       {},
       token
-    ).then(response => {
+    ).then((response) => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(get_completed_job(response));
@@ -260,7 +274,7 @@ export const approvedBidWork = (params, callback) => {
       data: { token }
     } = getState().user;
     ApiClient.post(`${apiUrl}/bid/approved_bid_work`, params, token).then(
-      response => {
+      (response) => {
         if (response.status === 200) {
           callback(true);
           toastAction(true, response.msg);
@@ -282,7 +296,7 @@ export const deleteMyJob = (params, callback) => {
       data: { token }
     } = getState().user;
     ApiClient.delete(`${apiUrl}/api/delete_job/${params.job_id}`, token).then(
-      response => {
+      (response) => {
         if (response.status === 200) {
           toastAction(true, response.msg);
           callback(true);
@@ -304,7 +318,7 @@ export const addBidderReview = (params, callback) => {
       data: { token }
     } = getState().user;
     ApiClient.post(`${apiUrl}/reviews/post_review`, params, token).then(
-      response => {
+      (response) => {
         if (response.status === 200) {
           toastAction(true, response.msg);
           callback(true);
@@ -321,7 +335,14 @@ export const addBidderReview = (params, callback) => {
 
 /****** action creator for Sidebar Toggle ********/
 
-export const sidebarToggleHandler = (data) => (
-  { type: TYPE.SIDEBAR_TOGGLE, data }
-);
+export const sidebarToggleHandler = (data) => ({
+  type: TYPE.SIDEBAR_TOGGLE,
+  data
+});
 
+
+
+export const filterToggleHandler = (data) => ({
+  type: TYPE.FILTER_TOGGLE,
+  data
+});

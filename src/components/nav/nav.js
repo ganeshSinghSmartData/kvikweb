@@ -1,18 +1,23 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { Button } from "reactstrap";
 import { logout } from "./../../actions/user";
 import "./nav.scss";
 
 const Nav = props => {
+  const loggedInUser = useSelector(state => state.user.loggedIn);
   const stopPropagationHandler = e => {
     e.nativeEvent.stopImmediatePropagation();
   };
   const { user } = useSelector(state => state);
 
-  const navVisibleHander = () => {
+  const navVisibleHander = async () => {
     props.navVisibleProp(false)
-    console.log('click')
+    // if (window.location.pathname === "/") {
+    let home = await document.getElementById("home");
+    home && home.scrollIntoView({ behavior: "smooth", block: "start" });
+    // }
   }
   return (
     <nav
@@ -22,20 +27,28 @@ const Nav = props => {
       {
         <ul className="d-flex align-items-center flex-wrap">
           <li>
+            <Link
+              className="text-black"
+              to={loggedInUser ? "/post-job" : "/login"}
+            >
+              <Button className="post-job-btn btn-block">Post a Job</Button>
+            </Link>
+          </li>
+          <li>
             <Link className="btn btn-link" to={"/"} onClick={navVisibleHander}>
-              Home
+              Browse Task
             </Link>
           </li>
           <li>
             <Link className="btn btn-link" to={"/about-us"} onClick={navVisibleHander}>
-              About Us
+              About Qviktask
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link className="btn btn-link" to={"/contact-us"} onClick={navVisibleHander}>
               Contact Us
             </Link>
-          </li>
+          </li> */}
           {!user.loggedIn && (
             <li>
               <Link className="btn btn-link" to={"/register"} onClick={navVisibleHander}>

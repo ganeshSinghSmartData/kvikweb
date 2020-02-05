@@ -18,7 +18,7 @@ const userPersistConfig = {
   key: "Kvik-task",
   storage: storage,
   // transforms: [encryptor],
-  blacklist: ["router", "loader"]
+  whiteList: ["user"]
 };
 
 export default persistCombineReducers(userPersistConfig, {

@@ -5,13 +5,41 @@
 .job-list-heading {
   font-family: $secondary-font-family;
   min-height: 41px;
-  margin-bottom: 9px;
+  margin-top: 6px;
+  margin-bottom: 36px;
   > h3 {
     font-size: 16px;
     font-weight: 500;
     margin: 10px 10px 0px 0;
     color: #000;
   }
+  .job-list-srch {
+    .container {
+      padding-right: 0;
+      padding-left: 0;
+    }
+    .src-service {
+      max-width: none;
+      margin-right: 12px;
+      height: 54px;
+      border-radius: 30px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+      form .btn {
+        min-width: 120px;
+      }
+      form {
+        svg {
+          width: 26px;
+        }
+        .form-control {
+          font-size: 17px;
+        }
+      }
+    }
+  }
+}
+.sorting-page {
+  margin: 0 0 10px 0;
 }
 .job-list-tab {
   .btn {
@@ -134,3 +162,38 @@
 .scroll-tp-btn.on {
   opacity: 1;
 }
+.job-rt-col {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+// *******************************************************************
+// new code merged with suraj
+
+.fixedSideBar {
+  @media (min-width: 767px) {
+    position: fixed;
+    height: 100vh;
+    overflow-y: overlay;
+    overflow: auto;
+    top: 82px;
+  }
+}
+
+.fixedSideBar::-webkit-scrollbar {
+  display: none;
+}
+// .fixedSideBar {
+//   -ms-overflow-style: none;
+// }
+.leftMargin {
+  @media (min-width: 767px) {
+    margin-left: 300px;
+  }
+}
+
+.removeFooter {
+  height: 60vh;
+}
+
+// *******************************************************************

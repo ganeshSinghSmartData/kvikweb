@@ -114,6 +114,10 @@
     margin: 0 10px 0 0;
   }
 }
+.product-col {
+  padding-right: 10px;
+  padding-left: 10px;
+}
 // List row style start
 .job-list-row.job-listing {
   flex-direction: column !important;
@@ -168,16 +172,25 @@
       font-weight: 500;
       color: #24231f;
     }
+    .job-time-col {
+      > label {
+        margin-top: 2px;
+      }
+    }
     .job-time-icn {
-      margin-right: 14px;
+      margin-right: 5px;
       svg {
         width: 15px;
-        fill: $secondary-100;
+        fill: $secondary-200;
       }
     }
     .job-time-col {
-      width: 44%;
+      // width: 44%;
+      flex: 1;
       line-height: 1;
+      &:last-child {
+        justify-content: flex-end;
+      }
     }
     .job-time-icn {
       display: block;

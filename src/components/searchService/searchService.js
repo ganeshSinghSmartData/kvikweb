@@ -9,10 +9,10 @@ import "./searchService.scss";
 import { pagination } from "../../utilities/constants";
 import { getJobProduct, reset_job_products } from "../../actions/job";
 
-const SearchService = props => {
+const SearchService = ({ history, className = '', posJobButton }) => {
   const loggedInUser = useSelector(state => state.user.loggedIn);
   const dispatch = useDispatch();
-  const pathname = props.history.location.pathname;
+  const pathname = history.location.pathname;
 
   const _handleSearch = searchKey => {
     if (pathname === "/" && searchKey.search) {
@@ -29,7 +29,7 @@ const SearchService = props => {
     }
   };
   return (
-    <div className="src-service-blc d-flex flex-column flex-fill">
+    <div className={`src-service-blc d-flex flex-column flex-fill ${className}`}>
       <Container className="d-flex flex-column flex-fill">
         <Row className="d-flex flex-column flex-fill">
           <Col className="d-flex flex-fill">
@@ -67,12 +67,16 @@ const SearchService = props => {
                   </Button>
                 </LocalForm>
               </div>
-              <Link
-                className="text-black"
-                to={loggedInUser ? "/post-job" : "/login"}
-              >
-                <Button className="post-job-btn btn-block">Post a Job</Button>
-              </Link>
+              {
+                posJobButton ?
+                  <Link
+                    className="text-black"
+                    to={loggedInUser ? "/post-job" : "/login"}
+                  >
+                    <Button className="post-job-btn btn-block">Post a Job</Button>
+                  </Link> : null
+              }
+
             </div>
           </Col>
         </Row>

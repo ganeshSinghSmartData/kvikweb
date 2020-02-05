@@ -7,7 +7,7 @@ import UserProfile from "./userProfile/userProfile";
 import Logo from "../commonUi/logo/logo";
 
 import "./header.scss";
-const Header = props => {
+const Header = (props) => {
   const { user } = useSelector(state => state);
 
   let imagepath = "", metricsData;
@@ -43,8 +43,11 @@ const Header = props => {
   const navClickCallback = value => {
     setnavVisible(value);
   };
+  const location = props.children.props.location.pathname
+
+  console.log('props', props)
   return (
-    <header className="header d-flex flex-column flex-shrink-0">
+    <header className={`header d-flex flex-column flex-shrink-0 ${location === "/" ? 'header-home position-absolute' : ''}`} id={"header"}>
       <Container>
         <Row>
           <Col
