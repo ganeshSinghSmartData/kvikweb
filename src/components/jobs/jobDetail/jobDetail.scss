@@ -499,6 +499,20 @@
         color: $primary;
       }
     }
+    .rejected {
+      .step-bar {
+        background: $red-dark;
+      }
+      .step-cell {
+        border-color: $red-dark;
+        span {
+          background: $red-dark;
+        }
+      }
+      .step-label {
+        color: $red-dark;
+      }
+    }
   }
 }
 

@@ -81,7 +81,7 @@ export default function JobDetail({
   let [timeleft, seTimeleft] = useState(
     datetimeDifference(
       new Date(),
-      new Date(DaysBetween(job.jobEndDate || job.endDate))
+      new Date(DaysBetween(parseInt(job.jobEndDate || job.endDate)))
     )
   );
   /*   setInterval(() => {
@@ -226,7 +226,7 @@ export default function JobDetail({
 
         <div className="job-detail-inner d-flex flex-fill">
           <div className="job-detail-rw job-detail-lft flex-fill">
-            <StatusBar visible={!reviewModal} />
+            <StatusBar visible={!reviewModal} status={job.status} />
             <div className="d-flex job-detail-top">
               <div className="job-detail-pic-col">
                 <div
@@ -490,7 +490,7 @@ export default function JobDetail({
                 </h3>
                 <div className="job-detail-bid d-flex justify-content-center">
                   <Countdown
-                    date={new Date(job.jobEndDate || job.endDate)}
+                    date={new Date(parseInt(job.jobEndDate || job.endDate))}
                     intervalDelay={0}
                     precision={3}
                     renderer={(props) => (
@@ -588,7 +588,7 @@ export default function JobDetail({
           {!reviewModal && (
             <div className="job-listing-blc">
               <Button block color="link" className="new-joblist-btn">
-                View {similarCount} New Tasks
+                View New Tasks
               </Button>
               <RenderSimilarProducts data={similarProducts} />
             </div>

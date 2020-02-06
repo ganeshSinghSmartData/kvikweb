@@ -18,23 +18,26 @@ import "./jobProduct.scss";
 /********* Get time ago in string format *********/
 
 const JobProduct = ({ product, listType, path }) => {
-  const [timeleft, seTimeleft] = useState(
-    datetimeDifference(new Date(), new Date(DaysBetween(product.jobEndDate)))
-  );
+  // const [timeleft, seTimeleft] = useState(
+  //   datetimeDifference(
+  //     new Date(),
+  //     new Date(DaysBetween(parseInt(product.jobEndDate || product.endDate)))
+  //   )
+  // );
 
-  var intervalId = setInterval(() => {
-    const time = datetimeDifference(
-      new Date(),
-      new Date(DaysBetween(product.jobEndDate))
-    );
-    seTimeleft(time);
-  }, 1000 * 60);
+  // var intervalId = setInterval(() => {
+  //   const time = datetimeDifference(
+  //     new Date(),
+  //     new Date(DaysBetween(parseInt(product.jobEndDate || product.endDate)))
+  //   );
+  //   seTimeleft(time);
+  // }, 1000 * 60);
 
-  useEffect(() => {
-    return () => {
-      clearInterval(intervalId);
-    };
-  });
+  // useEffect(() => {
+  //   return () => {
+  //     clearInterval(intervalId);
+  //   };
+  // });
 
   let workStatus = {};
   let pathname = "/job-details/";
@@ -210,9 +213,11 @@ const JobProduct = ({ product, listType, path }) => {
             </span>
             <label className="d-flex flex-column">
               Bidding ends in:
-              {product && product.jobEndDate ? (
+              {product && (product.jobEndDate || product.endDate) ? (
                 <Countdown
-                  date={new Date(product.jobEndDate)}
+                  date={
+                    new Date(parseInt(product.jobEndDate || product.endDate))
+                  }
                   renderer={({ days, hours, minutes, completed }) => {
                     if (completed) return null;
                     else {
