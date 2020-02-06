@@ -238,8 +238,11 @@ export default function JobDetail({
         )}
 
         <div className="job-detail-inner d-flex flex-fill">
-          <div className="job-detail-rw job-detail-lft flex-fill">
+          <div className="job-detail-rw job-detail-lft flex-fill overflow-auto">
             <div className="job-step-rw">
+              <div class="job-status-mbl">
+                Job Status: <span className="text-primary text-danger text-success">Inprogress</span>
+              </div>
               <ul className="d-flex">
                 <li className="d-flex justify-content-center position-relative complete">
                   {/* <span className="step-bar position-absolute">
@@ -489,44 +492,6 @@ export default function JobDetail({
                       )}
                     </ul>
                   </div>
-
-                </div>
-                <div className="bid-status-btns">
-                  {job.status === "accepted" && path !== "/job-proposal" && (
-                    <Button
-                      color="primary"
-                      onClick={() =>
-                        _startJob(job._id, job.job_seeker_id._id, user.data._id)
-                      }
-                    >
-                      Start Job
-                  </Button>
-                  )}
-                  {job.status === "in_progress" && path !== "/job-proposal" && (
-                    <Button
-                      color="secondary"
-                      onClick={() =>
-                        _endJob(job._id, job.job_seeker_id._id, user.data._id)
-                      }
-                    >
-                      <span>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="78.775"
-                          height="57.775"
-                          viewBox="0 0 78.775 57.775"
-                        >
-                          <path
-                            id="Forma_1"
-                            data-name="Forma 1"
-                            d="M78.564,8.73,29.722,57.567a1.1,1.1,0,0,1-1.556,0L.433,29.836a1.1,1.1,0,0,1,0-1.555l6.739-6.738a1.1,1.1,0,0,1,1.556,0L28.945,41.757,70.27.436a1.1,1.1,0,0,1,1.555,0l6.739,6.738A1.1,1.1,0,0,1,78.564,8.73Z"
-                            transform="translate(-0.111 -0.114)"
-                          />
-                        </svg>
-                      </span>
-                      Mark as Complete
-                  </Button>
-                  )}
                 </div>
               </div>
             </div>
@@ -555,6 +520,46 @@ export default function JobDetail({
                 <h4>About</h4>
                 <Paragraph>{job.description}</Paragraph>
               </div>
+
+              <div className="bid-status-btns place-bid-rw text-center w-100 job-detail-action-btns">
+                {job.status === "accepted" && path !== "/job-proposal" && (
+                  <Button
+                    color="secondary"
+                    onClick={() =>
+                      _startJob(job._id, job.job_seeker_id._id, user.data._id)
+                    }
+                  >
+                    Start Job
+                  </Button>
+                )}
+                {job.status === "in_progress" && path !== "/job-proposal" && (
+                  <Button
+                    color="secondary"
+                    onClick={() =>
+                      _endJob(job._id, job.job_seeker_id._id, user.data._id)
+                    }
+                  >
+                    <span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="78.775"
+                        height="57.775"
+                        viewBox="0 0 78.775 57.775"
+                      >
+                        <path
+                          id="Forma_1"
+                          data-name="Forma 1"
+                          d="M78.564,8.73,29.722,57.567a1.1,1.1,0,0,1-1.556,0L.433,29.836a1.1,1.1,0,0,1,0-1.555l6.739-6.738a1.1,1.1,0,0,1,1.556,0L28.945,41.757,70.27.436a1.1,1.1,0,0,1,1.555,0l6.739,6.738A1.1,1.1,0,0,1,78.564,8.73Z"
+                          transform="translate(-0.111 -0.114)"
+                        />
+                      </svg>
+                    </span>
+                    Mark as Complete
+                  </Button>
+                )}
+              </div>
+
+
               {path === "/job-proposal" && job.status === "completed" && (
                 <div className="place-bid-rw text-center w-100 job-detail-action-btns">
                   <Button
@@ -620,34 +625,297 @@ export default function JobDetail({
                 )}
             </div>
           </div>
-          <div className="job-listing-blc">
-            <Button block color="link" className="new-joblist-btn">
-              View 150 New Tasks
-            </Button>
-            <div className="job-list-bx bg-white">
-              <div className="job-list-bx-rw d-flex">
-                <UserImage />
-                <div className="job-list-bx-rt">
-                  <h2 className="d-flex">
-                    Air conditioner repair
-                 <span className="ml-auto">
-                      $750.00
-                 </span>
-                  </h2>
-                  <JobAddress
-                    job_seeker_id={''}
-                    handleImageUpload={null}
-                    imegeUploading={null}
-                    editimage={false}
-                    jobListings={false}
-                  />
+          <div className="job-listing-blc flex-shrink-0 flex-fill overflow-auto">
+
+            <div className="job-listing-blc-inner">
+              <Button block color="link" className="new-joblist-btn">
+                View 150 New Tasks
+              </Button>
+              <div className="job-list-bx bg-white">
+                <div className="job-list-bx-rw d-flex">
+                  <UserImage />
+                  <div className="job-list-bx-rt">
+                    <h2 className="d-flex">
+                      Air conditioner repair
+                    <span className="ml-auto">
+                        $750.00
+                    </span>
+                    </h2>
+                    <JobAddress
+                      job_seeker_id={''}
+                      handleImageUpload={null}
+                      imegeUploading={null}
+                      editimage={false}
+                      jobListings={false}
+                    />
+                  </div>
+                </div>
+                <div className="job-list-status text-right">
+                  <label className="mb-0">
+                    <span>OPEN</span>
+                    10 offers
+                  </label>
                 </div>
               </div>
-              <div className="job-list-status text-right">
-                <label className="mb-0">
-                  <span>OPEN</span>
-                  10 offers
+              <div className="job-list-bx bg-white">
+                <div className="job-list-bx-rw d-flex">
+                  <UserImage />
+                  <div className="job-list-bx-rt">
+                    <h2 className="d-flex">
+                      Air conditioner repair
+                 <span className="ml-auto">
+                        $750.00
+                 </span>
+                    </h2>
+                    <JobAddress
+                      job_seeker_id={''}
+                      handleImageUpload={null}
+                      imegeUploading={null}
+                      editimage={false}
+                      jobListings={false}
+                    />
+                  </div>
+                </div>
+                <div className="job-list-status text-right">
+                  <label className="mb-0">
+                    <span>OPEN</span>
+                    10 offers
                   </label>
+                </div>
+              </div>
+              <div className="job-list-bx bg-white">
+                <div className="job-list-bx-rw d-flex">
+                  <UserImage />
+                  <div className="job-list-bx-rt">
+                    <h2 className="d-flex">
+                      Air conditioner repair
+                 <span className="ml-auto">
+                        $750.00
+                 </span>
+                    </h2>
+                    <JobAddress
+                      job_seeker_id={''}
+                      handleImageUpload={null}
+                      imegeUploading={null}
+                      editimage={false}
+                      jobListings={false}
+                    />
+                  </div>
+                </div>
+                <div className="job-list-status text-right">
+                  <label className="mb-0">
+                    <span>OPEN</span>
+                    10 offers
+                  </label>
+                </div>
+              </div>
+              <div className="job-list-bx bg-white">
+                <div className="job-list-bx-rw d-flex">
+                  <UserImage />
+                  <div className="job-list-bx-rt">
+                    <h2 className="d-flex">
+                      Air conditioner repair
+                 <span className="ml-auto">
+                        $750.00
+                 </span>
+                    </h2>
+                    <JobAddress
+                      job_seeker_id={''}
+                      handleImageUpload={null}
+                      imegeUploading={null}
+                      editimage={false}
+                      jobListings={false}
+                    />
+                  </div>
+                </div>
+                <div className="job-list-status text-right">
+                  <label className="mb-0">
+                    <span>OPEN</span>
+                    10 offers
+                  </label>
+                </div>
+              </div>
+              <div className="job-list-bx bg-white">
+                <div className="job-list-bx-rw d-flex">
+                  <UserImage />
+                  <div className="job-list-bx-rt">
+                    <h2 className="d-flex">
+                      Air conditioner repair
+                 <span className="ml-auto">
+                        $750.00
+                 </span>
+                    </h2>
+                    <JobAddress
+                      job_seeker_id={''}
+                      handleImageUpload={null}
+                      imegeUploading={null}
+                      editimage={false}
+                      jobListings={false}
+                    />
+                  </div>
+                </div>
+                <div className="job-list-status text-right">
+                  <label className="mb-0">
+                    <span>OPEN</span>
+                    10 offers
+                  </label>
+                </div>
+              </div>
+              <div className="job-list-bx bg-white">
+                <div className="job-list-bx-rw d-flex">
+                  <UserImage />
+                  <div className="job-list-bx-rt">
+                    <h2 className="d-flex">
+                      Air conditioner repair
+                 <span className="ml-auto">
+                        $750.00
+                 </span>
+                    </h2>
+                    <JobAddress
+                      job_seeker_id={''}
+                      handleImageUpload={null}
+                      imegeUploading={null}
+                      editimage={false}
+                      jobListings={false}
+                    />
+                  </div>
+                </div>
+                <div className="job-list-status text-right">
+                  <label className="mb-0">
+                    <span>OPEN</span>
+                    10 offers
+                  </label>
+                </div>
+              </div>
+              <div className="job-list-bx bg-white">
+                <div className="job-list-bx-rw d-flex">
+                  <UserImage />
+                  <div className="job-list-bx-rt">
+                    <h2 className="d-flex">
+                      Air conditioner repair
+                 <span className="ml-auto">
+                        $750.00
+                 </span>
+                    </h2>
+                    <JobAddress
+                      job_seeker_id={''}
+                      handleImageUpload={null}
+                      imegeUploading={null}
+                      editimage={false}
+                      jobListings={false}
+                    />
+                  </div>
+                </div>
+                <div className="job-list-status text-right">
+                  <label className="mb-0">
+                    <span>OPEN</span>
+                    10 offers
+                  </label>
+                </div>
+              </div>
+              <div className="job-list-bx bg-white">
+                <div className="job-list-bx-rw d-flex">
+                  <UserImage />
+                  <div className="job-list-bx-rt">
+                    <h2 className="d-flex">
+                      Air conditioner repair
+                 <span className="ml-auto">
+                        $750.00
+                 </span>
+                    </h2>
+                    <JobAddress
+                      job_seeker_id={''}
+                      handleImageUpload={null}
+                      imegeUploading={null}
+                      editimage={false}
+                      jobListings={false}
+                    />
+                  </div>
+                </div>
+                <div className="job-list-status text-right">
+                  <label className="mb-0">
+                    <span>OPEN</span>
+                    10 offers
+                  </label>
+                </div>
+              </div>
+              <div className="job-list-bx bg-white">
+                <div className="job-list-bx-rw d-flex">
+                  <UserImage />
+                  <div className="job-list-bx-rt">
+                    <h2 className="d-flex">
+                      Air conditioner repair
+                 <span className="ml-auto">
+                        $750.00
+                 </span>
+                    </h2>
+                    <JobAddress
+                      job_seeker_id={''}
+                      handleImageUpload={null}
+                      imegeUploading={null}
+                      editimage={false}
+                      jobListings={false}
+                    />
+                  </div>
+                </div>
+                <div className="job-list-status text-right">
+                  <label className="mb-0">
+                    <span>OPEN</span>
+                    10 offers
+                  </label>
+                </div>
+              </div>
+              <div className="job-list-bx bg-white">
+                <div className="job-list-bx-rw d-flex">
+                  <UserImage />
+                  <div className="job-list-bx-rt">
+                    <h2 className="d-flex">
+                      Air conditioner repair
+                 <span className="ml-auto">
+                        $750.00
+                 </span>
+                    </h2>
+                    <JobAddress
+                      job_seeker_id={''}
+                      handleImageUpload={null}
+                      imegeUploading={null}
+                      editimage={false}
+                      jobListings={false}
+                    />
+                  </div>
+                </div>
+                <div className="job-list-status text-right">
+                  <label className="mb-0">
+                    <span>OPEN</span>
+                    10 offers
+                  </label>
+                </div>
+              </div>
+              <div className="job-list-bx bg-white">
+                <div className="job-list-bx-rw d-flex">
+                  <UserImage />
+                  <div className="job-list-bx-rt">
+                    <h2 className="d-flex">
+                      Air conditioner repair
+                 <span className="ml-auto">
+                        $750.00
+                 </span>
+                    </h2>
+                    <JobAddress
+                      job_seeker_id={''}
+                      handleImageUpload={null}
+                      imegeUploading={null}
+                      editimage={false}
+                      jobListings={false}
+                    />
+                  </div>
+                </div>
+                <div className="job-list-status text-right">
+                  <label className="mb-0">
+                    <span>OPEN</span>
+                    10 offers
+                  </label>
+                </div>
               </div>
             </div>
           </div>

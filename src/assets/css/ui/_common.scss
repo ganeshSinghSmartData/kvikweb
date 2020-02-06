@@ -100,6 +100,9 @@ body {
 .pt-30 {
   padding-top: 30px !important;
 }
+.pt-20 {
+  padding-top: 20px !important;
+}
 .flex-fill {
   min-height: 0;
 }
@@ -444,4 +447,25 @@ input[type="search"]::-webkit-search-decoration {
     color: #000;
     margin: 4px 0 0 0;
   }
+}
+
+//job detail layout style
+.jobDetailLayout {
+  > div {
+    flex: 1;
+    overflow: auto;
+    margin-bottom: 20px !important;
+    .job-detail-blc {
+      @media (max-width: 767px) {
+        flex: none !important;
+      }
+    }
+  }
+  .footer {
+    display: none;
+  }
+}
+// Home layout style
+.homeLayout {
+  padding-top: 78px;
 }

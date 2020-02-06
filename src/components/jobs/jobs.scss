@@ -171,24 +171,23 @@
 // new code merged with suraj
 
 .fixedSideBar {
-  @media (min-width: 767px) {
+  @media (min-width: 768px) {
+    .sidebar {
+      overflow: auto;
+    }
     position: fixed;
-    height: 100vh;
+    height: calc(100% - 195px);
     overflow-y: overlay;
-    overflow: auto;
     top: 82px;
   }
 }
 
-.fixedSideBar::-webkit-scrollbar {
-  display: none;
-}
-// .fixedSideBar {
-//   -ms-overflow-style: none;
+// .fixedSideBar::-webkit-scrollbar {
+//   display: none;
 // }
 .leftMargin {
   @media (min-width: 767px) {
-    margin-left: 300px;
+    margin-left: 265px;
   }
 }
 

@@ -100,8 +100,8 @@ const ReviewModal = (props) => {
                     <Button color="secondary" className="close-btn btn2" onClick={saveJobData}>Submit</Button>
                 </ModalHeader>
                 {/* //CHANGES */}
-                <ModalBody>
-                    <JobDetail  history={props.history}
+                <ModalBody className="overflow-auto">
+                    <JobDetail history={props.history}
                         job={_jobDetails}
                         path=""
                         _isLoading={false}

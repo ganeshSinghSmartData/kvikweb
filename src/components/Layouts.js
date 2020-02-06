@@ -22,12 +22,12 @@ export const PublicLayout = props => {
   window.scrollTo(0, 0);
   const wrapperRef = useRef(null);
   const [scrollVisible, setscrollVisible] = useState(false);
+  const [headerFixed, setheaderFixed] = useState(false);
   const scrollCheck = () => {
     if (window.location.pathname !== "/") return;
     let header = document.getElementById("main_container");
     let sidebar = document.getElementById("sideBar");
     let home = document.getElementById("home");
-
     if (
       window.pageYOffset + sidebar &&
       sidebar.getBoundingClientRect().top <= header.offsetTop
@@ -35,6 +35,14 @@ export const PublicLayout = props => {
       setscrollVisible(true);
       !sidebarToggleValue && dispatch(sidebarToggleHandler(true));
       return;
+    }
+    if (
+      wrapperRef.current.scrollTop > 60
+    ) {
+      setheaderFixed(true)
+    }
+    else {
+      setheaderFixed(false)
     }
     if (
       window.pageYOffset + home &&
@@ -57,13 +65,20 @@ export const PublicLayout = props => {
   }
   return (
     <>
+      {!custom_class ?
+        <Header {...props} headerFixed={headerFixed} />
+        : null}
       <div className={`main-wrapper d-flex flex-column flex-fill ${custom_class}`} onLoadStart={() => dispatch(sidebarToggleHandler(false))}>
-        {!custom_class ?
-          <Header {...props} />
-          : null}
+
         <div
           id="main_container"
-          className={`wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto ${!sidebarToggleValue ? 'active' : ''}`}
+          className={`wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto 
+          ${!sidebarToggleValue ? 'active' : ''}
+          ${props.children.props.match.path === "/job-details/:job_id"
+              ||
+              props.children.props.match.path == "/bid-details/:job_id" ? 'jobDetailLayout' : ''}
+              ${props.children.props.match.path == "/" ? 'homeLayout' : ''}
+          `}
           ref={wrapperRef}
           onScroll={scrollCheck}
         >
@@ -71,7 +86,9 @@ export const PublicLayout = props => {
             props.children.props.match.path === "/post-job") && (
               <Banner path={props.children} />
             )}
-          <Container className={`d-flex flex-column flex-shrink-0 mb-50 position-relative pt-30 ${custom_class}`}>
+          <Container className={`d-flex flex-column  mb-50 position-relative pt-20 
+          ${custom_class}`
+          }>
             {props.children}
             <button
               type="button"

@@ -47,7 +47,13 @@ const Header = (props) => {
 
   console.log('props', props)
   return (
-    <header className={`header d-flex flex-column flex-shrink-0 ${location === "/" ? 'header-home position-absolute' : ''}`} id={"header"}>
+    <header className={`header d-flex flex-column flex-shrink-0 
+    ${location === "/" ? 'header-home' : ''}
+    ${props.headerFixed ? 'active' : ''}
+    `
+
+    }
+      id={"header"}>
       <Container>
         <Row>
           <Col

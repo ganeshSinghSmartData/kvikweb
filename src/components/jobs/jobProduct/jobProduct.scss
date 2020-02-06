@@ -55,6 +55,13 @@
     color: #000;
     line-height: 18px;
     padding-right: 15px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    @media (max-width: 990px) {
+      white-space: normal;
+    }
   }
   span {
     font-size: 14px;

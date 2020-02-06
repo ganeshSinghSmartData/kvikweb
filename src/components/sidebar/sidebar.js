@@ -19,7 +19,7 @@ const Sidebar = ({
   _handleDistance,
   _handleBudget
 }) => {
-  const sidebarRef=createRef()
+  const sidebarRef = createRef()
   const [isCategory, setIsCategory] = useState(true);
   const [isFilter, setIsFilter] = useState(true);
   const [toggleCheck, setToggleCheck] = useState(false);
@@ -31,7 +31,7 @@ const Sidebar = ({
   const dispatch = useDispatch();
   let { job } = useSelector(state => state);
   useEffect(() => {
-   
+
     if (!job.category || job.category.length === 0) {
       dispatch(getJobCategory());
     }
@@ -44,12 +44,12 @@ const Sidebar = ({
         CategoryItems.push({ name: item.title, value: item.title });
       }
     });
-   
+
 
   return (
-    <aside className='sidebar' ref={sidebarRef} onScroll={()=>{
+    <aside className='sidebar' ref={sidebarRef} onScroll={() => {
       let sidebar = ReactDOM.findDOMNode(sidebarRef.current)
-      console.log("aside-side",sidebar.scrollTop); 
+      console.log("aside-side", sidebar.scrollTop);
     }}>
       <div className="sidebar-item">
         <h3 className="d-flex" onClick={toggleCategory}>

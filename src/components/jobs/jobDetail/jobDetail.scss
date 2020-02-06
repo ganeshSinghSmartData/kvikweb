@@ -12,7 +12,6 @@
     margin-right: 15px;
   }
   .job-desc-list {
-    margin-bottom: 20px;
     li {
       margin-bottom: 11px;
       padding-right: 12px;
@@ -68,6 +67,7 @@
   margin: 0px 15px 15px 0;
   @media (max-width: 600px) {
     flex-direction: column !important;
+    margin-bottom: 5px;
   }
   .rating-blc {
     margin-top: -2px;
@@ -102,6 +102,12 @@
     }
   }
 }
+.job-detail-col-rt {
+  margin-bottom: 15px;
+  @media (max-width: 600px) {
+    margin-bottom: 5px;
+  }
+}
 .job-detail-amnt {
   font-size: 18px;
   font-weight: 500;
@@ -133,6 +139,9 @@
 
 .job-detail-top {
   margin-bottom: 20px;
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
 }
 // .job-detail-hd {
 //   padding-bottom: 18px;
@@ -160,9 +169,6 @@
 .job-detail-hd-rw {
   margin: 0 0 3px 0;
   border-bottom: 1px solid #eee;
-  @media (max-width: 600px) {
-    flex-direction: column;
-  }
   h3 {
     font-family: $secondary-font-family;
     font-size: 18px;
@@ -175,14 +181,9 @@
     font-weight: 400;
     color: #757575;
   }
-  .job-detail-col-rt {
-    @media (max-width: 600px) {
-      margin-top: 8px;
-    }
-  }
 }
 .job-detail-rw {
-  margin: 0 0 49px 0;
+  margin: 0 0 5px 0;
   .slick-list {
     margin: 10px 0 0;
   }
@@ -207,6 +208,12 @@
 .job-detail-pic-col {
   width: 174px;
   margin-right: 15px;
+  @media (max-width: 767px) {
+    margin-bottom: 20px;
+  }
+  @media (max-width: 480px) {
+    width: 100%;
+  }
   .job-detail-pic {
     height: 174px;
     padding: 4px;
@@ -291,6 +298,11 @@
         width: 1px;
         height: calc(100% - 12px);
         background: $primary;
+      }
+      &:last-child {
+        &:after {
+          width: 0;
+        }
       }
     }
   }
@@ -414,10 +426,25 @@
 // job-listing-blc & step progress style start
 .job-step-rw {
   margin: 15px 0 25px 0;
+  @media (max-width: 500px) {
+    margin: 0px 0 15px 0;
+  }
+  .job-status-mbl {
+    font-size: 15px;
+    font-weight: 500;
+    display: none;
+    @media (max-width: 500px) {
+      display: block;
+    }
+  }
   ul {
+    @media (max-width: 500px) {
+      display: none !important;
+    }
     li {
       width: 25%;
       font-size: 16px;
+      text-align: center;
       @media (max-width: 640px) {
         font-size: 13px;
       }
@@ -431,6 +458,7 @@
       > label {
         margin-top: -7px;
         z-index: 2;
+        padding: 0 5px;
       }
       .step-cell {
         width: 18px;
@@ -503,7 +531,10 @@
 }
 
 .job-listing-blc {
-  margin-left: 15px;
+  position: relative;
+  top: 0;
+  padding-left: 15px;
+  padding-right: 15px;
   max-width: 300px;
   width: 100%;
   @media (max-width: 767px) {
@@ -512,7 +543,13 @@
   }
   .new-joblist-btn {
     border: 2px solid $primary;
+    background-color: #f0f5f6;
+    border-radius: 2px;
     color: $primary;
+    position: sticky;
+    -webkit-position: sticky;
+    top: 0;
+    z-index: 2;
     &:focus {
       text-decoration: none;
     }
@@ -526,7 +563,15 @@
     padding: 10px 10px 0;
     border-radius: 5px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all ease 0.3s 0s;
+    &:hover {
+      box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
+    }
+    * {
+      cursor: pointer;
+    }
     h2 {
       font-size: 15px;
       font-weight: 500;
@@ -553,6 +598,9 @@
     }
     .job-address {
       margin-top: 0;
+      @media (max-width: 600px) {
+        text-align: left;
+      }
       .job-user-info {
         padding: 0;
         li {
@@ -584,6 +632,7 @@
 @media (max-width: 767px) {
   .job-detail-blc {
     margin-top: 0px;
+    flex: none !important;
   }
   .job-detail-hd-rw {
     h3 {
@@ -591,10 +640,6 @@
     }
     .job-detail-amnt {
       font-size: 22px;
-      margin-top: 6px;
     }
-  }
-  .job-detail-pic-col {
-    margin-bottom: 20px;
   }
 }

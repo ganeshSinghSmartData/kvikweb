@@ -93,17 +93,25 @@
     padding: 12px 0;
   }
 }
+@mixin bg-opacity($color, $opacity) {
+  background: $color;
+  background: rgba($color, $opacity);
+}
 .header-home {
   background: none;
   left: 0;
   right: 0;
-  padding-left: 15px;
-  padding-right: 15px;
+  margin-left: 20px;
+  margin-right: 20px;
   z-index: 9999;
+  position: fixed;
+  transition: all ease 0.1s 0s;
 }
-.header-home {
-  background-color: $primary-dark;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+.header-home.active {
+  @include bg-opacity($primary-dark, 0.95);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .nav-toggle-btn.active {

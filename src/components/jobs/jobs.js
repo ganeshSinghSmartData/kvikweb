@@ -205,20 +205,19 @@ const Job = ({
       dispatch(reset_job_products());
       dispatch(getJobProduct(reqData));
     }
-    // window.addEventListener('resize', windowResize)
+    window.addEventListener('resize', windowResize)
     return (() => {
-      // document.removeEventListener("resize", windowResize)
+      document.removeEventListener("resize", windowResize)
     })
   }, []);
-  // const windowResize = () => {
-  //   const windowWidth = window.innerWidth;
-  //   if (windowWidth > 767) {
-  //     if (jobs.sidebarToggle) {
-  //       console.log('resize condition > 768')
-  //       dispatch(sidebarToggleHandler(false))
-  //     }
-  //   }
-  // }
+  const windowResize = () => {
+    const windowWidth = window.innerWidth;
+    if (windowWidth > 767) {
+      if (jobs.sidebarToggle === true) {
+        dispatch(filterToggleHandler(false))
+      }
+    }
+  }
 
   const sidebarToggleValue = useSelector(state => {
     return state.job.sidebarToggle
@@ -361,9 +360,9 @@ const Job = ({
             />
             : null}
           {path === "" && (
-            <Col className={`${
+            <div className={`${
               sidebarToggleValue ? "fixedSideBar" : ""
-              } ${jobs.filterToggle ? "active" : ""} sidebar-col d-flex flex-column`}
+              } ${jobs.filterToggle ? "active" : ""} sidebar-col d-flex flex-column flex-shrink-0`}
               id="sideBar" onClick={stopPropagation}>
               <Sidebar
                 _handleCategory={handleCategory}
@@ -371,9 +370,9 @@ const Job = ({
                 _handleDistance={handleDistance}
                 _handleBudget={handleBudget}
               />
-            </Col>
+            </div>
           )}
-          <Col className={`${sidebarToggleValue ? "leftMargin" : ""} job-rt-col`}>
+          <div className={`${sidebarToggleValue ? "leftMargin" : ""} job-rt-col flex-fill`}>
             {/* {path === "" && (
               <React.Fragment>
                 <Heading className="text-primary h1">
@@ -539,7 +538,7 @@ const Job = ({
                 </Row>
               )}
             </div>
-          </Col>
+          </div>
         </Row>
 
       </section>
