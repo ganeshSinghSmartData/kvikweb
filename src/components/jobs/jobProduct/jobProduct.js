@@ -3,34 +3,41 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import datetimeDifference from "datetime-difference";
 import Countdown from "react-countdown-now";
-
-import { StringToDate, DaysBetween, AddOffset } from "./../../../utilities/common";
+import moment from "moment";
+import {
+  StringToDate,
+  DaysBetween,
+  AddOffset
+} from "./../../../utilities/common";
 import { apiUrl } from "./../../../environment";
 import { JobStatus, BidStatus } from "../../../utilities/constants";
 import { getJobBidCheck } from "./../../../actions/job";
-
+import constants from "../../../constants";
 import "./jobProduct.scss";
 
 /********* Get time ago in string format *********/
 
 const JobProduct = ({ product, listType, path }) => {
-  const [timeleft, seTimeleft] = useState(
-    datetimeDifference(new Date(), new Date(DaysBetween(product.jobEndDate)))
-  );
+  // const [timeleft, seTimeleft] = useState(
+  //   datetimeDifference(
+  //     new Date(),
+  //     new Date(DaysBetween(parseInt(product.jobEndDate || product.endDate)))
+  //   )
+  // );
 
-  var intervalId = setInterval(() => {
-    const time = datetimeDifference(
-      new Date(),
-      new Date(DaysBetween(product.jobEndDate))
-    );
-    seTimeleft(time);
-  }, 1000 * 60);
+  // var intervalId = setInterval(() => {
+  //   const time = datetimeDifference(
+  //     new Date(),
+  //     new Date(DaysBetween(parseInt(product.jobEndDate || product.endDate)))
+  //   );
+  //   seTimeleft(time);
+  // }, 1000 * 60);
 
-  useEffect(() => {
-    return () => {
-      clearInterval(intervalId);
-    };
-  });
+  // useEffect(() => {
+  //   return () => {
+  //     clearInterval(intervalId);
+  //   };
+  // });
 
   let workStatus = {};
   let pathname = "/job-details/";
@@ -44,29 +51,6 @@ const JobProduct = ({ product, listType, path }) => {
   }
 
   let classname = "";
-  const setJobStatus = status => {
-    switch (status) {
-      case "not_started":
-        return (classname = "job-danger-bar");
-      case "not_accepted":
-        return (classname = "job-secondary-bar");
-      case "expired":
-        return (classname = "job-danger-bar");
-      case "rejected":
-        return (classname = "job-danger-bar");
-      case "approved":
-        return (classname = "job-primary-bar");
-      case "accepted":
-        return (classname = "job-primary-bar");
-      case "completed":
-        return (classname = "job-success-bar");
-      case "in_progress":
-        return (classname = "job-secondary-bar");
-      default:
-        return (classname = "job-danger-bar");
-    }
-  };
-  setJobStatus(product.status);
   let imageclass = "";
   if (product.images && product.images.length !== 0) {
     imageclass = "";
@@ -74,9 +58,9 @@ const JobProduct = ({ product, listType, path }) => {
     imageclass =
       "no-job-image-blc d-flex align-items-center justify-content-center";
   }
-  const { loggedIn = false } = useSelector(state => state.user);
+  const { loggedIn = false } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const jobDetails = id => {
+  const jobDetails = (id) => {
     if (loggedIn) dispatch(getJobBidCheck(id));
   };
   return (
@@ -92,7 +76,6 @@ const JobProduct = ({ product, listType, path }) => {
           to={`${pathname}${product._id}`}
           onClick={() => jobDetails(product._id)}
         >
-          {/* <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" /> */}
           {product.images && product.images.length !== 0 ? (
             <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />
           ) : (
@@ -182,8 +165,9 @@ const JobProduct = ({ product, listType, path }) => {
               Bid Count:
               {(product.jobBidStatus &&
                 product.jobBidStatus !== 0 &&
-                product.jobBidStatus.filter(status => status === "not_accepted")
-                  .length) ||
+                product.jobBidStatus.filter(
+                  (status) => status === "not_accepted"
+                ).length) ||
                 0}
             </label>
           </div>
@@ -211,39 +195,69 @@ const JobProduct = ({ product, listType, path }) => {
             </span>
             <label className="d-flex flex-column text-left">
               Date
-            <span>{StringToDate(product.jobStartDate)}</span>
+              <span>{StringToDate(product.jobStartDate)}</span>
             </label>
           </div>
           <div className="job-time-col d-flex text-right">
             <span className="job-time-icn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="23.003" height="23.003" viewBox="0 0 23.003 23.003">
-                <path id="Forma_1" data-name="Forma 1" d="M0,11.5A11.5,11.5,0,1,1,11.5,23,11.514,11.514,0,0,1,0,11.5Zm2.447,0A9.054,9.054,0,1,0,11.5,2.446,9.065,9.065,0,0,0,2.445,11.5Zm8.933,1.539a.947.947,0,0,1-.947-.947V4.93a.947.947,0,0,1,1.894,0v6.215h5.168a.947.947,0,1,1,0,1.894Z" transform="translate(0.002 0.002)" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="23.003"
+                height="23.003"
+                viewBox="0 0 23.003 23.003"
+              >
+                <path
+                  id="Forma_1"
+                  data-name="Forma 1"
+                  d="M0,11.5A11.5,11.5,0,1,1,11.5,23,11.514,11.514,0,0,1,0,11.5Zm2.447,0A9.054,9.054,0,1,0,11.5,2.446,9.065,9.065,0,0,0,2.445,11.5Zm8.933,1.539a.947.947,0,0,1-.947-.947V4.93a.947.947,0,0,1,1.894,0v6.215h5.168a.947.947,0,1,1,0,1.894Z"
+                  transform="translate(0.002 0.002)"
+                />
               </svg>
             </span>
             <label className="d-flex flex-column">
               Bidding ends in:
-            {product && product.jobEndDate ?
+              {product && (product.jobEndDate || product.endDate) ? (
                 <Countdown
-                  date={new Date().getTime() + Number(product.jobEndDate)}
-                  renderer={({ hours, minutes, completed }) => {
-                    if (!completed) {
-                      let diffTime = datetimeDifference(new Date(), new Date(AddOffset(+product.jobEndDate)));
+                  date={
+                    new Date(parseInt(product.jobEndDate || product.endDate))
+                  }
+                  renderer={({ days, hours, minutes, completed }) => {
+                    if (completed) return null;
+                    else {
+                      // Render a countdown
                       return (
-                        <span className="text-success"> {`${diffTime.days}d ${diffTime.hours}h ${diffTime.minutes}m`}</span>
+                        <span className="text-success">
+                          {days}d {hours}h {minutes}m
+                        </span>
                       );
                     }
                   }}
                 />
-                : null}
+              ) : null}
             </label>
           </div>
-
         </div>
         <div className="job-status-rw d-flex mt-auto0">
-          <label className="flex-fill mb-0 text-primary text-danger text-success">
-            Open
+          <label
+            className={`flex-fill mb-0 ${
+              product.status === "accepted" ||
+                product.status === "in_progress" ||
+                product.status === "completed"
+                ? "text-success"
+                : product.status === "rejected" || product.status === "expired"
+                  ? "text-danger"
+                  : "text-primary"
+              }`}
+          >
+            {constants.jobStatus[product.status]}
           </label>
-          <span>Your bid : $150</span>
+          <span>
+            Your bid : $
+            {(product.mybid &&
+              product.mybid[0] &&
+              product.mybid[0].bid_amount) ||
+              0}
+          </span>
         </div>
       </div>
     </div>

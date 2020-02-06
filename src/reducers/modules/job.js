@@ -17,7 +17,9 @@ const initialState = {
   completedJobsCount: 0,
   sidebarToggle: false,
   filter: {},
-  filterToggle: false
+  filterToggle: false,
+  similarProducts: [],
+  similarCount: 0
 };
 
 export default function reducer(state = initialState, action) {
@@ -81,6 +83,18 @@ export default function reducer(state = initialState, action) {
       return { ...state, jobDetails: {} };
     case TYPE.FILTER_SUCCESS:
       return { ...state, filter: action.payload };
+    case TYPE.SIMILAR_JOBS:
+      return {
+        ...state,
+        similarProducts: [...state.similarProducts, ...action.data.joblisting],
+        similarCount: action.data.count
+      };
+    case TYPE.CLEAR_SIMILAR_JOBS:
+      return {
+        ...state,
+        similarProducts: [],
+        similarCount: 0
+      };
     default:
       return state;
   }
