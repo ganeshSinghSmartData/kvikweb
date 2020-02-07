@@ -34,7 +34,7 @@ class JobList extends Component {
 
   handleUserActiveJob(page) {
     this.setState({ loading: true });
-    this.props.getUserActiveJob(page, callback => {
+    this.props.getUserActiveJob(page, (callback) => {
       if (callback) {
         this.setState({ loading: false });
       } else {
@@ -45,7 +45,7 @@ class JobList extends Component {
 
   handleUserCompletedJob(page) {
     this.setState({ loading: true });
-    this.props.getUserCompletedJob(page, callback => {
+    this.props.getUserCompletedJob(page, (callback) => {
       if (callback) {
         this.setState({ loading: false });
       } else {
@@ -62,8 +62,10 @@ class JobList extends Component {
         ) : (
           <Job
             path={this.props.match.path}
-            _handleUserActiveJob={page => this.handleUserActiveJob(page)}
-            _handleUserCompletedJob={page => this.handleUserCompletedJob(page)}
+            _handleUserActiveJob={(page) => this.handleUserActiveJob(page)}
+            _handleUserCompletedJob={(page) =>
+              this.handleUserCompletedJob(page)
+            }
           />
         )}
       </React.Fragment>
@@ -71,18 +73,18 @@ class JobList extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   activeJobs: state.job.activeJobProduct,
   completedJobs: state.job.completedJobProduct
 });
 
-const mapDispatchToProps ={
+const mapDispatchToProps = {
   getUserActiveJob,
   getUserCompletedJob,
   reset_active_job,
   reset_completed_job,
   reset_job_details,
-  reset_user_job_details,
+  reset_user_job_details
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(JobList);

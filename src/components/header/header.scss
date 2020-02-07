@@ -93,6 +93,12 @@
     padding: 12px 0;
   }
 }
+.header-invisible {
+  min-height: 78px;
+  position: relative;
+  z-index: 0;
+  display: none;
+}
 @mixin bg-opacity($color, $opacity) {
   background: $color;
   background: rgba($color, $opacity);

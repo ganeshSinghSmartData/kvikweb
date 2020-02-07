@@ -9,15 +9,15 @@ import "./searchService.scss";
 import { pagination } from "../../utilities/constants";
 import { getJobProduct, reset_job_products } from "../../actions/job";
 
-const SearchService = ({ history, className = '', posJobButton }) => {
-  const loggedInUser = useSelector(state => state.user.loggedIn);
+const SearchService = ({ history, className = "", posJobButton }) => {
+  const loggedInUser = useSelector((state) => state.user.loggedIn);
   const dispatch = useDispatch();
   const pathname = history.location.pathname;
 
-  const _handleSearch = searchKey => {
-    if (pathname === "/" && searchKey.search) {
+  const _handleSearch = (search) => {
+    if (pathname === "/" && search) {
       dispatch(reset_job_products());
-      dispatch(getJobProduct({ page: pagination.page, search: searchKey }));
+      dispatch(getJobProduct({ page: pagination.page, search }));
       /* if (searchKey.search === "") {
         console.log("I am calling in empty search");
         dispatch(getJobProduct({ page: pagination.page }));
@@ -31,7 +31,7 @@ const SearchService = ({ history, className = '', posJobButton }) => {
   return (
     <>
       <LocalForm
-        onSubmit={values => _handleSearch(values)}
+        onSubmit={values => _handleSearch(values.search)}
         className="src-service-blc d-flex flex-column flex-fill"
       >
         <div className="src-service position-relative d-flex flex-column">
@@ -42,7 +42,7 @@ const SearchService = ({ history, className = '', posJobButton }) => {
               model=".search"
               placeholder="Search for a service"
               className="border-0 flex-fill h-100 form-control"
-              onChange={e => _handleSearch({ search: e.target.value })}
+              onChange={e => _handleSearch(e.target.value)}
             />
             <span className="d-flex align-items-center position-absolute">
               <svg

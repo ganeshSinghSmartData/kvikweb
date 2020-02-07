@@ -63,6 +63,7 @@ export const REMOVE_CARD = "REMOVE_CARD";
 
 /*************Sidebar Toggle*********************************/
 export const SIDEBAR_TOGGLE = "SIDEBAR_TOGGLE";
+export const FOOTER_IN_VIEW = "FOOTER_IN_VIEW";
 
 /************Filter *********************************/
 export const FILTER_REQUEST = "FILTER_REQUEST";

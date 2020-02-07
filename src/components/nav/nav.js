@@ -14,10 +14,11 @@ const Nav = props => {
 
   const navVisibleHander = async () => {
     props.navVisibleProp(false)
-    // if (window.location.pathname === "/") {
-    let home = await document.getElementById("home");
-    home && home.scrollIntoView({ behavior: "smooth", block: "start" });
-    // }
+    if (window.location.pathname === "/") {
+      document.querySelector("#home").scrollIntoView({ block: 'start', inline: 'nearest' })
+      // let home = await document.getElementById("home");
+      // home && home.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+    }
   }
   return (
     <nav
@@ -35,7 +36,12 @@ const Nav = props => {
             </Link>
           </li>
           <li>
-            <Link className="btn btn-link" to={"/"} onClick={navVisibleHander}>
+            <Link className="btn btn-link" to={{
+              pathname: "/",
+              hash: window.location.pathname === "/" ? "#home" : "",
+
+            }}
+              onClick={navVisibleHander}>
               Browse Task
             </Link>
           </li>

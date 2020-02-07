@@ -174,29 +174,45 @@
 // *******************************************************************
 // new code merged with suraj
 
-.fixedSideBar {
-  @media (min-width: 768px) {
-    .sidebar {
-      overflow: auto;
-    }
-    position: fixed;
-    height: calc(100% - 195px);
-    overflow-y: overlay;
+@media (min-width: 768px) {
+  .fixedSideBar {
+    position: sticky;
     top: 82px;
+    // height: calc(634px - 80px);
+    overflow: auto;
+  }
+  // #home.active {
+  //   position: fixed !important;
+  //   top: 78px;
+  //   left: 0;
+  //   right: 0;
+  //   background: #fff;
+  //   padding: 0 15px;
+  //   z-index: 99;
+  //   padding-left: 260px;
+  //   border: 2px solid red;
+  //   height: calc(100% - 78px);
+  //   div + div {
+  //     flex: 1;
+  //     overflow: scroll;
+  //   }
+  // }
+  .job-listing.active {
+    min-height: 634px;
   }
 }
 
 // .fixedSideBar::-webkit-scrollbar {
 //   display: none;
+// // }
+// .leftMargin {
+//   @media (min-width: 767px) {
+//     margin-left: 265px;
+//   }
 // }
-.leftMargin {
-  @media (min-width: 767px) {
-    margin-left: 265px;
-  }
-}
 
-.removeFooter {
-  height: 60vh;
-}
+// .removeFooter {
+//   height: 60vh;
+// }
 
 // *******************************************************************
