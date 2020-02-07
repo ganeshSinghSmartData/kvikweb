@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import { LocalForm } from "react-redux-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,20 +20,33 @@ const Sidebar = ({
   _handleBudget,
   selectedCategory
 }) => {
-  const sidebarRef = createRef();
+  const sidebarRef = useRef(null);
   const [isCategory, setIsCategory] = useState(true);
   const [isFilter, setIsFilter] = useState(true);
-
+  const [isHeightSet, setHeight] = useState(false);
   const toggleCategory = () => setIsCategory(!isCategory);
   const toggleFilter = () => setIsFilter(!isFilter);
 
   const dispatch = useDispatch();
   let { job } = useSelector((state) => state);
   useEffect(() => {
+    // document.getElementById("side").clientHeigh;
+
+    if (!isHeightSet) {
+      let height =
+        window.innerHeight - document.querySelector("#header").clientHeight;
+      document
+        .getElementById("side")
+        .setAttribute("style", `height:${height}px;`);
+      document
+        .getElementById("jobListing")
+        .setAttribute("style", `min-height:${height}px;`);
+      setHeight(true);
+    }
     if (!job.category || job.category.length === 0) {
       dispatch(getJobCategory());
     }
-  });
+  }, [isHeightSet, job.category, dispatch]);
   let CategoryItems = [];
   job.category &&
     job.category.length &&
@@ -42,16 +55,17 @@ const Sidebar = ({
         CategoryItems.push({ name: item.title, value: item.title });
       }
     });
-  console.log("selectedCategory", selectedCategory)
+  console.log("selectedCategory", selectedCategory);
   return (
-
-    <aside
+    <div
       className="sidebar"
       ref={sidebarRef}
-    // onScroll={() => {
-    //   let sidebar = ReactDOM.findDOMNode(sidebarRef.current);
-    //   // console.log("aside-side", sidebar.scrollTop);
-    // }}
+      id="side"
+
+      // onScroll={() => {
+      //   let sidebar = ReactDOM.findDOMNode(sidebarRef.current);
+      //   // console.log("aside-side", sidebar.scrollTop);
+      // }}
     >
       <div className="sidebar-item">
         <h3 className="d-flex" onClick={toggleCategory}>
@@ -72,7 +86,15 @@ const Sidebar = ({
                 CategoryItems.length &&
                 CategoryItems.map((item, key) => {
                   return (
-                    <li className={`position-relative ${selectedCategory && selectedCategory.findIndex(i => i === item.name) >= 0 ? "active" : ""}`} key={key}>
+                    <li
+                      className={`position-relative ${
+                        selectedCategory &&
+                        selectedCategory.findIndex((i) => i === item.name) >= 0
+                          ? "active"
+                          : ""
+                      }`}
+                      key={key}
+                    >
                       <Button
                         color="link"
                         block
@@ -176,7 +198,7 @@ const Sidebar = ({
       >
         Search
       </Button>
-    </aside>
+    </div>
   );
 };
 

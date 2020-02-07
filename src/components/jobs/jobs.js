@@ -253,7 +253,7 @@ const Job = ({
         <div
           className={`d-flex job-list-heading ${
             path !== "" ? "sorting-page" : ""
-            }`}
+          }`}
         >
           {path == "" && <SearchService />}
           {path !== "" && (
@@ -269,7 +269,7 @@ const Job = ({
               <button
                 className={`btn ${
                   jobType === "completed" ? "btn-primary" : ""
-                  }`}
+                }`}
                 onClick={() => {
                   setJobType("completed");
                 }}
@@ -411,11 +411,9 @@ const Job = ({
           ) : null}
           {path === "" && (
             <div
-              className={`${
-                sidebarToggleValue ? "fixedSideBar" : ""
-                } ${
+              className={`${sidebarToggleValue ? "fixedSideBar" : ""} ${
                 jobs.filterToggle ? "active" : ""
-                } sidebar-col d-flex flex-column flex-shrink-0`}
+              } sidebar-col d-flex flex-column flex-shrink-0`}
               id="sideBar"
               onClick={stopPropagation}
             >
@@ -433,7 +431,7 @@ const Job = ({
               window.location.pathname === "/" && sidebarToggleValue
                 ? "leftMargin"
                 : ""
-              } job-rt-col flex-fill`}
+            } job-rt-col flex-fill`}
           >
             {/* {path === "" && (
               <React.Fragment>
@@ -448,16 +446,14 @@ const Job = ({
 
             <div className="job-list-blc m-0" id="jobList">
               <Row
-                className={
-                  `job-listing
+                className={`job-listing position-relative
                   ${listType ? "job-list-row" : ""}
-                  ${sidebarToggleValue ? "active" : ""}`
-                }
+                  ${sidebarToggleValue ? "active" : ""}`}
+                id="jobListing"
               >
                 {isFetching ? <SpinnerOverlay /> : null}
                 {!isFetching && products && products.length === 0 && <NoData />}
-                {
-                  !isFetching &&
+                {!isFetching &&
                   products &&
                   products.map((item, key) => {
                     return (
