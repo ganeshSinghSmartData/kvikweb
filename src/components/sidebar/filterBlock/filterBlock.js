@@ -8,20 +8,30 @@ const FilterBlock = ({
   minValue,
   handleRange,
   containerClass,
-  inputClass
+  inputClass,
+  multiValue,
+  unit,
+  placeUnitInRight
 }) => {
-  const [range, setRange] = useState({ min: 5, max: 10 });
+  const [range, setRange] = useState(
+    multiValue ? { min: 5, max: maxValue / 2 } : 10
+  );
 
   return (
     <div className={`filter-row filter-bar-rw ${containerClass}`}>
-      {/* <div className={`filter-row filter-bar-rw ${budgetFilter ? 'distance-row' : 'budget-row'}`}> */}
       <h5 className="d-flex">
-        <label className="flex-fill m-0">
-          {/* {budgetFilter ? "Budget" : "Distance"} */}
-          {title}
-        </label>
-        {/* <span>{budgetFilter ? "$150" : "10 mile"}</span> */}
-        {/* <span>${budgetFilter?budgetRange:distanceRange}</span> */}
+        <label className="flex-fill m-0">{title}</label>
+        <span>
+          {multiValue
+            ? `${!placeUnitInRight ? unit : ""}${range.min}${
+                placeUnitInRight ? unit : ""
+              }-${!placeUnitInRight ? unit : ""}${range.max}${
+                placeUnitInRight ? unit : ""
+              }`
+            : `${!placeUnitInRight ? unit : ""} ${range}${
+                placeUnitInRight ? unit : ""
+              }`}
+        </span>
       </h5>
       <div className={`filter-bar-blc position-relative ${inputClass}`}>
         <div className="filter-bar-outer">
@@ -32,7 +42,7 @@ const FilterBlock = ({
             minValue={minValue || 0}
             value={range}
             onChange={(value) => setRange(value)}
-            // onChangeComplete={(value) => handleRange(value)}
+            onChangeComplete={(value) => handleRange(value)}
           />
 
           {/* <Progress value={50} className={"filter-bar " + (props.budgetFilter ? 'secondary-bg-dark' : '')}></Progress> */}

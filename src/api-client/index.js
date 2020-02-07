@@ -16,14 +16,14 @@ class ApiClient {
     if (token) {
       setAuthorizationToken(axios, token);
     }
-    return new Promise(function (fulfill, reject) {
+    return new Promise(function(fulfill, reject) {
       axios
         .post(url, JSON.stringify(params), config)
 
-        .then(function (response) {
+        .then(function(response) {
           fulfill(response.data);
         })
-        .catch(function (error) {
+        .catch(function(error) {
           if (error && error.response) {
             fulfill(error.response.data);
           } else {
@@ -35,13 +35,13 @@ class ApiClient {
 
   static put(url, params, token = null) {
     setAuthorizationToken(axios, token);
-    return new Promise(function (fulfill, reject) {
+    return new Promise(function(fulfill, reject) {
       axios
         .put(url, JSON.stringify(params), config)
-        .then(function (response) {
+        .then(function(response) {
           fulfill(response.data);
         })
-        .catch(function (error) {
+        .catch(function(error) {
           if (error && error.response) {
             fulfill(error.response.data);
           } else {
@@ -55,14 +55,15 @@ class ApiClient {
     setAuthorizationToken(axios, token);
     let query = querystring.stringify(params);
     url = query ? `${url}?${query}` : url;
-    return new Promise(function (fulfill, reject) {
+    console.log("url hjer======>", url);
+    return new Promise(function(fulfill, reject) {
       axios
         .get(url, config)
 
-        .then(function (response) {
+        .then(function(response) {
           fulfill(response.data);
         })
-        .catch(function (error) {
+        .catch(function(error) {
           if (error && error.response) {
             fulfill(error.response.data);
           } else {
@@ -76,14 +77,14 @@ class ApiClient {
     // setAuthorizationToken(axios, token);
     let query = querystring.stringify(params);
     url = query ? `${url}?${query}` : url;
-    return new Promise(function (fulfill, reject) {
+    return new Promise(function(fulfill, reject) {
       axios
         .get(url, config)
 
-        .then(function (response) {
+        .then(function(response) {
           fulfill(response.data);
         })
-        .catch(function (error) {
+        .catch(function(error) {
           if (error && error.response) {
             fulfill(error.response.data);
           } else {
@@ -94,13 +95,13 @@ class ApiClient {
   }
 
   static patch(url, params, token = null) {
-    return new Promise(function (fulfill, reject) {
+    return new Promise(function(fulfill, reject) {
       axios
         .patch(url, JSON.stringify(params), config)
-        .then(function (response) {
+        .then(function(response) {
           fulfill(response.data);
         })
-        .catch(function (error) {
+        .catch(function(error) {
           if (error && error.response) {
             fulfill(error.response.data);
           } else {
@@ -112,13 +113,13 @@ class ApiClient {
 
   static delete(url, token = null) {
     setAuthorizationToken(axios, token);
-    return new Promise(function (fulfill, reject) {
+    return new Promise(function(fulfill, reject) {
       axios
         .delete(url, config)
-        .then(function (response) {
+        .then(function(response) {
           fulfill(response.data);
         })
-        .catch(function (error) {
+        .catch(function(error) {
           if (error && error.response) {
             fulfill(error.response.data);
           } else {
@@ -130,17 +131,17 @@ class ApiClient {
   /*************** Form-Data Method without file for Create ***********/
   static _postFormData(url, params, token = null) {
     setAuthorizationToken(axios, token);
-    return new Promise(function (fulfill, reject) {
+    return new Promise(function(fulfill, reject) {
       axios
         .post(url, params, {
           ...config,
           ...{ headers: { "Content-Type": "multipart/form-data" } }
         })
 
-        .then(function (response) {
+        .then(function(response) {
           fulfill(response.data);
         })
-        .catch(function (error) {
+        .catch(function(error) {
           if (error && error.response) {
             fulfill(error.response.data);
           } else {
@@ -153,7 +154,7 @@ class ApiClient {
   /*************** Form-Data Method for Update ***********/
   static _putFormData(url, params, token = null) {
     setAuthorizationToken(axios, token);
-    return new Promise(function (fulfill, reject) {
+    return new Promise(function(fulfill, reject) {
       // var body = new FormData();
       // body.append("file", params);
       axios
@@ -162,10 +163,10 @@ class ApiClient {
           ...{ headers: { "Content-Type": "multipart/form-data" } }
         })
 
-        .then(function (response) {
+        .then(function(response) {
           fulfill(response.data);
         })
-        .catch(function (error) {
+        .catch(function(error) {
           if (error && error.response) {
             fulfill(error.response.data);
           } else {
@@ -178,7 +179,7 @@ class ApiClient {
   /*************** Form-Data with file Method ***********/
   static postFormData(url, params, token = null) {
     setAuthorizationToken(axios, token);
-    return new Promise(function (fulfill, reject) {
+    return new Promise(function(fulfill, reject) {
       var body = new FormData();
       body.append("file", params);
       axios
@@ -187,10 +188,10 @@ class ApiClient {
           ...{ headers: { "Content-Type": "multipart/form-data" } }
         })
 
-        .then(function (response) {
+        .then(function(response) {
           fulfill(response.data);
         })
-        .catch(function (error) {
+        .catch(function(error) {
           if (error && error.response) {
             fulfill(error.response.data);
           } else {

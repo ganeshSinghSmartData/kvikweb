@@ -19,7 +19,11 @@ const RenderSimilarProducts = (props) => {
                   </span>
                 </h2>
                 <JobAddress
-                  job_seeker_id={""}
+                  job_seeker_id={{
+                    city: item.city,
+                    street: item.street,
+                    zip_code: item.location
+                  }}
                   handleImageUpload={null}
                   imegeUploading={null}
                   editimage={false}

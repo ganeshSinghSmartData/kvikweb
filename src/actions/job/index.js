@@ -55,7 +55,8 @@ export const getJobCategory = () => {
 /****** action creator for get jobs ********/
 export const getJobProduct = ({
   page,
-  budget = "",
+  minbudget = "",
+  maxbudget = "",
   search = "",
   zip_code = "",
   miles = "",
@@ -72,14 +73,15 @@ export const getJobProduct = ({
       }
     } = getState();
     const skip = (page - 1) * pagination.limit;
-    ApiClient.get(
-      `${apiUrl}/api/job_listing?userId=${_id}&&lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${
-        pagination.limit
-      }&budget=${budget}&zip_code=${zip_code}&miles=${miles}&search=${
-        search ? (search.search ? search.search : "") : ""
-      }&sort=${JSON.stringify(sort)}`,
-      {}
-    ).then((response) => {
+    let url = `${apiUrl}/api/job_listing?userId=${_id ||
+      ""}&lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${
+      pagination.limit
+    }&minbudget=${minbudget}&maxbudget=${maxbudget}&zip_code=${zip_code}&miles=${miles}&search=${search}&sort=${
+      sort ? JSON.stringify(sort) : ""
+    }`;
+    console.log("calling url", url);
+
+    ApiClient.get(url, {}).then((response) => {
       if (response.status === 200) {
         dispatch(is_fetching(false));
         dispatch(get_job_products(response));
@@ -369,3 +371,8 @@ export const getSimilarProduct = (page, category = []) => {
     });
   };
 };
+
+export const setFooterInView = (data) => ({
+  type: TYPE.FOOTER_IN_VIEW,
+  data
+});

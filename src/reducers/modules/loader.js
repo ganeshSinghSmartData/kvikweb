@@ -17,10 +17,12 @@ export default function reducer(state = initialState, action) {
       return { ...state, isFetching: action.status };
     case TYPE.FILTER_REQUEST:
       return { ...state, isFetching: true };
-      case TYPE.FILTER_SUCCESS:
-      return { ...state, isFetching: false };  
-      case TYPE.FILTER_FAIL:
-      return { ...state, isFetching: false }
+    case TYPE.FILTER_SUCCESS:
+      return { ...state, isFetching: false };
+    case TYPE.FILTER_FAIL:
+      return { ...state, isFetching: false };
+    case TYPE.LOGOUT_USERS:
+      return initialState;
     default:
       return state;
   }

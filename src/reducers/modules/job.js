@@ -19,7 +19,9 @@ const initialState = {
   filter: {},
   filterToggle: false,
   similarProducts: [],
-  similarCount: 0
+  similarCount: 0,
+  footerToggle: false,
+  jobBidCheck: []
 };
 
 export default function reducer(state = initialState, action) {
@@ -59,7 +61,11 @@ export default function reducer(state = initialState, action) {
         ],
         completedJobsCount: action.data.count
       };
-
+    case TYPE.FOOTER_IN_VIEW:
+      return {
+        ...state,
+        footerToggle: action.data
+      };
     case TYPE.SIDEBAR_TOGGLE:
       return {
         ...state,
@@ -95,6 +101,8 @@ export default function reducer(state = initialState, action) {
         similarProducts: [],
         similarCount: 0
       };
+    case TYPE.LOGOUT_USERS:
+      return initialState;
     default:
       return state;
   }

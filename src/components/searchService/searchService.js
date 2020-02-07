@@ -9,15 +9,15 @@ import "./searchService.scss";
 import { pagination } from "../../utilities/constants";
 import { getJobProduct, reset_job_products } from "../../actions/job";
 
-const SearchService = ({ history, className = '', posJobButton }) => {
-  const loggedInUser = useSelector(state => state.user.loggedIn);
+const SearchService = ({ history, className = "", posJobButton }) => {
+  const loggedInUser = useSelector((state) => state.user.loggedIn);
   const dispatch = useDispatch();
   const pathname = history.location.pathname;
 
-  const _handleSearch = searchKey => {
-    if (pathname === "/" && searchKey.search) {
+  const _handleSearch = (search) => {
+    if (pathname === "/" && search) {
       dispatch(reset_job_products());
-      dispatch(getJobProduct({ page: pagination.page, search: searchKey }));
+      dispatch(getJobProduct({ page: pagination.page, search }));
       /* if (searchKey.search === "") {
         console.log("I am calling in empty search");
         dispatch(getJobProduct({ page: pagination.page }));
@@ -29,14 +29,16 @@ const SearchService = ({ history, className = '', posJobButton }) => {
     }
   };
   return (
-    <div className={`src-service-blc d-flex flex-column flex-fill ${className}`}>
+    <div
+      className={`src-service-blc d-flex flex-column flex-fill ${className}`}
+    >
       <Container className="d-flex flex-column flex-fill">
         <Row className="d-flex flex-column flex-fill">
           <Col className="d-flex flex-fill">
             <div className="src-service-blc d-flex flex-fill m-auto justify-content-center">
               <div className="src-service d-flex">
                 <LocalForm
-                  onSubmit={values => _handleSearch(values)}
+                  onSubmit={(values) => _handleSearch(values.search)}
                   className="d-flex flex-fill"
                 >
                   <span className="d-flex align-items-center">
@@ -60,23 +62,21 @@ const SearchService = ({ history, className = '', posJobButton }) => {
                     model=".search"
                     placeholder="Search for a service"
                     className="border-0 flex-fill h-100 form-control"
-                    onChange={e => _handleSearch({ search: e.target.value })}
+                    onChange={(e) => _handleSearch(e.target.value)}
                   />
                   <Button color="primary" type="submit">
                     Search
                   </Button>
                 </LocalForm>
               </div>
-              {
-                posJobButton ?
-                  <Link
-                    className="text-black"
-                    to={loggedInUser ? "/post-job" : "/login"}
-                  >
-                    <Button className="post-job-btn btn-block">Post a Job</Button>
-                  </Link> : null
-              }
-
+              {posJobButton ? (
+                <Link
+                  className="text-black"
+                  to={loggedInUser ? "/post-job" : "/login"}
+                >
+                  <Button className="post-job-btn btn-block">Post a Job</Button>
+                </Link>
+              ) : null}
             </div>
           </Col>
         </Row>

@@ -29,16 +29,16 @@ class Home extends Component {
     this.handleForgotPassword = this.handleForgotPassword.bind(this);
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   toggleModal() {
     this.props.history.push("/");
   }
 
-  handleSubmit = values => {
+  handleSubmit = (values) => {
     this.setState({ isLoading: true });
     if (values.lname || values.fname) {
-      this.props.registerUser(values, callback => {
+      this.props.registerUser(values, (callback) => {
         if (callback) {
           this.setState({ isLoading: false });
           SocketClient.init(socketUrl, callback.token, this.props.dispatch);
@@ -49,10 +49,10 @@ class Home extends Component {
         }
       });
     } else if (values.message) {
-      this.props.contactUs(values, callback => {
+      this.props.contactUs(values, (callback) => {
         console.log("values, callback", values, callback);
         if (callback) {
-           toastAction(true, "Your message has sent to the admin successfully");
+          toastAction(true, "Your message has sent to the admin successfully");
           this.setState({ isLoading: false });
           this.props.history.push("/");
         } else {
@@ -62,7 +62,7 @@ class Home extends Component {
         }
       });
     } else if (values.forgotemail && !values.confirmPassword) {
-      this.props.forgotPassword({ email: values.forgotemail }, callback => {
+      this.props.forgotPassword({ email: values.forgotemail }, (callback) => {
         if (callback) {
           this.setState({ isLoading: false, sentForgotEmail: true });
         } else {
@@ -76,7 +76,7 @@ class Home extends Component {
         password: values.newpassword,
         confirmPassword: values.confirmPassword
       };
-      this.props.changePassword(reqData, callback => {
+      this.props.changePassword(reqData, (callback) => {
         if (callback) {
           this.setState({ isLoading: false, sentForgotEmail: false });
           this.toggleModal();
@@ -86,7 +86,7 @@ class Home extends Component {
         }
       });
     } else {
-      this.props.loginUser(values, callback => {
+      this.props.loginUser(values, (callback) => {
         if (callback) {
           this.setState({ isLoading: false });
           SocketClient.init(socketUrl, callback.token, this.props.dispatch);
@@ -99,18 +99,19 @@ class Home extends Component {
     }
   };
 
-  handleForgotPassword = values => { };
+  handleForgotPassword = (values) => {};
 
-  handleSocialLogin = user => {
+  handleSocialLogin = (user) => {
     console.log(user);
   };
 
-  handleSocialLoginFailure = err => {
+  handleSocialLoginFailure = (err) => {
     console.error("social error =====>", err);
   };
 
   render() {
     const path = this.props.location.pathname;
+    console.log("props here", this.props);
     return (
       <React.Fragment>
         {true ? <Job /> : <SpinnerOverlay className="position-fixed" />}
@@ -138,12 +139,12 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   /* user: state.user,
     dashboard: state.dashboard */
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   registerUser: bindActionCreators(registerUser, dispatch),
   loginUser: bindActionCreators(loginUser, dispatch),
   forgotPassword: bindActionCreators(forgotPassword, dispatch),

@@ -6,18 +6,20 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { sidebarToggleHandler } from "./../actions/job";
+import { sidebarToggleHandler, setFooterInView } from "./../actions/job";
 import smoothscroll from "smoothscroll-polyfill";
 import { Container, Button } from "reactstrap";
 import * as Scroll from "react-scroll";
 import Header from "./header/header";
 import Banner from "./banner/banner";
 import Footer from "./footer/footer";
+import { isElementInViewPort } from "../utilities/observer";
 
 smoothscroll.polyfill();
 /*************** Public Layout ***************/
-export const PublicLayout = props => {
+export const PublicLayout = (props) => {
   const sidebarToggleValue = useSelector((state) => state.job.sidebarToggle);
+  const footerToggle = useSelector((state) => state.job.footerToggle);
   const dispatch = useDispatch();
   window.scrollTo(0, 0);
   const wrapperRef = useRef(null);
@@ -28,6 +30,14 @@ export const PublicLayout = props => {
     let header = document.getElementById("main_container");
     let sidebar = document.getElementById("sideBar");
     let home = document.getElementById("home");
+    let footer = document.getElementById("footer");
+    let jobList = document.getElementById("jobList");
+    console.log(footer.getBoundingClientRect());
+    // if (isElementInViewPort("footer")) {
+    //   !footerToggle && dispatch(setFooterInView(true));
+    // } else {
+    //   footerToggle && dispatch(setFooterInView(false));
+    // }
     if (
       window.pageYOffset + sidebar &&
       sidebar.getBoundingClientRect().top <= header.offsetTop
@@ -36,13 +46,10 @@ export const PublicLayout = props => {
       !sidebarToggleValue && dispatch(sidebarToggleHandler(true));
       return;
     }
-    if (
-      wrapperRef.current.scrollTop > 60
-    ) {
-      setheaderFixed(true)
-    }
-    else {
-      setheaderFixed(false)
+    if (wrapperRef.current.scrollTop > 60) {
+      setheaderFixed(true);
+    } else {
+      setheaderFixed(false);
     }
     if (
       window.pageYOffset + home &&
@@ -65,30 +72,34 @@ export const PublicLayout = props => {
   }
   return (
     <>
-      {!custom_class ?
-        <Header {...props} headerFixed={headerFixed} />
-        : null}
-      <div className={`main-wrapper d-flex flex-column flex-fill ${custom_class}`} onLoadStart={() => dispatch(sidebarToggleHandler(false))}>
-
+      {!custom_class ? <Header {...props} headerFixed={headerFixed} /> : null}
+      <div
+        className={`main-wrapper d-flex flex-column flex-fill ${custom_class}`}
+        onLoadStart={() => dispatch(sidebarToggleHandler(false))}
+      >
         <div
           id="main_container"
           className={`wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto 
-          ${!sidebarToggleValue ? 'active' : ''}
-          ${props.children.props.match.path === "/job-details/:job_id"
-              ||
-              props.children.props.match.path == "/bid-details/:job_id" ? 'jobDetailLayout' : ''}
-              ${props.children.props.match.path == "/" ? 'homeLayout' : ''}
+          ${!sidebarToggleValue ? "active" : ""}
+          ${
+            props.children.props.match.path === "/job-details/:job_id" ||
+            props.children.props.match.path == "/bid-details/:job_id"
+              ? "jobDetailLayout"
+              : ""
+          }
+              ${props.children.props.match.path == "/" ? "homeLayout" : ""}
           `}
           ref={wrapperRef}
           onScroll={scrollCheck}
         >
           {(props.children.props.match.path === "/" ||
             props.children.props.match.path === "/post-job") && (
-              <Banner path={props.children} />
-            )}
-          <Container className={`d-flex flex-column  mb-50 position-relative pt-20 
-          ${custom_class}`
-          }>
+            <Banner path={props.children} />
+          )}
+          <Container
+            className={`d-flex flex-column  mb-50 position-relative pt-20 
+          ${custom_class}`}
+          >
             {props.children}
             <button
               type="button"
@@ -111,7 +122,6 @@ export const PublicLayout = props => {
                   fill="#1e201d"
                 />
               </svg>
-
             </button>
             {/* {(props.children.props.match.path === "/" &&
               <Button color="link" className="border-0 d-flex align-items-center sidebar-toogle-btn text-right position-fixed rounded-left d-md-none flex-shrink-0"
@@ -131,9 +141,7 @@ export const PublicLayout = props => {
               </Button>
             )} */}
           </Container>
-          {!custom_class ?
-            <Footer />
-            : null}
+          {!custom_class ? <Footer /> : null}
         </div>
       </div>
     </>
@@ -153,7 +161,7 @@ export const PublicLayout = props => {
 
 // export default connect(mapStateToProps, mapDispatchToProps)(PublicLayout);
 /*************** Private Layout ***************/
-export const privateLayout = props => {
+export const privateLayout = (props) => {
   window.scrollTo(0, 0);
   // const childrenWithProps = React.Children.map(props.children, child =>
   //   React.cloneElement(child, { value })
@@ -180,21 +188,19 @@ export const privateLayout = props => {
 };
 
 /*************** Private Layout ***************/
-export const commonLayout = props => {
+export const commonLayout = (props) => {
   let custom_class = "";
   if (props.children.props.match.path === "/verify-email") {
     custom_class = "verify-email-container";
   }
   return (
-    <div
-      className={`main-wrapper d-flex flex-column flex-fill`}
-    >
+    <div className={`main-wrapper d-flex flex-column flex-fill`}>
       <div
         className={`wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto`}
       >
-        <Container className={`d-flex flex-column flex-shrink-0 mb-50 position-relative ${custom_class}`}>
-
-        </Container>
+        <Container
+          className={`d-flex flex-column flex-shrink-0 mb-50 position-relative ${custom_class}`}
+        ></Container>
       </div>
     </div>
   );

@@ -43,6 +43,8 @@ export default function reducer(state = initialState, action) {
         ...state,
         userJobDetails: {}
       };
+    case TYPE.LOGOUT_USERS:
+      return initialState;
     default:
       return state;
   }

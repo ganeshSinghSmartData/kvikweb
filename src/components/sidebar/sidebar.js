@@ -19,7 +19,7 @@ const Sidebar = ({
   _handleDistance,
   _handleBudget
 }) => {
-  const sidebarRef = createRef()
+  const sidebarRef = createRef();
   const [isCategory, setIsCategory] = useState(true);
   const [isFilter, setIsFilter] = useState(true);
   const [toggleCheck, setToggleCheck] = useState(false);
@@ -44,12 +44,15 @@ const Sidebar = ({
       }
     });
 
-
   return (
-    <aside className='sidebar' ref={sidebarRef} onScroll={() => {
-      let sidebar = ReactDOM.findDOMNode(sidebarRef.current)
-      console.log("aside-side", sidebar.scrollTop);
-    }}>
+    <aside
+      className="sidebar"
+      ref={sidebarRef}
+      onScroll={() => {
+        let sidebar = ReactDOM.findDOMNode(sidebarRef.current);
+        console.log("aside-side", sidebar.scrollTop);
+      }}
+    >
       <div className="sidebar-item">
         <h3 className="d-flex" onClick={toggleCategory}>
           <label className="flex-fill m-0">SEARCH BY CATEGORY</label>
@@ -75,7 +78,7 @@ const Sidebar = ({
                         block
                         className={`d-flex flex-fill m-0 text-left rounded-0`}
                         onClick={() => toggleCheckHandler(key)}
-                      // className={`d-flex flex-fill m-0 text-left ${toggleCheck ? "active" : ""}`}
+                        // className={`d-flex flex-fill m-0 text-left ${toggleCheck ? "active" : ""}`}
                       >
                         {item.name}
                         <input
@@ -146,17 +149,21 @@ const Sidebar = ({
             </div>
             <FilterBlock
               handleRange={(val) => _handleDistance(val)}
-              maxValue={job.filter && job.filter.budget}
+              maxValue={100}
               title="Distance"
               containerClass="distance-row"
               inputClass="primary-bg-bar"
+              unit="Miles"
+              placeUnitInRight
             />
             <FilterBlock
               handleRange={(val) => _handleBudget(val)}
-              maxValue={job.filter && job.filter.budget}
+              maxValue={(job.filter && job.filter.budget) || 10000}
               title="Budget"
               containerClass="budget-row"
               inputClass="secondary-bg-bar"
+              multiValue
+              unit="$"
             />
           </div>
         </Collapse>

@@ -18,27 +18,6 @@ import "./jobProduct.scss";
 /********* Get time ago in string format *********/
 
 const JobProduct = ({ product, listType, path }) => {
-  // const [timeleft, seTimeleft] = useState(
-  //   datetimeDifference(
-  //     new Date(),
-  //     new Date(DaysBetween(parseInt(product.jobEndDate || product.endDate)))
-  //   )
-  // );
-
-  // var intervalId = setInterval(() => {
-  //   const time = datetimeDifference(
-  //     new Date(),
-  //     new Date(DaysBetween(parseInt(product.jobEndDate || product.endDate)))
-  //   );
-  //   seTimeleft(time);
-  // }, 1000 * 60);
-
-  // useEffect(() => {
-  //   return () => {
-  //     clearInterval(intervalId);
-  //   };
-  // });
-
   let workStatus = {};
   let pathname = "/job-details/";
   if (path === "/job-list") {
@@ -64,11 +43,13 @@ const JobProduct = ({ product, listType, path }) => {
     if (loggedIn) dispatch(getJobBidCheck(id));
   };
   return (
-    <div
+    <Link
       className={
         "job-wrapper d-flex flex-column flex-fill " +
         (listType ? "d-flex flex-column" : "")
       }
+      to={`${pathname}${product._id}`}
+      onClick={() => jobDetails(product._id)}
     >
       <div className="job-pic text-center flex-shrink-0 d-flex position-relative">
         <Link
@@ -79,11 +60,11 @@ const JobProduct = ({ product, listType, path }) => {
           {product.images && product.images.length !== 0 ? (
             <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />
           ) : (
-              <img
-                src={require("../../../assets/images/icons/default-job-image.svg")}
-                alt="Job"
-              />
-            )}
+            <img
+              src={require("../../../assets/images/icons/default-job-image.svg")}
+              alt="Job"
+            />
+          )}
           {path === "/bid-list" && (
             <span className={`job-status-bar position-absolute ${classname}`}>
               {workStatus[product.status]}
@@ -103,10 +84,7 @@ const JobProduct = ({ product, listType, path }) => {
           (listType ? "d-flex flex-column flex-fill" : "")
         }
       >
-        <div
-          className={
-            "job-title d-flex"}
-        >
+        <div className={"job-title d-flex"}>
           <label className={"flex-fill m-0 " + (listType ? "order-2" : "")}>
             {product.jobtitle || ""}
           </label>
@@ -241,13 +219,13 @@ const JobProduct = ({ product, listType, path }) => {
           <label
             className={`flex-fill mb-0 ${
               product.status === "accepted" ||
-                product.status === "in_progress" ||
-                product.status === "completed"
+              product.status === "in_progress" ||
+              product.status === "completed"
                 ? "text-success"
                 : product.status === "rejected" || product.status === "expired"
-                  ? "text-danger"
-                  : "text-primary"
-              }`}
+                ? "text-danger"
+                : "text-primary"
+            }`}
           >
             {constants.jobStatus[product.status]}
           </label>
@@ -260,7 +238,7 @@ const JobProduct = ({ product, listType, path }) => {
           </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
