@@ -9,6 +9,9 @@
     > li {
       padding: 6px 0;
     }
+    .active .btn {
+      color: $secondary-200;
+    }
   }
   button {
     color: $dark-default;

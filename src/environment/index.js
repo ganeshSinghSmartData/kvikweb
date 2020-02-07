@@ -25,11 +25,10 @@ const production = {
   socketUrl: "http://54.71.18.74:4599",
   stripeKey: "pk_test_d1UROWtZYJBNTCKAPLSjjY1x00Vbn25a9Q"
 };
-
 if (process.env.REACT_APP_ENV === "prod") {
   module.exports = production;
 } else if (process.env.REACT_APP_ENV === "dev") {
-  // module.exports = local;
+  //module.exports = local;
   module.exports = staging;
 } else {
   // module.exports = local;

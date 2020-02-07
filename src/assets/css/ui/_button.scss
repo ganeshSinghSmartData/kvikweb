@@ -45,10 +45,10 @@
 }
 
 .btn-secondary {
-  @include secondary-gradient($orange-100, $orange);
+  @include secondary-gradient($orange, $orange-100);
   border: none;
   &:hover {
-    @include secondary-gradient-hover($orange-hover, $orange-200);
+    @include secondary-gradient-hover($orange-200, $orange-hover);
     border: none;
   }
   &:focus {

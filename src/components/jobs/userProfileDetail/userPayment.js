@@ -414,8 +414,11 @@ const UserPayment = props => {
                                 <div className="payment-pic-btn-cell text-center d-flex flex-column">
                                   <div
                                     color="link"
-                                    className="position-relative payment-pic-btn p-0 d-flex flex-column"
+                                    className={`position-relative payment-pic-btn p-0 d-flex flex-column 
+                                    ${front_image.url ? 'image-container' : ''}`}
                                   >
+
+
                                     {/* payment-upload-pic */}
                                     {front_image.url &&
                                       <span className="d-flex flex-column justify-content-center align-items-center payment-upload-pic position-absolute h-100 w-100 flex-fill">
@@ -500,7 +503,7 @@ const UserPayment = props => {
                                 <div className="payment-pic-btn-cell text-center d-flex flex-column">
                                   <div
                                     color="link"
-                                    className="position-relative payment-pic-btn p-0 d-flex flex-column"
+                                    className={`position-relative payment-pic-btn p-0 d-flex flex-column ${back_image.url ? 'image-container' : ''}`}
                                   >
                                     {/* payment-upload-pic */}
                                     {back_image.url &&
@@ -586,7 +589,8 @@ const UserPayment = props => {
                                 <div className="payment-pic-btn-cell text-center d-flex flex-column">
                                   <div
                                     color="link"
-                                    className="position-relative payment-pic-btn p-0 d-flex flex-column"
+                                    className={`position-relative payment-pic-btn p-0 d-flex flex-column 
+                                    ${additional_front.url ? 'image-container' : ''}`}
                                   >
                                     {/* payment-upload-pic */}
                                     {additional_front.url &&
@@ -672,7 +676,7 @@ const UserPayment = props => {
                                 <div className="payment-pic-btn-cell text-center d-flex flex-column">
                                   <div
                                     color="link"
-                                    className="position-relative payment-pic-btn p-0 d-flex flex-column"
+                                    className={`position-relative payment-pic-btn p-0 d-flex flex-column ${additional_back.url ? 'image-container' : ''}`}
                                   >
                                     {/* payment-upload-pic */}
                                     {additional_back.url &&

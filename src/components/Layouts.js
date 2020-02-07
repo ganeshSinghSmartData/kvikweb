@@ -6,32 +6,56 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import {
-//   sidebarToggleHandler
-// } from "./../actions/job";
+import { sidebarToggleHandler, setFooterInView } from "./../actions/job";
 import smoothscroll from "smoothscroll-polyfill";
 import { Container, Button } from "reactstrap";
 import * as Scroll from "react-scroll";
 import Header from "./header/header";
 import Banner from "./banner/banner";
 import Footer from "./footer/footer";
+import { isElementInViewPort } from "../utilities/observer";
 
 smoothscroll.polyfill();
 /*************** Public Layout ***************/
-export const PublicLayout = props => {
-  const sidebarToggleValue = useSelector(state => state.job.sidebarToggle);
+export const PublicLayout = (props) => {
+  const sidebarToggleValue = useSelector((state) => state.job.sidebarToggle);
+  const footerToggle = useSelector((state) => state.job.footerToggle);
+  const job = useSelector((state) => state.job.jobProduct);
+  // const job = [1, 2, 3];
   const dispatch = useDispatch();
   window.scrollTo(0, 0);
   const wrapperRef = useRef(null);
   const [scrollVisible, setscrollVisible] = useState(false);
+  const [headerFixed, setheaderFixed] = useState(false);
+
+
   const scrollCheck = () => {
+
+    //Header Fixed Function start
+    if (
+      wrapperRef.current.scrollTop > 60
+    ) {
+      setheaderFixed(true)
+    }
+    else {
+      setheaderFixed(false)
+    }
+    //Header Fixed Function end
+
+    //Scroll to top Function start
     let scrollTopCheck = wrapperRef.current.scrollTop;
     if (scrollTopCheck > 300) {
-      console.log('> 300')
       setscrollVisible(true);
-    } else {
-      console.log('< 300')
+    } else if ((scrollTopCheck < 100)) {
       setscrollVisible(false);
+    }
+    let home = document.getElementById("home");
+    if (home && home.getBoundingClientRect().top <= 0) {
+      !sidebarToggleValue && dispatch(sidebarToggleHandler(true));
+      return;
+    } else {
+      sidebarToggleValue && dispatch(sidebarToggleHandler(false));
+      return;
     }
   };
   const scrollTopFunction = () => {
@@ -46,27 +70,40 @@ export const PublicLayout = props => {
   }
   return (
     <>
-      <div className={`main-wrapper d-flex flex-column flex-fill ${custom_class}`}>
-        {!custom_class ?
-          <Header {...props} />
-          : null}
+
+      <div
+        className={`main-wrapper d-flex flex-column flex-fill ${custom_class}`}
+        onLoadStart={() => dispatch(sidebarToggleHandler(false))}
+      >
+
         <div
-          className={`wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto ${!sidebarToggleValue ? 'active' : ''}`}
+          id="main_container"
+          className={`wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto 
+          ${!sidebarToggleValue ? "active" : ""}
+          ${
+            props.children.props.match.path === "/job-details/:job_id" ||
+              props.children.props.match.path == "/bid-details/:job_id"
+              ? "jobDetailLayout"
+              : ""
+            }
+              ${props.children.props.match.path == "/" ? "homeLayout" : ""}
+          `}
           ref={wrapperRef}
           onScroll={scrollCheck}
         >
+          {!custom_class ? <Header {...props} headerFixed={headerFixed} /> : null}
           {(props.children.props.match.path === "/" ||
             props.children.props.match.path === "/post-job") && (
               <Banner path={props.children} />
             )}
-          <Container className={`d-flex flex-column flex-shrink-0 mb-50 position-relative pt-30 ${custom_class}`}>
+          <Container className={`d-flex flex-column flex-shrink-0 mb-50 position-relative pt-20 
+          ${custom_class}`
+          }>
             {props.children}
             <button
               type="button"
               className={
-                "btn scroll-tp-btn rounded-circle position-fixed " +
-                (scrollVisible ? "on" : "")
-              }
+                `btn scroll-tp-btn rounded-circle position-fixed ${scrollVisible ? "on" : ""}`}
               onClick={scrollTopFunction}
             >
               <svg
@@ -82,7 +119,6 @@ export const PublicLayout = props => {
                   fill="#1e201d"
                 />
               </svg>
-
             </button>
             {/* {(props.children.props.match.path === "/" &&
               <Button color="link" className="border-0 d-flex align-items-center sidebar-toogle-btn text-right position-fixed rounded-left d-md-none flex-shrink-0"
@@ -102,9 +138,7 @@ export const PublicLayout = props => {
               </Button>
             )} */}
           </Container>
-          {!custom_class ?
-            <Footer />
-            : null}
+          {!custom_class ? <Footer /> : null}
         </div>
       </div>
     </>
@@ -124,7 +158,7 @@ export const PublicLayout = props => {
 
 // export default connect(mapStateToProps, mapDispatchToProps)(PublicLayout);
 /*************** Private Layout ***************/
-export const privateLayout = props => {
+export const privateLayout = (props) => {
   window.scrollTo(0, 0);
   // const childrenWithProps = React.Children.map(props.children, child =>
   //   React.cloneElement(child, { value })
@@ -151,21 +185,19 @@ export const privateLayout = props => {
 };
 
 /*************** Private Layout ***************/
-export const commonLayout = props => {
+export const commonLayout = (props) => {
   let custom_class = "";
   if (props.children.props.match.path === "/verify-email") {
     custom_class = "verify-email-container";
   }
   return (
-    <div
-      className={`main-wrapper d-flex flex-column flex-fill`}
-    >
+    <div className={`main-wrapper d-flex flex-column flex-fill`}>
       <div
         className={`wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto`}
       >
-        <Container className={`d-flex flex-column flex-shrink-0 mb-50 position-relative ${custom_class}`}>
-
-        </Container>
+        <Container
+          className={`d-flex flex-column flex-shrink-0 mb-50 position-relative ${custom_class}`}
+        ></Container>
       </div>
     </div>
   );

@@ -1,3 +1,7 @@
+// #main_container {
+//   flex: none !important;
+// }
+
 * {
   margin: 0;
   padding: 0;
@@ -58,12 +62,21 @@ body {
 
 //smooth scrol style end
 .container {
-  max-width: 1200px;
+  max-width: 1054px;
+}
+.row {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+.col {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .wrapper-inner {
   > div {
     @media (max-width: 767px) {
       padding-top: 15px !important;
+      overflow: visible !important;
     }
   }
 }
@@ -91,6 +104,9 @@ body {
 }
 .pt-30 {
   padding-top: 30px !important;
+}
+.pt-20 {
+  padding-top: 20px !important;
 }
 .flex-fill {
   min-height: 0;
@@ -392,13 +408,10 @@ input[type="search"]::-webkit-search-decoration {
 //Detail heading style start
 .job-detail-blc {
   .job-detail-hd {
-    padding-bottom: 18px;
+    padding-bottom: 15px;
     @media (max-width: 600px) {
       flex-direction: column;
       align-items: flex-start !important;
-    }
-    p {
-      color: rgba(0, 0, 0, 0.7);
     }
     > h2 {
       margin: 0;
@@ -440,3 +453,27 @@ input[type="search"]::-webkit-search-decoration {
     margin: 4px 0 0 0;
   }
 }
+
+//job detail layout style
+.jobDetailLayout {
+  > div {
+    flex: 1;
+    overflow: auto;
+    margin-bottom: 20px !important;
+    .job-detail-blc {
+      @media (max-width: 767px) {
+        flex: none !important;
+      }
+    }
+  }
+  .footer {
+    display: none;
+  }
+}
+.footer.active {
+  // display: none;
+}
+// Home layout style
+// .homeLayout {
+//   padding-top: 78px;
+// }

@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import ReactDOM from "react-dom";
 import { LocalForm } from "react-redux-form";
 import { useDispatch, useSelector } from "react-redux";
-import { sidebarToggleHandler } from '../../actions/job';
+import { sidebarToggleHandler } from "../../actions/job";
 import { Button, Input } from "reactstrap";
 import { Collapse } from "reactstrap";
 import "react-input-range/lib/css/index.css";
 import { getJobCategory } from "../../actions/job";
-
 // onChangeComplete
 
 import FilterBlock from "../sidebar/filterBlock/filterBlock";
@@ -17,41 +17,62 @@ const Sidebar = ({
   _handleCategory,
   _handlePostalCode,
   _handleDistance,
-  _handleBudget
+  _handleBudget,
+  selectedCategory
 }) => {
+  const sidebarRef = useRef(null);
   const [isCategory, setIsCategory] = useState(true);
   const [isFilter, setIsFilter] = useState(true);
-  const [toggleCheck, setToggleCheck] = useState(false);
-
+  const [isHeightSet, setHeight] = useState(false);
   const toggleCategory = () => setIsCategory(!isCategory);
   const toggleFilter = () => setIsFilter(!isFilter);
-  const toggleCheckHandler = () => setToggleCheck(!toggleCheck);
 
   const dispatch = useDispatch();
-  let { job } = useSelector(state => state);
+  let { job } = useSelector((state) => state);
   useEffect(() => {
+    // document.getElementById("side").clientHeigh;
+
+    if (!isHeightSet) {
+      let height =
+        window.innerHeight - document.querySelector("#header").clientHeight;
+      document
+        .getElementById("side")
+        .setAttribute("style", `height:${height}px;`);
+      document
+        .getElementById("jobListing")
+        .setAttribute("style", `min-height:${height}px;`);
+      setHeight(true);
+    }
     if (!job.category || job.category.length === 0) {
       dispatch(getJobCategory());
     }
-  });
+  }, [isHeightSet, job.category, dispatch]);
   let CategoryItems = [];
   job.category &&
     job.category.length &&
-    job.category.map(item => {
+    job.category.map((item) => {
       if (item) {
         CategoryItems.push({ name: item.title, value: item.title });
       }
     });
-
+  console.log("selectedCategory", selectedCategory);
   return (
-    <aside className='sidebar'>
+    <div
+      className="sidebar"
+      ref={sidebarRef}
+      id="side"
+
+      // onScroll={() => {
+      //   let sidebar = ReactDOM.findDOMNode(sidebarRef.current);
+      //   // console.log("aside-side", sidebar.scrollTop);
+      // }}
+    >
       <div className="sidebar-item">
         <h3 className="d-flex" onClick={toggleCategory}>
           <label className="flex-fill m-0">SEARCH BY CATEGORY</label>
           <Button
             color="link"
             className="item-toggle-btn rounded-0 d-flex flex-column flex-column align-items-end flex-shrink-0   btn btn-link p-0"
-
           >
             <span className="d-flex align-items-center justify-content-center">
               <span className={`${isCategory ? "active" : ""} d-flex`}></span>
@@ -65,13 +86,19 @@ const Sidebar = ({
                 CategoryItems.length &&
                 CategoryItems.map((item, key) => {
                   return (
-                    <li className="position-relative" key={key}>
+                    <li
+                      className={`position-relative ${
+                        selectedCategory &&
+                        selectedCategory.findIndex((i) => i === item.name) >= 0
+                          ? "active"
+                          : ""
+                      }`}
+                      key={key}
+                    >
                       <Button
                         color="link"
                         block
                         className={`d-flex flex-fill m-0 text-left rounded-0`}
-                        onClick={() => toggleCheckHandler(key)}
-                      // className={`d-flex flex-fill m-0 text-left ${toggleCheck ? "active" : ""}`}
                       >
                         {item.name}
                         <input
@@ -111,7 +138,6 @@ const Sidebar = ({
           <Button
             color="link"
             className="item-toggle-btn rounded-0 d-flex flex-column flex-column align-items-end flex-shrink-0 btn btn-link p-0"
-
           >
             <span className="d-flex align-items-center justify-content-center">
               <span className={`${isFilter ? "active" : ""} d-flex`}></span>
@@ -142,28 +168,37 @@ const Sidebar = ({
               </LocalForm>
             </div>
             <FilterBlock
-              handleBudgetRange={val => _handleBudget(val)}
-              handleDistanceRange={val => _handleDistance(val)}
-              budgetFilter={false}
+              handleRange={(val) => _handleDistance(val)}
+              maxValue={100}
+              title="Distance"
+              containerClass="distance-row"
+              inputClass="primary-bg-bar"
+              unit="Miles"
+              placeUnitInRight
             />
             <FilterBlock
-              handleBudgetRange={val => _handleBudget(val)}
-              handleDistanceRange={val => _handleDistance(val)}
-              budgetFilter={true}
+              handleRange={(val) => _handleBudget(val)}
+              maxValue={(job.filter && job.filter.budget) || 10000}
+              title="Budget"
+              containerClass="budget-row"
+              inputClass="secondary-bg-bar"
+              multiValue
+              unit="$"
             />
           </div>
         </Collapse>
       </div>
-      <Button color="secondary" block
+      <Button
+        color="secondary"
+        block
         className="filter-search-btn"
         onClick={() => {
-          dispatch(sidebarToggleHandler(false)
-          );
+          dispatch(sidebarToggleHandler(false));
         }}
       >
         Search
       </Button>
-    </aside>
+    </div>
   );
 };
 

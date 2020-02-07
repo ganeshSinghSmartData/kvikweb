@@ -1,12 +1,13 @@
 @import "../../../../assets/css/variables";
 .job-user {
-  width: 64px;
-  height: 64px;
+  width: 62px;
+  height: 62px;
   border-width: 1px;
   border-style: solid;
+  transition: all ease 0.1s 0s;
   img {
-    width: 54px;
-    height: 54px;
+    width: 52px;
+    height: 52px;
   }
   .btn:disabled {
     opacity: 1;

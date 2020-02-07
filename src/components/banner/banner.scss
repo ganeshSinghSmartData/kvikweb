@@ -12,3 +12,10 @@
     padding: 15px;
   }
 }
+.home-banner {
+  background: none;
+  height: auto;
+  @media (max-width: 767px) {
+    height: auto;
+  }
+}

@@ -15,7 +15,13 @@ const initialState = {
   count: 0,
   activeJobsCount: 0,
   completedJobsCount: 0,
-  sidebarToggle: false
+  sidebarToggle: false,
+  filter: {},
+  filterToggle: false,
+  similarProducts: [],
+  similarCount: 0,
+  footerToggle: false,
+  jobBidCheck: []
 };
 
 export default function reducer(state = initialState, action) {
@@ -55,11 +61,20 @@ export default function reducer(state = initialState, action) {
         ],
         completedJobsCount: action.data.count
       };
-
+    case TYPE.FOOTER_IN_VIEW:
+      return {
+        ...state,
+        footerToggle: action.data
+      };
     case TYPE.SIDEBAR_TOGGLE:
       return {
         ...state,
         sidebarToggle: action.data
+      };
+    case TYPE.FILTER_TOGGLE:
+      return {
+        ...state,
+        filterToggle: action.data
       };
 
     case TYPE.POST_JOB_PRODUCTS:
@@ -72,6 +87,22 @@ export default function reducer(state = initialState, action) {
       return { ...state, completedJobProduct: [] };
     case TYPE.RESET_JOB_DETAILS:
       return { ...state, jobDetails: {} };
+    case TYPE.FILTER_SUCCESS:
+      return { ...state, filter: action.payload };
+    case TYPE.SIMILAR_JOBS:
+      return {
+        ...state,
+        similarProducts: [...state.similarProducts, ...action.data.joblisting],
+        similarCount: action.data.count
+      };
+    case TYPE.CLEAR_SIMILAR_JOBS:
+      return {
+        ...state,
+        similarProducts: [],
+        similarCount: 0
+      };
+    case TYPE.LOGOUT_USERS:
+      return initialState;
     default:
       return state;
   }

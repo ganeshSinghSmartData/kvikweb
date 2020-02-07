@@ -1,20 +1,21 @@
 @import "../../assets/css/variables";
 .sidebar-col {
-  max-width: 295px;
+  flex-basis: 265px;
+  max-width: 265px;
+  flex-grow: 0;
   transition: all ease 0.3s 0s;
   transform: translateX(0);
-  z-index: 999;
-  // display: none !important;
+  z-index: 0;
+  padding: 0 10px;
+  height: 100%;
+  top: 0;
 }
-
-// .footer {
-//   display: none !important;
-// }
 .sidebar {
   background-color: #fff;
   border: 1px solid #e2e5e7;
-  padding: 17px 20px 94px;
+  padding: 17px 20px 17px;
   border-radius: 10px;
+  overflow: auto;
   .filter-search-btn {
     display: none;
     @media (max-width: 767px) {
@@ -29,7 +30,7 @@
   > h3 {
     cursor: pointer;
     font-family: $secondary-font-family;
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 600;
     margin: 0 0 5px 0;
     * {
@@ -37,7 +38,7 @@
     }
     &:hover {
       .btn-link {
-        color: $secondary-100;
+        color: $secondary-200;
       }
     }
   }
@@ -63,13 +64,13 @@
         span {
           svg {
             width: 15px;
-            fill: $secondary-100;
+            fill: $secondary-200;
           }
         }
       }
     }
     .btn.active {
-      color: $secondary-100;
+      color: $secondary-200;
     }
     input:checked + label {
       display: flex;
@@ -191,7 +192,7 @@
   margin-top: 3px;
   &:hover {
     path {
-      fill: $secondary-100;
+      fill: $secondary-200;
     }
   }
 }
@@ -205,7 +206,7 @@
   }
   &:hover {
     > span {
-      background: $secondary-100;
+      background: $secondary-200;
     }
   }
 }
@@ -244,6 +245,7 @@
   .sidebar-col {
     position: fixed;
     top: 0;
+    left: 0;
     bottom: 0;
     padding: 0;
     overflow: auto;

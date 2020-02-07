@@ -57,10 +57,20 @@ export const MESSAGE_COUNT = "MESSAGE_COUNT";
 export const CHAT_USERS = "CHAT_USERS";
 export const TOGGLE_CHAT = "TOGGLE_CHAT";
 
-
 /*************CARDS*********************************/
 export const USER_CARDS = "USER_CARDS";
 export const REMOVE_CARD = "REMOVE_CARD";
 
 /*************Sidebar Toggle*********************************/
 export const SIDEBAR_TOGGLE = "SIDEBAR_TOGGLE";
+export const FOOTER_IN_VIEW = "FOOTER_IN_VIEW";
+
+/************Filter *********************************/
+export const FILTER_REQUEST = "FILTER_REQUEST";
+export const FILTER_SUCCESS = "FILTER_SUCCESS";
+export const FILTER_FAIL = "FILTER_FAIL";
+export const FILTER_TOGGLE = "FILTER_TOGGLE";
+
+/************Similar Jobs *********************************/
+export const SIMILAR_JOBS = "SIMILAR_JOBS";
+export const CLEAR_SIMILAR_JOBS = "CLEAR_SIMILAR_JOBS";

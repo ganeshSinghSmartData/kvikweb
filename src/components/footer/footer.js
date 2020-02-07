@@ -1,9 +1,15 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import "./footer.scss";
 import { Container, Row, Col, Button } from "reactstrap";
 const Footer = () => {
+  const sidebarToggleValue = useSelector((state) => {
+    return state.job.sidebarToggle;
+  });
   return (
-    <footer className="footer position-relative mt-auto">
+    <footer
+      className={`footer position-relative mt-auto ${sidebarToggleValue && 'active'}`}
+      id="footer">
       <Container>
         <Row>
           <Col>
@@ -76,7 +82,7 @@ const Footer = () => {
                   <Button color="link">Services</Button>
                 </li>
                 <li className="d-flex align-items-center">
-                  <Button color="link">Contact</Button>
+                  <Button color="link">Contact Us</Button>
                 </li>
                 <li className="d-flex align-items-center">
                   <Button color="link">Terms &amp; Conditions</Button>

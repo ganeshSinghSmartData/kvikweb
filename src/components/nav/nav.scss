@@ -35,12 +35,27 @@ nav {
       }
     }
   }
+  a:hover {
+    text-decoration: none;
+  }
 }
 
 .login-btn {
   min-width: 89px;
   min-height: 40px;
-  margin-left: 29px;
+  margin-left: 12px;
+}
+.post-job-btn {
+  min-width: 119px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 20px;
+  @media (max-width: 767px) {
+    background: none;
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
 }
 @media (max-width: 767px) {
   nav.nav {
@@ -74,9 +89,14 @@ nav {
           padding: 13px 15px;
           border-radius: 0;
           border-bottom: 1px solid #49bcff;
-          &:hover {
-            background-color: rgba(256, 256, 256, 0.1);
+          &:hover,
+          &:active,
+          &:focus {
+            background-color: rgba(256, 256, 256, 0.1) !important;
             text-decoration: none;
+            text-decoration: none;
+            box-shadow: none !important;
+            border: 1px solid transparent !important;
           }
         }
         .btn.login-btn {

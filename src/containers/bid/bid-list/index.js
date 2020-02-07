@@ -21,7 +21,7 @@ class BidList extends Component {
   componentDidMount() {
     this.setState({ loading: true });
     this.props.reset_user_job_details();
-    this.props.getUserActiveBid({ page: 1 }, callback => {
+    this.props.getUserActiveBid({ page: 1 }, (callback) => {
       if (callback) {
         this.setState({ loading: false });
       } else {
@@ -29,7 +29,7 @@ class BidList extends Component {
       }
     });
 
-    this.props.getUserCompletedBid({ page: 1 }, callback => {
+    this.props.getUserCompletedBid({ page: 1 }, (callback) => {
       if (callback) {
         this.setState({ loading: false });
       } else {
@@ -38,8 +38,8 @@ class BidList extends Component {
     });
   }
   // handleUserNotAcceptedBid
-  handleUserCompletedBid = value => {
-    this.props.getUserCompletedBid({ page: value }, callback => {
+  handleUserCompletedBid = (value) => {
+    this.props.getUserCompletedBid({ page: value }, (callback) => {
       if (callback) {
         this.setState({ loading: false });
       } else {
@@ -49,8 +49,8 @@ class BidList extends Component {
   };
 
   // handleUserActiveBid
-  handleUserActiveBid = value => {
-    this.props.getUserActiveBid({ page: value }, callback => {
+  handleUserActiveBid = (value) => {
+    this.props.getUserActiveBid({ page: value }, (callback) => {
       if (callback) {
         this.setState({ loading: false });
       } else {
@@ -67,8 +67,10 @@ class BidList extends Component {
         ) : (
           <Job
             path={this.props.match.path}
-            _handleUserActiveBid={page => this.handleUserActiveBid(page)}
-            _handleUserCompletedBid={page => this.handleUserCompletedBid(page)}
+            _handleUserActiveBid={(page) => this.handleUserActiveBid(page)}
+            _handleUserCompletedBid={(page) =>
+              this.handleUserCompletedBid(page)
+            }
           />
         )}
       </React.Fragment>
@@ -76,12 +78,12 @@ class BidList extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   activeBid: state.bid.activeBid,
   completedBid: state.bid.completedBid
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getUserActiveBid: bindActionCreators(getUserActiveBid, dispatch),
   getUserCompletedBid: bindActionCreators(getUserCompletedBid, dispatch),
   reset_user_job_details: bindActionCreators(reset_user_job_details, dispatch)
