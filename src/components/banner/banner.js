@@ -7,19 +7,22 @@ const Banner = (path) => {
   // !bid && !proposal && !details &&
 
   return (
-    <section className={`banner d-flex flex-column flex-shrink-0 ${location === "/" ? 'home-banner' : ''}`}>
-      {
-        location === "/" ?
-          <HomeVideo />
-          : null
-      }
-      {/* {location === "/" &&
+    <>
+      {/* <div className="header-invisible"></div> */}
+      <section className={`banner d-flex flex-column flex-shrink-0 ${location === "/" ? 'home-banner' : ''}`}>
+        {
+          location === "/" ?
+            <HomeVideo />
+            : null
+        }
+        {/* {location === "/" &&
         <SearchService posJobButton={true} />
       } */}
-      {location === "/post-job" && (
-        <h2 className="banner-title m-auto">Post a Job</h2>
-      )}
-    </section>
+        {location === "/post-job" && (
+          <h2 className="banner-title m-auto">Post a Job</h2>
+        )}
+      </section>
+    </>
   );
 };
 
