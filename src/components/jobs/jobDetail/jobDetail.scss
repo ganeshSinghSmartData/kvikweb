@@ -553,7 +553,7 @@
   width: 100%;
   @media (max-width: 767px) {
     max-width: none;
-    margin-left: 0;
+    margin: 15px 0 0;
   }
   .new-joblist-btn {
     border: 2px solid $primary;
@@ -614,6 +614,7 @@
       margin-top: 0;
       @media (max-width: 600px) {
         text-align: left;
+        align-items: flex-start;
       }
       .job-user-info {
         padding: 0;
@@ -632,12 +633,13 @@
       font-weight: 500;
       color: #333;
       border-top: 1px solid rgba(0, 0, 0, 0.1);
-      padding: 5px;
+      padding: 5px 10px;
       margin: 0 -10px;
       span {
         text-decoration: uppercase;
-        color: $primary;
-        margin-right: 5px;
+      }
+      .job-offer-lbl {
+        padding-left: 10px;
       }
     }
   }

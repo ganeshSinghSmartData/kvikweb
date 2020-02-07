@@ -23,19 +23,11 @@ export const PublicLayout = props => {
   const wrapperRef = useRef(null);
   const [scrollVisible, setscrollVisible] = useState(false);
   const [headerFixed, setheaderFixed] = useState(false);
+
+
   const scrollCheck = () => {
-    if (window.location.pathname !== "/") return;
-    let header = document.getElementById("main_container");
-    let sidebar = document.getElementById("sideBar");
-    let home = document.getElementById("home");
-    if (
-      window.pageYOffset + sidebar &&
-      sidebar.getBoundingClientRect().top <= header.offsetTop
-    ) {
-      setscrollVisible(true);
-      !sidebarToggleValue && dispatch(sidebarToggleHandler(true));
-      return;
-    }
+
+    //Header Fixed Function start
     if (
       wrapperRef.current.scrollTop > 60
     ) {
@@ -44,11 +36,40 @@ export const PublicLayout = props => {
     else {
       setheaderFixed(false)
     }
+    //Header Fixed Function end
+
+    //Scroll to top Function start
+    let scrollTopCheck = wrapperRef.current.scrollTop;
+    if (scrollTopCheck > 300) {
+      console.log('scrollTopCheck', scrollTopCheck)
+      setscrollVisible(true);
+      console.log('scrollVisible', scrollVisible)
+
+
+    } else if ((scrollTopCheck < 100)) {
+      console.log('scrollTopCheck', scrollTopCheck)
+      setscrollVisible(false);
+      console.log('scrollVisible', scrollVisible)
+    }
+    //Scroll to top Function end
+
+
+    let header = document.getElementById("main_container");
+    let sidebar = document.getElementById("sideBar");
+    let home = document.getElementById("home");
+    if (
+      window.pageYOffset + sidebar &&
+      sidebar.getBoundingClientRect().top <= header.offsetTop
+    ) {
+      // setscrollVisible(true);
+      !sidebarToggleValue && dispatch(sidebarToggleHandler(true));
+      return;
+    }
     if (
       window.pageYOffset + home &&
       home.getBoundingClientRect().top >= header.offsetTop
     ) {
-      setscrollVisible(false);
+      // setscrollVisible(false);
       sidebarToggleValue && dispatch(sidebarToggleHandler(false));
       return;
     }
@@ -86,16 +107,14 @@ export const PublicLayout = props => {
             props.children.props.match.path === "/post-job") && (
               <Banner path={props.children} />
             )}
-          <Container className={`d-flex flex-column  mb-50 position-relative pt-20 
+          <Container className={`d-flex flex-column flex-shrink-0 mb-50 position-relative pt-20 
           ${custom_class}`
           }>
             {props.children}
             <button
               type="button"
               className={
-                "btn scroll-tp-btn rounded-circle position-fixed " +
-                (scrollVisible ? "on" : "")
-              }
+                `btn scroll-tp-btn rounded-circle position-fixed ${scrollVisible ? "on" : ""}`}
               onClick={scrollTopFunction}
             >
               <svg

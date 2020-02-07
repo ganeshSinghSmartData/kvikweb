@@ -11,7 +11,7 @@ const RenderSimilarProducts = (props) => {
           <div className="job-list-bx bg-white">
             <div className="job-list-bx-rw d-flex">
               <UserImage />
-              <div className="job-list-bx-rt">
+              <div className="job-list-bx-rt flex-fill">
                 <h2 className="d-flex">
                   {item.jobtitle}
                   <span className="ml-auto">
@@ -29,11 +29,14 @@ const RenderSimilarProducts = (props) => {
                 />
               </div>
             </div>
-            <div className="job-list-status text-right">
-              <label className="mb-0">
-                <span>{constants.jobStatus[item.status]}</span>
+            <div className="job-list-status d-flex">
+              <span className="job-status-lbl text-primary">
+                {constants.jobStatus[item.status]}
+              </span>
+              <span className="job-offer-lbl ml-auto">
                 {item.bidcount} offers
-              </label>
+                </span>
+
             </div>
           </div>
         );

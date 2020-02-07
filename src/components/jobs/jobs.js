@@ -244,7 +244,7 @@ const Job = ({
             path !== "" ? "sorting-page" : ""
             }`}
         >
-          {path == "" && <SearchService className="job-list-srch" />}
+          {path == "" && <SearchService />}
           {path !== "" && (
             <div className="job-list-tab">
               <button

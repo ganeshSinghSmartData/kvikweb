@@ -136,12 +136,18 @@
       .btn {
         width: 42px;
         height: 42px;
+        overflow: hidden;
+        @media (max-width: 767px) {
+          margin: 0 5px 0 0;
+        }
       }
       .attach-btn {
         input {
           cursor: pointer;
-          width: 100%;
-          height: 100%;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
           opacity: 0;
         }
         svg {

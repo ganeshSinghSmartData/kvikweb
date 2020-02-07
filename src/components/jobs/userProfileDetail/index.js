@@ -202,7 +202,7 @@ const UserProfile = ({
                     <Modal isOpen={modal} toggle={toggle} size="lg" className="d-flex flex-column align-items-center  
                       justify-content-center users-review-mdl">
                       {/* <Spinner className="position-absolute w-100 h-100 d-flex justify-content-center align-items-center with-overlay overlay-opacity" /> */}
-                      <ModalHeader>
+                      <ModalHeader className="flex-shrink-0">
                         User Reviews
                         <Button
                           color="link"
