@@ -172,7 +172,7 @@ export default (props) => {
       <div
         className={`post-job-inner ${
           _currentstage === 3 ? "gallery-block" : ""
-        }`}
+          }`}
       >
         <LocalForm
           initialState={_jobDetails}
@@ -210,8 +210,8 @@ export default (props) => {
                       _selectedCategory
                         ? _selectedCategory
                         : CategoryItems &&
-                          CategoryItems.length &&
-                          CategoryItems[0].value
+                        CategoryItems.length &&
+                        CategoryItems[0].value
                     }
                     name="category"
                     onChange={(category) => _handleCategoryOnchange(category)}
@@ -450,8 +450,8 @@ export default (props) => {
                   You can't select more then 5 images
                 </div>
               ) : (
-                ""
-              )}
+                  ""
+                )}
             </>
           )}
 
@@ -496,7 +496,7 @@ export default (props) => {
                   type="submit"
                   disabled={isImageLengthExist}
                 >
-                  {path == "/post-job" ? "Post Now" : "Update Job"}
+                  {path == "/post-job" ? "Review Job" : "Update Job"}
                 </Button>
               </div>
             )}

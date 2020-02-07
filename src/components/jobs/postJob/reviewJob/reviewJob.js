@@ -107,13 +107,15 @@ const ReviewModal = (props) => {
         className="modal-lg job-review-modal d-flex flex-column align-items-center justify-content-center"
       >
         <ModalHeader>
-          View Job Details
+          <span>
+            View Job Details
+          </span>
           <Button
             color="secondary"
-            className="close-btn btn2"
+            className="job-post-btn ml-auto"
             onClick={saveJobData}
           >
-            Submit
+            Post Now
           </Button>
         </ModalHeader>
         {/* //CHANGES */}

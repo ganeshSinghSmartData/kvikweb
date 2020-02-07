@@ -32,7 +32,7 @@ const Nav = props => {
               className="text-black"
               to={loggedInUser ? "/post-job" : "/login"}
             >
-              <Button className="post-job-btn btn-block">Post a Job</Button>
+              <Button className="post-job-btn btn-block" onClick={navVisibleHander}>Post a Job</Button>
             </Link>
           </li>
           <li>

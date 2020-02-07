@@ -48,7 +48,6 @@ const Header = (props) => {
   console.log('props', props)
   return (
     <>
-      <div className="header-invisible"></div>
       <header className={`header d-flex flex-column flex-shrink-0 
     ${location === "/" ? 'header-home' : ''}
     ${props.headerFixed ? 'active' : ''}
