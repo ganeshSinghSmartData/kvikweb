@@ -56,9 +56,9 @@ export default (props) => {
 
   const setStartDateOnRender = () => {
     if (_jobDetails && _jobDetails.jobStartDate) {
-      return new Date(new Date(Number(_jobDetails.jobStartDate)));
+      return new Date(new Date(Number(_jobDetails.jobStartDate))).getTime();
     } else {
-      return new Date();
+      return new Date().getTime();
     }
   };
 
@@ -66,9 +66,11 @@ export default (props) => {
     // _handleCategoryOnchange(CategoryItems[_jobDetails.category]);
     // setImages(_jobDetails.images);
     if (_jobDetails && _jobDetails.jobEndDate) {
-      return new Date(new Date(Number(_jobDetails.jobEndDate)));
+      return new Date(new Date(Number(_jobDetails.jobEndDate))).getTime();
     } else {
-      return new Date(moment(new Date(), "DD-MM-YYYY").subtract(5, "minutes"));
+      return new Date(
+        moment(new Date(), "DD-MM-YYYY").subtract(5, "minutes")
+      ).getTime();
     }
   };
 
@@ -301,14 +303,14 @@ export default (props) => {
                   selected={startDate}
                   onChange={(date) => {
                     return (
-                      setStartDate(date),
+                      setStartDate(date.getTime()),
                       setEndDate(
                         new Date(
                           moment(new Date(date), "DD-MM-YYYY").subtract(
                             5,
                             "minutes"
                           )
-                        )
+                        ).getTime()
                       )
                     );
                   }}
@@ -324,12 +326,10 @@ export default (props) => {
                 <label className="input-title">Bid deadline date</label>
                 <DatePicker
                   selected={endDate}
-                  onChange={(date) => setEndDate(date)}
+                  onChange={(date) => setEndDate(date.getTime())}
                   timeInputLabel="Time:"
                   minDate={moment()}
-                  maxDate={moment(startDate)
-                    .clone()
-                    .subtract(5, "minutes")}
+                  maxDate={startDate}
                   dateFormat="MM/dd/yyyy h:mm aa"
                   onInputClick={() => handleOnInputClick()}
                   onClickOutsideEvent={handleOnClickOutsideEvent()}

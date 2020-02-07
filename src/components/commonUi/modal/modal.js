@@ -77,28 +77,28 @@ const SignInModal = ({
             </svg>
           </Button>
         ) : (
-            <ModalHeader className={`${headerClass}`}>
-              {headerClass === "" && <span>{_modalType}</span>}
-              <Button
-                color="link"
-                className="close-btn btn2"
-                onClick={_toggleModal}
+          <ModalHeader className={`${headerClass}`}>
+            {headerClass === "" && <span>{_modalType}</span>}
+            <Button
+              color="link"
+              className="close-btn btn2"
+              onClick={_toggleModal}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="357"
+                height="357"
+                viewBox="0 0 357 357"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="357"
-                  height="357"
-                  viewBox="0 0 357 357"
-                >
-                  <path
-                    id="Forma_1"
-                    data-name="Forma 1"
-                    d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
-                  />
-                </svg>
-              </Button>
-            </ModalHeader>
-          )}
+                <path
+                  id="Forma_1"
+                  data-name="Forma 1"
+                  d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                />
+              </svg>
+            </Button>
+          </ModalHeader>
+        )}
         <ModalBody
           className={
             "overflow-auto " +
@@ -133,7 +133,7 @@ const SignInModal = ({
               </div>
 
               <div className="signup-modal-frm flex-fill">
-                <LocalForm onSubmit={values => _handleSubmit(values)}>
+                <LocalForm onSubmit={(values) => _handleSubmit(values)}>
                   {_modalType === "/register" && (
                     <React.Fragment>
                       <h2>
@@ -235,7 +235,7 @@ const SignInModal = ({
                       </div>
                       <div className="text-center">
                         <Button type="submit" size="lg" className="signup">
-                          LOGIN
+                          Login
                         </Button>
                       </div>
                       <LoginType {...props} />
@@ -267,41 +267,41 @@ const SignInModal = ({
                       )}
                       {props._sentForgotEmail && (
                         <>
-                        <InputCell
-                          Name={"otp"}
-                          Placeholder={"OTP"}
-                          Model=".otp"
-                          InputType={"text"}
-                          ClassName="input-icon-cell"
-                          InputIcon={true}
-                          Errors={{
-                            required: "required"
-                          }}
-                        />
-                        <InputCell
-                          Name={"password"}
-                          Placeholder={"Password"}
-                          Model=".newpassword"
-                          InputType={"password"}
-                          ClassName="input-icon-cell"
-                          InputIcon={true}
-                          Errors={{
-                            required: "required",
-                            invalidPass: "invalidPass"
-                          }}
-                        />
-                        <InputCell
-                          Name={"confirmPassword"}
-                          Placeholder={"Confirm Password"}
-                          Model=".confirmPassword"
-                          InputType={"password"}
-                          ClassName="input-icon-cell"
-                          InputIcon={true}
-                          Errors={{
-                            required: "required",
-                            invalidPass: "invalidPass"
-                          }}
-                        />
+                          <InputCell
+                            Name={"otp"}
+                            Placeholder={"OTP"}
+                            Model=".otp"
+                            InputType={"text"}
+                            ClassName="input-icon-cell"
+                            InputIcon={true}
+                            Errors={{
+                              required: "required"
+                            }}
+                          />
+                          <InputCell
+                            Name={"password"}
+                            Placeholder={"Password"}
+                            Model=".newpassword"
+                            InputType={"password"}
+                            ClassName="input-icon-cell"
+                            InputIcon={true}
+                            Errors={{
+                              required: "required",
+                              invalidPass: "invalidPass"
+                            }}
+                          />
+                          <InputCell
+                            Name={"confirmPassword"}
+                            Placeholder={"Confirm Password"}
+                            Model=".confirmPassword"
+                            InputType={"password"}
+                            ClassName="input-icon-cell"
+                            InputIcon={true}
+                            Errors={{
+                              required: "required",
+                              invalidPass: "invalidPass"
+                            }}
+                          />
                         </>
                       )}
                       <div className="signup-agree d-flex align-items-start">
@@ -328,7 +328,7 @@ const SignInModal = ({
 
           {_modalType === "Place your bid" && (
             <div className="bid-desc-blc">
-              <LocalForm onSubmit={values => _handleSubmit(values)}>
+              <LocalForm onSubmit={(values) => _handleSubmit(values)}>
                 <div className="row bid-desc-frm">
                   <div className="col-md-12">
                     <label className="input-title">Description</label>
@@ -438,106 +438,106 @@ const SignInModal = ({
                       </div>
                     </div>
                   ) : (
-                      <React.Fragment>
-                        <h2>
-                          <strong>Card Holder:</strong>
-                          {props._cardHolderName}
-                        </h2>
-                        <div className="payment-card-list d-flex flex-column flex-wrap">
-                          <ul className="row">
-                            {props._cards.map((item, key) => {
-                              return (
-                                <li key={key}>
-                                  <div className="payment-confirm position-relative">
-                                    <label className="payment-confirm-check d-flex align-items-center justify-content-center ">
-                                      <input
-                                        type="radio"
-                                        name="select-option"
-                                        checked="checked"
-                                        onChange={() => props._selectedCard(item)}
-                                        className="position-absolute"
-                                      />
-                                      <span className="card-check-cell">
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          width="78.775"
-                                          height="57.775"
-                                          viewBox="0 0 78.775 57.775"
-                                        >
-                                          <path
-                                            id="Forma_1"
-                                            data-name="Forma 1"
-                                            d="M78.564,8.73,29.722,57.567a1.1,1.1,0,0,1-1.556,0L.433,29.836a1.1,1.1,0,0,1,0-1.555l6.739-6.738a1.1,1.1,0,0,1,1.556,0L28.945,41.757,70.27.436a1.1,1.1,0,0,1,1.555,0l6.739,6.738A1.1,1.1,0,0,1,78.564,8.73Z"
-                                            transform="translate(-0.111 -0.114)"
-                                          />
-                                        </svg>
-                                      </span>
-                                    </label>
-                                    <div className="form-group payment-confirm-rw">
-                                      <label>Card Number</label>
-                                      <div className="card-confirm-pic-rw d-flex">
-                                        <div className="card-confirm-pic d-flex justify-content-center align-items-center">
-                                          {item.type === "visa" && (
-                                            <img
-                                              src={require("../../../assets/images/icons/payment-icon/visa.svg")}
-                                              alt="Visa Card"
-                                            />
-                                          )}
-                                        </div>
-                                        <div className="card-confirm-col flex-fill">
-                                          <input
-                                            type="email"
-                                            disabled
-                                            className="form-control"
-                                            id="exampleFormControlInput1"
-                                            placeholder={item.cardNumber}
-                                          />
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div className="form-group payment-confirm-rw d-flex">
-                                      <div className="payment-confirm-col flex-fill">
-                                        <label for="exampleFormControlInput1">
-                                          Expiration Date
-                                      </label>
-                                        <input
-                                          type="email"
-                                          disabled
-                                          className="form-control"
-                                          id="exampleFormControlInput1"
-                                          placeholder={item.cardValidity}
+                    <React.Fragment>
+                      <h2>
+                        <strong>Card Holder:</strong>
+                        {props._cardHolderName}
+                      </h2>
+                      <div className="payment-card-list d-flex flex-column flex-wrap">
+                        <ul className="row">
+                          {props._cards.map((item, key) => {
+                            return (
+                              <li key={key}>
+                                <div className="payment-confirm position-relative">
+                                  <label className="payment-confirm-check d-flex align-items-center justify-content-center ">
+                                    <input
+                                      type="radio"
+                                      name="select-option"
+                                      checked="checked"
+                                      onChange={() => props._selectedCard(item)}
+                                      className="position-absolute"
+                                    />
+                                    <span className="card-check-cell">
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="78.775"
+                                        height="57.775"
+                                        viewBox="0 0 78.775 57.775"
+                                      >
+                                        <path
+                                          id="Forma_1"
+                                          data-name="Forma 1"
+                                          d="M78.564,8.73,29.722,57.567a1.1,1.1,0,0,1-1.556,0L.433,29.836a1.1,1.1,0,0,1,0-1.555l6.739-6.738a1.1,1.1,0,0,1,1.556,0L28.945,41.757,70.27.436a1.1,1.1,0,0,1,1.555,0l6.739,6.738A1.1,1.1,0,0,1,78.564,8.73Z"
+                                          transform="translate(-0.111 -0.114)"
                                         />
+                                      </svg>
+                                    </span>
+                                  </label>
+                                  <div className="form-group payment-confirm-rw">
+                                    <label>Card Number</label>
+                                    <div className="card-confirm-pic-rw d-flex">
+                                      <div className="card-confirm-pic d-flex justify-content-center align-items-center">
+                                        {item.type === "visa" && (
+                                          <img
+                                            src={require("../../../assets/images/icons/payment-icon/visa.svg")}
+                                            alt="Visa Card"
+                                          />
+                                        )}
                                       </div>
-                                      <div className="payment-confirm-col flex-fill cvv">
-                                        <label for="exampleFormControlInput1">
-                                          CVV
-                                      </label>
+                                      <div className="card-confirm-col flex-fill">
                                         <input
                                           type="email"
                                           disabled
                                           className="form-control"
                                           id="exampleFormControlInput1"
-                                          placeholder={item.cardCvv}
+                                          placeholder={item.cardNumber}
                                         />
                                       </div>
                                     </div>
                                   </div>
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        </div>
-                        <div className="bid-frm-btns text-center">
-                          <Button
-                            color="secondary"
-                            type="button"
-                            onClick={props._makePayment}
-                          >
-                            Make Payment
+                                  <div className="form-group payment-confirm-rw d-flex">
+                                    <div className="payment-confirm-col flex-fill">
+                                      <label for="exampleFormControlInput1">
+                                        Expiration Date
+                                      </label>
+                                      <input
+                                        type="email"
+                                        disabled
+                                        className="form-control"
+                                        id="exampleFormControlInput1"
+                                        placeholder={item.cardValidity}
+                                      />
+                                    </div>
+                                    <div className="payment-confirm-col flex-fill cvv">
+                                      <label for="exampleFormControlInput1">
+                                        CVV
+                                      </label>
+                                      <input
+                                        type="email"
+                                        disabled
+                                        className="form-control"
+                                        id="exampleFormControlInput1"
+                                        placeholder={item.cardCvv}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                      <div className="bid-frm-btns text-center">
+                        <Button
+                          color="secondary"
+                          type="button"
+                          onClick={props._makePayment}
+                        >
+                          Make Payment
                         </Button>
-                        </div>
-                      </React.Fragment>
-                    )}
+                      </div>
+                    </React.Fragment>
+                  )}
                 </div>
               )}
             </React.Fragment>
@@ -545,7 +545,7 @@ const SignInModal = ({
 
           {_modalType === "Contact Us" && (
             <div className="contact-us-blc">
-              <LocalForm onSubmit={values => _handleSubmit(values)}>
+              <LocalForm onSubmit={(values) => _handleSubmit(values)}>
                 <div className="contact-us-frm">
                   <InputCell
                     Name={"name"}
@@ -615,12 +615,12 @@ const SignInModal = ({
               <div className="bidder-rate d-flex justify-content-center">
                 <RatingBlock
                   disablestar={false}
-                  ratingClick={rate => setBidderrating(rate)}
+                  ratingClick={(rate) => setBidderrating(rate)}
                 />
               </div>
               <div className="rating-desc">
                 <LocalForm
-                  onSubmit={values => _handleSubmit(values, bidderRating)}
+                  onSubmit={(values) => _handleSubmit(values, bidderRating)}
                 >
                   <div className="rating-desc-rw">
                     <InputCell

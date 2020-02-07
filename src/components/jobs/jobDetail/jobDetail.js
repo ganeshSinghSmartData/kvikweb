@@ -78,19 +78,6 @@ export default function JobDetail({
   const dispatch = useDispatch();
   const { jobBidCheck } = useSelector((state) => state.job);
   const thmbnails = [];
-  let [timeleft, seTimeleft] = useState(
-    datetimeDifference(
-      new Date(),
-      new Date(DaysBetween(parseInt(job.jobEndDate || job.endDate)))
-    )
-  );
-  /*   setInterval(() => {
-    const time = datetimeDifference(
-      new Date(),
-      new Date(DaysBetween(job.jobStartDate))
-    );
-    seTimeleft(time);
-  }, 1000); */
 
   job.images.length &&
     job.images.map((item) => {
@@ -453,7 +440,7 @@ export default function JobDetail({
                 </h3>
                 <div className="job-detail-bid d-flex justify-content-center">
                   <Countdown
-                    date={new Date(parseInt(job.jobEndDate || job.endDate))}
+                    date={new Date(job.jobEndDate || job.endDate)}
                     intervalDelay={0}
                     precision={3}
                     renderer={(props) => (
