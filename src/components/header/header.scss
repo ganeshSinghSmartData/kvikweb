@@ -15,6 +15,9 @@
     img {
       position: relative;
       width: 125px;
+      @media(max-width:850px){
+        width: 110px;
+      }
     }
     // @media (max-width: 550px) {
     //   border-bottom: 1px solid rgba(256, 256, 256, 0.2);
@@ -111,7 +114,7 @@
   margin-right: 20px;
   z-index: 9;
   position: fixed;
-  transition: all ease 0.1s 0s;
+  // transition: all ease 0.1s 0s;
 }
 .header-home.active {
   @include bg-opacity($primary-dark, 0.95);

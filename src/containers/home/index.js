@@ -50,7 +50,6 @@ class Home extends Component {
       });
     } else if (values.message) {
       this.props.contactUs(values, (callback) => {
-        console.log("values, callback", values, callback);
         if (callback) {
           toastAction(true, "Your message has sent to the admin successfully");
           this.setState({ isLoading: false });
@@ -102,7 +101,6 @@ class Home extends Component {
   handleForgotPassword = (values) => {};
 
   handleSocialLogin = (user) => {
-    console.log(user);
   };
 
   handleSocialLoginFailure = (err) => {
@@ -111,7 +109,6 @@ class Home extends Component {
 
   render() {
     const path = this.props.location.pathname;
-    console.log("props here", this.props);
     return (
       <React.Fragment>
         {true ? <Job /> : <SpinnerOverlay className="position-fixed" />}

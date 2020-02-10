@@ -52,19 +52,18 @@ const JobProduct = ({ product, listType, path }) => {
       onClick={() => jobDetails(product._id)}
     >
       <div className="job-pic text-center flex-shrink-0 d-flex position-relative">
-        <Link
-          className={`text-black flex-fill position-relative ${imageclass}`}
+        <div
+          className={`job-pic-inner text-black flex-fill position-relative ${imageclass}`}
           to={`${pathname}${product._id}`}
-          onClick={() => jobDetails(product._id)}
         >
           {product.images && product.images.length !== 0 ? (
             <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />
           ) : (
-            <img
-              src={require("../../../assets/images/icons/default-job-image.svg")}
-              alt="Job"
-            />
-          )}
+              <img
+                src={require("../../../assets/images/icons/default-job-image.svg")}
+                alt="Job"
+              />
+            )}
           {path === "/bid-list" && (
             <span className={`job-status-bar position-absolute ${classname}`}>
               {workStatus[product.status]}
@@ -76,7 +75,7 @@ const JobProduct = ({ product, listType, path }) => {
               {workStatus[product.status]}
             </span>
           )}
-        </Link>
+        </div>
       </div>
       <div
         className={
@@ -219,13 +218,13 @@ const JobProduct = ({ product, listType, path }) => {
           <label
             className={`flex-fill mb-0 ${
               product.status === "accepted" ||
-              product.status === "in_progress" ||
-              product.status === "completed"
+                product.status === "in_progress" ||
+                product.status === "completed"
                 ? "text-success"
                 : product.status === "rejected" || product.status === "expired"
-                ? "text-danger"
-                : "text-primary"
-            }`}
+                  ? "text-danger"
+                  : "text-primary"
+              }`}
           >
             {constants.jobStatus[product.status]}
           </label>

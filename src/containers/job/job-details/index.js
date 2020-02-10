@@ -121,7 +121,6 @@ class JobDetails extends Component {
         userJobDetails = this.props.userJobDetails;
       }
     }
-    console.log("jobs", this.props.jobs);
     return (
       <React.Fragment>
         {Object.keys(userJobDetails).length ? (

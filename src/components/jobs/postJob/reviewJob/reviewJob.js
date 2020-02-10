@@ -37,7 +37,6 @@ import {
 import JobDetail from "../../jobDetail/jobDetail";
 
 const ReviewModal = (props) => {
-  console.log("ReviewModal", props);
   const {
     buttonLabel,
     _jobDetails,

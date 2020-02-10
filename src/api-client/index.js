@@ -55,7 +55,7 @@ class ApiClient {
     setAuthorizationToken(axios, token);
     let query = querystring.stringify(params);
     url = query ? `${url}?${query}` : url;
-    console.log("url hjer======>", url);
+
     return new Promise(function(fulfill, reject) {
       axios
         .get(url, config)

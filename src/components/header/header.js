@@ -44,8 +44,6 @@ const Header = (props) => {
     setnavVisible(value);
   };
   const location = props.children.props.location.pathname
-
-  console.log('props', props)
   return (
     <>
       <header className={`header d-flex flex-column flex-shrink-0 

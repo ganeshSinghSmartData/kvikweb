@@ -110,7 +110,6 @@ class PostNewJob extends Component {
     let imageData = this.state.imageData;
     let uploadedImages = this.state.uploadedImages;
     let categories = this.props.category;
-    console.log("uploadedImages", uploadedImages, "imageData", imageData);
     this.setState({ openView: false, uploadedImages: [] });
     let formData = new FormData();
     this.setState({ dataload: true });
@@ -156,7 +155,6 @@ class PostNewJob extends Component {
     }
   };
   render() {
-    console.log("Post job states", this.state)
     let CategoryItems = [];
     this.props.category &&
       this.props.category.length &&

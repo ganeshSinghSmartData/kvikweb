@@ -77,7 +77,6 @@ const getStatus = (status) => {
 };
 
 const Status = (props) => {
-  console.log("item in status", props);
   return (
     <li
       className={`d-flex justify-content-center position-relative  ${

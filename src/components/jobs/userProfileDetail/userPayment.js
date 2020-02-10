@@ -51,7 +51,6 @@ const UserPayment = props => {
     }
   }, []);
 
-  console.log("front_image :", front_image);
 
   const handleBankSubmit = e => {
     setIsLoading(true);

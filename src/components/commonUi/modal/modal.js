@@ -40,7 +40,6 @@ const SignInModal = ({
 
   let [isForgot, setForgot] = useState(false);
   let [bidderRating, setBidderrating] = useState(1);
-  console.log("_jobStatus", props._jobStatus);
   return (
     <div>
       <Modal

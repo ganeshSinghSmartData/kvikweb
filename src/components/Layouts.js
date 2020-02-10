@@ -96,7 +96,7 @@ export const PublicLayout = (props) => {
             props.children.props.match.path === "/post-job") && (
               <Banner path={props.children} />
             )}
-          <Container className={`d-flex flex-column flex-shrink-0 mb-50 position-relative pt-20 
+          <Container className={`d-flex flex-column flex-shrink-0 mb-50 position-relative pt-20 inner-section-wrapper
           ${custom_class}`
           }>
             {props.children}
@@ -145,18 +145,6 @@ export const PublicLayout = (props) => {
   );
 };
 
-// const mapStateToProps = state => {
-//   console.log('state-------------', state);
-
-//   return ({
-//     sidebarToggle: state.job.sidebarToggle
-//   })
-// };
-// const mapDispatchToProps = dispatch => ({
-//   sidebarToggleHandler: bindActionCreators(sidebarToggle, dispatch)
-// });
-
-// export default connect(mapStateToProps, mapDispatchToProps)(PublicLayout);
 /*************** Private Layout ***************/
 export const privateLayout = (props) => {
   window.scrollTo(0, 0);

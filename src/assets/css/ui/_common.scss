@@ -460,6 +460,7 @@ input[type="search"]::-webkit-search-decoration {
     flex: 1;
     overflow: auto;
     margin-bottom: 20px !important;
+    flex-shrink: initial !important;
     .job-detail-blc {
       @media (max-width: 767px) {
         flex: none !important;
