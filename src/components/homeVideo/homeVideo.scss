@@ -41,14 +41,17 @@
     }
   }
   .home-video-blc {
+    overflow:auto;
     h1 {
-      // font-size: 9vw;
       font-size: 58px;
       font-weight: 700;
       text-transform: uppercase;
-      text-shadow: 0 1px 2px rgba(0, 1px, 0, 0.16);
+      text-shadow: 0 1px 2px rgba(0, 1px, 0, 0.16);      
       @media (max-width: 767px) {
         font-size: 40px;
+      }
+      @media (max-width: 374px) {
+        font-size: 30px;
       }
       span {
         color: $orange-100;
@@ -56,9 +59,11 @@
     }
     p {
       font-size: 18px;
-      // font-size: 3vw;
       font-weight: 700;
       text-shadow: 0 1px 2px rgba(0, 1px, 3px, 0.16);
+      @media (max-width: 374px) {
+        font-size: 14px;
+      }
     }
     .home-video-inner {
       margin-top: 4vh;
