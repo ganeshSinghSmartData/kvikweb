@@ -45,7 +45,6 @@ const Header = (props) => {
     setnavVisible(value);
   };
   const location = props.children.props.location.pathname;
-
   return (
     <>
       <header

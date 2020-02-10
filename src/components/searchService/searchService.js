@@ -18,14 +18,6 @@ const SearchService = ({ history, className = "", posJobButton }) => {
     if (pathname === "/" && search) {
       dispatch(reset_job_products());
       dispatch(getJobProduct({ page: pagination.page, search }));
-      /* if (searchKey.search === "") {
-        console.log("I am calling in empty search");
-        dispatch(getJobProduct({ page: pagination.page }));
-      } else {
-        console.log("I am calling in string search");
-        dispatch(reset_job_products());
-        
-      } */
     }
   };
   return (

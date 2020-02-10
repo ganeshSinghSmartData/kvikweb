@@ -250,7 +250,7 @@ const Job = ({
     <React.Fragment>
       {/* <SpinnerOverlay className="position-fixed" /> */}
       <section className={`d-flex flex-column position-relative`} id="home">
-        <div id="blank-div" class="blank-height"></div>
+        <div id="blank-div" className="blank-height"></div>
         <div
           className={`d-flex job-list-heading ${
             path !== "" ? "sorting-page" : ""

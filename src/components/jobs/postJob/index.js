@@ -35,9 +35,6 @@ export default (props) => {
     _jobDetails && _jobDetails.images ? _jobDetails.images : []
   );
   const [imageData, setImageData] = useState({});
-  console.log("inside postjob=======>", props, uploadedImages);
-
-  console.log("imageData", imageData);
   let { job } = useSelector((state) => state);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -177,15 +174,6 @@ export default (props) => {
         <LocalForm
           initialState={_jobDetails}
           onSubmit={(values) => {
-            console.log(
-              "sending data to next page===>",
-              values,
-              startDate,
-              endDate,
-              imageData,
-              images,
-              _currentstage
-            );
             _handleJobPost(
               values,
               startDate,
@@ -356,8 +344,6 @@ export default (props) => {
                   {images &&
                     images.length > 0 &&
                     images.slice(0, 5).map((item, key) => {
-                      console.log("item here", item);
-
                       return (
                         <li key={key} className="position-relative">
                           <Button

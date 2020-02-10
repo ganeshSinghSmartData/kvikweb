@@ -192,9 +192,6 @@ export default function JobDetail({
     }
   }, [dispatch, initial, job.category]);
 
-  console.log("====================================");
-  console.log("job here", job);
-  console.log("====================================");
   return (
     <>
       <div className="job-detail-blc d-flex flex-column flex-fill">

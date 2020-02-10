@@ -45,7 +45,6 @@ const UserProfile = (props) => {
   const userListtoggle = () => setuserListOpen((prevState) => !prevState);
 
   const chatToggle = (chat) => {
-    console.log("chat", chat);
     setBidersName(chat.fname + " " + chat.lname);
     setchatVisible(true);
     dispatch(resetChats());

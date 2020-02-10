@@ -1,14 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import datetimeDifference from "datetime-difference";
 import Countdown from "react-countdown-now";
-import moment from "moment";
-import {
-  StringToDate,
-  DaysBetween,
-  AddOffset
-} from "./../../../utilities/common";
+import { StringToDate } from "./../../../utilities/common";
 import { apiUrl } from "./../../../environment";
 import { JobStatus, BidStatus } from "../../../utilities/constants";
 import { getJobBidCheck } from "./../../../actions/job";
@@ -53,9 +47,8 @@ const JobProduct = ({ product, listType, path }) => {
     >
       <div className="job-pic text-center flex-shrink-0 d-flex position-relative">
         <div
-          className={`text-black flex-fill position-relative ${imageclass}`}
+          className={`job-pic-inner text-black flex-fill position-relative ${imageclass}`}
           to={`${pathname}${product._id}`}
-          onClick={() => jobDetails(product._id)}
         >
           {product.images && product.images.length !== 0 ? (
             <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />

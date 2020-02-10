@@ -79,7 +79,6 @@ export const getJobProduct = ({
     }&minbudget=${minbudget}&maxbudget=${maxbudget}&zip_code=${zip_code}&miles=${miles}&search=${search}&sort=${
       sort ? JSON.stringify(sort) : ""
     }`;
-    console.log("calling url", url);
 
     ApiClient.get(url, {}).then((response) => {
       if (response.status === 200) {
@@ -190,7 +189,6 @@ export const placeYourBid = (params, callback) => {
       data: { token }
     } = getState().user;
     ApiClient.post(`${apiUrl}/bid/post_bid`, params, token).then((response) => {
-      console.log("response", response);
       if (response.status === 200) {
         dispatch(is_fetching(false));
         // dispatch(post_job_products(response.data));

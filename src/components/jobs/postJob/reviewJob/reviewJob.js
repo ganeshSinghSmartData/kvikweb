@@ -10,7 +10,6 @@ import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import JobDetail from "../../jobDetail/jobDetail";
 
 const ReviewModal = (props) => {
-  console.log("ReviewModal", props);
   const { _jobDetails, closePrevieModal, submitJobData } = props;
   const [modal, setModal] = useState(true);
   const _isLoading = useSelector((state) => state.loader.isFetching);

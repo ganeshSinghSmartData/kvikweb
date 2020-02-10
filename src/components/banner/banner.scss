@@ -14,8 +14,8 @@
 }
 .home-banner {
   background: none;
-  height: auto;
-  @media (max-width: 767px) {
+  height: 100vh;
+  @media (max-height: 480px) {
     height: auto;
   }
 }
