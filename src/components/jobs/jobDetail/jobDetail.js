@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Countdown from "react-countdown-now";
-import datetimeDifference from "datetime-difference";
-import { Button, Row, Col } from "reactstrap";
+import { Button } from "reactstrap";
 import { toastAction } from "../../../actions/toast-actions";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
-import moment from "moment";
 import { ImageView } from "../bidderProfile/chat/ImageView/ImageView";
 
 import "./jobDetail.scss";
@@ -15,17 +13,10 @@ import "slick-carousel/slick/slick-theme.css";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
 import Paragraph from "../../commonUi/paragraph/paragraph";
-import JobCreatedBy from "./JobAddress/jobCreatedBy";
 import Proposal from "./proposal/proposal";
 import Breadcrumb from "../../commonUi/breadcrumb/breadcrumb";
-import TimeCounterComponent from "./timeCounterComponent";
 
-import {
-  StringToDate,
-  dateTime,
-  DaysBetween,
-  AddOffset
-} from "./../../../utilities/common";
+import { StringToDate, dateTime } from "./../../../utilities/common";
 import { JobStatus, BidStatus } from "../../../utilities/constants";
 import { apiUrl } from "./../../../environment";
 import {
@@ -34,14 +25,12 @@ import {
   approvedBidWork,
   getSimilarProduct
 } from "./../../../actions/job";
-import Spinner from "../../commonUi/spinner/spinner";
 import SpinnerOverlay from "../../commonUi/spinner/spinnerOverlay/spinnerOverlay";
 
 import PlaceYourBidModal from "../../commonUi/modal/modal";
 import ConfirmJobStartModal from "../../commonUi/modal/modal";
 import RateBidderWorkModal from "../../commonUi/modal/modal";
 import UserImage from "../../jobs/jobDetail/userImage/userImage";
-import JobAddress from "../jobDetail/JobAddress/jobAddress";
 import RenderSimilarProducts from "./RenderSimilarProducts";
 import StatusBar from "./StatusBar";
 export default function JobDetail({
@@ -203,7 +192,18 @@ export default function JobDetail({
         />
         {!hideHeader && (
           <div className="job-detail-hd d-flex align-items-center">
-            <h2 className="flex-fill">Job Details</h2>
+            <div className="flex-fill">
+              <h2 className="flex-fill">Job Details</h2>
+              <h6
+                className="mobile-new-task-btn flex-fill"
+                onClick={() => {
+                  document.querySelector("#newTaskBtn") &&
+                    document.querySelector("#newTaskBtn").scrollIntoView();
+                }}
+              >
+                View New Tasks
+              </h6>
+            </div>
             <Breadcrumb path={path} />
           </div>
         )}
@@ -432,7 +432,7 @@ export default function JobDetail({
                         />
                       </svg>
                     </span>
-                    Bidding ends in 
+                    Bidding ends in
                   </label>
                 </h3>
                 <div className="job-detail-bid d-flex justify-content-center">
@@ -574,12 +574,18 @@ export default function JobDetail({
             </div>
           </div>
           {!reviewModal && (
-            <div className="job-listing-blc flex-shrink-0 flex-fill overflow-auto">
+            <div
+              className="job-listing-blc flex-shrink-0 flex-fill overflow-auto"
+              id="newTaskBtn"
+            >
               <Button
                 block
                 color="link"
                 className="new-joblist-btn"
-                onClick={() => dispatch(getSimilarProduct(1, [job.category]))}
+                onClick={() => {
+                  document.querySelector("#main_container").scrollTop = 0;
+                  dispatch(getSimilarProduct(1, [job.category]));
+                }}
               >
                 View New Tasks
               </Button>

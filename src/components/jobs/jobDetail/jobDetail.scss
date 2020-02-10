@@ -143,6 +143,7 @@
     flex-direction: column;
   }
 }
+
 // .job-detail-hd {
 //   padding-bottom: 18px;
 //   @media (max-width: 600px) {
@@ -660,5 +661,12 @@
     .job-detail-amnt {
       font-size: 22px;
     }
+  }
+}
+
+.mobile-new-task-btn {
+  display: none;
+  @media (max-width: 767px) {
+    display: inline;
   }
 }
