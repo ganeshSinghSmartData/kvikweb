@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Input, FormGroup } from "reactstrap";
 import "./chat.scss";
 import {
   messages_list,
   toggleChat,
-  uploadChatImage,
-  get_message
+  uploadChatImage
 } from "../../../../actions/messages";
 import { LocalForm, Control } from "react-redux-form";
 import SocketClient from "../../../../config/socket";
@@ -22,7 +21,6 @@ const ROOT_CSS = css({
   height: 400,
   width: 800
 });
-let chatId = "";
 let messagesEnd = null;
 const Chat = (props) => {
   const [message, setMessage] = useState("");
@@ -38,17 +36,19 @@ const Chat = (props) => {
   if (messages && messages.data && messages.data.length) {
     displayMessages = [...new Set(messages.data)];
   }
+  const loadChatData = useCallback(
+    async (Id) => {
+      if (Id) {
+        SocketClient.eventHandler(GET_MESSAGE, { user_id: user.data._id });
+        await dispatch(messages_list({ id: Id, limit: 10, skip: 0 }));
+        ScrollToBottom();
+      }
+    },
+    [dispatch, user.data._id]
+  );
   useEffect(() => {
     loadChatData(messages.chatId);
   }, [loadChatData, messages.chatId]);
-
-  const loadChatData = async (Id) => {
-    if (Id) {
-      SocketClient.eventHandler(GET_MESSAGE, { user_id: user.data._id });
-      await dispatch(messages_list({ id: Id, limit: 10, skip: 0 }));
-      // ScrollToBottom()
-    }
-  };
 
   const [ImageModal, setImageModal] = useState(false);
   const imageViewHandler = () => {
@@ -79,14 +79,11 @@ const Chat = (props) => {
       });
 
     setMessage("");
-    // ScrollToBottom()
+    ScrollToBottom();
     dispatch(messages_list({ id: props.Id, limit: 10, skip: 0 }));
   };
 
-  const chatHide = () => {
-    props.chatHideCallback(false);
-  };
-  const handleImageUpload = (data) => {
+  const handleImageUpload = (data = []) => {
     let formData = new FormData();
     formData.append("images", data[0]);
     dispatch(
