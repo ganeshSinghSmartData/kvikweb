@@ -1,4 +1,7 @@
 import React, { useRef, useState } from "react";
+import {
+  BrowserView
+} from "react-device-detect";
 import "./homeVideo.scss";
 const HomeVideo = (path) => {
   const videoRef = useRef(null);
@@ -20,7 +23,8 @@ const HomeVideo = (path) => {
               bases of requirements.
             </p>
             <div className="home-video-inner d-flex justify-items-center align-items-center position-relative">
-              {paused ? (
+            <BrowserView>
+            {paused ? (
                 <span
                   className="video-play-btn video-btn"
                   onClick={() => {
@@ -158,6 +162,8 @@ const HomeVideo = (path) => {
                   </svg>
                 </span>
               )}
+            </BrowserView>
+             
               <video width="400" controls ref={videoRef}>
                 <source
                   src={require("../../../src/assets/sample.mp4")}

@@ -29,32 +29,30 @@ export const PublicLayout = (props) => {
   const [headerFixed, setheaderFixed] = useState(false);
 
   const scrollCheck = () => {
-    //Header Fixed Function start
-    if (wrapperRef.current.scrollTop > 60) {
-      setheaderFixed(true);
-    } else {
-      setheaderFixed(false);
-    }
-    //Header Fixed Function end
-
-    //Scroll to top Function start
     let scrollTopCheck = wrapperRef.current.scrollTop;
+    //Header Fixed Function start
+    if (scrollTopCheck > 60) {
+      !headerFixed && setheaderFixed(true);
+    } else {
+      headerFixed && setheaderFixed(false);
+    }
+    //Scroll to top Function start
+   
     if (scrollTopCheck > 300) {
-      setscrollVisible(true);
+      !scrollVisible && setscrollVisible(true);
     } else if (scrollTopCheck < 100) {
-      setscrollVisible(false);
+      scrollVisible && setscrollVisible(false);
     }
     let home = document.getElementById("home");
     if (home && home.getBoundingClientRect().top <= 0) {
-      !sidebarToggleValue && dispatch(sidebarToggleHandler(true));
-      return;
+      return !sidebarToggleValue && dispatch(sidebarToggleHandler(true));
+      
     } else {
       document.querySelector("#blank-div") &&
         document
           .querySelector("#blank-div")
           .setAttribute("style", "display:none");
-      sidebarToggleValue && dispatch(sidebarToggleHandler(false));
-      return;
+          return sidebarToggleValue && dispatch(sidebarToggleHandler(false));    
     }
   };
   const scrollTopFunction = () => {

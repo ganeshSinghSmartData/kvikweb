@@ -11,7 +11,7 @@ const Banner = (path) => {
       {/* <div className="header-invisible"></div> */}
       <section className={`banner d-flex flex-column flex-shrink-0 ${location === "/" ? 'home-banner' : ''}`}>
         {
-          location === "/" ?
+          location === "/" || location === "/login" ||  location === "/register" ?
             <HomeVideo />
             : null
         }
