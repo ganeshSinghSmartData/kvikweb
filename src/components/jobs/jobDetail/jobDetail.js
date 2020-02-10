@@ -435,7 +435,7 @@ export default function JobDetail({
                         />
                       </svg>
                     </span>
-                    Bidding ends in
+                    Bidding ends in 
                   </label>
                 </h3>
                 <div className="job-detail-bid d-flex justify-content-center">
@@ -578,7 +578,12 @@ export default function JobDetail({
           </div>
           {!reviewModal && (
             <div className="job-listing-blc flex-shrink-0 flex-fill overflow-auto">
-              <Button block color="link" className="new-joblist-btn">
+              <Button
+                block
+                color="link"
+                className="new-joblist-btn"
+                onClick={() => dispatch(getSimilarProduct(1, [job.category]))}
+              >
                 View New Tasks
               </Button>
               <RenderSimilarProducts data={similarProducts} />

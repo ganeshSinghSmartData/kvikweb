@@ -25,7 +25,7 @@ class JobProposal extends Component {
       this.props.getUserJobDetails({ jobId: params });
     }
   }
-  confirmDelete = value => {
+  confirmDelete = (value) => {
     confirmAlert({
       title: "",
       message: "Are you sure do you want to delete this job ?",
@@ -42,8 +42,8 @@ class JobProposal extends Component {
     });
   };
 
-  deleteJob = jobId => {
-    this.props.deleteMyJob({ job_id: jobId }, callback => {
+  deleteJob = (jobId) => {
+    this.props.deleteMyJob({ job_id: jobId }, (callback) => {
       if (callback) {
         this.props.history.push("/job-list");
       }
@@ -62,7 +62,7 @@ class JobProposal extends Component {
             job={this.props.userJobDetails}
             history={this.props.history}
             path={pathname}
-            _isLoading={this.state.isLoading}
+            _isLoading={this.props._isLoading}
             _deleteJob={this.confirmDelete}
           ></JobDetail>
         ) : (
@@ -73,11 +73,12 @@ class JobProposal extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  userJobDetails: state.bid.userJobDetails
+const mapStateToProps = (state) => ({
+  userJobDetails: state.bid.userJobDetails,
+  _isLoading: state.loader.isFetching
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getUserJobDetails: bindActionCreators(getUserJobDetails, dispatch),
   deleteMyJob: bindActionCreators(deleteMyJob, dispatch),
   reset_job_details: bindActionCreators(reset_job_details, dispatch)

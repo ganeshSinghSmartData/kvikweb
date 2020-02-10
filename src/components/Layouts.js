@@ -28,17 +28,12 @@ export const PublicLayout = (props) => {
   const [scrollVisible, setscrollVisible] = useState(false);
   const [headerFixed, setheaderFixed] = useState(false);
 
-
   const scrollCheck = () => {
-
     //Header Fixed Function start
-    if (
-      wrapperRef.current.scrollTop > 60
-    ) {
-      setheaderFixed(true)
-    }
-    else {
-      setheaderFixed(false)
+    if (wrapperRef.current.scrollTop > 60) {
+      setheaderFixed(true);
+    } else {
+      setheaderFixed(false);
     }
     //Header Fixed Function end
 
@@ -46,7 +41,7 @@ export const PublicLayout = (props) => {
     let scrollTopCheck = wrapperRef.current.scrollTop;
     if (scrollTopCheck > 300) {
       setscrollVisible(true);
-    } else if ((scrollTopCheck < 100)) {
+    } else if (scrollTopCheck < 100) {
       setscrollVisible(false);
     }
     let home = document.getElementById("home");
@@ -54,6 +49,10 @@ export const PublicLayout = (props) => {
       !sidebarToggleValue && dispatch(sidebarToggleHandler(true));
       return;
     } else {
+      document.querySelector("#blank-div") &&
+        document
+          .querySelector("#blank-div")
+          .setAttribute("style", "display:none");
       sidebarToggleValue && dispatch(sidebarToggleHandler(false));
       return;
     }
@@ -70,40 +69,42 @@ export const PublicLayout = (props) => {
   }
   return (
     <>
-
       <div
         className={`main-wrapper d-flex flex-column flex-fill ${custom_class}`}
         onLoadStart={() => dispatch(sidebarToggleHandler(false))}
       >
-
         <div
           id="main_container"
           className={`wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto 
           ${!sidebarToggleValue ? "active" : ""}
           ${
             props.children.props.match.path === "/job-details/:job_id" ||
-              props.children.props.match.path == "/bid-details/:job_id"
+            props.children.props.match.path == "/bid-details/:job_id"
               ? "jobDetailLayout"
               : ""
-            }
+          }
               ${props.children.props.match.path == "/" ? "homeLayout" : ""}
           `}
           ref={wrapperRef}
           onScroll={scrollCheck}
         >
-          {!custom_class ? <Header {...props} headerFixed={headerFixed} /> : null}
+          {!custom_class ? (
+            <Header {...props} headerFixed={headerFixed} />
+          ) : null}
           {(props.children.props.match.path === "/" ||
             props.children.props.match.path === "/post-job") && (
-              <Banner path={props.children} />
-            )}
-          <Container className={`d-flex flex-column flex-shrink-0 mb-50 position-relative pt-20 
-          ${custom_class}`
-          }>
+            <Banner path={props.children} />
+          )}
+          <Container
+            className={`d-flex flex-column flex-shrink-0 mb-50 position-relative pt-20 
+          ${custom_class}`}
+          >
             {props.children}
             <button
               type="button"
-              className={
-                `btn scroll-tp-btn rounded-circle position-fixed ${scrollVisible ? "on" : ""}`}
+              className={`btn scroll-tp-btn rounded-circle position-fixed ${
+                scrollVisible ? "on" : ""
+              }`}
               onClick={scrollTopFunction}
             >
               <svg

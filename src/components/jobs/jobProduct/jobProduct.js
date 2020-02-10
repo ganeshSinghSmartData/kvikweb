@@ -52,7 +52,7 @@ const JobProduct = ({ product, listType, path }) => {
       onClick={() => jobDetails(product._id)}
     >
       <div className="job-pic text-center flex-shrink-0 d-flex position-relative">
-        <Link
+        <div
           className={`text-black flex-fill position-relative ${imageclass}`}
           to={`${pathname}${product._id}`}
           onClick={() => jobDetails(product._id)}
@@ -76,7 +76,7 @@ const JobProduct = ({ product, listType, path }) => {
               {workStatus[product.status]}
             </span>
           )}
-        </Link>
+        </div>
       </div>
       <div
         className={
