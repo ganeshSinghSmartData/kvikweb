@@ -53,11 +53,11 @@ const JobProduct = ({ product, listType, path }) => {
           {product.images && product.images.length !== 0 ? (
             <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />
           ) : (
-            <img
-              src={require("../../../assets/images/icons/default-job-image.svg")}
-              alt="Job"
-            />
-          )}
+              <img
+                src={require("../../../assets/images/icons/default-job-image.svg")}
+                alt="Job"
+              />
+            )}
           {path === "/bid-list" && (
             <span className={`job-status-bar position-absolute ${classname}`}>
               {workStatus[product.status]}
@@ -149,7 +149,7 @@ const JobProduct = ({ product, listType, path }) => {
           </div>
         ) : null}
         <div className="job-time d-flex space-bet justify-content-between mt-auto">
-          <div className="job-time-col d-flex">
+          <div className="job-time-col d-flex pr-3">
             <span className="job-time-icn">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -212,13 +212,13 @@ const JobProduct = ({ product, listType, path }) => {
           <label
             className={`flex-fill mb-0 ${
               product.status === "accepted" ||
-              product.status === "in_progress" ||
-              product.status === "completed"
+                product.status === "in_progress" ||
+                product.status === "completed"
                 ? "text-success"
                 : product.status === "rejected" || product.status === "expired"
-                ? "text-danger"
-                : "text-primary"
-            }`}
+                  ? "text-danger"
+                  : "text-primary"
+              }`}
           >
             {constants.jobStatus[product.status]}
           </label>
