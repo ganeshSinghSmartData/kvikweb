@@ -106,10 +106,10 @@ const Chat = (props) => {
       <div
         className={`chat-block d-flex flex-column ${
           props.chatToggle ? "on" : ""
-        }`}
+          }`}
       >
         <div className="chat-head d-flex flex-shrink-0">
-          <h2>{props.recieversName ? props.recieversName : "CHAT"}</h2>
+          <h2>{props.recieversName || "CHAT"}</h2>
           <Button
             color="primary"
             className="chat-btn rounded-circle position-static ml-auto"
@@ -194,56 +194,56 @@ const Chat = (props) => {
                         {/* media row  end*/}
                       </>
                     ) : (
-                      <>
-                        {val.type == "text" ? (
-                          <div className="chat-row d-flex">
-                            <div
-                              ref={(el) => {
-                                messagesEnd = el;
-                              }}
-                              className="chat-txt admin"
-                            >
-                              <p>{val.message}</p>
-                              <span className="d-block chat-time">
-                                {moment(val.createdAt).format("LT")}
-                              </span>
-                            </div>
-                          </div>
-                        ) : null}
-
-                        {/* media row  start*/}
-                        {val.type == "image" ? (
-                          <div className="d-flex flex-wrap chat-row">
-                            <div className="user-media-cell 002 d-flex overflow-auto admin">
-                              <div className="user-media-cell-inner">
-                                <div className="user-media-pic position-relative flex-shrink-0">
-                                  {imageLoader ? <Spinner /> : null}
-                                  <Button
-                                    color="link"
-                                    className="p-0 rounded-0"
-                                    onClick={() =>
-                                      closeimageViewHandlerViewChat(
-                                        `${apiUrl}/${val.path}`
-                                      )
-                                    }
-                                  >
-                                    <img
-                                      src={`${apiUrl}/${val.path}`}
-                                      onLoad={(e) => chatLoader(e)}
-                                      alt="Media File"
-                                    />
-                                  </Button>
-                                </div>
+                        <>
+                          {val.type == "text" ? (
+                            <div className="chat-row d-flex">
+                              <div
+                                ref={(el) => {
+                                  messagesEnd = el;
+                                }}
+                                className="chat-txt admin"
+                              >
+                                <p>{val.message}</p>
                                 <span className="d-block chat-time">
                                   {moment(val.createdAt).format("LT")}
                                 </span>
                               </div>
                             </div>
-                          </div>
-                        ) : null}
-                        {/* media row end*/}
-                      </>
-                    )}
+                          ) : null}
+
+                          {/* media row  start*/}
+                          {val.type == "image" ? (
+                            <div className="d-flex flex-wrap chat-row">
+                              <div className="user-media-cell 002 d-flex overflow-auto admin">
+                                <div className="user-media-cell-inner">
+                                  <div className="user-media-pic position-relative flex-shrink-0">
+                                    {imageLoader ? <Spinner /> : null}
+                                    <Button
+                                      color="link"
+                                      className="p-0 rounded-0"
+                                      onClick={() =>
+                                        closeimageViewHandlerViewChat(
+                                          `${apiUrl}/${val.path}`
+                                        )
+                                      }
+                                    >
+                                      <img
+                                        src={`${apiUrl}/${val.path}`}
+                                        onLoad={(e) => chatLoader(e)}
+                                        alt="Media File"
+                                      />
+                                    </Button>
+                                  </div>
+                                  <span className="d-block chat-time">
+                                    {moment(val.createdAt).format("LT")}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          ) : null}
+                          {/* media row end*/}
+                        </>
+                      )}
                   </React.Fragment>
                 );
               })}

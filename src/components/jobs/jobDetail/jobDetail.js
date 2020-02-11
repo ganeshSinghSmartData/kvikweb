@@ -37,9 +37,9 @@ export default function JobDetail({
   history,
   job = {},
   path = "",
-  _deleteJob = () => {},
-  _startJob = () => {},
-  _endJob = () => {},
+  _deleteJob = () => { },
+  _startJob = () => { },
+  _endJob = () => { },
   _isLoading = false,
   _isStatusLoading = false,
   hideHeader = false,
@@ -191,21 +191,24 @@ export default function JobDetail({
           imageViewHandlerProp={imageViewHandler}
         />
         {!hideHeader && (
-          <div className="job-detail-hd d-flex align-items-center">
-            <div className="flex-fill">
-              <h2 className="flex-fill">Job Details</h2>
-              <h6
-                className="mobile-new-task-btn flex-fill"
-                onClick={() => {
-                  document.querySelector("#newTaskBtn") &&
-                    document.querySelector("#newTaskBtn").scrollIntoView();
-                }}
-              >
-                View New Tasks
-              </h6>
+          <>
+            <div className="job-detail-hd d-flex align-items-center">
+              <div className="flex-fill d-flex job-detail-hd-inner align-items-center">
+                <h2 className="flex-fill">Job Details</h2>
+              </div>
+              <Breadcrumb path={path} />
             </div>
-            <Breadcrumb path={path} />
-          </div>
+            <Button
+              color="primary"
+              className="mobile-new-task-btn"
+              onClick={() => {
+                document.querySelector("#newTaskBtn") &&
+                  document.querySelector("#newTaskBtn").scrollIntoView();
+              }}
+            >
+              View Similar Jobs
+              </Button>
+          </>
         )}
 
         <div className="job-detail-inner d-flex flex-fill">
@@ -234,11 +237,11 @@ export default function JobDetail({
                       }
                     />
                   ) : (
-                    <img
-                      src={require("../../../assets/images/icons/default-job-image.svg")}
-                      alt="Job Post User"
-                    />
-                  )}
+                      <img
+                        src={require("../../../assets/images/icons/default-job-image.svg")}
+                        alt="Job Post User"
+                      />
+                    )}
                 </div>
                 <div className="d-flex justify-content-center">
                   <div className="job-slider-track-inner">
@@ -259,8 +262,8 @@ export default function JobDetail({
                         ))}
                       </Slider>
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                   </div>
                 </div>
               </div>
@@ -335,7 +338,7 @@ export default function JobDetail({
                         <label
                           className={`job-detail-amnt margin flex-shrink-0 ${
                             path === "/job-proposal" ? "" : ""
-                          }`}
+                            }`}
                         >
                           {job.budget ? `$${job.budget}` : ""}
                         </label>
@@ -508,7 +511,7 @@ export default function JobDetail({
 
               {path === "/job-proposal" && job.status === "completed" && (
                 <div className="place-bid-rw text-center w-100 job-detail-action-btns">
-                  <Button size="lg" color="secondary" onClick={() => {}}>
+                  <Button size="lg" color="secondary" onClick={() => { }}>
                     Mark as Done
                   </Button>
                 </div>
@@ -526,7 +529,7 @@ export default function JobDetail({
                         jobBidCheck && jobBidCheck.length
                           ? "btn-dark"
                           : "btn-secondary"
-                      } place-bid-btn`}
+                        } place-bid-btn`}
                       onClick={() => openBidForm()}
                     >
                       Place a Bid
@@ -562,7 +565,7 @@ export default function JobDetail({
                           history={history}
                           isclick={
                             job.status === "not_started" ||
-                            job.status === "not_accepted"
+                              job.status === "not_accepted"
                               ? true
                               : false
                           }
@@ -601,7 +604,7 @@ export default function JobDetail({
         _modalType={"Place your bid"}
         _handleSubmit={handleSubmit}
         _frequency={job.frequency}
-        // _loading={isModalLoading}
+      // _loading={isModalLoading}
       />
       <ConfirmJobStartModal
         _isOpen={confirmStartModal}

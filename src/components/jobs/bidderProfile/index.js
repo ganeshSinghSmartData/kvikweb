@@ -123,7 +123,7 @@ const BidderProfile = ({ user_id, review }) => {
               Id={biderDetails._id}
               chatToggle={chatVisible}
               chatHideCallback={value => chatHideCallback(value)}
-              recieversName={biderDetails.fname + " " + biderDetails.lname}
+              recieversName={biderDetails.fname || "Anonymous" + " " + biderDetails.lname || "User"}
             />
             : null}
         </div>

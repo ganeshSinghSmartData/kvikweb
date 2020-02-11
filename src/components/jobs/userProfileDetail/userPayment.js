@@ -53,6 +53,11 @@ const UserPayment = props => {
 
 
   const handleBankSubmit = e => {
+    // Object.keys(e).forEach(item=>{
+    //   if(item!="routingNumber"){
+    //     return 
+    //   }
+    // })
     setIsLoading(true);
 
     stripe
