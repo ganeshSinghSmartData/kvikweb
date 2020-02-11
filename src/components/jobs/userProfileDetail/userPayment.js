@@ -20,7 +20,7 @@ import SpinnerOverlay from "../../../components/commonUi/spinner/spinnerOverlay/
 import { toastAction } from "../../../actions/toast-actions";
 // import "./../postJob/postJob.scss";
 
-const UserPayment = props => {
+const UserPayment = (props) => {
   const [isSelect, setIsSelect] = useState(false);
   const [paymentType, setPaymentType] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +39,7 @@ const UserPayment = props => {
   const [additional_back, setAdditionalBack] = useState({ url: "", file: {} });
 
   const dispatch = useDispatch();
-  let user = useSelector(state => state.user);
+  let user = useSelector((state) => state.user);
 
   let usercards = [];
   if (user && user.cards && user.cards.length !== 0) {
@@ -49,13 +49,12 @@ const UserPayment = props => {
     if (user && user.cards && user.cards.length === 0) {
       dispatch(GetCards());
     }
-  }, []);
+  }, [dispatch, user]);
 
-
-  const handleBankSubmit = e => {
+  const handleBankSubmit = (e) => {
     // Object.keys(e).forEach(item=>{
     //   if(item!="routingNumber"){
-    //     return 
+    //     return
     //   }
     // })
     setIsLoading(true);
@@ -69,7 +68,7 @@ const UserPayment = props => {
         account_holder_name: e.firstName,
         account_holder_type: "individual"
       })
-      .then(paymentMethod => {
+      .then((paymentMethod) => {
         if (paymentMethod && paymentMethod.token) {
           let formData = new FormData();
           formData.append("front", front_image.file);
@@ -99,7 +98,7 @@ const UserPayment = props => {
           formData.append("url", "http://google.com");
 
           dispatch(
-            AddBankAccount(formData, res => {
+            AddBankAccount(formData, (res) => {
               if (res) {
                 setIsLoading(false);
                 setIsSelect(!isSelect);
@@ -113,7 +112,7 @@ const UserPayment = props => {
       });
   };
 
-  const handleResult = val => {
+  const handleResult = (val) => {
     if (val && !val.error) {
       setIsLoading(true);
       dispatch(
@@ -122,7 +121,7 @@ const UserPayment = props => {
             token: val && val.token && val.token.id ? val.token.id : "",
             type: paymentType
           },
-          res => {
+          (res) => {
             if (res) {
               dispatch(GetCards());
               setIsLoading(false);
@@ -154,12 +153,12 @@ const UserPayment = props => {
     }
   };
 
-  const choosePaymentMethod = type => {
+  const choosePaymentMethod = (type) => {
     setPaymentType(type);
     setIsSelect(!isSelect);
   };
 
-  const _removeImage = type => {
+  const _removeImage = (type) => {
     if (type === "front_image") {
       setFrontImage({});
     }
@@ -174,11 +173,10 @@ const UserPayment = props => {
     }
   };
 
-
-  const onDobChange = e => {
+  const onDobChange = (e) => {
     setDate(e._d);
   };
-  const openBankDetails = e => {
+  const openBankDetails = (e) => {
     if (paymentType === "credit") {
       setPaymentType("bank");
     } else {
@@ -188,9 +186,9 @@ const UserPayment = props => {
       setAdditionalBack({});
       setAdditionalFront({});
     }
-  }
+  };
 
-  const _removeCard = card_id => {
+  const _removeCard = (card_id) => {
     confirmAlert({
       title: "",
       message: "Are you sure do you want to delete this card ?",
@@ -200,7 +198,7 @@ const UserPayment = props => {
           onClick: () => {
             setIsLoading(true);
             dispatch(
-              removeCard(card_id, callback => {
+              removeCard(card_id, (callback) => {
                 if (callback) {
                   dispatch(GetCards());
                   setIsLoading(false);
@@ -211,7 +209,7 @@ const UserPayment = props => {
         },
         {
           label: "No",
-          onClick: () => { }
+          onClick: () => {}
         }
       ]
     });
@@ -252,89 +250,88 @@ const UserPayment = props => {
           </div>
         </div>
       ) : (
-          <React.Fragment>
-            <div className="payment-card-hd d-flex flex-wrap align-items-center">
-              <h2 className="flex-fill mb-0">
-                {paymentType === "credit" ? "Card" : "Bank"} Detail
+        <React.Fragment>
+          <div className="payment-card-hd d-flex flex-wrap align-items-center">
+            <h2 className="flex-fill mb-0">
+              {paymentType === "credit" ? "Card" : "Bank"} Detail
             </h2>
-              <Button
-                color="link"
-                onClick={() =>
-                  openBankDetails()
-                }
-              >
-                + Add {paymentType === "credit" ? "Bank" : "Card"}
-              </Button>
-            </div>
-            <div className="user-cards-rw card-detail">
-              <div>
-                <h2>
-                  Type your {paymentType === "credit" ? "Card" : "Bank"} details
-                </h2>
-                {paymentType === "credit" ? (
-                  <StripeCard handleResult={handleResult} />
-                ) : (
-                    <div className="CardDemo payment-cardDemo payment-form">
-                      <LocalForm onSubmit={values => handleBankSubmit(values)}>
-                        <ul className="card-detail-item">
-                          <li>
-                            <InputCell
-                              Name={"firstName"}
-                              Placeholder={"First Name"}
-                              Model=".firstName"
-                              maxlength={16}
-                              InputType={"text"}
-                              ClassName="input-line-blc"
-                              Errors={{ required: "required" }}
-                            />
+            <Button color="link" onClick={() => openBankDetails()}>
+              + Add {paymentType === "credit" ? "Bank" : "Card"}
+            </Button>
+          </div>
+          <div className="user-cards-rw card-detail">
+            <div>
+              <h2>
+                Type your {paymentType === "credit" ? "Card" : "Bank"} details
+              </h2>
+              {paymentType === "credit" ? (
+                <StripeCard handleResult={handleResult} />
+              ) : (
+                <div className="CardDemo payment-cardDemo payment-form">
+                  <LocalForm
+                    onSubmit={(values) => handleBankSubmit(values)}
+                    // onSubmitFailed={(e) => console.log("error===>", e)}
+                  >
+                    <ul className="card-detail-item">
+                      <li>
+                        <InputCell
+                          id="LocalForm"
+                          Name={"firstName"}
+                          Placeholder={"First Name"}
+                          Model=".firstName"
+                          maxlength={16}
+                          InputType={"text"}
+                          ClassName="input-line-blc"
+                          Errors={{ required: "required" }}
+                        />
 
-                            <InputCell
-                              Name={"lastName"}
-                              Placeholder={"Last Name"}
-                              Model=".lastName"
-                              InputType={"text"}
-                              ClassName="input-line-blc"
-                              Errors={{ required: "required" }}
-                            />
+                        <InputCell
+                          Name={"lastName"}
+                          Placeholder={"Last Name"}
+                          Model=".lastName"
+                          InputType={"text"}
+                          ClassName="input-line-blc"
+                          Errors={{ required: "required" }}
+                        />
 
-                            <InputCell
-                              Name={"accountNumber"}
-                              Placeholder={"Account Number"}
-                              Model=".accountNumber"
-                              InputType={"text"}
-                              ClassName="input-line-blc"
-                              Errors={{
-                                required: "required"
-                              }}
-                            />
+                        <InputCell
+                          Name={"accountNumber"}
+                          Placeholder={"Account Number"}
+                          Model=".accountNumber"
+                          InputType={"text"}
+                          ClassName="input-line-blc"
+                          Errors={{
+                            required: "required"
+                          }}
+                        />
 
-                            <InputCell
-                              Name={"routingNumber"}
-                              Placeholder={"Routing Number"}
-                              Model=".routingNumber"
-                              InputType={"text"}
-                              ClassName="input-line-blc"
-                              Errors={{
-                                required: "",
-                                invalidNumber: "invalidNumber"
-                              }}
-                            />
-                            <DatePicker
-                              selected={date}
-                              //      value={new Date()}
-                              // onChange={date => setEndDate(date)}
-                              Placeholder={"Date of Birth"}
-                              maxDate={new Date()}
-                              // maxDate={startDate}
-                              dateFormat="MM/dd/yyyy"
-                              // onInputClick={() => handleOnInputClick()}
-                              // onClickOutsideEvent={handleOnClickOutsideEvent()}
-                              showMonthDropdown
-                              showYearDropdown
-                              onChange={onDobChange}
-                              showTimeInput={false}
-                            />
-                            {/* <InputCell
+                        <InputCell
+                          Name={"routingNumber"}
+                          Placeholder={"Routing Number"}
+                          Model=".routingNumber"
+                          InputType={"text"}
+                          ClassName="input-line-blc"
+                          Errors={{
+                            required: "",
+                            invalidNumber: "invalidNumber"
+                          }}
+                        />
+                        <DatePicker
+                          selected={date}
+                          //      value={new Date()}
+                          // onChange={date => setEndDate(date)}
+                          Placeholder={"Date of Birth"}
+                          maxDate={new Date()}
+                          // maxDate={startDate}
+                          dateFormat="MM/dd/yyyy"
+                          // onInputClick={() => handleOnInputClick()}
+                          // onClickOutsideEvent={handleOnClickOutsideEvent()}
+                          showMonthDropdown
+                          showYearDropdown
+                          onChange={onDobChange}
+                          showTimeInput={false}
+                        />
+                        {/* <InputCell
                         Name={"dob"}
                         Placeholder={"Date of Birth"}
                         Model=".dob"
@@ -342,537 +339,549 @@ const UserPayment = props => {
                         ClassName="input-line-blc"
                         Errors={{ required: "required" }}
                       /> */}
+                        <InputCell
+                          Name={"phone"}
+                          Placeholder={"Mobile"}
+                          Model=".phone"
+                          InputType={"text"}
+                          ClassName="input-line-blc"
+                          Errors={{
+                            required: "required",
+                            invalidNumber: "invalidNumber"
+                          }}
+                        />
+                        <InputCell
+                          Name={"address"}
+                          Placeholder={"Address"}
+                          Model=".line1"
+                          InputType={"text"}
+                          ClassName="input-line-blc"
+                          Errors={{ required: "required" }}
+                        />
+                        <InputCell
+                          Name={"postal"}
+                          Placeholder={"Zip code"}
+                          Model=".postal"
+                          InputType={"text"}
+                          ClassName="input-line-blc"
+                          Errors={{
+                            required: "required",
+                            invalidNumber: "invalidNumber"
+                          }}
+                        />
+                        <div className="user-payment-inputs d-flex row">
+                          <div className="col-sm-4">
                             <InputCell
-                              Name={"phone"}
-                              Placeholder={"Mobile"}
-                              Model=".phone"
+                              Name={"country"}
+                              Placeholder={"Country"}
+                              Model=".country"
                               InputType={"text"}
                               ClassName="input-line-blc"
                               Errors={{
-                                required: "required",
-                                invalidNumber: "invalidNumber"
+                                required: "required"
                               }}
                             />
+                          </div>
+                          <div className="col-sm-4">
                             <InputCell
-                              Name={"address"}
-                              Placeholder={"Address"}
-                              Model=".line1"
+                              Name={"city"}
+                              Placeholder={"City"}
+                              Model=".city"
                               InputType={"text"}
                               ClassName="input-line-blc"
                               Errors={{ required: "required" }}
                             />
+                          </div>
+                          <div className="col-sm-4">
                             <InputCell
-                              Name={"postal"}
-                              Placeholder={"Zip code"}
-                              Model=".postal"
+                              Name={"state"}
+                              Placeholder={"State"}
+                              Model=".state"
                               InputType={"text"}
                               ClassName="input-line-blc"
-                              Errors={{
-                                required: "required",
-                                invalidNumber: "invalidNumber"
-                              }}
+                              Errors={{ required: "required" }}
                             />
-                            <div className="user-payment-inputs d-flex row">
-                              <div className="col-sm-4">
-                                <InputCell
-                                  Name={"country"}
-                                  Placeholder={"Country"}
-                                  Model=".country"
-                                  InputType={"text"}
-                                  ClassName="input-line-blc"
-                                  Errors={{
-                                    required: "required"
-                                  }}
-                                />
-                              </div>
-                              <div className="col-sm-4">
-                                <InputCell
-                                  Name={"city"}
-                                  Placeholder={"City"}
-                                  Model=".city"
-                                  InputType={"text"}
-                                  ClassName="input-line-blc"
-                                  Errors={{ required: "required" }}
-                                />
-                              </div>
-                              <div className="col-sm-4">
-                                <InputCell
-                                  Name={"state"}
-                                  Placeholder={"State"}
-                                  Model=".state"
-                                  InputType={"text"}
-                                  ClassName="input-line-blc"
-                                  Errors={{ required: "required" }}
-                                />
-                              </div>
-                            </div>
-                            <div className="payment-upload-rw">
-                              <h4>
-                                National id{" "}
-                                <i>
-                                  (clear image of front, back, additional if front
+                          </div>
+                        </div>
+                        <div className="payment-upload-rw">
+                          <h4>
+                            National id{" "}
+                            <i>
+                              (clear image of front, back, additional if front
                               and back)
                             </i>
-                              </h4>
-                              <div className="payment-upload-list d-flex justify-content-center flex-wrap">
-                                <div className="payment-pic-btn-cell text-center d-flex flex-column">
-                                  <div
-                                    color="link"
-                                    className={`position-relative payment-pic-btn p-0 d-flex flex-column 
-                                    ${front_image.url ? 'image-container' : ''}`}
-                                  >
-
-
-                                    {/* payment-upload-pic */}
-                                    {front_image.url &&
-                                      <span className="d-flex flex-column justify-content-center align-items-center payment-upload-pic position-absolute h-100 w-100 flex-fill">
-                                        <div className="position-relative">
-                                          <img
-                                            src={front_image.url}
-                                            alt="User"
-                                            className="rounded-circle"
-                                          />
-                                          <span
-                                            color="link"
-                                            className="position-absolute rounded-circle payment-upload-pic-btn"
-                                            onClick={() => _removeImage("front_image")}
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              width="357"
-                                              height="357"
-                                              viewBox="0 0 357 357"
-                                            >
-                                              <path
-                                                id="Forma_1"
-                                                data-name="Forma 1"
-                                                d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
-                                              />
-                                            </svg>
-                                          </span>
-                                        </div>
-                                      </span>
-                                    }
-                                    {/* payment-upload-pic */}
-
-                                    {/* payment-upload-btn */}
-                                    {!front_image.url &&
-                                      <span className="payment-upload-btn d-flex align-items-center justify-content-center flex-fill position-absolute h-100 w-100">
-                                        <input
-                                          type="file"
-                                          className="position-absolute w-100"
-                                          onChange={event =>
-                                            handleImageOnchange(
-                                              "front_image",
-                                              event.target.files
-                                            )
-                                          }
-                                        />
-                                        <span className="payment-upload-btn-icn w-100 h-100 d-flex align-items-center justify-content-center">
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="91"
-                                            height="91"
-                                            viewBox="0 0 91 91"
-                                          >
-                                            <g
-                                              id="Group_1"
-                                              data-name="Group 1"
-                                              transform="translate(-1079.5 -358)"
-                                            >
-                                              <rect
-                                                id="Rectangle_1"
-                                                data-name="Rectangle 1"
-                                                width="14"
-                                                height="91"
-                                                rx="7"
-                                                transform="translate(1170.5 396.5) rotate(90)"
-                                              />
-                                              <rect
-                                                id="Rectangle_2"
-                                                data-name="Rectangle 2"
-                                                width="14"
-                                                height="91"
-                                                rx="7"
-                                                transform="translate(1118 358)"
-                                              />
-                                            </g>
-                                          </svg>
-                                        </span>
-                                      </span>
-                                    }
-                                  </div>
-                                  <label>Front</label>
-                                </div>
-                                <div className="payment-pic-btn-cell text-center d-flex flex-column">
-                                  <div
-                                    color="link"
-                                    className={`position-relative payment-pic-btn p-0 d-flex flex-column ${back_image.url ? 'image-container' : ''}`}
-                                  >
-                                    {/* payment-upload-pic */}
-                                    {back_image.url &&
-                                      <span className="d-flex flex-column justify-content-center align-items-center payment-upload-pic position-absolute h-100 w-100 flex-fill">
-                                        <div className="position-relative">
-                                          <img
-                                            src={back_image.url}
-                                            alt="User"
-                                            className="rounded-circle"
-                                          />
-                                          <span
-                                            color="link"
-                                            className="position-absolute rounded-circle payment-upload-pic-btn"
-                                            onClick={() => _removeImage("back_image")}
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              width="357"
-                                              height="357"
-                                              viewBox="0 0 357 357"
-                                            >
-                                              <path
-                                                id="Forma_1"
-                                                data-name="Forma 1"
-                                                d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
-                                              />
-                                            </svg>
-                                          </span>
-                                        </div>
-                                      </span>
-                                    }
-                                    {/* payment-upload-pic */}
-
-                                    {/* payment-upload-btn */}
-                                    {!back_image.url &&
-                                      <span className="payment-upload-btn d-flex align-items-center justify-content-center flex-fill position-absolute h-100 w-100">
-                                        <input
-                                          type="file"
-                                          className="position-absolute w-100"
-                                          onChange={event =>
-                                            handleImageOnchange(
-                                              "back_image",
-                                              event.target.files
-                                            )
-                                          }
-                                        />
-                                        <span className="payment-upload-btn-icn w-100 h-100 d-flex align-items-center justify-content-center">
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="91"
-                                            height="91"
-                                            viewBox="0 0 91 91"
-                                          >
-                                            <g
-                                              id="Group_1"
-                                              data-name="Group 1"
-                                              transform="translate(-1079.5 -358)"
-                                            >
-                                              <rect
-                                                id="Rectangle_1"
-                                                data-name="Rectangle 1"
-                                                width="14"
-                                                height="91"
-                                                rx="7"
-                                                transform="translate(1170.5 396.5) rotate(90)"
-                                              />
-                                              <rect
-                                                id="Rectangle_2"
-                                                data-name="Rectangle 2"
-                                                width="14"
-                                                height="91"
-                                                rx="7"
-                                                transform="translate(1118 358)"
-                                              />
-                                            </g>
-                                          </svg>
-                                        </span>
-                                      </span>
-                                    }
-                                  </div>
-                                  <label>Back</label>
-                                </div>
-                                <div className="payment-pic-btn-cell text-center d-flex flex-column">
-                                  <div
-                                    color="link"
-                                    className={`position-relative payment-pic-btn p-0 d-flex flex-column 
-                                    ${additional_front.url ? 'image-container' : ''}`}
-                                  >
-                                    {/* payment-upload-pic */}
-                                    {additional_front.url &&
-                                      <span className="d-flex flex-column justify-content-center align-items-center payment-upload-pic position-absolute h-100 w-100 flex-fill">
-                                        <div className="position-relative">
-                                          <img
-                                            src={additional_front.url}
-                                            alt="User"
-                                            className="rounded-circle"
-                                          />
-                                          <span
-                                            color="link"
-                                            className="position-absolute rounded-circle payment-upload-pic-btn"
-                                            onClick={() => _removeImage("additional_front")}
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              width="357"
-                                              height="357"
-                                              viewBox="0 0 357 357"
-                                            >
-                                              <path
-                                                id="Forma_1"
-                                                data-name="Forma 1"
-                                                d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
-                                              />
-                                            </svg>
-                                          </span>
-                                        </div>
-                                      </span>
-                                    }
-                                    {/* payment-upload-pic */}
-
-                                    {/* payment-upload-btn */}
-                                    {!additional_front.url &&
-                                      <span className="payment-upload-btn d-flex align-items-center justify-content-center flex-fill position-absolute h-100 w-100">
-                                        <input
-                                          type="file"
-                                          className="position-absolute w-100"
-                                          onChange={event =>
-                                            handleImageOnchange(
-                                              "additional_front",
-                                              event.target.files
-                                            )
-                                          }
-                                        />
-                                        <span className="payment-upload-btn-icn w-100 h-100 d-flex align-items-center justify-content-center">
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="91"
-                                            height="91"
-                                            viewBox="0 0 91 91"
-                                          >
-                                            <g
-                                              id="Group_1"
-                                              data-name="Group 1"
-                                              transform="translate(-1079.5 -358)"
-                                            >
-                                              <rect
-                                                id="Rectangle_1"
-                                                data-name="Rectangle 1"
-                                                width="14"
-                                                height="91"
-                                                rx="7"
-                                                transform="translate(1170.5 396.5) rotate(90)"
-                                              />
-                                              <rect
-                                                id="Rectangle_2"
-                                                data-name="Rectangle 2"
-                                                width="14"
-                                                height="91"
-                                                rx="7"
-                                                transform="translate(1118 358)"
-                                              />
-                                            </g>
-                                          </svg>
-                                        </span>
-                                      </span>
-                                    }
-                                  </div>
-                                  <label>Additional Front</label>
-                                </div>
-                                <div className="payment-pic-btn-cell text-center d-flex flex-column">
-                                  <div
-                                    color="link"
-                                    className={`position-relative payment-pic-btn p-0 d-flex flex-column ${additional_back.url ? 'image-container' : ''}`}
-                                  >
-                                    {/* payment-upload-pic */}
-                                    {additional_back.url &&
-                                      <span className="d-flex flex-column justify-content-center align-items-center payment-upload-pic position-absolute h-100 w-100 flex-fill">
-                                        <div className="position-relative">
-                                          <img
-                                            src={additional_back.url}
-                                            alt="User"
-                                            className="rounded-circle"
-                                          />
-                                          <span
-                                            color="link"
-                                            className="position-absolute rounded-circle payment-upload-pic-btn"
-                                            onClick={() => _removeImage("additional_back")}
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              width="357"
-                                              height="357"
-                                              viewBox="0 0 357 357"
-                                            >
-                                              <path
-                                                id="Forma_1"
-                                                data-name="Forma 1"
-                                                d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
-                                              />
-                                            </svg>
-                                          </span>
-                                        </div>
-                                      </span>
-                                    }
-                                    {/* payment-upload-pic */}
-
-                                    {/* payment-upload-btn */}
-                                    {!additional_back.url &&
-                                      <span className="payment-upload-btn d-flex align-items-center justify-content-center flex-fill position-absolute h-100 w-100">
-                                        <input
-                                          type="file"
-                                          className="position-absolute w-100"
-                                          onChange={event =>
-                                            handleImageOnchange(
-                                              "additional_back",
-                                              event.target.files
-                                            )
-                                          }
-                                        />
-                                        <span className="payment-upload-btn-icn w-100 h-100 d-flex align-items-center justify-content-center">
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="91"
-                                            height="91"
-                                            viewBox="0 0 91 91"
-                                          >
-                                            <g
-                                              id="Group_1"
-                                              data-name="Group 1"
-                                              transform="translate(-1079.5 -358)"
-                                            >
-                                              <rect
-                                                id="Rectangle_1"
-                                                data-name="Rectangle 1"
-                                                width="14"
-                                                height="91"
-                                                rx="7"
-                                                transform="translate(1170.5 396.5) rotate(90)"
-                                              />
-                                              <rect
-                                                id="Rectangle_2"
-                                                data-name="Rectangle 2"
-                                                width="14"
-                                                height="91"
-                                                rx="7"
-                                                transform="translate(1118 358)"
-                                              />
-                                            </g>
-                                          </svg>
-                                        </span>
-                                      </span>
-                                    }
-                                  </div>
-                                  <label>Additional Back</label>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                        <div className="payment-btn-row text-center">
-                          <Button color="secondary" type="submit">
-                            Submit
-                      </Button>
-                          <Button color="link" className="btn-dark">
-                            Reset
-                      </Button>
-                        </div>
-                      </LocalForm>
-                    </div>
-                  )}
-              </div>
-            </div>
-
-            {paymentType === "credit" &&
-              usercards &&
-              usercards.length !== 0 &&
-              usercards.map((val, count) => {
-                return (
-                  <div className="user-cards-rw" key={count}>
-                    <div className="card-chip position-relative">
-                      <Button
-                        color="link"
-                        className="d-flex align-items-center justify-content-center card-del-btn position-absolute p-0"
-                      >
-                        <span
-                          className="rounded-circle d-flex align-items-center justify-content-center"
-                          onClick={() => _removeCard(val.id)}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="357"
-                            height="357"
-                            viewBox="0 0 357 357"
-                          >
-                            <path
-                              id="Forma_1"
-                              data-name="Forma 1"
-                              d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
-                            />
-                          </svg>
-                        </span>
-                      </Button>
-                      <div className="card-chip-hd d-flex justify-content-end">
-                        <div className="card-confirm-pic2">
-                          {val.type == "visa" ? (
-                            <img
-                              src={require("../../../assets/images/icons/payment-icon/visa.svg")}
-                              alt="Visa Card"
-                            />
-                          ) : val.type == "amex" ? (
-                            <img
-                              src={require("../../../assets/images/icons/payment-icon/amex.svg")}
-                              alt="Visa Card"
-                            />
-                          ) : val.type == "mastercard" ? (
-                            <img
-                              src={require("../../../assets/images/icons/payment-icon/master-card.svg")}
-                              alt="Visa Card"
-                            />
-                          ) : val.type == "discover" ? (
-                            <img
-                              src={require("../../../assets/images/icons/payment-icon/discover.svg")}
-                              alt="Visa Card"
-                            />
-                          ) : val.type == "jcb" ? (
-                            <img
-                              src={require("../../../assets/images/icons/payment-icon/jcb.svg")}
-                              alt="Visa Card"
-                            />
-                          ) : (
+                          </h4>
+                          <div className="payment-upload-list d-flex justify-content-center flex-wrap">
+                            <div className="payment-pic-btn-cell text-center d-flex flex-column">
+                              <div
+                                color="link"
+                                className={`position-relative payment-pic-btn p-0 d-flex flex-column 
+                                    ${
+                                      front_image.url ? "image-container" : ""
+                                    }`}
+                              >
+                                {/* payment-upload-pic */}
+                                {front_image.url && (
+                                  <span className="d-flex flex-column justify-content-center align-items-center payment-upload-pic position-absolute h-100 w-100 flex-fill">
+                                    <div className="position-relative">
                                       <img
-                                        src={require("../../../assets/images/icons/payment-icon/master-card.svg")}
-                                        alt="Visa Card"
+                                        src={front_image.url}
+                                        alt="User"
+                                        className="rounded-circle"
                                       />
-                                    )}
+                                      <span
+                                        color="link"
+                                        className="position-absolute rounded-circle payment-upload-pic-btn"
+                                        onClick={() =>
+                                          _removeImage("front_image")
+                                        }
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="357"
+                                          height="357"
+                                          viewBox="0 0 357 357"
+                                        >
+                                          <path
+                                            id="Forma_1"
+                                            data-name="Forma 1"
+                                            d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                                          />
+                                        </svg>
+                                      </span>
+                                    </div>
+                                  </span>
+                                )}
+                                {/* payment-upload-pic */}
+
+                                {/* payment-upload-btn */}
+                                {!front_image.url && (
+                                  <span className="payment-upload-btn d-flex align-items-center justify-content-center flex-fill position-absolute h-100 w-100">
+                                    <input
+                                      type="file"
+                                      className="position-absolute w-100"
+                                      onChange={(event) =>
+                                        handleImageOnchange(
+                                          "front_image",
+                                          event.target.files
+                                        )
+                                      }
+                                    />
+                                    <span className="payment-upload-btn-icn w-100 h-100 d-flex align-items-center justify-content-center">
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="91"
+                                        height="91"
+                                        viewBox="0 0 91 91"
+                                      >
+                                        <g
+                                          id="Group_1"
+                                          data-name="Group 1"
+                                          transform="translate(-1079.5 -358)"
+                                        >
+                                          <rect
+                                            id="Rectangle_1"
+                                            data-name="Rectangle 1"
+                                            width="14"
+                                            height="91"
+                                            rx="7"
+                                            transform="translate(1170.5 396.5) rotate(90)"
+                                          />
+                                          <rect
+                                            id="Rectangle_2"
+                                            data-name="Rectangle 2"
+                                            width="14"
+                                            height="91"
+                                            rx="7"
+                                            transform="translate(1118 358)"
+                                          />
+                                        </g>
+                                      </svg>
+                                    </span>
+                                  </span>
+                                )}
+                              </div>
+                              <label>Front</label>
+                            </div>
+                            <div className="payment-pic-btn-cell text-center d-flex flex-column">
+                              <div
+                                color="link"
+                                className={`position-relative payment-pic-btn p-0 d-flex flex-column ${
+                                  back_image.url ? "image-container" : ""
+                                }`}
+                              >
+                                {/* payment-upload-pic */}
+                                {back_image.url && (
+                                  <span className="d-flex flex-column justify-content-center align-items-center payment-upload-pic position-absolute h-100 w-100 flex-fill">
+                                    <div className="position-relative">
+                                      <img
+                                        src={back_image.url}
+                                        alt="User"
+                                        className="rounded-circle"
+                                      />
+                                      <span
+                                        color="link"
+                                        className="position-absolute rounded-circle payment-upload-pic-btn"
+                                        onClick={() =>
+                                          _removeImage("back_image")
+                                        }
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="357"
+                                          height="357"
+                                          viewBox="0 0 357 357"
+                                        >
+                                          <path
+                                            id="Forma_1"
+                                            data-name="Forma 1"
+                                            d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                                          />
+                                        </svg>
+                                      </span>
+                                    </div>
+                                  </span>
+                                )}
+                                {/* payment-upload-pic */}
+
+                                {/* payment-upload-btn */}
+                                {!back_image.url && (
+                                  <span className="payment-upload-btn d-flex align-items-center justify-content-center flex-fill position-absolute h-100 w-100">
+                                    <input
+                                      type="file"
+                                      className="position-absolute w-100"
+                                      onChange={(event) =>
+                                        handleImageOnchange(
+                                          "back_image",
+                                          event.target.files
+                                        )
+                                      }
+                                    />
+                                    <span className="payment-upload-btn-icn w-100 h-100 d-flex align-items-center justify-content-center">
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="91"
+                                        height="91"
+                                        viewBox="0 0 91 91"
+                                      >
+                                        <g
+                                          id="Group_1"
+                                          data-name="Group 1"
+                                          transform="translate(-1079.5 -358)"
+                                        >
+                                          <rect
+                                            id="Rectangle_1"
+                                            data-name="Rectangle 1"
+                                            width="14"
+                                            height="91"
+                                            rx="7"
+                                            transform="translate(1170.5 396.5) rotate(90)"
+                                          />
+                                          <rect
+                                            id="Rectangle_2"
+                                            data-name="Rectangle 2"
+                                            width="14"
+                                            height="91"
+                                            rx="7"
+                                            transform="translate(1118 358)"
+                                          />
+                                        </g>
+                                      </svg>
+                                    </span>
+                                  </span>
+                                )}
+                              </div>
+                              <label>Back</label>
+                            </div>
+                            <div className="payment-pic-btn-cell text-center d-flex flex-column">
+                              <div
+                                color="link"
+                                className={`position-relative payment-pic-btn p-0 d-flex flex-column 
+                                    ${
+                                      additional_front.url
+                                        ? "image-container"
+                                        : ""
+                                    }`}
+                              >
+                                {/* payment-upload-pic */}
+                                {additional_front.url && (
+                                  <span className="d-flex flex-column justify-content-center align-items-center payment-upload-pic position-absolute h-100 w-100 flex-fill">
+                                    <div className="position-relative">
+                                      <img
+                                        src={additional_front.url}
+                                        alt="User"
+                                        className="rounded-circle"
+                                      />
+                                      <span
+                                        color="link"
+                                        className="position-absolute rounded-circle payment-upload-pic-btn"
+                                        onClick={() =>
+                                          _removeImage("additional_front")
+                                        }
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="357"
+                                          height="357"
+                                          viewBox="0 0 357 357"
+                                        >
+                                          <path
+                                            id="Forma_1"
+                                            data-name="Forma 1"
+                                            d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                                          />
+                                        </svg>
+                                      </span>
+                                    </div>
+                                  </span>
+                                )}
+                                {/* payment-upload-pic */}
+
+                                {/* payment-upload-btn */}
+                                {!additional_front.url && (
+                                  <span className="payment-upload-btn d-flex align-items-center justify-content-center flex-fill position-absolute h-100 w-100">
+                                    <input
+                                      type="file"
+                                      className="position-absolute w-100"
+                                      onChange={(event) =>
+                                        handleImageOnchange(
+                                          "additional_front",
+                                          event.target.files
+                                        )
+                                      }
+                                    />
+                                    <span className="payment-upload-btn-icn w-100 h-100 d-flex align-items-center justify-content-center">
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="91"
+                                        height="91"
+                                        viewBox="0 0 91 91"
+                                      >
+                                        <g
+                                          id="Group_1"
+                                          data-name="Group 1"
+                                          transform="translate(-1079.5 -358)"
+                                        >
+                                          <rect
+                                            id="Rectangle_1"
+                                            data-name="Rectangle 1"
+                                            width="14"
+                                            height="91"
+                                            rx="7"
+                                            transform="translate(1170.5 396.5) rotate(90)"
+                                          />
+                                          <rect
+                                            id="Rectangle_2"
+                                            data-name="Rectangle 2"
+                                            width="14"
+                                            height="91"
+                                            rx="7"
+                                            transform="translate(1118 358)"
+                                          />
+                                        </g>
+                                      </svg>
+                                    </span>
+                                  </span>
+                                )}
+                              </div>
+                              <label>Additional Front</label>
+                            </div>
+                            <div className="payment-pic-btn-cell text-center d-flex flex-column">
+                              <div
+                                color="link"
+                                className={`position-relative payment-pic-btn p-0 d-flex flex-column ${
+                                  additional_back.url ? "image-container" : ""
+                                }`}
+                              >
+                                {/* payment-upload-pic */}
+                                {additional_back.url && (
+                                  <span className="d-flex flex-column justify-content-center align-items-center payment-upload-pic position-absolute h-100 w-100 flex-fill">
+                                    <div className="position-relative">
+                                      <img
+                                        src={additional_back.url}
+                                        alt="User"
+                                        className="rounded-circle"
+                                      />
+                                      <span
+                                        color="link"
+                                        className="position-absolute rounded-circle payment-upload-pic-btn"
+                                        onClick={() =>
+                                          _removeImage("additional_back")
+                                        }
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="357"
+                                          height="357"
+                                          viewBox="0 0 357 357"
+                                        >
+                                          <path
+                                            id="Forma_1"
+                                            data-name="Forma 1"
+                                            d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                                          />
+                                        </svg>
+                                      </span>
+                                    </div>
+                                  </span>
+                                )}
+                                {/* payment-upload-pic */}
+
+                                {/* payment-upload-btn */}
+                                {!additional_back.url && (
+                                  <span className="payment-upload-btn d-flex align-items-center justify-content-center flex-fill position-absolute h-100 w-100">
+                                    <input
+                                      type="file"
+                                      className="position-absolute w-100"
+                                      onChange={(event) =>
+                                        handleImageOnchange(
+                                          "additional_back",
+                                          event.target.files
+                                        )
+                                      }
+                                    />
+                                    <span className="payment-upload-btn-icn w-100 h-100 d-flex align-items-center justify-content-center">
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="91"
+                                        height="91"
+                                        viewBox="0 0 91 91"
+                                      >
+                                        <g
+                                          id="Group_1"
+                                          data-name="Group 1"
+                                          transform="translate(-1079.5 -358)"
+                                        >
+                                          <rect
+                                            id="Rectangle_1"
+                                            data-name="Rectangle 1"
+                                            width="14"
+                                            height="91"
+                                            rx="7"
+                                            transform="translate(1170.5 396.5) rotate(90)"
+                                          />
+                                          <rect
+                                            id="Rectangle_2"
+                                            data-name="Rectangle 2"
+                                            width="14"
+                                            height="91"
+                                            rx="7"
+                                            transform="translate(1118 358)"
+                                          />
+                                        </g>
+                                      </svg>
+                                    </span>
+                                  </span>
+                                )}
+                              </div>
+                              <label>Additional Back</label>
+                            </div>
+                          </div>
                         </div>
+                      </li>
+                    </ul>
+                    <div className="payment-btn-row text-center">
+                      <Button color="secondary" type="submit">
+                        Submit
+                      </Button>
+                      <Button color="link" className="btn-dark">
+                        Reset
+                      </Button>
+                    </div>
+                  </LocalForm>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {paymentType === "credit" &&
+            usercards &&
+            usercards.length !== 0 &&
+            usercards.map((val, count) => {
+              return (
+                <div className="user-cards-rw" key={count}>
+                  <div className="card-chip position-relative">
+                    <Button
+                      color="link"
+                      className="d-flex align-items-center justify-content-center card-del-btn position-absolute p-0"
+                    >
+                      <span
+                        className="rounded-circle d-flex align-items-center justify-content-center"
+                        onClick={() => _removeCard(val.id)}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="357"
+                          height="357"
+                          viewBox="0 0 357 357"
+                        >
+                          <path
+                            id="Forma_1"
+                            data-name="Forma 1"
+                            d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z"
+                          />
+                        </svg>
+                      </span>
+                    </Button>
+                    <div className="card-chip-hd d-flex justify-content-end">
+                      <div className="card-confirm-pic2">
+                        {val.type == "visa" ? (
+                          <img
+                            src={require("../../../assets/images/icons/payment-icon/visa.svg")}
+                            alt="Visa Card"
+                          />
+                        ) : val.type == "amex" ? (
+                          <img
+                            src={require("../../../assets/images/icons/payment-icon/amex.svg")}
+                            alt="Visa Card"
+                          />
+                        ) : val.type == "mastercard" ? (
+                          <img
+                            src={require("../../../assets/images/icons/payment-icon/master-card.svg")}
+                            alt="Visa Card"
+                          />
+                        ) : val.type == "discover" ? (
+                          <img
+                            src={require("../../../assets/images/icons/payment-icon/discover.svg")}
+                            alt="Visa Card"
+                          />
+                        ) : val.type == "jcb" ? (
+                          <img
+                            src={require("../../../assets/images/icons/payment-icon/jcb.svg")}
+                            alt="Visa Card"
+                          />
+                        ) : (
+                          <img
+                            src={require("../../../assets/images/icons/payment-icon/master-card.svg")}
+                            alt="Visa Card"
+                          />
+                        )}
                       </div>
-                      <div className="card-chip-no">
-                        <span>XXXX</span>
-                        <span>XXXX</span>
-                        <span>
-                          XXX<span className="grey-digit">X</span>
-                        </span>
-                        <span className="last-digit grey-digit">
-                          {val.last4}
-                        </span>
+                    </div>
+                    <div className="card-chip-no">
+                      <span>XXXX</span>
+                      <span>XXXX</span>
+                      <span>
+                        XXX<span className="grey-digit">X</span>
+                      </span>
+                      <span className="last-digit grey-digit">{val.last4}</span>
+                    </div>
+                    <div className="card-chip-btm d-flex">
+                      <div className="card-chip-col flex-fill">
+                        <h2>{val.acHolderName ? val.acHolderName : "----"}</h2>
+                        <h3>-----</h3>
                       </div>
-                      <div className="card-chip-btm d-flex">
-                        <div className="card-chip-col flex-fill">
-                          <h2>
-                            {val.acHolderName ? val.acHolderName : "----"}
-                          </h2>
-                          <h3>-----</h3>
-                        </div>
-                        <div className="card-chip-col rt">
-                          <h2>VALID THRU</h2>
-                          <h3 className="mb-0">{val.cardValidity}</h3>
-                        </div>
+                      <div className="card-chip-col rt">
+                        <h2>VALID THRU</h2>
+                        <h3 className="mb-0">{val.cardValidity}</h3>
                       </div>
                     </div>
                   </div>
-                );
-              })}
-          </React.Fragment>
-        )}
+                </div>
+              );
+            })}
+        </React.Fragment>
+      )}
     </div>
   );
 };
