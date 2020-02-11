@@ -5,7 +5,6 @@
   flex-grow: 0;
   transition: all ease 0.3s 0s;
   transform: translateX(0);
-  z-index: 0;
   padding: 0 10px;
   height: 100%;
   top: 0;
@@ -259,6 +258,7 @@
   }
   .sidebar-col.active {
     transform: translateX(0);
+    z-index: 100;
   }
   // .sidebar-toogle-btn {
   //   left: 0px;

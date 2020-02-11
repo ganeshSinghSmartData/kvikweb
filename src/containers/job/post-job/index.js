@@ -35,6 +35,8 @@ class PostNewJob extends Component {
   }
 
   componentDidMount() {
+    // document.querySelector("#main_container") &&
+    document.querySelector("#main_container").scrollTop = 0;
     this.props.getJobCategory();
     if (this.props.match.params.job_id) {
       this.props.getJobDetails(this.props.match.params.job_id);
@@ -65,8 +67,8 @@ class PostNewJob extends Component {
           endDate,
           imageData,
           uploadedImages,
-          job_seeker_id:{...this.props.user},
-          status:"Pending"
+          job_seeker_id: { ...this.props.user },
+          status: "Pending"
         },
         imageData: imageData,
         startDate: startDate,
@@ -99,7 +101,7 @@ class PostNewJob extends Component {
   _getPagesNumber(numb) {
     this.setState({ stage: numb });
   }
-  closePrevieModal = index => {
+  closePrevieModal = (index) => {
     this.setState({ openView: false, uploadedImages: [] });
   };
 
@@ -110,12 +112,11 @@ class PostNewJob extends Component {
     let imageData = this.state.imageData;
     let uploadedImages = this.state.uploadedImages;
     let categories = this.props.category;
-    console.log("uploadedImages", uploadedImages, "imageData", imageData);
     this.setState({ openView: false, uploadedImages: [] });
     let formData = new FormData();
     this.setState({ dataload: true });
-    const newStartDate = moment(startDate).format('YYYY-MM-DD hh:mm a');
-    const newEndDate = moment(endDate).format('YYYY-MM-DD hh:mm a');
+    const newStartDate = moment(startDate).format("YYYY-MM-DD hh:mm a");
+    const newEndDate = moment(endDate).format("YYYY-MM-DD hh:mm a");
     if (uploadedImages && uploadedImages.length !== 0) {
       formData.append("saved_images", JSON.stringify(uploadedImages));
     }
@@ -126,7 +127,14 @@ class PostNewJob extends Component {
         }
       }
     }
-    formData.append("category", this.state.selectedCategory ? this.state.selectedCategory : categories && categories.length ? categories[0].title : "");
+    formData.append(
+      "category",
+      this.state.selectedCategory
+        ? this.state.selectedCategory
+        : categories && categories.length
+        ? categories[0].title
+        : ""
+    );
     formData.append("jobtitle", jobData.jobtitle);
     formData.append("description", jobData.description);
     if (jobData.budget) {
@@ -139,7 +147,7 @@ class PostNewJob extends Component {
     formData.append("jobEndDate", newEndDate);
     formData.append("frequency", jobData.frequency);
     if (this.state.pathname === "/post-job") {
-      this.props.createNewJob(formData, callback => {
+      this.props.createNewJob(formData, (callback) => {
         if (callback) {
           this.setState({ dataload: false });
           this.props.history.push("/");
@@ -147,27 +155,26 @@ class PostNewJob extends Component {
       });
     } else {
       formData.append("job_id", this.props.match.params.job_id);
-      this.props.updateExistingJob(formData, callback => {
+      this.props.updateExistingJob(formData, (callback) => {
         if (callback) {
           this.setState({ dataload: false });
           this.props.history.push("/job-list");
         }
       });
     }
-  };
+  }
   render() {
-    console.log("Post job states", this.state)
     let CategoryItems = [];
     this.props.category &&
       this.props.category.length &&
-      this.props.category.map(item => {
+      this.props.category.map((item) => {
         if (item) {
           CategoryItems.push({ name: item.title, value: item.title });
         }
       });
     return (
       <React.Fragment>
-        {this.state.openView ?
+        {this.state.openView ? (
           <ReviewJob
             history={this.props.history}
             _jobDetails={this.state.previewData}
@@ -178,8 +185,7 @@ class PostNewJob extends Component {
             images={this.state.uploadedImages}
             pagesCount={this._getPagesNumber}
           />
-          : null
-        }
+        ) : null}
         {this.state.pathname === "/post-job" && (
           <PostJob
             history={this.props.history}
@@ -189,7 +195,7 @@ class PostNewJob extends Component {
             viewJob={this.viewJob}
             getPagesNumber={this._getPagesNumber}
             _handleJobUpdate={this.handleJobUpdate}
-            _handleCategoryOnchange={category =>
+            _handleCategoryOnchange={(category) =>
               this.setState({
                 selectedCategory: category
                   ? category.value
@@ -211,7 +217,7 @@ class PostNewJob extends Component {
               _handleStageChange={this.handleStageChange}
               _handleJobPost={this.handleJobPost}
               _handleJobUpdate={this.handleJobUpdate}
-              _handleCategoryOnchange={category => {
+              _handleCategoryOnchange={(category) => {
                 this.setState({ selectedCategory: category.value });
               }}
               _selectedCategory={
@@ -224,20 +230,20 @@ class PostNewJob extends Component {
               path={this.props.match.path}
             />
           ) : (
-              <SpinnerOverlay className="position-fixed" />
-            ))}
+            <SpinnerOverlay className="position-fixed" />
+          ))}
       </React.Fragment>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   jobDetails: state.job.jobDetails,
   category: state.job.category,
-  user:state.user.data,
+  user: state.user.data
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   createNewJob: bindActionCreators(createNewJob, dispatch),
   updateExistingJob: bindActionCreators(updateExistingJob, dispatch),
   getJobDetails: bindActionCreators(getJobDetails, dispatch),

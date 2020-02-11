@@ -12,24 +12,25 @@ import "./bidderProfile.scss";
 
 const BidderProfile = ({ user_id, review }) => {
   const dispatch = useDispatch();
-  const biderDetails = useSelector(state => state.user.userDetails);
+  const biderDetails = useSelector((state) => state.user.userDetails);
   useEffect(() => {
     if (user_id) {
       dispatch(getUserDetails(user_id));
     }
-  }, []);
+  }, [dispatch, user_id]);
   const [chatVisible, setchatVisible] = useState(false);
   const [recieverID, setId] = useState("");
   const chatToggle = () => {
     setchatVisible(!chatVisible);
   };
-  const chatHideCallback = value => {
+  const chatHideCallback = (value) => {
     setchatVisible(value);
   };
-  const { location } = useSelector(state => state.router);
-  let params = location.pathname.split("/"), statusCheck;
+  const { location } = useSelector((state) => state.router);
+  let params = location.pathname.split("/"),
+    statusCheck;
   if (params && params.length) {
-    statusCheck = params[params.length - 1]
+    statusCheck = params[params.length - 1];
   }
 
   return (
@@ -88,8 +89,8 @@ const BidderProfile = ({ user_id, review }) => {
             <h2>REVIEWS</h2>
             {review.length !== 0
               ? review.map((item, key) => {
-                return <Proposal props={item} key={key} />;
-              })
+                  return <Proposal props={item} key={key} />;
+                })
               : ""}
             {review.length === 0 && <h6>No review found.</h6>}
           </div>
@@ -97,8 +98,12 @@ const BidderProfile = ({ user_id, review }) => {
           {/* customchatbtn */}
           <Button
             color="primary"
-            className={`chat-btn bidder-profile rounded-circle position-fixed ${!chatVisible && statusCheck && statusCheck !== "not_started" && 'active'}`}
-            onClick={chatToggle}>
+            className={`chat-btn bidder-profile rounded-circle position-fixed ${!chatVisible &&
+              statusCheck &&
+              statusCheck !== "not_started" &&
+              "active"}`}
+            onClick={chatToggle}
+          >
             <svg
               id="chat"
               xmlns="http://www.w3.org/2000/svg"
@@ -118,16 +123,20 @@ const BidderProfile = ({ user_id, review }) => {
             </svg>
           </Button>
 
-          {chatVisible ?
-            <Chat
-              Id={biderDetails._id}
-              chatToggle={chatVisible}
-              chatHideCallback={value => chatHideCallback(value)}
-              recieversName={biderDetails.fname + " " + biderDetails.lname}
-            />
-            : null}
+          {/* {chatVisible ? */}
+          <Chat
+            Id={biderDetails._id}
+            chatToggle={chatVisible}
+            chatHideCallback={(value) => chatHideCallback(value)}
+            recieversName={
+              biderDetails.fname ||
+              "Anonymous" + " " + biderDetails.lname ||
+              "User"
+            }
+          />
+          {/* : null} */}
         </div>
-      </div >
+      </div>
     </>
   );
 };

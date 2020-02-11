@@ -55,7 +55,6 @@ const Sidebar = ({
         CategoryItems.push({ name: item.title, value: item.title });
       }
     });
-  console.log("selectedCategory", selectedCategory);
   return (
     <div
       className="sidebar"

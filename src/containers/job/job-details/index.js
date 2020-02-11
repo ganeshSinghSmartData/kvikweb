@@ -33,7 +33,7 @@ class JobDetails extends Component {
         },
         {
           label: "No",
-          onClick: () => { }
+          onClick: () => {}
         }
       ]
     });
@@ -50,7 +50,7 @@ class JobDetails extends Component {
         },
         {
           label: "No",
-          onClick: () => { }
+          onClick: () => {}
         }
       ]
     });
@@ -63,7 +63,7 @@ class JobDetails extends Component {
       job_seeker_id: jobSeekerId,
       job_provider_id: userId
     };
-    this.props.startBid(reqData, callback => {
+    this.props.startBid(reqData, (callback) => {
       if (callback) {
         this.setState({ isStatusLoading: false, isLoading: false });
         this.props.history.push("/bid-list");
@@ -81,7 +81,7 @@ class JobDetails extends Component {
       job_seeker_id: jobSeekerId,
       job_provider_id: userId
     };
-    this.props.endBid(reqData, callback => {
+    this.props.endBid(reqData, (callback) => {
       if (callback) {
         this.setState({ isStatusLoading: false, isLoading: false });
         this.props.history.push("/bid-list");
@@ -121,7 +121,6 @@ class JobDetails extends Component {
         userJobDetails = this.props.userJobDetails;
       }
     }
-    console.log("jobs", this.props.jobs);
     return (
       <React.Fragment>
         {Object.keys(userJobDetails).length ? (
@@ -135,24 +134,25 @@ class JobDetails extends Component {
             _endJob={(jobId, jobSeekerId, userId) =>
               this.confirmEndBidWork(jobId, jobSeekerId, userId)
             }
-            _isLoading={this.state.isLoading}
+            _isLoading={this.props._isLoading}
             _isStatusLoading={this.state.isStatusLoading}
           ></JobDetail>
         ) : (
-            <SpinnerOverlay className="position-fixed" />
-          )}
+          <SpinnerOverlay className="position-fixed" />
+        )}
       </React.Fragment>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   jobs: state.job.jobProduct,
   jobDetails: state.job.jobDetails,
-  userJobDetails: state.bid.userJobDetails
+  userJobDetails: state.bid.userJobDetails,
+  _isLoading: state.loader.isFetching
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getJobDetails: bindActionCreators(getJobDetails, dispatch),
   getUserJobDetails: bindActionCreators(getUserJobDetails, dispatch),
   startBid: bindActionCreators(startBid, dispatch),

@@ -3,26 +3,30 @@ import ApiClient from "../../api-client";
 import { apiUrl } from "../../environment";
 import { toastAction, toastErrorAction } from "../toast-actions";
 import { pagination } from "../../utilities/constants";
+import { is_fetching } from "../job";
 
-export const bid_list = data => ({ type: TYPE.BID_LIST, data });
-export const bid_details = data => ({ type: TYPE.BID_DETAILS, data });
-export const get_active_bid = data => ({ type: TYPE.GET_ACTIVE_BID, data });
-export const get_completed_bid = data => ({
+export const bid_list = (data) => ({ type: TYPE.BID_LIST, data });
+export const bid_details = (data) => ({ type: TYPE.BID_DETAILS, data });
+export const get_active_bid = (data) => ({ type: TYPE.GET_ACTIVE_BID, data });
+export const get_completed_bid = (data) => ({
   type: TYPE.GET_COMPLETED_BID,
   data
 });
-export const user_job_details = data => ({ type: TYPE.USER_JOB_DETAILS, data });
+export const user_job_details = (data) => ({
+  type: TYPE.USER_JOB_DETAILS,
+  data
+});
 export const reset_user_job_details = () => ({
   type: TYPE.RESET_USER_JOB_DETAILS
 });
 
-export const start_bid_work = data => ({ type: TYPE.START_BID_WORK, data });
-export const end_bid_work = data => ({ type: TYPE.END_BID_WORK, data });
+export const start_bid_work = (data) => ({ type: TYPE.START_BID_WORK, data });
+export const end_bid_work = (data) => ({ type: TYPE.END_BID_WORK, data });
 
 /****** action creator for register users ********/
 export const getBidList = (params, callback) => {
-  return dispatch => {
-    ApiClient.post(`${apiUrl}/register`, params).then(response => {
+  return (dispatch) => {
+    ApiClient.post(`${apiUrl}/register`, params).then((response) => {
       if (response.status === 200) {
         dispatch(bid_list(response));
         callback(true);
@@ -37,9 +41,9 @@ export const getBidList = (params, callback) => {
 
 /****** action creator for register users ********/
 export const getUserBidDetails = (params, callback) => {
-  return dispatch => {
-    ApiClient.post(`${apiUrl}/bid/user_job_detail`, params).then(response => {
-      console.log("response11111111111111111", response)
+  return (dispatch) => {
+    ApiClient.post(`${apiUrl}/bid/user_job_detail`, params).then((response) => {
+      console.log("response11111111111111111", response);
       if (response.status === 200) {
         dispatch(bid_details(response));
         callback(true);
@@ -66,7 +70,7 @@ export const getUserCompletedBid = (
       `${apiUrl}/api/user_completed_bid?lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${pagination.limit}&search=${search}`,
       {},
       token
-    ).then(response => {
+    ).then((response) => {
       if (response.status === 200) {
         callback(true);
         dispatch(get_completed_bid(response.data));
@@ -96,7 +100,7 @@ export const getUserActiveBid = (
       `${apiUrl}/api/user_active_bid?lat=${lat}&long=${long}&category=${category}&skip=${skip}&limit=${pagination.limit}&search=${search}`,
       {},
       token
-    ).then(response => {
+    ).then((response) => {
       if (response.status === 200) {
         dispatch(get_active_bid(response.data));
         console.log("Call Attempt");
@@ -113,21 +117,23 @@ export const getUserActiveBid = (
 };
 
 /****** action creator for get user bid details ********/
-export const getUserJobDetails = params => {
+export const getUserJobDetails = (params) => {
   return (dispatch, getState) => {
     const {
       data: { token }
     } = getState().user;
-
+    dispatch(is_fetching(true));
     ApiClient.get(`${apiUrl}/bid/user_job_detail`, params, token).then(
-      response => {
+      (response) => {
         if (response.status === 200) {
           dispatch(user_job_details(response.data));
         } else if (response.status === 401) {
           console.log("errror with 401 : ");
           toastErrorAction(dispatch, response.msg);
         } else {
+          toastErrorAction(dispatch, response.msg);
         }
+        dispatch(is_fetching(false));
       }
     );
   };
@@ -143,7 +149,7 @@ export const getBidderReview = (bidder_id, callback) => {
       `${apiUrl}/reviews/get_user_reviews/${bidder_id}`,
       {},
       token
-    ).then(response => {
+    ).then((response) => {
       if (response.status === 200) {
         callback(response.data);
         // dispatch(reject_bid(response.data));
@@ -164,19 +170,21 @@ export const rejectBid = (params, callback) => {
     const {
       data: { token }
     } = getState().user;
-    ApiClient.put(`${apiUrl}/bid/reject_bid`, params, token).then(response => {
-      if (response.status === 200) {
-        toastAction(true, response.msg);
-        callback(true);
-        // dispatch(reject_bid(response.data));
-      } else if (response.status === 401) {
-        callback(false);
-        console.log("errror with 401 : ");
-        toastErrorAction(dispatch, response.msg);
-      } else {
-        console.log("Un certain error");
+    ApiClient.put(`${apiUrl}/bid/reject_bid`, params, token).then(
+      (response) => {
+        if (response.status === 200) {
+          toastAction(true, response.msg);
+          callback(true);
+          // dispatch(reject_bid(response.data));
+        } else if (response.status === 401) {
+          callback(false);
+          console.log("errror with 401 : ");
+          toastErrorAction(dispatch, response.msg);
+        } else {
+          console.log("Un certain error");
+        }
       }
-    });
+    );
   };
 };
 
@@ -186,19 +194,21 @@ export const acceptBid = (params, callback) => {
     const {
       data: { token }
     } = getState().user;
-    ApiClient.put(`${apiUrl}/bid/accept_bid`, params, token).then(response => {
-      if (response.status === 200) {
-        toastAction(true, response.msg);
-        callback(true);
-        // dispatch(accept_bid(response.data));
-      } else if (response.status === 402) {
-        console.log("errror with 401 : ");
-        toastAction(false, response.msg);
-        callback(false);
-      } else {
-        console.log("Un certain error");
+    ApiClient.put(`${apiUrl}/bid/accept_bid`, params, token).then(
+      (response) => {
+        if (response.status === 200) {
+          toastAction(true, response.msg);
+          callback(true);
+          // dispatch(accept_bid(response.data));
+        } else if (response.status === 402) {
+          console.log("errror with 401 : ");
+          toastAction(false, response.msg);
+          callback(false);
+        } else {
+          console.log("Un certain error");
+        }
       }
-    });
+    );
   };
 };
 
@@ -209,7 +219,7 @@ export const startBid = (params, callback) => {
       data: { token }
     } = getState().user;
     ApiClient.post(`${apiUrl}/bid/start_bid_work`, params, token).then(
-      response => {
+      (response) => {
         if (response.status === 200) {
           toastAction(true, response.msg);
           callback(true);
@@ -234,7 +244,7 @@ export const endBid = (params, callback) => {
       data: { token }
     } = getState().user;
     ApiClient.post(`${apiUrl}/bid/end_bid_work`, params, token).then(
-      response => {
+      (response) => {
         if (response.status === 200) {
           callback(true);
           toastAction(true, response.msg);

@@ -151,6 +151,9 @@
   opacity: 0;
   transition: all ease 0.3s 0s;
   transform: rotate(-90deg);
+  @media (max-width: 767px) {
+    bottom: 50px;
+  }
   svg {
     width: 24px;
     path {
@@ -216,3 +219,9 @@
 // }
 
 // *******************************************************************
+.blank-height {
+  min-height: 78px !important;
+  background: transparent;
+  width: 100%;
+  display: none;
+}

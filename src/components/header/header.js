@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Container, Row, Col, Button } from "reactstrap";
-import Spinner from "../commonUi/spinner/spinner"
+import Spinner from "../commonUi/spinner/spinner";
 import Nav from "../nav/nav";
 import UserProfile from "./userProfile/userProfile";
 import Logo from "../commonUi/logo/logo";
 
 import "./header.scss";
 const Header = (props) => {
-  const { user } = useSelector(state => state);
+  const { user } = useSelector((state) => state);
 
-  let imagepath = "", metricsData;
+  let imagepath = "",
+    metricsData;
   if (user.data && user.data.image && user.data.image.length) {
     imagepath = user.data.image;
   }
@@ -18,7 +19,7 @@ const Header = (props) => {
     metricsData = user.userDetails;
   }
   const [navVisible, setnavVisible] = useState(false);
-  const navToggle = e => {
+  const navToggle = (e) => {
     e.nativeEvent.stopImmediatePropagation();
     setnavVisible(() => {
       setnavVisible(!navVisible);
@@ -35,38 +36,38 @@ const Header = (props) => {
   const bodyClickHandler = () => {
     setnavVisible(false);
   };
-  const escFunction = e => {
+  const escFunction = (e) => {
     if (e.keyCode === 27) {
       setnavVisible(false);
     }
   };
-  const navClickCallback = value => {
+  const navClickCallback = (value) => {
     setnavVisible(value);
   };
-  const location = props.children.props.location.pathname
-
-  console.log('props', props)
+  const location = props.children.props.location.pathname;
   return (
     <>
-      <header className={`header d-flex flex-column flex-shrink-0 
-    ${location === "/" ? 'header-home' : ''}
-    ${props.headerFixed ? 'active' : ''}
-    `
-
-      }
-        id={"header"}>
+      <header
+        className={`header d-flex flex-column flex-shrink-0 
+    ${location === "/" ? "header-home" : ""}
+    ${props.headerFixed ? "active" : ""}
+    `}
+        id={"header"}
+      >
         <Container>
           <Row>
             <Col
-              className={`d-flex flex-wrap header-inner align-items-center ${!user.loggedIn && "beforeLogin"}`}>
-
+              className={`d-flex flex-wrap header-inner align-items-center ${!user.loggedIn &&
+                "beforeLogin"}`}
+            >
               <Logo navigate={true} />
               <div className="d-flex align-items-center ml-auto nav-wrapper">
-                {navVisible ?
-                  <Spinner className="with-overlay no-spin-icon nav-overlay"
+                {navVisible ? (
+                  <Spinner
+                    className="with-overlay no-spin-icon nav-overlay"
                     onClickEvent={() => setnavVisible(false)}
                   />
-                  : null}
+                ) : null}
                 <Nav
                   {...props}
                   navVisibleProp={navClickCallback}
@@ -74,7 +75,9 @@ const Header = (props) => {
                     "d-sm-none d-md-block nav " + (navVisible ? "active" : "")
                   }
                 />
-                {user.loggedIn && <UserProfile image={imagepath} metricsData={metricsData} />}
+                {user.loggedIn && (
+                  <UserProfile image={imagepath} metricsData={metricsData} />
+                )}
                 <Button
                   color="link"
                   className={

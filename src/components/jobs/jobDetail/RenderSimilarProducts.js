@@ -2,9 +2,10 @@ import React from "react";
 import UserImage from "./userImage/userImage";
 import JobAddress from "./JobAddress/jobAddress";
 import constants from "../../../constants";
-import { getJobBidCheck } from "../../../actions/job";
+// import { getJobBidCheck } from "../../../actions/job";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { getUserJobDetails } from "../../../actions/bid";
 const RenderSimilarProducts = (props) => {
   const dispatch = useDispatch();
   if (!props.data && props.data.length) return null;
@@ -16,7 +17,10 @@ const RenderSimilarProducts = (props) => {
             <Link
               // className="job-list-bx bg-white"
               to={`/job-details/${item._id}`}
-              onClick={() => dispatch(getJobBidCheck(item._id))}
+              onClick={() => {
+                document.querySelector("#main_container").scrollTop = 0;
+                dispatch(getUserJobDetails({ jobId: item._id }))
+              }}
             >
               <div className="job-list-bx-rw d-flex">
                 <UserImage />

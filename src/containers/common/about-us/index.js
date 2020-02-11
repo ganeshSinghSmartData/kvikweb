@@ -13,9 +13,7 @@ class AboutUs extends Component {
   componentDidMount() {
     this.props.getCustomPageDetails("about_us", callback => {
       if (callback) {
-        console.log(" I m in about us callback");
       } else {
-        console.log(" I m in about us callback false");
       }
     });
   }

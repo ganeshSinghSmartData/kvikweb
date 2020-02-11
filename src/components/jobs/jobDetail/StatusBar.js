@@ -77,14 +77,13 @@ const getStatus = (status) => {
 };
 
 const Status = (props) => {
-  console.log("item in status", props);
   return (
     <li
       className={`d-flex justify-content-center position-relative  ${
         props.isActive ? "active-step" : ""
-        } ${props.isComplete ? "complete" : ""} ${
+      } ${props.isComplete ? "complete" : ""} ${
         props.isRejected ? "rejected" : ""
-        }`}
+      }`}
     >
       {props.index > 0 && <span className="step-bar position-absolute"></span>}
       <label className="d-flex flex-column align-items-center position-relative mb-0">
@@ -103,15 +102,18 @@ const StatusBar = (props) => {
       <>
         <div className="job-step-rw">
           <div class="job-status-mbl">
-            Job Status: <span className={`${
-              props.status === "accepted" ||
+            Job Status:{" "}
+            <span
+              className={`${
+                props.status === "accepted" ||
                 props.status === "in_progress" ||
                 props.status === "completed"
-                ? "text-success"
-                : props.status === "rejected" || props.status === "expired"
+                  ? "text-success"
+                  : props.status === "rejected" || props.status === "expired"
                   ? "text-danger"
                   : "text-primary"
-              }`}>
+              }`}
+            >
               {constants.jobStatus[props.status]}
             </span>
           </div>

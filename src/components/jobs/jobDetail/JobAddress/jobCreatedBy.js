@@ -12,7 +12,6 @@ const JobCreatedBy = ({
   editimage = false,
   jobStatus
 }) => {
-  console.log("job_seeker_id", job_seeker_id)
   return (
     <div className="job-address d-flex">
       <Link to={`/bidder-profile/${job_seeker_id._id}/${jobStatus}`}

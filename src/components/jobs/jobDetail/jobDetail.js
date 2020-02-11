@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Countdown from "react-countdown-now";
-import datetimeDifference from "datetime-difference";
-import { Button, Row, Col } from "reactstrap";
+import { Button } from "reactstrap";
 import { toastAction } from "../../../actions/toast-actions";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
-import moment from "moment";
 import { ImageView } from "../bidderProfile/chat/ImageView/ImageView";
 
 import "./jobDetail.scss";
@@ -15,17 +13,10 @@ import "slick-carousel/slick/slick-theme.css";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
 import Paragraph from "../../commonUi/paragraph/paragraph";
-import JobCreatedBy from "./JobAddress/jobCreatedBy";
 import Proposal from "./proposal/proposal";
 import Breadcrumb from "../../commonUi/breadcrumb/breadcrumb";
-import TimeCounterComponent from "./timeCounterComponent";
 
-import {
-  StringToDate,
-  dateTime,
-  DaysBetween,
-  AddOffset
-} from "./../../../utilities/common";
+import { StringToDate, dateTime } from "./../../../utilities/common";
 import { JobStatus, BidStatus } from "../../../utilities/constants";
 import { apiUrl } from "./../../../environment";
 import {
@@ -34,23 +25,21 @@ import {
   approvedBidWork,
   getSimilarProduct
 } from "./../../../actions/job";
-import Spinner from "../../commonUi/spinner/spinner";
 import SpinnerOverlay from "../../commonUi/spinner/spinnerOverlay/spinnerOverlay";
 
 import PlaceYourBidModal from "../../commonUi/modal/modal";
 import ConfirmJobStartModal from "../../commonUi/modal/modal";
 import RateBidderWorkModal from "../../commonUi/modal/modal";
 import UserImage from "../../jobs/jobDetail/userImage/userImage";
-import JobAddress from "../jobDetail/JobAddress/jobAddress";
 import RenderSimilarProducts from "./RenderSimilarProducts";
 import StatusBar from "./StatusBar";
 export default function JobDetail({
   history,
   job = {},
   path = "",
-  _deleteJob = () => {},
-  _startJob = () => {},
-  _endJob = () => {},
+  _deleteJob = () => { },
+  _startJob = () => { },
+  _endJob = () => { },
   _isLoading = false,
   _isStatusLoading = false,
   hideHeader = false,
@@ -192,9 +181,6 @@ export default function JobDetail({
     }
   }, [dispatch, initial, job.category]);
 
-  console.log("====================================");
-  console.log("job here", job);
-  console.log("====================================");
   return (
     <>
       <div className="job-detail-blc d-flex flex-column flex-fill">
@@ -205,10 +191,24 @@ export default function JobDetail({
           imageViewHandlerProp={imageViewHandler}
         />
         {!hideHeader && (
-          <div className="job-detail-hd d-flex align-items-center">
-            <h2 className="flex-fill">Job Details</h2>
-            <Breadcrumb path={path} />
-          </div>
+          <>
+            <div className="job-detail-hd d-flex align-items-center">
+              <div className="flex-fill d-flex job-detail-hd-inner align-items-center">
+                <h2 className="flex-fill">Job Details</h2>
+              </div>
+              <Breadcrumb path={path} />
+            </div>
+            <Button
+              color="primary"
+              className="mobile-new-task-btn"
+              onClick={() => {
+                document.querySelector("#newTaskBtn") &&
+                  document.querySelector("#newTaskBtn").scrollIntoView();
+              }}
+            >
+              View Similar Jobs
+              </Button>
+          </>
         )}
 
         <div className="job-detail-inner d-flex flex-fill">
@@ -237,11 +237,11 @@ export default function JobDetail({
                       }
                     />
                   ) : (
-                    <img
-                      src={require("../../../assets/images/icons/default-job-image.svg")}
-                      alt="Job Post User"
-                    />
-                  )}
+                      <img
+                        src={require("../../../assets/images/icons/default-job-image.svg")}
+                        alt="Job Post User"
+                      />
+                    )}
                 </div>
                 <div className="d-flex justify-content-center">
                   <div className="job-slider-track-inner">
@@ -262,8 +262,8 @@ export default function JobDetail({
                         ))}
                       </Slider>
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                   </div>
                 </div>
               </div>
@@ -338,7 +338,7 @@ export default function JobDetail({
                         <label
                           className={`job-detail-amnt margin flex-shrink-0 ${
                             path === "/job-proposal" ? "" : ""
-                          }`}
+                            }`}
                         >
                           {job.budget ? `$${job.budget}` : ""}
                         </label>
@@ -511,7 +511,7 @@ export default function JobDetail({
 
               {path === "/job-proposal" && job.status === "completed" && (
                 <div className="place-bid-rw text-center w-100 job-detail-action-btns">
-                  <Button size="lg" color="secondary" onClick={() => {}}>
+                  <Button size="lg" color="secondary" onClick={() => { }}>
                     Mark as Done
                   </Button>
                 </div>
@@ -529,7 +529,7 @@ export default function JobDetail({
                         jobBidCheck && jobBidCheck.length
                           ? "btn-dark"
                           : "btn-secondary"
-                      } place-bid-btn`}
+                        } place-bid-btn`}
                       onClick={() => openBidForm()}
                     >
                       Place a Bid
@@ -565,7 +565,7 @@ export default function JobDetail({
                           history={history}
                           isclick={
                             job.status === "not_started" ||
-                            job.status === "not_accepted"
+                              job.status === "not_accepted"
                               ? true
                               : false
                           }
@@ -577,8 +577,19 @@ export default function JobDetail({
             </div>
           </div>
           {!reviewModal && (
-            <div className="job-listing-blc flex-shrink-0 flex-fill overflow-auto">
-              <Button block color="link" className="new-joblist-btn">
+            <div
+              className="job-listing-blc flex-shrink-0 flex-fill overflow-auto"
+              id="newTaskBtn"
+            >
+              <Button
+                block
+                color="link"
+                className="new-joblist-btn"
+                onClick={() => {
+                  document.querySelector("#main_container").scrollTop = 0;
+                  dispatch(getSimilarProduct(1, [job.category]));
+                }}
+              >
                 View New Tasks
               </Button>
               <RenderSimilarProducts data={similarProducts} />
@@ -593,7 +604,7 @@ export default function JobDetail({
         _modalType={"Place your bid"}
         _handleSubmit={handleSubmit}
         _frequency={job.frequency}
-        // _loading={isModalLoading}
+      // _loading={isModalLoading}
       />
       <ConfirmJobStartModal
         _isOpen={confirmStartModal}
