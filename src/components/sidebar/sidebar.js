@@ -61,10 +61,10 @@ const Sidebar = ({
       ref={sidebarRef}
       id="side"
 
-    // onScroll={() => {
-    //   let sidebar = ReactDOM.findDOMNode(sidebarRef.current);
-    //   // console.log("aside-side", sidebar.scrollTop);
-    // }}
+      // onScroll={() => {
+      //   let sidebar = ReactDOM.findDOMNode(sidebarRef.current);
+      //   // console.log("aside-side", sidebar.scrollTop);
+      // }}
     >
       <div className="sidebar-item">
         <h3 className="d-flex" onClick={toggleCategory}>
@@ -88,10 +88,10 @@ const Sidebar = ({
                     <li
                       className={`position-relative ${
                         selectedCategory &&
-                          selectedCategory.findIndex((i) => i === item.name) >= 0
+                        selectedCategory.findIndex((i) => i === item.name) >= 0
                           ? "active"
                           : ""
-                        }`}
+                      }`}
                       key={key}
                     >
                       <Button
