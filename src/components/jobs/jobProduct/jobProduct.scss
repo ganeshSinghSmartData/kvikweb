@@ -153,7 +153,6 @@
   }
   .job-inner {
     flex: 1;
-    padding-right: 16px;
   }
   .job-title {
     padding-left: 0;
@@ -167,6 +166,7 @@
       font-size: 17px;
       color: #24231f;
       order: 0;
+      white-space: normal;
     }
   }
   .job-time {
@@ -209,9 +209,9 @@
     font-weight: 300;
     color: #24231f;
     margin-bottom: 10px;
-    span {
-      margin-right: 14px;
-    }
+    // span {
+    //   margin-right: 0;
+    // }
   }
   .job-desc {
     font-size: 12px;
@@ -220,8 +220,10 @@
     color: #24231f;
   }
   .job-status-rw {
-    margin: 10px 0 0;
-    padding: 6px 0 0;
+    margin-top: auto;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 8px 0 8px;
   }
 }
 
