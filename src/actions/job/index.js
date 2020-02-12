@@ -268,7 +268,7 @@ export const getUserCompletedJob = (
 };
 
 /****** action creator for list users cpmpleted job ********/
-export const approvedBidWork = (params, callback) => {
+export const approvedBidWork = (params, callback = () => {}) => {
   return (dispatch, getState) => {
     const {
       data: { token }

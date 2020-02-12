@@ -37,7 +37,7 @@ export const PublicLayout = (props) => {
       headerFixed && setheaderFixed(false);
     }
     //Scroll to top Function start
-   
+
     if (scrollTopCheck > 300) {
       !scrollVisible && setscrollVisible(true);
     } else if (scrollTopCheck < 100) {
@@ -46,13 +46,12 @@ export const PublicLayout = (props) => {
     let home = document.getElementById("home");
     if (home && home.getBoundingClientRect().top <= 0) {
       return !sidebarToggleValue && dispatch(sidebarToggleHandler(true));
-      
     } else {
       document.querySelector("#blank-div") &&
         document
           .querySelector("#blank-div")
           .setAttribute("style", "display:none");
-          return sidebarToggleValue && dispatch(sidebarToggleHandler(false));    
+      return sidebarToggleValue && dispatch(sidebarToggleHandler(false));
     }
   };
   const scrollTopFunction = () => {
@@ -73,15 +72,16 @@ export const PublicLayout = (props) => {
       >
         <div
           id="main_container"
-          className={`wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto 
-          ${!sidebarToggleValue ? "active" : ""}
-          ${
+          className={`wrapper-inner d-flex flex-column flex-fill position-relative overflow-auto ${
+            props.children.props.match.path !== "/" && !sidebarToggleValue
+              ? "active"
+              : ""
+          } ${
             props.children.props.match.path === "/job-details/:job_id" ||
-            props.children.props.match.path == "/bid-details/:job_id"
+            props.children.props.match.path === "/bid-details/:job_id"
               ? "jobDetailLayout"
               : ""
-          }
-              ${props.children.props.match.path == "/" ? "homeLayout" : ""}
+          } ${props.children.props.match.path === "/" ? "homeLayout" : ""}
           `}
           ref={wrapperRef}
           onScroll={scrollCheck}

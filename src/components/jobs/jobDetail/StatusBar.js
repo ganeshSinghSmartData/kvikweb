@@ -82,7 +82,7 @@ const StatusBar = (props) => {
     return (
       <>
         <div className="job-step-rw">
-          <div class="job-status-mbl">
+          <div className="job-status-mbl">
             Job Status:{" "}
             <span
               className={`${

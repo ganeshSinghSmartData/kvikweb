@@ -25,14 +25,27 @@ class JobDetails extends Component {
     this.endBidWork = this.endBidWork.bind(this);
   }
 
-  confirmApproveJob = (jobId, jobSeekerId, userId) => {
+  confirmApproveJob = (job_id, job_seeker_id, job_provider_id) => {
     confirmAlert({
       title: "",
       message: "Are you sure do you want to approve this job ?",
       buttons: [
         {
           label: "Yes",
-          onClick: () => this.props.approvedBidWork(jobId, jobSeekerId, userId)
+          onClick: () =>
+            this.props.approvedBidWork(
+              {
+                job_id,
+                job_seeker_id,
+                job_provider_id
+              },
+              (callback) => {
+                if (callback) {
+                  this.setState({ isStatusLoading: false, isLoading: false });
+                  this.props.history.push("/bid-list");
+                }
+              }
+            )
         },
         {
           label: "No",
@@ -154,9 +167,9 @@ class JobDetails extends Component {
             _endJob={(jobId, jobSeekerId, userId) =>
               this.confirmEndBidWork(jobId, jobSeekerId, userId)
             }
+            _approveJob={this.confirmApproveJob}
             _isLoading={this.props._isLoading}
             _isStatusLoading={this.state.isStatusLoading}
-            _approveJob={this.confirmApproveJob}
           ></JobDetail>
         ) : (
           <SpinnerOverlay className="position-fixed" />

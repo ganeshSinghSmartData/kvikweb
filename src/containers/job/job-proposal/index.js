@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import { confirmAlert } from "react-confirm-alert";
 
 import "react-confirm-alert/src/react-confirm-alert.css";
@@ -8,8 +7,12 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import JobDetail from "./../../../components/jobs/jobDetail/jobDetail";
 import { getUserJobDetails } from "../../../actions/bid";
 import SpinnerOverlay from "../../../components/commonUi/spinner/spinnerOverlay/spinnerOverlay";
-import { deleteMyJob, reset_job_details } from "../../../actions/job";
-
+import {
+  deleteMyJob,
+  reset_job_details,
+  approvedBidWork
+} from "../../../actions/job";
+import { endBid } from "../../../actions/bid";
 class JobProposal extends Component {
   constructor(props) {
     super(props);
@@ -50,6 +53,68 @@ class JobProposal extends Component {
     });
   };
 
+  confirmApproveJob = (job_id, job_seeker_id, job_provider_id) => {
+    confirmAlert({
+      title: "",
+      message: "Are you sure do you want to approve this job ?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () =>
+            this.props.approvedBidWork(
+              {
+                job_id,
+                job_seeker_id,
+                job_provider_id
+              },
+              (callback) => {
+                if (callback) {
+                  this.setState({ isStatusLoading: false, isLoading: false });
+                  this.props.history.push("/bid-list");
+                }
+              }
+            )
+        },
+        {
+          label: "No",
+          onClick: () => {}
+        }
+      ]
+    });
+  };
+  confirmEndBidWork = (jobId, jobSeekerId, userId) => {
+    confirmAlert({
+      title: "",
+      message: "Are you sure do you want to end this job ?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => this.endBidWork(jobId, jobSeekerId, userId)
+        },
+        {
+          label: "No",
+          onClick: () => {}
+        }
+      ]
+    });
+  };
+  endBidWork(jobId, jobSeekerId, userId) {
+    this.setState({ isStatusLoading: true, isLoading: true });
+    const reqData = {
+      job_id: jobId,
+      job_seeker_id: jobSeekerId,
+      job_provider_id: userId
+    };
+    this.props.endBid(reqData, (callback) => {
+      if (callback) {
+        this.setState({ isStatusLoading: false, isLoading: false });
+        this.props.history.push("/bid-list");
+      } else {
+        this.setState({ isStatusLoading: false, isLoading: false });
+        this.props.history.push("/bid-list");
+      }
+    });
+  }
   render() {
     let pathname = "";
     if (this.props.match.path.search("/job-proposal") !== -1) {
@@ -64,6 +129,10 @@ class JobProposal extends Component {
             path={pathname}
             _isLoading={this.props._isLoading}
             _deleteJob={this.confirmDelete}
+            _endJob={(jobId, jobSeekerId, userId) =>
+              this.confirmEndBidWork(jobId, jobSeekerId, userId)
+            }
+            _approveJob={this.confirmApproveJob}
           ></JobDetail>
         ) : (
           <SpinnerOverlay className="position-fixed" />
@@ -78,10 +147,12 @@ const mapStateToProps = (state) => ({
   _isLoading: state.loader.isFetching
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getUserJobDetails: bindActionCreators(getUserJobDetails, dispatch),
-  deleteMyJob: bindActionCreators(deleteMyJob, dispatch),
-  reset_job_details: bindActionCreators(reset_job_details, dispatch)
-});
+const mapDispatchToProps = {
+  getUserJobDetails,
+  deleteMyJob,
+  reset_job_details,
+  approvedBidWork,
+  endBid
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(JobProposal);

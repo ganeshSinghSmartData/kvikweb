@@ -448,7 +448,11 @@ const Job = ({
               <Row
                 className={`job-listing position-relative
             ${listType ? "job-list-row" : ""}
-            ${sidebarToggleValue ? "active" : ""}`}
+            ${
+              window.location.pathname === "/" && sidebarToggleValue
+                ? "active"
+                : ""
+            }`}
                 id="jobListing"
               >
                 {isFetching ? <SpinnerOverlay /> : null}

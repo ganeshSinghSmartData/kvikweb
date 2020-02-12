@@ -515,7 +515,7 @@ export default function JobDetail({
                     size="lg"
                     color="secondary"
                     onClick={() =>
-                      _approveJob(job._id, job.job_seeker_id._id, user.data._id)
+                      _approveJob(job._id, job.job_seeker_id._id, job.job_provider_id)
                     }
                   >
                     Mark as Done
