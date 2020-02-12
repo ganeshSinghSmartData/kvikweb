@@ -428,11 +428,14 @@ const Job = ({
             </div>
           )}
           <div
-            className={`${
-              window.location.pathname === "/" && sidebarToggleValue
+            className={`
+            ${window.location.pathname === "/"
+                && sidebarToggleValue
                 ? "leftMargin"
                 : ""
-              } job-rt-col flex-fill`}
+              } job-rt-col flex-fill
+              ${window.location.pathname === "/bid-list" || window.location.pathname === "/job-list" ? 'noSidebarFilter' : ''}
+                `}
           >
             {/* {path === "" && (
               <React.Fragment>
@@ -448,8 +451,8 @@ const Job = ({
             <div className="job-list-blc m-0" id="jobList">
               <Row
                 className={`job-listing position-relative
-                  ${listType ? "job-list-row" : ""}
-                  ${sidebarToggleValue ? "active" : ""}`}
+            ${listType ? "job-list-row" : ""}
+            ${sidebarToggleValue ? "active" : ""}`}
                 id="jobListing"
               >
                 {isFetching ? <SpinnerOverlay /> : null}
