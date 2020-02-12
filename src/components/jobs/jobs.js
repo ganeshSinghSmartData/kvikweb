@@ -213,31 +213,20 @@ const Job = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initial]);
-  // const windowResize = useCallback(() => {
-  //   const windowWidth = window.innerWidth;
-  //   if (windowWidth > 767) {
-  //     if (jobs.sidebarToggle === true) {
-  //       dispatch(filterToggleHandler(false));
-  //     }
-  //   }
-  // });
-  // useEffect(() => {
-  //   dispatch(filterRange());
-  //   if (path !== "/job-list") {
-  //     const reqData = {
-  //       page: page,
-  //       category: selectedCategory,
-  //       lat: "",
-  //       long: ""
-  //     };
-  //     dispatch(reset_job_products());
-  //     dispatch(getJobProduct(reqData));
-  //   }
-  //   window.addEventListener("resize", windowResize);
-  //   return () => {
-  //     document.removeEventListener("resize", windowResize);
-  //   };
-  // }, [dispatch, page, path, selectedCategory, windowResize]);
+  const windowResize = useCallback(() => {
+    const windowWidth = window.innerWidth;
+    if (windowWidth > 767) {
+      if (jobs.sidebarToggle === true) {
+        dispatch(filterToggleHandler(false));
+      }
+    }
+  });
+  useEffect(() => {
+    window.addEventListener("resize", windowResize);
+    return () => {
+      document.removeEventListener("resize", windowResize);
+    };
+  }, [windowResize]);
 
   const sidebarToggleValue = useSelector((state) => {
     return state.job.sidebarToggle;
@@ -254,7 +243,7 @@ const Job = ({
         <div
           className={`d-flex job-list-heading ${
             path !== "" ? "sorting-page" : ""
-            }`}
+          }`}
         >
           {path == "" && <SearchService />}
           {path !== "" && (
@@ -270,7 +259,7 @@ const Job = ({
               <button
                 className={`btn ${
                   jobType === "completed" ? "btn-primary" : ""
-                  }`}
+                }`}
                 onClick={() => {
                   setJobType("completed");
                 }}
@@ -281,29 +270,31 @@ const Job = ({
           )}
 
           <div className="job-list-icon d-flex ml-auto">
-            {path === "" && <Button
-              color="link"
-              className="list-icon filter sidebar-toogle-btn d-md-none"
-              onClick={(e) => {
-                dispatch(
-                  filterToggleHandler(!jobs.filterToggle),
-                  e.nativeEvent.stopImmediatePropagation()
-                );
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="511.973"
-                height="511.999"
-                viewBox="0 0 511.973 511.999"
+            {path === "" && (
+              <Button
+                color="link"
+                className="list-icon filter sidebar-toogle-btn d-md-none"
+                onClick={(e) => {
+                  dispatch(
+                    filterToggleHandler(!jobs.filterToggle),
+                    e.nativeEvent.stopImmediatePropagation()
+                  );
+                }}
               >
-                <path
-                  id="filter"
-                  d="M492.477,0H20.5A20,20,0,0,0,.5,20,195.331,195.331,0,0,0,66,165.871l87.59,77.852a71.265,71.265,0,0,1,23.9,53.223V491.977a20.01,20.01,0,0,0,31.09,16.637l118-78.66a20,20,0,0,0,8.906-16.641V296.945a71.265,71.265,0,0,1,23.9-53.223l87.586-77.852A195.331,195.331,0,0,0,512.473,20,20,20,0,0,0,492.477,0ZM420.395,135.973l-87.586,77.855a111.3,111.3,0,0,0-37.324,83.113V402.609l-78,52V296.945a111.3,111.3,0,0,0-37.324-83.117L92.578,135.977A155.356,155.356,0,0,1,41.793,40H471.18A155.317,155.317,0,0,1,420.395,135.973Zm0,0"
-                  transform="translate(-0.5)"
-                />
-              </svg>
-            </Button>}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="511.973"
+                  height="511.999"
+                  viewBox="0 0 511.973 511.999"
+                >
+                  <path
+                    id="filter"
+                    d="M492.477,0H20.5A20,20,0,0,0,.5,20,195.331,195.331,0,0,0,66,165.871l87.59,77.852a71.265,71.265,0,0,1,23.9,53.223V491.977a20.01,20.01,0,0,0,31.09,16.637l118-78.66a20,20,0,0,0,8.906-16.641V296.945a71.265,71.265,0,0,1,23.9-53.223l87.586-77.852A195.331,195.331,0,0,0,512.473,20,20,20,0,0,0,492.477,0ZM420.395,135.973l-87.586,77.855a111.3,111.3,0,0,0-37.324,83.113V402.609l-78,52V296.945a111.3,111.3,0,0,0-37.324-83.117L92.578,135.977A155.356,155.356,0,0,1,41.793,40H471.18A155.317,155.317,0,0,1,420.395,135.973Zm0,0"
+                    transform="translate(-0.5)"
+                  />
+                </svg>
+              </Button>
+            )}
             {products && products.length !== 0 && path === "" ? (
               <ButtonDropdown
                 isOpen={dropdownOpen}
@@ -338,22 +329,22 @@ const Job = ({
                 <DropdownMenu right className="overflow-auto">
                   <DropdownItem onClick={() => sortBy({ budget: -1 })}>
                     Budget - high to low
-                    </DropdownItem>
+                  </DropdownItem>
                   <DropdownItem onClick={() => sortBy({ budget: 1 })}>
                     Budget - low to high
-                    </DropdownItem>
+                  </DropdownItem>
                   <DropdownItem onClick={() => sortBy({ created_at: -1 })}>
                     Create Date
-                    </DropdownItem>
+                  </DropdownItem>
                   <DropdownItem onClick={() => sortBy({ jobtitle: 1 })}>
                     Title (a-z)
-                    </DropdownItem>
+                  </DropdownItem>
                   <DropdownItem onClick={() => sortBy({ jobStartDate: -1 })}>
                     Job Start Date
-                    </DropdownItem>
+                  </DropdownItem>
                   <DropdownItem onClick={() => sortBy({ jobEndDate: -1 })}>
                     Bid Deadline Date
-                    </DropdownItem>
+                  </DropdownItem>
                 </DropdownMenu>
               </ButtonDropdown>
             ) : null}
@@ -414,7 +405,7 @@ const Job = ({
             <div
               className={`${sidebarToggleValue ? "fixedSideBar" : ""} ${
                 jobs.filterToggle ? "active" : ""
-                } sidebar-col d-flex flex-column flex-shrink-0`}
+              } sidebar-col d-flex flex-column flex-shrink-0`}
               id="sideBar"
               onClick={stopPropagation}
             >
@@ -432,7 +423,7 @@ const Job = ({
               window.location.pathname === "/" && sidebarToggleValue
                 ? "leftMargin"
                 : ""
-              } job-rt-col flex-fill`}
+            } job-rt-col flex-fill`}
           >
             {/* {path === "" && (
               <React.Fragment>

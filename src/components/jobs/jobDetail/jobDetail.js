@@ -37,9 +37,10 @@ export default function JobDetail({
   history,
   job = {},
   path = "",
-  _deleteJob = () => { },
-  _startJob = () => { },
-  _endJob = () => { },
+  _deleteJob = () => {},
+  _startJob = () => {},
+  _endJob = () => {},
+  _approveJob = () => {},
   _isLoading = false,
   _isStatusLoading = false,
   hideHeader = false,
@@ -52,7 +53,6 @@ export default function JobDetail({
     workStatus = JobStatus;
   }
   const similarProducts = useSelector((state) => state.job.similarProducts);
-  const similarCount = useSelector((state) => state.job.similarCount);
   const [imagePath, seImagePath] = useState("");
   const [ImageModal, setImageModal] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
@@ -207,7 +207,7 @@ export default function JobDetail({
               }}
             >
               View Similar Jobs
-              </Button>
+            </Button>
           </>
         )}
 
@@ -237,11 +237,11 @@ export default function JobDetail({
                       }
                     />
                   ) : (
-                      <img
-                        src={require("../../../assets/images/icons/default-job-image.svg")}
-                        alt="Job Post User"
-                      />
-                    )}
+                    <img
+                      src={require("../../../assets/images/icons/default-job-image.svg")}
+                      alt="Job Post User"
+                    />
+                  )}
                 </div>
                 <div className="d-flex justify-content-center">
                   <div className="job-slider-track-inner">
@@ -262,8 +262,8 @@ export default function JobDetail({
                         ))}
                       </Slider>
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                   </div>
                 </div>
               </div>
@@ -338,7 +338,7 @@ export default function JobDetail({
                         <label
                           className={`job-detail-amnt margin flex-shrink-0 ${
                             path === "/job-proposal" ? "" : ""
-                            }`}
+                          }`}
                         >
                           {job.budget ? `$${job.budget}` : ""}
                         </label>
@@ -511,7 +511,13 @@ export default function JobDetail({
 
               {path === "/job-proposal" && job.status === "completed" && (
                 <div className="place-bid-rw text-center w-100 job-detail-action-btns">
-                  <Button size="lg" color="secondary" onClick={() => { }}>
+                  <Button
+                    size="lg"
+                    color="secondary"
+                    onClick={() =>
+                      _approveJob(job._id, job.job_seeker_id._id, user.data._id)
+                    }
+                  >
                     Mark as Done
                   </Button>
                 </div>
@@ -529,7 +535,7 @@ export default function JobDetail({
                         jobBidCheck && jobBidCheck.length
                           ? "btn-dark"
                           : "btn-secondary"
-                        } place-bid-btn`}
+                      } place-bid-btn`}
                       onClick={() => openBidForm()}
                     >
                       Place a Bid
@@ -565,7 +571,7 @@ export default function JobDetail({
                           history={history}
                           isclick={
                             job.status === "not_started" ||
-                              job.status === "not_accepted"
+                            job.status === "not_accepted"
                               ? true
                               : false
                           }
@@ -604,7 +610,7 @@ export default function JobDetail({
         _modalType={"Place your bid"}
         _handleSubmit={handleSubmit}
         _frequency={job.frequency}
-      // _loading={isModalLoading}
+        // _loading={isModalLoading}
       />
       <ConfirmJobStartModal
         _isOpen={confirmStartModal}
