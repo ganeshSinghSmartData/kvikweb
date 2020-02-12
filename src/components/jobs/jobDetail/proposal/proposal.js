@@ -14,16 +14,13 @@ import { acceptBid, rejectBid } from "../../../../actions/bid";
 const Proposal = ({ props, jobId, history, isclick = false }) => {
   const dispatch = useDispatch();
 
-  let usercards = [];
-  let user = useSelector(state => state.user);
-  if (user && user.cards && user.cards.length !== 0) {
-    usercards = user.cards;
-  }
+  let user = useSelector((state) => state.user);
+  let { cards = [] } = user;
   useEffect(() => {
-    if (usercards.length === 0) {
+    if (!cards.length) {
       dispatch(GetCards());
     }
-  }, []);
+  }, [dispatch, cards]);
 
   let imagepath = [];
   let username = "Dummy User";
@@ -39,7 +36,7 @@ const Proposal = ({ props, jobId, history, isclick = false }) => {
   const [openModal, setOpenModal] = useState(false);
   const [acceptProposal, setAcceptProposal] = useState(false);
   const [isModalLoading, setModalLoading] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(usercards[0]);
+  const [selectedCard, setSelectedCard] = useState(cards && cards[0]);
 
   let daysfrom = new Date() - new Date(DaysBetween(props.created_at));
   daysfrom = parseInt(daysfrom / (1000 * 3600 * 24));
@@ -67,9 +64,9 @@ const Proposal = ({ props, jobId, history, isclick = false }) => {
       job_provider_id: props.job_provider_id._id,
       job_id: jobId,
       card: {
-        cardId: selectedCard.id,
+        cardId: selectedCard && selectedCard.id,
         // cardCvv: "",
-        last4: selectedCard.last4,
+        last4: selectedCard && selectedCard.last4,
         amount: props.bid_amount,
         meta: {
           bidderId: props.job_provider_id._id,
@@ -78,7 +75,7 @@ const Proposal = ({ props, jobId, history, isclick = false }) => {
       }
     };
     dispatch(
-      acceptBid(reqData, callback => {
+      acceptBid(reqData, (callback) => {
         if (callback) {
           setOpenModal(false);
           history.push("/job-list");
@@ -91,12 +88,12 @@ const Proposal = ({ props, jobId, history, isclick = false }) => {
     );
   };
 
-  const hadleReject = value => {
+  const hadleReject = (value) => {
     setModalLoading(true);
     dispatch(
       rejectBid(
         { job_provider_id: value.job_provider_id._id, job_id: jobId },
-        callback => {
+        (callback) => {
           if (callback) {
             history.push("/job-list");
             setOpenModal(false);
@@ -142,9 +139,9 @@ const Proposal = ({ props, jobId, history, isclick = false }) => {
           _propsDetails={{ ...props, daysfrom: daysfrom }}
           _acceptProposal={acceptProposal}
           _loading={isModalLoading}
-          _cards={usercards}
+          _cards={cards}
           _cardHolderName={` ${user.data.fname} ${user.data.lname}`}
-          _selectedCard={value => setSelectedCard(value)}
+          _selectedCard={(value) => setSelectedCard(value)}
           _makePayment={makePayment}
         />
       )}

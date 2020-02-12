@@ -1,5 +1,6 @@
 import React from "react";
 import constants from "../../../constants";
+import Status from "./Status";
 const getStatus = (status) => {
   let data = {
     not_started: {
@@ -76,32 +77,12 @@ const getStatus = (status) => {
   }
 };
 
-const Status = (props) => {
-  return (
-    <li
-      className={`d-flex justify-content-center position-relative  ${
-        props.isActive ? "active-step" : ""
-      } ${props.isComplete ? "complete" : ""} ${
-        props.isRejected ? "rejected" : ""
-      }`}
-    >
-      {props.index > 0 && <span className="step-bar position-absolute"></span>}
-      <label className="d-flex flex-column align-items-center position-relative mb-0">
-        <span className="step-cell d-flex flex-column align-items-center justify-content-center rounded-circle">
-          <span className="inline-block rounded-circle"></span>
-        </span>
-        <span className="step-label">{props.title}</span>
-      </label>
-    </li>
-  );
-};
-
 const StatusBar = (props) => {
   if (props.visible)
     return (
       <>
         <div className="job-step-rw">
-          <div class="job-status-mbl">
+          <div className="job-status-mbl">
             Job Status:{" "}
             <span
               className={`${

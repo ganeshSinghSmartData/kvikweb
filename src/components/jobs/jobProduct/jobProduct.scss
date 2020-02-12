@@ -127,6 +127,17 @@
   padding-right: 10px;
   padding-left: 10px;
 }
+
+.noSidebarFilter {
+  .product-col {
+    @media (max-width: 1024px) {
+      width: 50%;
+    }
+    @media (max-width: 767px) {
+      width: 100%;
+    }
+  }
+}
 // List row style start
 .job-list-row.job-listing {
   flex-direction: column !important;

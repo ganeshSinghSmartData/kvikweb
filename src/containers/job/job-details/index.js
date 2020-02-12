@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import { confirmAlert } from "react-confirm-alert";
 
 import SpinnerOverlay from "../../../components/commonUi/spinner/spinnerOverlay/spinnerOverlay";
 import JobDetail from "../../../components/jobs/jobDetail/jobDetail";
-import { getJobDetails, reset_job_details } from "../../../actions/job";
+import {
+  getJobDetails,
+  reset_job_details,
+  approvedBidWork
+} from "../../../actions/job";
 import {
   getUserJobDetails,
   startBid,
@@ -21,6 +24,36 @@ class JobDetails extends Component {
     this.startBidWork = this.startBidWork.bind(this);
     this.endBidWork = this.endBidWork.bind(this);
   }
+
+  confirmApproveJob = (job_id, job_seeker_id, job_provider_id) => {
+    confirmAlert({
+      title: "",
+      message: "Are you sure do you want to approve this job ?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () =>
+            this.props.approvedBidWork(
+              {
+                job_id,
+                job_seeker_id,
+                job_provider_id
+              },
+              (callback) => {
+                if (callback) {
+                  this.setState({ isStatusLoading: false, isLoading: false });
+                  this.props.history.push("/bid-list");
+                }
+              }
+            )
+        },
+        {
+          label: "No",
+          onClick: () => {}
+        }
+      ]
+    });
+  };
 
   confirmStartBidWork = (jobId, jobSeekerId, userId) => {
     confirmAlert({
@@ -134,6 +167,7 @@ class JobDetails extends Component {
             _endJob={(jobId, jobSeekerId, userId) =>
               this.confirmEndBidWork(jobId, jobSeekerId, userId)
             }
+            _approveJob={this.confirmApproveJob}
             _isLoading={this.props._isLoading}
             _isStatusLoading={this.state.isStatusLoading}
           ></JobDetail>
@@ -152,13 +186,14 @@ const mapStateToProps = (state) => ({
   _isLoading: state.loader.isFetching
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getJobDetails: bindActionCreators(getJobDetails, dispatch),
-  getUserJobDetails: bindActionCreators(getUserJobDetails, dispatch),
-  startBid: bindActionCreators(startBid, dispatch),
-  endBid: bindActionCreators(endBid, dispatch),
-  reset_job_details: bindActionCreators(reset_job_details, dispatch),
-  reset_user_job_details: bindActionCreators(reset_user_job_details, dispatch)
-});
+const mapDispatchToProps = {
+  getJobDetails,
+  getUserJobDetails,
+  startBid,
+  endBid,
+  reset_job_details,
+  reset_user_job_details,
+  approvedBidWork
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(JobDetails);
