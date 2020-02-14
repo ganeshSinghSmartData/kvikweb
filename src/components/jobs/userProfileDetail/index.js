@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Label, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Button, Label, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { LocalForm, actions } from "react-redux-form";
 
 import Heading from "../../commonUi/heading/heading";
@@ -9,8 +9,8 @@ import InputCell from "../../commonUi/input/inputCell";
 import UserImage from "../jobDetail/userImage/userImage";
 import UserPayment from "./userPayment";
 import "./userProfileDetail.scss";
-import RatingBlock from '../ratingBock/ratingBlock';
-import Spinner from "../../commonUi/spinner/spinner";
+import RatingBlock from "../ratingBock/ratingBlock";
+import Review from "../Review";
 
 const UserProfile = ({
   user,
@@ -18,18 +18,16 @@ const UserProfile = ({
   imegeUploading,
   isEdit,
   handleSubmit,
-  loading,
   _toggleEdit,
-  job_seeker_id
+  reviews
 }) => {
   const [modal, setModal] = useState(false);
+  let [skills, setSkills] = useState([...user.skills] || []);
   const toggle = () => setModal(!modal);
   return (
     <div className="job-detail-blc d-flex flex-column flex-fill">
       <div className="detail-blc-hd d-flex align-items-center mb-3">
-        <Heading className="h3 flex-fill mb-0 mr-3">
-          Profile
-        </Heading>
+        <Heading className="h3 flex-fill mb-0 mr-3">Profile</Heading>
         <div className="user-profl-edit">
           <Button
             color="link"
@@ -63,8 +61,8 @@ const UserProfile = ({
               <div className="user-profl-l flex-fill">
                 <LocalForm
                   initialState={user}
-                  onSubmit={values => handleSubmit(values)}
-                  getDispatch={dispatch => dispatch(actions.change(user))}
+                  onSubmit={(values) => handleSubmit({ ...values, skills })}
+                  getDispatch={(dispatch) => dispatch(actions.change(user))}
                 >
                   {!isEdit ? (
                     <JobAddress
@@ -72,135 +70,143 @@ const UserProfile = ({
                       handleImageUpload={handleImageUpload}
                       imegeUploading={imegeUploading}
                       editimage={true}
+                      showSeekerName
+                      showEmail
                     />
                   ) : (
-                      <React.Fragment>
-                        <div
-                          className={`job-address d-flex ${
-                            isEdit ? "editMode" : ""
-                            }`}
-                        >
-                          <UserImage
-                            image={user.image}
-                            handleImageUpload={handleImageUpload}
-                            imegeUploading={imegeUploading}
-                            edit={isEdit}
-                          />
-                          <div className="job-user-info flex-fill">
-                            <div className="edit-profile-blc text-left">
-                              <Label className="input-title">Email</Label>
-                              <InputCell
-                                Name={"email"}
-                                Placeholder={"Email"}
-                                Model=".email"
-                                InputType={"text"}
-                                Disabled={true}
-                                className="input-line-blc"
-                                Errors={{
-                                  required: "required",
-                                  invalidEmail: "invalidEmail"
-                                }}
-                              />
-                              <Label className="input-title">First Name</Label>
-                              <InputCell
-                                Name={"fname"}
-                                Placeholder={"First Name"}
-                                Model=".fname"
-                                InputType={"text"}
-                                className="input-line-blc"
-                                Errors={{
-                                  required: "required"
-                                }}
-                              />
-                              <Label className="input-title">Last Name</Label>
-                              <InputCell
-                                Name={"lname"}
-                                Placeholder={"Last Name"}
-                                Model=".lname"
-                                InputType={"text"}
-                                className="input-line-blc"
-                                Errors={{
-                                  required: "required"
-                                }}
-                              />
+                    <React.Fragment>
+                      <div
+                        className={`job-address d-flex ${
+                          isEdit ? "editMode" : ""
+                        }`}
+                      >
+                        <UserImage
+                          image={user.image}
+                          handleImageUpload={handleImageUpload}
+                          imegeUploading={imegeUploading}
+                          edit={isEdit}
+                        />
+                        <div className="job-user-info flex-fill">
+                          <div className="edit-profile-blc text-left">
+                            <Label className="input-title">Email</Label>
+                            <InputCell
+                              Name={"email"}
+                              Placeholder={"Email"}
+                              Model=".email"
+                              InputType={"text"}
+                              Disabled={true}
+                              className="input-line-blc"
+                              Errors={{
+                                required: "required",
+                                invalidEmail: "invalidEmail"
+                              }}
+                            />
+                            <Label className="input-title">First Name</Label>
+                            <InputCell
+                              Name={"fname"}
+                              Placeholder={"First Name"}
+                              Model=".fname"
+                              InputType={"text"}
+                              className="input-line-blc"
+                              Errors={{
+                                required: "required"
+                              }}
+                            />
+                            <Label className="input-title">Last Name</Label>
+                            <InputCell
+                              Name={"lname"}
+                              Placeholder={"Last Name"}
+                              Model=".lname"
+                              InputType={"text"}
+                              className="input-line-blc"
+                              Errors={{
+                                required: "required"
+                              }}
+                            />
 
-                              <Label className="input-title">Mobile</Label>
-                              <InputCell
-                                Name={"mobile"}
-                                Placeholder={"Mobile"}
-                                Model=".mobile"
-                                InputType={"text"}
-                                className="input-line-blc"
-                                Errors={{
-                                  required: "required",
-                                  invalidNumber: "invalidNumber"
-                                }}
-                              />
-                              <Label className="input-title">Zip Code</Label>
-                              <InputCell
-                                Name={"zip"}
-                                Placeholder={"Zip"}
-                                Model=".zip_code"
-                                InputType={"text"}
-                                className="input-line-blc"
-                                Errors={{
-                                  required: "required",
-                                  invalidNumber: "invalidNumber"
-                                }}
-                              />
-                              <Label className="input-title">City</Label>
-                              <InputCell
-                                Name={"city"}
-                                Placeholder={"City"}
-                                Model=".city"
-                                InputType={"text"}
-                                className="input-line-blc"
-                                Errors={{
-                                  required: "required"
-                                }}
-                              />
-                              <Label className="input-title">About Me </Label>
-                              <InputCell
-                                Name={"aboutme"}
-                                Placeholder={"About Me"}
-                                Model=".about"
-                                InputType={"textarea"}
-                                className="input-line-blc"
-                                Errors={{ required: "required" }}
-                              />
-                            </div>
-                            <div className="edit-profile-btns">
-                              <Button color="secondary" type="submit">
-                                Submit
+                            <Label className="input-title">Mobile</Label>
+                            <InputCell
+                              Name={"mobile"}
+                              Placeholder={"Mobile"}
+                              Model=".mobile"
+                              InputType={"text"}
+                              className="input-line-blc"
+                              Errors={{
+                                required: "required",
+                                invalidNumber: "invalidNumber"
+                              }}
+                            />
+                            <Label className="input-title">Zip Code</Label>
+                            <InputCell
+                              Name={"zip"}
+                              Placeholder={"Zip"}
+                              Model=".zip_code"
+                              InputType={"text"}
+                              className="input-line-blc"
+                              Errors={{
+                                required: "required",
+                                invalidNumber: "invalidNumber"
+                              }}
+                            />
+                            <Label className="input-title">City</Label>
+                            <InputCell
+                              Name={"city"}
+                              Placeholder={"City"}
+                              Model=".city"
+                              InputType={"text"}
+                              className="input-line-blc"
+                              Errors={{
+                                required: "required"
+                              }}
+                            />
+                            <Label className="input-title">About Me </Label>
+                            <InputCell
+                              Name={"aboutme"}
+                              Placeholder={"About Me"}
+                              Model=".about"
+                              InputType={"textarea"}
+                              className="input-line-blc"
+                              Errors={{ required: "required" }}
+                            />
+                          </div>
+                          <div className="edit-profile-btns">
+                            <Button color="secondary" type="submit">
+                              Submit
                             </Button>
-                              <Button
-                                color="link"
-                                className="btn-dark cancel"
-                                onClick={() => _toggleEdit(!isEdit)}
-                                type="button"
-                              >
-                                Cancel
+                            <Button
+                              color="link"
+                              className="btn-dark cancel"
+                              onClick={() => _toggleEdit(!isEdit)}
+                              type="button"
+                            >
+                              Cancel
                             </Button>
-                            </div>
                           </div>
                         </div>
-                      </React.Fragment>
-                    )}
+                      </div>
+                    </React.Fragment>
+                  )}
                 </LocalForm>
               </div>
               {!isEdit && (
                 <div className="flex-shrink-0">
                   <div className="user-review-blc d-flex flex-column align-items-end">
                     <RatingBlock />
-                    <Button color="link"
+                    <Button
+                      color="link"
                       className="user-rating-btn p-0 text-primary"
                       onClick={toggle}
                     >
                       See your Reviews
                     </Button>
                     {/* Review Modal Start */}
-                    <Modal isOpen={modal} toggle={toggle} size="lg" className="d-flex flex-column align-items-center  
-                      justify-content-center users-review-mdl">
+                    <Modal
+                      isOpen={modal}
+                      toggle={toggle}
+                      size="lg"
+                      className="d-flex flex-column align-items-center  
+                      justify-content-center users-review-mdl"
+                    >
                       {/* <Spinner className="position-absolute w-100 h-100 d-flex justify-content-center align-items-center with-overlay overlay-opacity" /> */}
                       <ModalHeader className="flex-shrink-0">
                         User Reviews
@@ -224,178 +230,22 @@ const UserProfile = ({
                         </Button>
                       </ModalHeader>
                       <ModalBody className="users-review-blc overflow-auto">
-                      <div className="users-review-card d-flex shadow-sm bg-white">
-                          <div className="users-review-hd">
-                            <UserImage className="linkImage" />
-                          </div>
-                          <div className="users-review-inner">
-                            <div className="users-review-cell">
-                              <div className="review-lbl-cell d-flex flex-column align-items-start">
-                                <Button color="link" className="p-0 review-lbl-1">
-                                  Chandigarh Painting
-                               </Button>
-                              </div>
-                              <RatingBlock className="users-review-rating" />
-                              <label className="users-review-time d-block mb-0">
-                                Jan 2016
-                               </label>
-                            </div>
-                            <div className="users-review-txt">
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                            </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="users-review-card d-flex shadow-sm bg-white">
-                          <div className="users-review-hd">
-                            <UserImage className="linkImage" />
-                          </div>
-                          <div className="users-review-inner">
-                            <div className="users-review-cell">
-                              <div className="review-lbl-cell d-flex flex-column align-items-start">
-                                <Button color="link" className="p-0 review-lbl-1">
-                                  Chandigarh Painting
-                               </Button>
-                              </div>
-                              <RatingBlock className="users-review-rating" />
-                              <label className="users-review-time d-block mb-0">
-                                Jan 2016
-                               </label>
-                            </div>
-                            <div className="users-review-txt">
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                            </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="users-review-card d-flex shadow-sm bg-white">
-                          <div className="users-review-hd">
-                            <UserImage className="linkImage" />
-                          </div>
-                          <div className="users-review-inner">
-                            <div className="users-review-cell">
-                              <div className="review-lbl-cell d-flex flex-column align-items-start">
-                                <Button color="link" className="p-0 review-lbl-1">
-                                  Chandigarh Painting
-                               </Button>
-                              </div>
-                              <RatingBlock className="users-review-rating" />
-                              <label className="users-review-time d-block mb-0">
-                                Jan 2016
-                               </label>
-                            </div>
-                            <div className="users-review-txt">
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                            </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="users-review-card d-flex shadow-sm bg-white">
-                          <div className="users-review-hd">
-                            <UserImage className="linkImage" />
-                          </div>
-                          <div className="users-review-inner">
-                            <div className="users-review-cell">
-                              <div className="review-lbl-cell d-flex flex-column align-items-start">
-                                <Button color="link" className="p-0 review-lbl-1">
-                                  Chandigarh Painting
-                               </Button>
-                              </div>
-                              <RatingBlock className="users-review-rating" />
-                              <label className="users-review-time d-block mb-0">
-                                Jan 2016
-                               </label>
-                            </div>
-                            <div className="users-review-txt">
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                            </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="users-review-card d-flex shadow-sm bg-white">
-                          <div className="users-review-hd">
-                            <UserImage className="linkImage" />
-                          </div>
-                          <div className="users-review-inner">
-                            <div className="users-review-cell">
-                              <div className="review-lbl-cell d-flex flex-column align-items-start">
-                                <Button color="link" className="p-0 review-lbl-1">
-                                  Chandigarh Painting
-                               </Button>
-                              </div>
-                              <RatingBlock className="users-review-rating" />
-                              <label className="users-review-time d-block mb-0">
-                                Jan 2016
-                               </label>
-                            </div>
-                            <div className="users-review-txt">
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                            </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="users-review-card d-flex shadow-sm bg-white">
-                          <div className="users-review-hd">
-                            <UserImage className="linkImage" />
-                          </div>
-                          <div className="users-review-inner">
-                            <div className="users-review-cell">
-                              <div className="review-lbl-cell d-flex flex-column align-items-start">
-                                <Button color="link" className="p-0 review-lbl-1">
-                                  Chandigarh Painting
-                               </Button>
-                              </div>
-                              <RatingBlock className="users-review-rating" />
-                              <label className="users-review-time d-block mb-0">
-                                Jan 2016
-                               </label>
-                            </div>
-                            <div className="users-review-txt">
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                            </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="users-review-card d-flex shadow-sm bg-white">
-                          <div className="users-review-hd">
-                            <UserImage className="linkImage" />
-                          </div>
-                          <div className="users-review-inner">
-                            <div className="users-review-cell">
-                              <div className="review-lbl-cell d-flex flex-column align-items-start">
-                                <Button color="link" className="p-0 review-lbl-1">
-                                  Chandigarh Painting
-                               </Button>
-                              </div>
-                              <RatingBlock className="users-review-rating" />
-                              <label className="users-review-time d-block mb-0">
-                                Jan 2016
-                               </label>
-                            </div>
-                            <div className="users-review-txt">
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                            </p>
-                            </div>
-                          </div>
-                        </div>
+                        <Review reviews={reviews} />
                       </ModalBody>
                     </Modal>
                     {/* Review Modal Ends */}
                   </div>
                   <div className="profile-bar ml-auto user-profile-bar">
-                    <span className="profile-percentage">95%</span>
+                    <span className="profile-percentage">
+                      {`${((user && user.percent) || 0) * 100}%`}
+                    </span>
                     <div className="progress">
                       <div
                         className="progress-bar bg-primary"
                         role="progressbar"
-                        style={{ width: "25%" }}
+                        style={{
+                          width: `${((user && user.percent) || 0) * 100}%`
+                        }}
                       ></div>
                     </div>
                     <span className="d-block profile-bar-txt text-left">
@@ -431,43 +281,50 @@ const UserProfile = ({
             {!isEdit && <UserInfo description={user.about} />}
             <div className="bidder-profl-rw bidder-profile-desc bidder-profile-l-padd">
               <h3>Skills</h3>
+              {isEdit && (
+                <div className="position-relative d-flex flex-wrap align-items-center ">
+                  <input
+                    type="text"
+                    name="skill"
+                    placeholder="Enter a skill"
+                    className="form-control"
+                    onKeyDown={(event) => {
+                      if (event.keyCode === 32) {
+                        setSkills([...skills, event.target.value]);
+                        event.target.value = null;
+                      }
+                    }}
+                  />
+                </div>
+              )}
               <div className="skils-blc">
-               <span>
-               Laundry Service
-               </span>
-               <span>
-               Painting
-               </span>
-               <span>
-               Gardening
-               </span>
-               <span>
-               Laundry Service
-               </span>
-               <span>
-               Painting
-               </span>
-               <span>
-               Gardening
-               </span>
-               <span>
-               Laundry Service
-               </span>
-               <span>
-               Painting
-               </span>
-               <span>
-               Gardening
-               </span>
-               <span>
-               Laundry Service
-               </span>
-               <span>
-               Painting
-               </span>
-               <span>
-               Gardening
-               </span>
+                {skills.map((item, key) => (
+                  <span
+                    key={key}
+                    onClick={() => {
+                      // let da/ta = [...skills];
+                      skills.splice(key, 1);
+                      setSkills([...skills]);
+                    }}
+                  >
+                    {item}
+                    {isEdit && (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="19.446"
+                        height="19.435"
+                        viewBox="0 0 19.446 19.435"
+                      >
+                        <path
+                          id="delete"
+                          d="M18.987,1.513a4.29,4.29,0,0,0-6.07,0L1.788,12.633a.556.556,0,0,0-.157.319l-.825,6.1a.555.555,0,0,0,.157.468.566.566,0,0,0,.394.166.452.452,0,0,0,.075,0l3.679-.5a.56.56,0,1,0-.149-1.11l-2.95.4.576-4.258L7.071,18.7a.566.566,0,0,0,.394.166.549.549,0,0,0,.394-.166L18.987,7.58a4.283,4.283,0,0,0,0-6.067ZM13.132,2.88,15,4.748,4.846,14.9,2.977,13.031ZM7.468,17.516,5.641,15.69,15.8,5.539l1.827,1.826ZM18.4,6.566,13.932,2.1A3.175,3.175,0,0,1,18.4,6.566Z"
+                          transform="translate(-0.8 -0.255)"
+                          fill="#9d9d9d"
+                        />
+                      </svg>
+                    )}
+                  </span>
+                ))}
               </div>
             </div>
           </div>

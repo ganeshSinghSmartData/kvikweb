@@ -20,10 +20,9 @@ const JobAddress = ({
   showSeekerName,
   showEmail
 }) => {
-  let [timeleft, seTimeleft] = useState(
-    datetimeDifference(new Date(), new Date(DaysBetween(end_date)))
-  );
-
+  console.log("====================================");
+  console.log("data in jobaddress====>", job_seeker_id);
+  console.log("====================================");
   return (
     <div className="job-address d-flex">
       {jobListings ? (

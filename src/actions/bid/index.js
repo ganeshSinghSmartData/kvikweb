@@ -140,10 +140,10 @@ export const getUserJobDetails = (params) => {
 };
 
 /****** action creator for get Bidder Review for the bid ********/
-export const getBidderReview = (bidder_id, callback) => {
+export const getBidderReview = (bidder_id, callback = () => {}) => {
   return (dispatch, getState) => {
     const {
-      data: { token }
+      data: { token, _id }
     } = getState().user;
     ApiClient.get(
       `${apiUrl}/reviews/get_user_reviews/${bidder_id}`,
@@ -152,7 +152,9 @@ export const getBidderReview = (bidder_id, callback) => {
     ).then((response) => {
       if (response.status === 200) {
         callback(response.data);
-        // dispatch(reject_bid(response.data));
+        if (_id === bidder_id) {
+          dispatch({ type: TYPE.USERS_REVIEW, data: response.data });
+        }
       } else if (response.status === 401) {
         console.log("errror with 401 : ");
         callback(false);

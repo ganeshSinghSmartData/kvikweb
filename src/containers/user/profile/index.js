@@ -11,7 +11,7 @@ import {
   updateUserDetails,
   uploadUserImage
 } from "./../../../actions/user";
-
+import { getBidderReview } from "./../../../actions/bid";
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -27,17 +27,18 @@ class Profile extends Component {
 
   componentDidMount() {
     this.props.getUserDetails(this.props.user.data._id);
+    this.props.getBidderReview(this.props.user.data._id);
   }
 
-  _toggleEdit = val => {
+  _toggleEdit = (val) => {
     this.setState({ isEdit: val });
   };
 
-  _handleImageUpload = file => {
+  _handleImageUpload = (file) => {
     this.setState({ uploading: true });
     let formData = new FormData();
     formData.append("images", file[0]);
-    this.props.uploadUserImage(formData, callback => {
+    this.props.uploadUserImage(formData, (callback) => {
       if (callback) {
         this.setState({ uploading: false });
       } else {
@@ -46,11 +47,11 @@ class Profile extends Component {
     });
   };
 
-  _handleSubmit = params => {
+  _handleSubmit = (params) => {
     this.setState({ loading: true });
     let reqdata = { ...params };
     delete reqdata.image;
-    this.props.updateUserDetails(reqdata, callback => {
+    this.props.updateUserDetails(reqdata, (callback) => {
       if (callback) {
         this._toggleEdit(false);
         this.setState({ loading: false });
@@ -74,6 +75,7 @@ class Profile extends Component {
             handleSubmit={this._handleSubmit}
             loading={this.state.loading}
             _toggleEdit={this._toggleEdit}
+            reviews={this.props.user.userReviews}
           />
         ) : (
           <SpinnerOverlay className="position-fixed" />
@@ -83,14 +85,15 @@ class Profile extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   user: state.user
 });
 
-const mapDispatchToProps = dispatch => ({
-  getUserDetails: bindActionCreators(getUserDetails, dispatch),
-  updateUserDetails: bindActionCreators(updateUserDetails, dispatch),
-  uploadUserImage: bindActionCreators(uploadUserImage, dispatch)
-});
+const mapDispatchToProps = {
+  getUserDetails,
+  updateUserDetails,
+  uploadUserImage,
+  getBidderReview
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

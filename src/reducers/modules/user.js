@@ -12,7 +12,8 @@ const initialState = {
   userBids: [],
   userDetails: {},
   cards: [],
-  loggedIn: false
+  loggedIn: false,
+  userReviews: []
 };
 
 export default function reducer(state = initialState, action) {
@@ -44,6 +45,8 @@ export default function reducer(state = initialState, action) {
         data: { ...state.data, image: action.data.image },
         userDetails: { ...state.userDetails, image: action.data.image }
       };
+    case TYPE.USERS_REVIEW:
+      return { ...state, userReviews: action.data };
     default:
       return state;
   }

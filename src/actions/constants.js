@@ -74,3 +74,6 @@ export const FILTER_TOGGLE = "FILTER_TOGGLE";
 /************Similar Jobs *********************************/
 export const SIMILAR_JOBS = "SIMILAR_JOBS";
 export const CLEAR_SIMILAR_JOBS = "CLEAR_SIMILAR_JOBS";
+
+/************************************************************/
+export const USERS_REVIEW = "USERS_REVIEW";
