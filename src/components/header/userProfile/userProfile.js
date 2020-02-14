@@ -572,7 +572,7 @@ const UserProfile = (props) => {
                 Rating
                 <span>
                   {props.metricsData && props.metricsData.average_rating
-                    ? props.metricsData.average_rating
+                    ? parseFloat(props.metricsData.average_rating).toFixed(2)
                     : 0}
                 </span>
               </label>

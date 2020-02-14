@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Label, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { LocalForm, actions } from "react-redux-form";
-
+import _ from "lodash";
 import Heading from "../../commonUi/heading/heading";
 import JobAddress from "../jobDetail/JobAddress/jobAddress";
 import UserInfo from "../bidderProfile/userInfo/userInfo";
@@ -22,6 +22,7 @@ const UserProfile = ({
   reviews
 }) => {
   const [modal, setModal] = useState(false);
+  const [skillError, setSkillError] = useState(false);
   let [skills, setSkills] = useState([...user.skills] || []);
   const toggle = () => setModal(!modal);
   return (
@@ -191,7 +192,7 @@ const UserProfile = ({
               {!isEdit && (
                 <div className="flex-shrink-0">
                   <div className="user-review-blc d-flex flex-column align-items-end">
-                    <RatingBlock />
+                    <RatingBlock rating={user.average_rating} />
                     <Button
                       color="link"
                       className="user-rating-btn p-0 text-primary"
@@ -282,19 +283,35 @@ const UserProfile = ({
             <div className="bidder-profl-rw bidder-profile-desc bidder-profile-l-padd">
               <h3>Skills</h3>
               {isEdit && (
-                <div className="position-relative d-flex flex-wrap align-items-center ">
-                  <input
-                    type="text"
-                    name="skill"
-                    placeholder="Enter a skill"
-                    className="form-control"
-                    onKeyDown={(event) => {
-                      if (event.keyCode === 32) {
-                        setSkills([...skills, event.target.value]);
-                        event.target.value = null;
-                      }
-                    }}
-                  />
+                <div class="form-group">
+                  {" "}
+                  <div className="position-relative d-flex flex-wrap align-items-center ">
+                    <input
+                      type="text"
+                      name="skill"
+                      placeholder="Enter a skill"
+                      className="form-control"
+                      onKeyDown={(event) => {
+                        if (
+                          event.keyCode === 32 &&
+                          !_.isEmpty(event.target.value.trim())
+                        ) {
+                          if (!skills.includes(event.target.value.trim())) {
+                            setSkillError(false);
+                            setSkills([...skills, event.target.value.trim()]);
+                          } else {
+                            setSkillError(true);
+                          }
+                          event.target.value = null;
+                        }
+                      }}
+                    />
+                  </div>
+                  {skillError && (
+                    <p className="error">
+                      Skill Already Exists, Enter another skill
+                    </p>
+                  )}
                 </div>
               )}
               <div className="skils-blc">
@@ -302,9 +319,10 @@ const UserProfile = ({
                   <span
                     key={key}
                     onClick={() => {
-                      // let da/ta = [...skills];
-                      skills.splice(key, 1);
-                      setSkills([...skills]);
+                      if (isEdit) {
+                        skills.splice(key, 1);
+                        setSkills([...skills]);
+                      }
                     }}
                   >
                     {item}

@@ -20,9 +20,6 @@ const JobAddress = ({
   showSeekerName,
   showEmail
 }) => {
-  console.log("====================================");
-  console.log("data in jobaddress====>", job_seeker_id);
-  console.log("====================================");
   return (
     <div className="job-address d-flex">
       {jobListings ? (
