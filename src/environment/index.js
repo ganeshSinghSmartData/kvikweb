@@ -5,12 +5,11 @@
  * @author: smartData
  */
 
-
 const local = {
-  apiUrl: "http://localhost:3000",
-  socketUrl: "http://localhost:3000",
+  apiUrl: "http://172.24.4.127:4599",
+  socketUrl: "http://172.24.4.127:4599",
   // apiUrl: "http://172.24.4.68:3000",
-  // socketUrl: "http://172.24.4.68:3000",
+  socketUrl: "http://172.24.4.127:4599",
   stripeKey: "pk_test_d1UROWtZYJBNTCKAPLSjjY1x00Vbn25a9Q"
 };
 
@@ -29,7 +28,7 @@ if (process.env.REACT_APP_ENV === "prod") {
   module.exports = production;
 } else if (process.env.REACT_APP_ENV === "dev") {
   //module.exports = local;
-  module.exports = staging;
+  module.exports = local;
 } else {
   // module.exports = local;
   module.exports = staging;

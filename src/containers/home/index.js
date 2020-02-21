@@ -100,8 +100,7 @@ class Home extends Component {
 
   handleForgotPassword = (values) => {};
 
-  handleSocialLogin = (user) => {
-  };
+  handleSocialLogin = (user) => {};
 
   handleSocialLoginFailure = (err) => {
     console.error("social error =====>", err);

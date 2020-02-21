@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
-import { logout } from "./../../actions/user";
+import { Dropdown } from "react-bootstrap";
+import {
+  getTranslations,
+  changeLanguage,
+  getCurrentLanguage
+} from "../../utilities/translations";
+// import { logout } from "./../../actions/user";
 import "./nav.scss";
 
 const Nav = (props) => {
+  const [lang, setLang] = useState(getCurrentLanguage());
   const loggedInUser = useSelector((state) => state.user.loggedIn);
   const stopPropagationHandler = (e) => {
     e.nativeEvent.stopImmediatePropagation();
@@ -19,13 +26,19 @@ const Nav = (props) => {
         document
           .querySelector("#blank-div")
           .setAttribute("style", "display:block");
-      document
-        .querySelector("#home")
-        .scrollIntoView({ block: "start", inline: "nearest" });
+      document.querySelector("#home").scrollIntoView({
+        block: "start",
+        inline: "nearest"
+      });
       // let home = await document.getElementById("home");
       // home && home.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
     }
   };
+
+  const changeLang = useCallback((lang) => {
+    changeLanguage(lang);
+    setLang(lang);
+  }, []);
   return (
     <nav
       className={"d-flex align-items-center " + props.className}
@@ -43,6 +56,7 @@ const Nav = (props) => {
                 onClick={navVisibleHander}
               >
                 Post a Job
+                {/* getTranslations("component") */}
               </Button>
             </Link>
           </li>
@@ -116,6 +130,27 @@ const Nav = (props) => {
                 Login
               </Link>
             )}
+          </li>
+          <li>
+            <Dropdown>
+              <Dropdown.Toggle
+                variant="light"
+                as="button"
+                id="languageDropdown"
+                className="btn btn-light"
+              >
+                {lang}
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item as="button" onClick={() => changeLang("en")}>
+                  EN
+                </Dropdown.Item>
+                <Dropdown.Item as="button" onClick={() => changeLang("nl")}>
+                  NL
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </li>
         </ul>
       }
