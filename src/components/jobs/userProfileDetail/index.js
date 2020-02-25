@@ -11,6 +11,7 @@ import UserPayment from "./userPayment";
 import "./userProfileDetail.scss";
 import RatingBlock from "../ratingBock/ratingBlock";
 import Review from "../Review";
+import { getTranslations } from "../../../utilities/translations";
 
 const UserProfile = ({
   user,
@@ -28,7 +29,9 @@ const UserProfile = ({
   return (
     <div className="job-detail-blc d-flex flex-column flex-fill">
       <div className="detail-blc-hd d-flex align-items-center mb-3">
-        <Heading className="h3 flex-fill mb-0 mr-3">Profile</Heading>
+        <Heading className="h3 flex-fill mb-0 mr-3">
+          {getTranslations("profile")}
+        </Heading>
         <div className="user-profl-edit">
           <Button
             color="link"
@@ -50,7 +53,9 @@ const UserProfile = ({
                 />
               </svg>
             </span>
-            <label className="text-secondary mb-0">Edit</label>
+            <label className="text-secondary mb-0">
+              {getTranslations("edit")}
+            </label>
           </Button>
         </div>
       </div>
@@ -89,10 +94,12 @@ const UserProfile = ({
                         />
                         <div className="job-user-info flex-fill">
                           <div className="edit-profile-blc text-left">
-                            <Label className="input-title">Email</Label>
+                            <Label className="input-title">
+                              {getTranslations("email")}
+                            </Label>
                             <InputCell
                               Name={"email"}
-                              Placeholder={"Email"}
+                              Placeholder={getTranslations("email")}
                               Model=".email"
                               InputType={"text"}
                               Disabled={true}
@@ -102,10 +109,12 @@ const UserProfile = ({
                                 invalidEmail: "invalidEmail"
                               }}
                             />
-                            <Label className="input-title">First Name</Label>
+                            <Label className="input-title">
+                              {getTranslations("first_name")}
+                            </Label>
                             <InputCell
                               Name={"fname"}
-                              Placeholder={"First Name"}
+                              Placeholder={getTranslations("first_name")}
                               Model=".fname"
                               InputType={"text"}
                               className="input-line-blc"
@@ -113,10 +122,12 @@ const UserProfile = ({
                                 required: "required"
                               }}
                             />
-                            <Label className="input-title">Last Name</Label>
+                            <Label className="input-title">
+                              {getTranslations("last_name")}
+                            </Label>
                             <InputCell
                               Name={"lname"}
-                              Placeholder={"Last Name"}
+                              Placeholder={getTranslations("last_name")}
                               Model=".lname"
                               InputType={"text"}
                               className="input-line-blc"
@@ -125,10 +136,12 @@ const UserProfile = ({
                               }}
                             />
 
-                            <Label className="input-title">Mobile</Label>
+                            <Label className="input-title">
+                              {getTranslations("mobile")}
+                            </Label>
                             <InputCell
                               Name={"mobile"}
-                              Placeholder={"Mobile"}
+                              Placeholder={getTranslations("mobile")}
                               Model=".mobile"
                               InputType={"text"}
                               className="input-line-blc"
@@ -137,10 +150,12 @@ const UserProfile = ({
                                 invalidNumber: "invalidNumber"
                               }}
                             />
-                            <Label className="input-title">Zip Code</Label>
+                            <Label className="input-title">
+                              {getTranslations("zip_code")}
+                            </Label>
                             <InputCell
                               Name={"zip"}
-                              Placeholder={"Zip"}
+                              Placeholder={getTranslations("zip_code")}
                               Model=".zip_code"
                               InputType={"text"}
                               className="input-line-blc"
@@ -149,10 +164,12 @@ const UserProfile = ({
                                 invalidNumber: "invalidNumber"
                               }}
                             />
-                            <Label className="input-title">City</Label>
+                            <Label className="input-title">
+                              {getTranslations("city")}
+                            </Label>
                             <InputCell
                               Name={"city"}
-                              Placeholder={"City"}
+                              Placeholder={getTranslations("city")}
                               Model=".city"
                               InputType={"text"}
                               className="input-line-blc"
@@ -160,10 +177,12 @@ const UserProfile = ({
                                 required: "required"
                               }}
                             />
-                            <Label className="input-title">About Me </Label>
+                            <Label className="input-title">
+                              {getTranslations("about_me")}{" "}
+                            </Label>
                             <InputCell
                               Name={"aboutme"}
-                              Placeholder={"About Me"}
+                              Placeholder={getTranslations("about_me")}
                               Model=".about"
                               InputType={"textarea"}
                               className="input-line-blc"
@@ -172,7 +191,7 @@ const UserProfile = ({
                           </div>
                           <div className="edit-profile-btns">
                             <Button color="secondary" type="submit">
-                              Submit
+                              {getTranslations("submit")}
                             </Button>
                             <Button
                               color="link"
@@ -180,7 +199,7 @@ const UserProfile = ({
                               onClick={() => _toggleEdit(!isEdit)}
                               type="button"
                             >
-                              Cancel
+                              {getTranslations("cancel")}
                             </Button>
                           </div>
                         </div>
@@ -198,7 +217,7 @@ const UserProfile = ({
                       className="user-rating-btn p-0 text-primary"
                       onClick={toggle}
                     >
-                      See your Reviews
+                      {getTranslations("see_your_review")}
                     </Button>
                     {/* Review Modal Start */}
                     <Modal
@@ -210,7 +229,7 @@ const UserProfile = ({
                     >
                       {/* <Spinner className="position-absolute w-100 h-100 d-flex justify-content-center align-items-center with-overlay overlay-opacity" /> */}
                       <ModalHeader className="flex-shrink-0">
-                        User Reviews
+                        {getTranslations("user_reviews")}
                         <Button
                           color="link"
                           className="close-btn btn2"
@@ -250,38 +269,15 @@ const UserProfile = ({
                       ></div>
                     </div>
                     <span className="d-block profile-bar-txt text-left">
-                      Profile Completion
+                      {getTranslations("profile_completion")}
                     </span>
                   </div>
-                  {/* <Button
-                    color="link"
-                    className="edit-btn"
-                    onClick={() => _toggleEdit(!isEdit)}
-                  >
-                    <span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="19.446"
-                        height="19.435"
-                        viewBox="0 0 19.446 19.435"
-                      >
-                        <path
-                          id="edit"
-                          d="M18.987,1.513a4.29,4.29,0,0,0-6.07,0L1.788,12.633a.556.556,0,0,0-.157.319l-.825,6.1a.555.555,0,0,0,.157.468.566.566,0,0,0,.394.166.452.452,0,0,0,.075,0l3.679-.5a.56.56,0,1,0-.149-1.11l-2.95.4.576-4.258L7.071,18.7a.566.566,0,0,0,.394.166.549.549,0,0,0,.394-.166L18.987,7.58a4.283,4.283,0,0,0,0-6.067ZM13.132,2.88,15,4.748,4.846,14.9,2.977,13.031ZM7.468,17.516,5.641,15.69,15.8,5.539l1.827,1.826ZM18.4,6.566,13.932,2.1A3.175,3.175,0,0,1,18.4,6.566Z"
-                          transform="translate(-0.8 -0.255)"
-                          fill="#9d9d9d"
-                        />
-                      </svg>
-                    </span>
-                    <label className="text-secondary mb-0">Edit</label>
-                  </Button> */}
-                  {/* </Link> */}
                 </div>
               )}
             </div>
             {!isEdit && <UserInfo description={user.about} />}
             <div className="bidder-profl-rw bidder-profile-desc bidder-profile-l-padd">
-              <h3>Skills</h3>
+              <h3>{getTranslations("skills")}</h3>
               {isEdit && (
                 <div class="form-group">
                   {" "}
@@ -289,7 +285,7 @@ const UserProfile = ({
                     <input
                       type="text"
                       name="skill"
-                      placeholder="Enter a skill"
+                      placeholder={getTranslations("enter_skill")}
                       className="form-control"
                       onKeyDown={(event) => {
                         if (
@@ -308,9 +304,7 @@ const UserProfile = ({
                     />
                   </div>
                   {skillError && (
-                    <p className="error">
-                      Skill Already Exists, Enter another skill
-                    </p>
+                    <p className="error">{getTranslations("skill_error")}</p>
                   )}
                 </div>
               )}

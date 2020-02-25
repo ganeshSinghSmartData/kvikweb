@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   CardElement,
   injectStripe,
   StripeProvider,
   Elements,
   BankForm
-} from 'react-stripe-elements';
+} from "react-stripe-elements";
 import { Button, Label } from "reactstrap";
-import UserPayment from '../components/jobs/userProfileDetail/userPayment';
+import UserPayment from "../components/jobs/userProfileDetail/userPayment";
 import { LocalForm } from "react-redux-form";
+import { getTranslations } from "../utilities/translations";
 
 // You can customize your Elements to give it the look and feel of your site.
 const createOptions = () => {
@@ -16,27 +17,27 @@ const createOptions = () => {
     hidePostalCode: true,
     style: {
       base: {
-        fontSize: '16px',
-        color: '#424770',
-        fontFamily: 'Open Sans, sans-serif',
-        letterSpacing: '0.025em',
-        '::placeholder': {
-          color: '#aab7c4',
-        },
+        fontSize: "16px",
+        color: "#424770",
+        fontFamily: "Open Sans, sans-serif",
+        letterSpacing: "0.025em",
+        "::placeholder": {
+          color: "#aab7c4"
+        }
       },
       invalid: {
-        color: '#c23d4b',
-      },
+        color: "#c23d4b"
+      }
     }
   };
 };
 
 class _CardForm extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       errorMessage: false
-    }
+    };
   }
 
   handleChange = ({ error }) => {
@@ -50,30 +51,29 @@ class _CardForm extends Component {
   handleSubmit = (evt) => {
     evt.preventDefault();
     if (this.props.stripe) {
-      const token = this.props.stripe.createToken().then(this.props.handleResult);
+      const token = this.props.stripe
+        .createToken()
+        .then(this.props.handleResult);
       // this.props.stripe.createToken().then(this.props.handleResult);
     } else {
     }
   };
-    render() {
+  render() {
     return (
       <div className="CardDemo payment-cardDemo payment-form">
         <form onSubmit={this.handleSubmit.bind(this)}>
           <label>
-            <CardElement
-              onChange={this.handleChange}
-              {...createOptions() }
-            />
+            <CardElement onChange={this.handleChange} {...createOptions()} />
             {/* <UserPayment></UserPayment> */}
           </label>
-          {
-            this.state.errorMessage ? <div className="error" role="alert">
+          {this.state.errorMessage ? (
+            <div className="error" role="alert">
               {this.state.errorMessage}
-            </div> : null
-          }
+            </div>
+          ) : null}
 
           <div className="card-detail-btn text-center">
-            <Button color="secondary">Save</Button>
+            <Button color="secondary">{getTranslations("save")}</Button>
           </div>
         </form>
       </div>
@@ -91,7 +91,6 @@ export default class CardDemo extends Component {
           <CardForm handleResult={this.props.handleResult} />
         </Elements>
       </StripeProvider>
-
     );
   }
 }

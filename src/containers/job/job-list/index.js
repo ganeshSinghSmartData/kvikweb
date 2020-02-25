@@ -75,7 +75,8 @@ class JobList extends Component {
 
 const mapStateToProps = (state) => ({
   activeJobs: state.job.activeJobProduct,
-  completedJobs: state.job.completedJobProduct
+  completedJobs: state.job.completedJobProduct,
+  lang: state.user.lang
 });
 
 const mapDispatchToProps = {

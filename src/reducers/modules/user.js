@@ -13,7 +13,8 @@ const initialState = {
   userDetails: {},
   cards: [],
   loggedIn: false,
-  userReviews: []
+  userReviews: [],
+  lang: "en"
 };
 
 export default function reducer(state = initialState, action) {
@@ -47,6 +48,8 @@ export default function reducer(state = initialState, action) {
       };
     case TYPE.USERS_REVIEW:
       return { ...state, userReviews: action.data };
+    case TYPE.LANGUAGE_CHANGED:
+      return { ...state, lang: action.data };
     default:
       return state;
   }

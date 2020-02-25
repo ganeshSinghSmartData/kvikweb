@@ -2,14 +2,17 @@ import React from "react";
 import { useSelector } from "react-redux";
 import "./footer.scss";
 import { Container, Row, Col, Button } from "reactstrap";
+import { getTranslations } from "../../utilities/translations";
 const Footer = () => {
   const sidebarToggleValue = useSelector((state) => {
     return state.job.sidebarToggle;
   });
   return (
     <footer
-      className={`footer position-relative mt-auto ${sidebarToggleValue && 'active'}`}
-      id="footer">
+      className={`footer position-relative mt-auto ${sidebarToggleValue &&
+        "active"}`}
+      id="footer"
+    >
       <Container>
         <Row>
           <Col>
@@ -70,26 +73,27 @@ const Footer = () => {
             <div className="footer-links text-center">
               <ul className="d-flex justify-content-center flex-wrap">
                 <li className="d-flex align-items-center">
-                  <Button color="link">Help</Button>
+                  <Button color="link">{getTranslations("help")}</Button>
                 </li>
                 <li className="d-flex align-items-center">
-                  <Button color="link">FAQ</Button>
+                  <Button color="link">{getTranslations("faq")}</Button>
                 </li>
                 <li className="d-flex align-items-center">
-                  <Button color="link">Support</Button>
+                  <Button color="link">{getTranslations("support")}</Button>
                 </li>
                 <li className="d-flex align-items-center">
-                  <Button color="link">Services</Button>
+                  <Button color="link">{getTranslations("services")}</Button>
                 </li>
                 <li className="d-flex align-items-center">
-                  <Button color="link">Contact Us</Button>
+                  <Button color="link">{getTranslations("contact_us")}</Button>
                 </li>
                 <li className="d-flex align-items-center">
-                  <Button color="link">Terms &amp; Conditions</Button>
+                  <Button color="link">{getTranslations("term_con")}</Button>
                 </li>
               </ul>
               <p className="p-0">
-                Copyright {new Date().getFullYear()}. All Rights Reserved.
+                {getTranslations("cpyrt")} {new Date().getFullYear()}{" "}
+                {getTranslations("all_rights")}
               </p>
             </div>
           </Col>

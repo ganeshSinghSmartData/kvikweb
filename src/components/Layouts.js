@@ -4,24 +4,20 @@
  * @author: smartData
  */
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { sidebarToggleHandler, setFooterInView } from "./../actions/job";
+import { sidebarToggleHandler } from "./../actions/job";
 import smoothscroll from "smoothscroll-polyfill";
-import { Container, Button } from "reactstrap";
-import * as Scroll from "react-scroll";
+import { Container } from "reactstrap";
 import Header from "./header/header";
 import Banner from "./banner/banner";
 import Footer from "./footer/footer";
-import { isElementInViewPort } from "../utilities/observer";
 
 smoothscroll.polyfill();
 /*************** Public Layout ***************/
 export const PublicLayout = (props) => {
   const sidebarToggleValue = useSelector((state) => state.job.sidebarToggle);
-  const footerToggle = useSelector((state) => state.job.footerToggle);
-  const job = useSelector((state) => state.job.jobProduct);
-  // const job = [1, 2, 3];
+  const lang = useSelector((state) => state.user.lang);
   const dispatch = useDispatch();
   window.scrollTo(0, 0);
   const wrapperRef = useRef(null);
@@ -119,23 +115,6 @@ export const PublicLayout = (props) => {
                 />
               </svg>
             </button>
-            {/* {(props.children.props.match.path === "/" &&
-              <Button color="link" className="border-0 d-flex align-items-center sidebar-toogle-btn text-right position-fixed rounded-left d-md-none flex-shrink-0"
-                onClick={(e) => {
-                  dispatch(sidebarToggleHandler(!sidebarToggleValue),
-                    e.nativeEvent.stopImmediatePropagation()
-                  )
-                }}>
-                <span className="btn btn btn-secondary d-inline-block">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="257.569" height="451.847" viewBox="0 0 257.569 451.847">
-                    <g id="arrow-point-to-right" transform="translate(-97.139 0)">
-                      <path id="Path_1" data-name="Path 1" d="M345.441,248.292,151.154,442.573a31.641,31.641,0,0,1-44.75-44.744L278.318,225.92,106.409,54.017a31.642,31.642,0,0,1,44.75-44.748L345.446,203.553a31.638,31.638,0,0,1,0,44.739Z" />
-                    </g>
-                  </svg>
-                </span>
-
-              </Button>
-            )} */}
           </Container>
           {!custom_class ? <Footer /> : null}
         </div>
@@ -147,9 +126,6 @@ export const PublicLayout = (props) => {
 /*************** Private Layout ***************/
 export const privateLayout = (props) => {
   window.scrollTo(0, 0);
-  // const childrenWithProps = React.Children.map(props.children, child =>
-  //   React.cloneElement(child, { value })
-  // );
 
   const path = props.children.props.history.location.pathname;
   let _class = "";

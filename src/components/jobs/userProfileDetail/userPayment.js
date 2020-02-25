@@ -18,6 +18,7 @@ import StripeCard from "../../../config/stripe";
 import InputCell from "../../commonUi/input/inputCell";
 import SpinnerOverlay from "../../../components/commonUi/spinner/spinnerOverlay/spinnerOverlay";
 import { toastAction } from "../../../actions/toast-actions";
+import { getTranslations } from "../../../utilities/translations";
 // import "./../postJob/postJob.scss";
 
 const UserPayment = (props) => {
@@ -191,7 +192,7 @@ const UserPayment = (props) => {
   const _removeCard = (card_id) => {
     confirmAlert({
       title: "",
-      message: "Are you sure do you want to delete this card ?",
+      message: getTranslations("delete_card_alert"),
       buttons: [
         {
           label: "Yes",
@@ -231,7 +232,7 @@ const UserPayment = (props) => {
                   alt="Payment Card"
                 />
               </span>
-              <label>Bank Details</label>
+              <label>{getTranslations("bank_details")}</label>
             </div>
           </div>
           <div
@@ -245,7 +246,7 @@ const UserPayment = (props) => {
                   alt="Payment Card"
                 />
               </span>
-              <label>Credit Card</label>
+              <label>{getTranslations("credit_card")}</label>
             </div>
           </div>
         </div>
@@ -253,16 +254,22 @@ const UserPayment = (props) => {
         <React.Fragment>
           <div className="payment-card-hd d-flex flex-wrap align-items-center">
             <h2 className="flex-fill mb-0">
-              {paymentType === "credit" ? "Card" : "Bank"} Detail
+              {paymentType === "credit" ? "Card" : "Bank"}{" "}
+              {getTranslations("detail")}
             </h2>
             <Button color="link" onClick={() => openBankDetails()}>
-              + Add {paymentType === "credit" ? "Bank" : "Card"}
+              +{" "}
+              {paymentType === "credit"
+                ? getTranslations("add_bank_details")
+                : getTranslations("add_credit_details")}
             </Button>
           </div>
           <div className="user-cards-rw card-detail">
             <div>
               <h2>
-                Type your {paymentType === "credit" ? "Card" : "Bank"} details
+                {paymentType === "credit"
+                  ? getTranslations("credit_card_details")
+                  : getTranslations("type_bank_details")}
               </h2>
               {paymentType === "credit" ? (
                 <StripeCard handleResult={handleResult} />
@@ -277,7 +284,7 @@ const UserPayment = (props) => {
                         <InputCell
                           id="LocalForm"
                           Name={"firstName"}
-                          Placeholder={"First Name"}
+                          Placeholder={getTranslations("first_name")}
                           Model=".firstName"
                           maxlength={16}
                           InputType={"text"}
@@ -287,7 +294,7 @@ const UserPayment = (props) => {
 
                         <InputCell
                           Name={"lastName"}
-                          Placeholder={"Last Name"}
+                          Placeholder={getTranslations("last_name")}
                           Model=".lastName"
                           InputType={"text"}
                           ClassName="input-line-blc"
@@ -296,7 +303,7 @@ const UserPayment = (props) => {
 
                         <InputCell
                           Name={"accountNumber"}
-                          Placeholder={"Account Number"}
+                          Placeholder={getTranslations("account_number")}
                           Model=".accountNumber"
                           InputType={"text"}
                           ClassName="input-line-blc"
@@ -307,7 +314,7 @@ const UserPayment = (props) => {
 
                         <InputCell
                           Name={"routingNumber"}
-                          Placeholder={"Routing Number"}
+                          Placeholder={getTranslations("routing_number")}
                           Model=".routingNumber"
                           InputType={"text"}
                           ClassName="input-line-blc"
@@ -318,30 +325,18 @@ const UserPayment = (props) => {
                         />
                         <DatePicker
                           selected={date}
-                          //      value={new Date()}
-                          // onChange={date => setEndDate(date)}
-                          Placeholder={"Date of Birth"}
+                          Placeholder={getTranslations("dob")}
                           maxDate={new Date()}
-                          // maxDate={startDate}
                           dateFormat="MM/dd/yyyy"
-                          // onInputClick={() => handleOnInputClick()}
-                          // onClickOutsideEvent={handleOnClickOutsideEvent()}
                           showMonthDropdown
                           showYearDropdown
                           onChange={onDobChange}
                           showTimeInput={false}
                         />
-                        {/* <InputCell
-                        Name={"dob"}
-                        Placeholder={"Date of Birth"}
-                        Model=".dob"
-                        InputType={"date"}
-                        ClassName="input-line-blc"
-                        Errors={{ required: "required" }}
-                      /> */}
+
                         <InputCell
                           Name={"phone"}
-                          Placeholder={"Mobile"}
+                          Placeholder={getTranslations("mobile")}
                           Model=".phone"
                           InputType={"text"}
                           ClassName="input-line-blc"
@@ -352,7 +347,7 @@ const UserPayment = (props) => {
                         />
                         <InputCell
                           Name={"address"}
-                          Placeholder={"Address"}
+                          Placeholder={getTranslations("address")}
                           Model=".line1"
                           InputType={"text"}
                           ClassName="input-line-blc"
@@ -360,7 +355,7 @@ const UserPayment = (props) => {
                         />
                         <InputCell
                           Name={"postal"}
-                          Placeholder={"Zip code"}
+                          Placeholder={getTranslations("zip_code")}
                           Model=".postal"
                           InputType={"text"}
                           ClassName="input-line-blc"
@@ -373,7 +368,7 @@ const UserPayment = (props) => {
                           <div className="col-sm-4">
                             <InputCell
                               Name={"country"}
-                              Placeholder={"Country"}
+                              Placeholder={getTranslations("country")}
                               Model=".country"
                               InputType={"text"}
                               ClassName="input-line-blc"
@@ -385,7 +380,7 @@ const UserPayment = (props) => {
                           <div className="col-sm-4">
                             <InputCell
                               Name={"city"}
-                              Placeholder={"City"}
+                              Placeholder={getTranslations("city")}
                               Model=".city"
                               InputType={"text"}
                               ClassName="input-line-blc"
@@ -395,7 +390,7 @@ const UserPayment = (props) => {
                           <div className="col-sm-4">
                             <InputCell
                               Name={"state"}
-                              Placeholder={"State"}
+                              Placeholder={getTranslations("state")}
                               Model=".state"
                               InputType={"text"}
                               ClassName="input-line-blc"
@@ -405,11 +400,8 @@ const UserPayment = (props) => {
                         </div>
                         <div className="payment-upload-rw">
                           <h4>
-                            National id{" "}
-                            <i>
-                              (clear image of front, back, additional if front
-                              and back)
-                            </i>
+                            {getTranslations("national_id")}{" "}
+                            <i>({getTranslations("id_message")})</i>
                           </h4>
                           <div className="payment-upload-list d-flex justify-content-center flex-wrap">
                             <div className="payment-pic-btn-cell text-center d-flex flex-column">
@@ -591,7 +583,7 @@ const UserPayment = (props) => {
                                   </span>
                                 )}
                               </div>
-                              <label>Back</label>
+                              <label>{getTranslations("back")}</label>
                             </div>
                             <div className="payment-pic-btn-cell text-center d-flex flex-column">
                               <div
@@ -684,7 +676,9 @@ const UserPayment = (props) => {
                                   </span>
                                 )}
                               </div>
-                              <label>Additional Front</label>
+                              <label>
+                                {getTranslations("additional_font")}
+                              </label>
                             </div>
                             <div className="payment-pic-btn-cell text-center d-flex flex-column">
                               <div
@@ -774,7 +768,9 @@ const UserPayment = (props) => {
                                   </span>
                                 )}
                               </div>
-                              <label>Additional Back</label>
+                              <label>
+                                {getTranslations("additional_back")}
+                              </label>
                             </div>
                           </div>
                         </div>
@@ -782,10 +778,10 @@ const UserPayment = (props) => {
                     </ul>
                     <div className="payment-btn-row text-center">
                       <Button color="secondary" type="submit">
-                        Submit
+                        {getTranslations("submit")}
                       </Button>
                       <Button color="link" className="btn-dark">
-                        Reset
+                        {getTranslations("reset")}
                       </Button>
                     </div>
                   </LocalForm>
@@ -872,7 +868,7 @@ const UserPayment = (props) => {
                         <h3>-----</h3>
                       </div>
                       <div className="card-chip-col rt">
-                        <h2>VALID THRU</h2>
+                        <h2>{getTranslations("valid_thru")}</h2>
                         <h3 className="mb-0">{val.cardValidity}</h3>
                       </div>
                     </div>

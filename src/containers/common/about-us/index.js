@@ -11,36 +11,38 @@ class AboutUs extends Component {
   }
 
   componentDidMount() {
-    this.props.getCustomPageDetails("about_us", callback => {
+    this.props.getCustomPageDetails("about_us", (callback) => {
       if (callback) {
       } else {
       }
     });
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
   render() {
     return (
       <React.Fragment>
         {this.props.about_us_details &&
-          this.props.about_us_details.description ? (
-            <div className="data-page data-editor"
-              dangerouslySetInnerHTML={{
-                __html: this.props.about_us_details.description
-              }}
-            />
-          ) : null}
+        this.props.about_us_details.description ? (
+          <div
+            className="data-page data-editor"
+            dangerouslySetInnerHTML={{
+              __html: this.props.about_us_details.description
+            }}
+          />
+        ) : null}
       </React.Fragment>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  about_us_details: state.common.about_us_details
+const mapStateToProps = (state) => ({
+  about_us_details: state.common.about_us_details,
+  lang: state.user.lang
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getCustomPageDetails: bindActionCreators(getCustomPageDetails, dispatch)
 });
 

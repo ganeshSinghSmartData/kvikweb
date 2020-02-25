@@ -138,6 +138,7 @@ class Home extends Component {
 const mapStateToProps = (state) => ({
   /* user: state.user,
     dashboard: state.dashboard */
+  lang: state.user.lang
 });
 
 const mapDispatchToProps = (dispatch) => ({

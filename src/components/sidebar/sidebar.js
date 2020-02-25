@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import ReactDOM from "react-dom";
 import { LocalForm } from "react-redux-form";
 import { useDispatch, useSelector } from "react-redux";
 import { sidebarToggleHandler } from "../../actions/job";
@@ -7,11 +6,11 @@ import { Button, Input } from "reactstrap";
 import { Collapse } from "reactstrap";
 import "react-input-range/lib/css/index.css";
 import { getJobCategory } from "../../actions/job";
-// onChangeComplete
 
 import FilterBlock from "../sidebar/filterBlock/filterBlock";
 import InputCell from "../commonUi/input/inputCell";
 import "./sidebar.scss";
+import { getTranslations } from "../../utilities/translations";
 
 const Sidebar = ({
   _handleCategory,
@@ -56,19 +55,12 @@ const Sidebar = ({
       }
     });
   return (
-    <div
-      className="sidebar"
-      ref={sidebarRef}
-      id="side"
-
-      // onScroll={() => {
-      //   let sidebar = ReactDOM.findDOMNode(sidebarRef.current);
-      //   // console.log("aside-side", sidebar.scrollTop);
-      // }}
-    >
+    <div className="sidebar" ref={sidebarRef} id="side">
       <div className="sidebar-item">
         <h3 className="d-flex" onClick={toggleCategory}>
-          <label className="flex-fill m-0">SEARCH BY CATEGORY</label>
+          <label className="flex-fill m-0">
+            {getTranslations("search_categories")}
+          </label>
           <Button
             color="link"
             className="item-toggle-btn rounded-0 d-flex flex-column flex-column align-items-end flex-shrink-0   btn btn-link p-0"
@@ -133,7 +125,9 @@ const Sidebar = ({
       </div>
       <div className="sidebar-item">
         <h3 className="d-flex" onClick={toggleFilter}>
-          <label className="flex-fill m-0">FILTER BY</label>
+          <label className="flex-fill m-0">
+            {getTranslations("filter_by")}
+          </label>
           <Button
             color="link"
             className="item-toggle-btn rounded-0 d-flex flex-column flex-column align-items-end flex-shrink-0 btn btn-link p-0"
@@ -148,13 +142,13 @@ const Sidebar = ({
             <div className="filter-row postal-rw">
               <h5 className="d-flex postal-head">
                 <label className="flex-fill m-0 text-primary">
-                  Postal Code
+                  {getTranslations("postal_code")}
                 </label>
               </h5>
               <LocalForm>
                 <InputCell
                   Name={"postal-code"}
-                  Placeholder={"Enter Postal Code"}
+                  Placeholder={getTranslations("enter_postal")}
                   Model=".postal-code"
                   InputType={"text"}
                   Length={6}
@@ -169,7 +163,7 @@ const Sidebar = ({
             <FilterBlock
               handleRange={(val) => _handleDistance(val)}
               maxValue={100}
-              title="Distance"
+              title={getTranslations("distance")}
               containerClass="distance-row"
               inputClass="primary-bg-bar"
               unit="Miles"
@@ -178,7 +172,7 @@ const Sidebar = ({
             <FilterBlock
               handleRange={(val) => _handleBudget(val)}
               maxValue={(job.filter && job.filter.budget) || 10000}
-              title="Budget"
+              title={getTranslations("budget")}
               containerClass="budget-row"
               inputClass="secondary-bg-bar"
               multiValue
@@ -195,7 +189,7 @@ const Sidebar = ({
           dispatch(sidebarToggleHandler(false));
         }}
       >
-        Search
+        {getTranslations("search")}
       </Button>
     </div>
   );

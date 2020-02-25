@@ -31,6 +31,7 @@ import "react-toastify/dist/ReactToastify.css";
 import configureStore from "./config";
 import Routers from "./routers";
 import Loader from "./components/commonUi/loader/loader";
+import "./utilities/translations";
 
 export const history = createBrowserHistory();
 /************ store configration *********/

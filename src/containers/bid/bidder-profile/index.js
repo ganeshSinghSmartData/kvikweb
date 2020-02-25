@@ -15,13 +15,16 @@ class BidderProfile extends Component {
 
   componentDidMount() {
     if (this.props.match.params.user_id) {
-      this.props.getBidderReview(this.props.match.params.user_id, callback => {
-        if (callback) {
-          this.setState({ review: callback });
-        } else {
-          this.setState({ review: [] });
+      this.props.getBidderReview(
+        this.props.match.params.user_id,
+        (callback) => {
+          if (callback) {
+            this.setState({ review: callback });
+          } else {
+            this.setState({ review: [] });
+          }
         }
-      });
+      );
     }
   }
 
@@ -47,11 +50,12 @@ class BidderProfile extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   //   activeJobs: state.job.activeJobProduct
+  lang: state.user.lang
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getBidderReview: bindActionCreators(getBidderReview, dispatch)
 });
 

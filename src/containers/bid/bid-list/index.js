@@ -80,7 +80,8 @@ class BidList extends Component {
 
 const mapStateToProps = (state) => ({
   activeBid: state.bid.activeBid,
-  completedBid: state.bid.completedBid
+  completedBid: state.bid.completedBid,
+  lang: state.user.lang
 });
 
 const mapDispatchToProps = (dispatch) => ({

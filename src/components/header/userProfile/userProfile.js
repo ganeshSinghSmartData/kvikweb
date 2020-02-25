@@ -9,8 +9,7 @@ import {
   Badge,
   Modal,
   ModalHeader,
-  ModalBody,
-  ModalFooter
+  ModalBody
 } from "reactstrap";
 import Chat from "../../jobs/bidderProfile/chat/chat";
 import { logout } from "../../../actions/user";
@@ -27,6 +26,7 @@ import {
   notifications,
   toggleChat
 } from "../../../actions/messages";
+import { getTranslations } from "../../../utilities/translations";
 
 const UserProfile = (props) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -116,7 +116,7 @@ const UserProfile = (props) => {
           </svg>
         </DropdownToggle>
         <DropdownMenu right className="user-list-dropdown">
-          <DropdownItem header>User Message List</DropdownItem>
+          <DropdownItem header>{getTranslations("user_msg_list")}</DropdownItem>
           <DropdownItem divider />
           <div className="user-list-scroll overflow-auto">
             {messages && messages.chatUsers.length > 0 ? (
@@ -160,7 +160,7 @@ const UserProfile = (props) => {
                       transform="translate(-0.5 -0.143)"
                     />
                   </svg>
-                  <label>No Message Found!!</label>
+                  <label>{getTranslations("no_msg")}</label>
                 </span>
               </div>
             )}
@@ -223,7 +223,7 @@ const UserProfile = (props) => {
           </span>
         </DropdownToggle>
         <DropdownMenu right className="overflow-auto">
-          <DropdownItem header>General</DropdownItem>
+          <DropdownItem header>{getTranslations("general")}</DropdownItem>
           <DropdownItem divider />
           {/* <Link className="dropdown-item d-flex justify-content-between align-items-center " to={"/"} onClick={() => toggle()}>
             Setting
@@ -257,10 +257,10 @@ const UserProfile = (props) => {
             to={""}
             onClick={() => openMetricsModal()}
           >
-            <label className="mb-0">Metrics</label>
+            <label className="mb-0">{getTranslations("metrics")}</label>
           </Link>
           <DropdownItem header className="padd">
-            <label className="mb-0">Profile</label>
+            <label className="mb-0">{getTranslations("profile")}</label>
           </DropdownItem>
           <DropdownItem divider />
           <Link
@@ -268,14 +268,14 @@ const UserProfile = (props) => {
             to="/profile"
             onClick={() => toggle()}
           >
-            <label className="mb-0">My Profile</label>
+            <label className="mb-0">{getTranslations("my_profile")}</label>
           </Link>
           <Link
             className="dropdown-item d-flex justify-content-between align-items-center "
             to={""}
             onClick={() => dispatch(logout())}
           >
-            <label className="mb-0">Logout</label>
+            <label className="mb-0">{getTranslations("logout")}</label>
           </Link>
         </DropdownMenu>
       </Dropdown>
@@ -293,7 +293,7 @@ const UserProfile = (props) => {
         className="metric-modal modal-lg d-flex flex-column align-items-center justify-content-center"
       >
         <ModalHeader>
-          User Metrics
+          {getTranslations("user_metrics")}
           <Button
             color="link"
             className="close-btn btn2"
@@ -333,61 +333,14 @@ const UserProfile = (props) => {
                 </svg>
               </span>
               <label className=" d-flex flex-column">
-                Job Completed
+                {getTranslations("job_completed")}
                 <span>
                   {props.metricsData && props.metricsData.total_jobs
                     ? props.metricsData.total_jobs
                     : 0}
                 </span>
               </label>
-              {/* <span className="metric-view-btn mt-auto">
-                View All
-              </span> */}
             </Button>
-            {/* <Button color="link" className="metric-btn d-flex flex-column align-items-center">
-              <span className="metric-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="479.779" height="479.976" viewBox="0 0 479.779 479.976">
-                  <g id="auction2" transform="translate(-0.098)">
-                    <g id="Group_2" data-name="Group 2">
-                      <g id="Group_1" data-name="Group 1">
-                        <path id="Path_1" data-name="Path 1" d="M279.339,144.016a40,40,0,0,0-39.24-32.04,24,24,0,1,1,24-24h16a40.072,40.072,0,0,0-32-39.2v-16.8h-16v16.8a40,40,0,0,0,8,79.2,24,24,0,1,1-24,24h-16a40.072,40.072,0,0,0,32,39.2v16.8h16v-16.8A40,40,0,0,0,279.339,144.016Z" />
-                      </g>
-                    </g>
-                    <g id="Group_4" data-name="Group 4">
-                      <g id="Group_3" data-name="Group 3">
-                        <path id="Path_2" data-name="Path 2" d="M360.1,119.976a120,120,0,1,0-144,117.6v82.4h-8A8,8,0,0,0,202.786,322l-72,64a8,8,0,0,0-2.688,5.976v80a8,8,0,0,0,8,8h152a23.9,23.9,0,0,0,17.76-40,23.633,23.633,0,0,0,0-32,23.633,23.633,0,0,0,0-32,23.9,23.9,0,0,0-17.76-40h-9.472A24,24,0,0,0,264.1,321.448V237.576A120.2,120.2,0,0,0,360.1,119.976Zm-120,268v-20h-16v20a27.943,27.943,0,0,0,11.952,22.872,23.7,23.7,0,0,0,2.288,29.128,23.263,23.263,0,0,0-4.8,24H144.1V395.567l67.04-59.592H256.1a8,8,0,0,1,8,8v44a12,12,0,1,1-24,0Zm-8-68V239.567c2.656.176,5.3.408,8,.408s5.344-.232,8-.408v80.408Zm56,144h-32a8,8,0,1,1,0-16h32a8,8,0,0,1,0,16Zm-8-112h8a8,8,0,0,1,0,16h-8Zm0,36v-4h8a8,8,0,0,1,0,16H277.29A27.7,27.7,0,0,0,280.1,387.975Zm8,28a8,8,0,0,1,0,16h-32a8,8,0,1,1,0-16Zm-48-192a104,104,0,1,1,104-104A104.12,104.12,0,0,1,240.1,223.975Z" />
-                      </g>
-                    </g>
-                    <g id="Group_6" data-name="Group 6">
-                      <g id="Group_5" data-name="Group 5">
-                        <path id="Path_3" data-name="Path 3" d="M72.1,311.975a8,8,0,1,1,8-8h16a24,24,0,0,0-16-22.528v-9.472h-16v9.472a23.944,23.944,0,0,0,8,46.528,8,8,0,1,1-8,8h-16a24,24,0,0,0,16,22.528v9.472h16V358.5a23.944,23.944,0,0,0-8-46.528Z" />
-                      </g>
-                    </g>
-                    <g id="Group_8" data-name="Group 8">
-                      <g id="Group_7" data-name="Group 7">
-                        <path id="Path_4" data-name="Path 4" d="M72.124,247.949A72,72,0,0,0,64.1,391.5v88.472h16V391.5a72,72,0,0,0-7.974-143.554ZM72.1,375.975a56,56,0,1,1,56-56A56,56,0,0,1,72.1,375.975Z" />
-                      </g>
-                    </g>
-                    <g id="Group_10" data-name="Group 10">
-                      <g id="Group_9" data-name="Group 9">
-                        <path id="Path_5" data-name="Path 5" d="M408.1,311.975a8,8,0,1,1,8-8h16a24,24,0,0,0-16-22.528v-9.472h-16v9.472a23.944,23.944,0,0,0,8,46.528,8,8,0,1,1-8,8h-16a24,24,0,0,0,16,22.528v9.472h16V358.5a23.944,23.944,0,0,0-8-46.528Z" />
-                      </g>
-                    </g>
-                    <g id="Group_12" data-name="Group 12">
-                      <g id="Group_11" data-name="Group 11">
-                        <path id="Path_6" data-name="Path 6" d="M479.4,311.748A71.784,71.784,0,1,0,400.1,391.5v88.472h16V391.5A72,72,0,0,0,479.4,311.748Zm-71.3,64.227a56,56,0,1,1,56-56A56,56,0,0,1,408.1,375.975Z" />
-                      </g>
-                    </g>
-                  </g>
-                </svg>
-              </span>
-              <label className=" d-flex flex-column">
-                Bid Completed
-              <span>
-                  {props.metricsData && props.metricsData.total_jobs ? props.metricsData.total_jobs : 0}
-                </span>
-              </label>
-            </Button> */}
             <Button
               color="link"
               className="metric-btn d-flex flex-column align-items-center"
@@ -518,16 +471,13 @@ const UserProfile = (props) => {
                 </svg>
               </span>
               <label className=" d-flex flex-column">
-                Total Earning
+                {getTranslations("total_earning")}
                 <span>
                   {props.metricsData && props.metricsData.total_earnings
                     ? props.metricsData.total_earnings
                     : 0}
                 </span>
               </label>
-              {/* <span className="metric-view-btn mt-auto">
-                View All
-              </span> */}
             </Button>
             <Button
               color="link"
@@ -535,6 +485,7 @@ const UserProfile = (props) => {
             >
               <span className="metric-icon">
                 <svg
+                  z
                   xmlns="http://www.w3.org/2000/svg"
                   width="323.92"
                   height="364.712"
@@ -569,7 +520,7 @@ const UserProfile = (props) => {
                 </svg>
               </span>
               <label className=" d-flex flex-column">
-                Rating
+                {getTranslations("rating")}
                 <span>
                   {props.metricsData && props.metricsData.average_rating
                     ? parseFloat(props.metricsData.average_rating).toFixed(2)

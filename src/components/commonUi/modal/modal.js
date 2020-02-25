@@ -11,6 +11,7 @@ import UserImage from "../../jobs/jobDetail/userImage/userImage";
 import Spinner from "../../commonUi/spinner/spinner";
 
 import "./modal.scss";
+import { getTranslations } from "../../../utilities/translations";
 
 const SignInModal = ({
   _isOpen,
@@ -124,7 +125,7 @@ const SignInModal = ({
                   </svg>
                 </span>
                 <h3 className="text-center position-relative mb0">
-                  Welcome to
+                  {getTranslations("welcome_to")}
                   <span className="d-block">
                     <Logo classname="signup-logo" navigate={false} />
                   </span>
@@ -136,11 +137,13 @@ const SignInModal = ({
                   {_modalType === "/register" && (
                     <React.Fragment>
                       <h2>
-                        <label className="d-block">Sign Up</label>
+                        <label className="d-block">
+                          {getTranslations("signUp")}
+                        </label>
                       </h2>
                       <InputCell
                         Name={"fname"}
-                        Placeholder={"First Name"}
+                        Placeholder={getTranslations("first_name")}
                         Model=".fname"
                         InputType={"text"}
                         ClassName="input-icon-cell"
@@ -149,7 +152,7 @@ const SignInModal = ({
                       />
                       <InputCell
                         Name={"lname"}
-                        Placeholder={"Last Name"}
+                        Placeholder={getTranslations("last_name")}
                         Model=".lname"
                         InputType={"text"}
                         ClassName="input-icon-cell"
@@ -158,7 +161,7 @@ const SignInModal = ({
                       />
                       <InputCell
                         Name={"email"}
-                        Placeholder={"Email"}
+                        Placeholder={getTranslations("email")}
                         Model=".email"
                         InputType={"email"}
                         ClassName="input-icon-cell"
@@ -170,7 +173,7 @@ const SignInModal = ({
                       />
                       <InputCell
                         Name={"password"}
-                        Placeholder={"Password"}
+                        Placeholder={getTranslations("password")}
                         Model=".password"
                         InputType={"password"}
                         ClassName="input-icon-cell"
@@ -187,7 +190,7 @@ const SignInModal = ({
                     </div> */}
                       <div className="text-center">
                         <Button size="lg" className="signup">
-                          SIGN UP
+                          {getTranslations("signUp")}
                         </Button>
                       </div>
                     </React.Fragment>
@@ -195,11 +198,13 @@ const SignInModal = ({
                   {_modalType === "/login" && !isForgot && (
                     <div>
                       <h2>
-                        <label className="d-block">Login</label>
+                        <label className="d-block">
+                          {getTranslations("login")}
+                        </label>
                       </h2>
                       <InputCell
                         Name={"email"}
-                        Placeholder={"Email"}
+                        Placeholder={getTranslations("email")}
                         Model=".email"
                         InputType={"email"}
                         ClassName="input-icon-cell"
@@ -210,7 +215,7 @@ const SignInModal = ({
                       />
                       <InputCell
                         Name={"password"}
-                        Placeholder={"Password"}
+                        Placeholder={getTranslations("password")}
                         Model=".password"
                         InputType={"password"}
                         ClassName="input-icon-cell"
@@ -229,19 +234,19 @@ const SignInModal = ({
                           className="forgot-btn btn btn-link flex-shrink-0 ml-auto p-0 text-primary-hover"
                           onClick={() => setForgot(true)}
                         >
-                          Forgot Password?
+                          {getTranslations("forgot_password")}
                         </Button>
                       </div>
                       <div className="text-center">
                         <Button type="submit" size="lg" className="signup">
-                          Login
+                          {getTranslations("login")}
                         </Button>
                       </div>
                       <LoginType {...props} />
                       <p className="signup-link-rw text-center">
-                        <span>Don't have an account?</span>
+                        <span>{getTranslations("dont_account")}</span>
                         <Link className="text-black" to={"/register"}>
-                          Sign Up Now
+                          {getTranslations("sign_up")}
                         </Link>
                       </p>
                     </div>
@@ -249,12 +254,14 @@ const SignInModal = ({
                   {_modalType === "/login" && isForgot && (
                     <div>
                       <h2>
-                        <label className="d-block">Forgot Password</label>
+                        <label className="d-block">
+                          {getTranslations("forgot")}
+                        </label>
                       </h2>
                       {!props._sentForgotEmail && (
                         <InputCell
                           Name={"email"}
-                          Placeholder={"Email"}
+                          Placeholder={getTranslations("email")}
                           Model=".forgotemail"
                           InputType={"email"}
                           ClassName="input-icon-cell"
@@ -268,7 +275,7 @@ const SignInModal = ({
                         <>
                           <InputCell
                             Name={"otp"}
-                            Placeholder={"OTP"}
+                            Placeholder={getTranslations("otp")}
                             Model=".otp"
                             InputType={"text"}
                             ClassName="input-icon-cell"
@@ -279,7 +286,7 @@ const SignInModal = ({
                           />
                           <InputCell
                             Name={"password"}
-                            Placeholder={"Password"}
+                            Placeholder={getTranslations("password")}
                             Model=".newpassword"
                             InputType={"password"}
                             ClassName="input-icon-cell"
@@ -291,7 +298,7 @@ const SignInModal = ({
                           />
                           <InputCell
                             Name={"confirmPassword"}
-                            Placeholder={"Confirm Password"}
+                            Placeholder={getTranslations("confirm_pass")}
                             Model=".confirmPassword"
                             InputType={"password"}
                             ClassName="input-icon-cell"
@@ -310,12 +317,12 @@ const SignInModal = ({
                           className="forgot-btn btn btn-link flex-shrink-0 ml-auto p-0 text-primary-hover"
                           onClick={() => setForgot(false)}
                         >
-                          Login?
+                          {getTranslations("login")}?
                         </Button>
                       </div>
                       <div className="text-center">
                         <Button type="submit" size="lg" className="signup">
-                          Submit
+                          {getTranslations("submit")}
                         </Button>
                       </div>
                     </div>
@@ -330,32 +337,38 @@ const SignInModal = ({
               <LocalForm onSubmit={(values) => _handleSubmit(values)}>
                 <div className="row bid-desc-frm">
                   <div className="col-md-12">
-                    <label className="input-title">Description</label>
+                    <label className="input-title">
+                      {getTranslations("description")}
+                    </label>
                     <InputCell
                       Name={"description"}
-                      Placeholder={"Description"}
+                      Placeholder={getTranslations("description")}
                       Model=".description"
                       InputType={"textarea"}
                       Errors={{ required: "required" }}
                     />
                   </div>
                   <div className="col-md-6">
-                    <label className="input-title">Bid Amount</label>
+                    <label className="input-title">
+                      {getTranslations("bid_amount")}
+                    </label>
                     <InputCell
                       Name={"bid_amount"}
-                      Placeholder={"Bid Amount"}
+                      Placeholder={getTranslations("bid_amount")}
                       Model=".bid_amount"
                       InputType={"number"}
                       Errors={{ required: "required" }}
                     />
                   </div>
                   <div className="col-md-6">
-                    <label className="input-title">Frequency</label>
+                    <label className="input-title">
+                      {getTranslations("frequency")}
+                    </label>
                     <InputCell
                       Name={"frequency"}
                       Model=".frequency"
                       InputType="select"
-                      Placeholder={"Frequency"}
+                      Placeholder={getTranslations("frequency")}
                       Disabled={true}
                       DefaultValue={props._frequency}
                       Errors={{ required: "required" }}
@@ -365,11 +378,14 @@ const SignInModal = ({
                 <div className="bid-frm-btns text-center">
                   {_modalType !== "Place your bid" && (
                     <Button color="link" className="btn-dark">
-                      REJECT
+                      {getTranslations("reject")}
                     </Button>
                   )}
                   {_modalType === "Place your bid" && (
-                    <Button color="secondary">SEND</Button>
+                    <Button color="secondary">
+                      {" "}
+                      {getTranslations("send")}
+                    </Button>
                   )}
                 </div>
               </LocalForm>
@@ -392,7 +408,10 @@ const SignInModal = ({
                         >
                           {`${props._propsDetails.job_provider_id.fname} ${props._propsDetails.job_provider_id.lname}`}
                         </Link>
-                        <span>{props._propsDetails.daysfrom} Day Ago</span>
+                        <span>
+                          {props._propsDetails.daysfrom}{" "}
+                          {getTranslations("day_ago")}
+                        </span>
                       </h2>
                       <p>{props._propsDetails.description}</p>
                       <div className="bid-price">
@@ -408,10 +427,10 @@ const SignInModal = ({
                             props._hadleReject(props._propsDetails)
                           }
                         >
-                          REJECT
+                          {getTranslations("reject")}
                         </Button>
                         <Button color="secondary" onClick={props._handleAccept}>
-                          ACCEPT
+                          {getTranslations("accept")}
                         </Button>
                       </div>
                     )}
@@ -424,14 +443,14 @@ const SignInModal = ({
                   {!props._cards || props._cards.length === 0 ? (
                     <div className="no-card-blc text-center d-flex justify-content-center align-items-center">
                       <div className="no-card-msg">
-                        No Card Added yet!!
+                        {getTranslations("no_card")}
                         <p className="">
                           <Link
                             className="btn btn-secondary"
                             color="secondary"
                             to={"/profile"}
                           >
-                            Add Payment Card
+                            {getTranslations("add_payment")}
                           </Link>
                         </p>
                       </div>
@@ -439,7 +458,7 @@ const SignInModal = ({
                   ) : (
                     <React.Fragment>
                       <h2>
-                        <strong>Card Holder:</strong>
+                        <strong>{getTranslations("card_holder")}:</strong>
                         {props._cardHolderName}
                       </h2>
                       <div className="payment-card-list d-flex flex-column flex-wrap">
@@ -473,7 +492,9 @@ const SignInModal = ({
                                     </span>
                                   </label>
                                   <div className="form-group payment-confirm-rw">
-                                    <label>Card Number</label>
+                                    <label>
+                                      {getTranslations("card_number")}
+                                    </label>
                                     <div className="card-confirm-pic-rw d-flex">
                                       <div className="card-confirm-pic d-flex justify-content-center align-items-center">
                                         {item.type === "visa" && (
@@ -497,7 +518,7 @@ const SignInModal = ({
                                   <div className="form-group payment-confirm-rw d-flex">
                                     <div className="payment-confirm-col flex-fill">
                                       <label for="exampleFormControlInput1">
-                                        Expiration Date
+                                        {getTranslations("expiry_date")}
                                       </label>
                                       <input
                                         type="email"
@@ -532,7 +553,7 @@ const SignInModal = ({
                           type="button"
                           onClick={props._makePayment}
                         >
-                          Make Payment
+                          {getTranslations("make_payment")}
                         </Button>
                       </div>
                     </React.Fragment>
@@ -548,7 +569,7 @@ const SignInModal = ({
                 <div className="contact-us-frm">
                   <InputCell
                     Name={"name"}
-                    Placeholder={"Name"}
+                    Placeholder={getTranslations("name")}
                     Model=".name"
                     InputType={"text"}
                     ClassName="input-icon-cell"
@@ -557,7 +578,7 @@ const SignInModal = ({
                   />
                   <InputCell
                     Name={"email"}
-                    Placeholder={"Email"}
+                    Placeholder={getTranslations("email")}
                     Model=".email"
                     InputType={"email"}
                     ClassName="input-icon-cell"
@@ -569,7 +590,7 @@ const SignInModal = ({
                   />
                   <InputCell
                     Name={"message"}
-                    Placeholder={"Message"}
+                    Placeholder={getTranslations("message")}
                     Model=".message"
                     InputType={"textarea"}
                     InputIcon={true}
@@ -577,7 +598,7 @@ const SignInModal = ({
                   />
                 </div>
                 <div className="contact-us-btm text-left">
-                  <Button color="primary">Submit</Button>
+                  <Button color="primary">{getTranslations("submit")}</Button>
                 </div>
               </LocalForm>
             </div>
@@ -587,7 +608,7 @@ const SignInModal = ({
             <ModalBody className={"overflow-auto"}>
               <div className="bid-confirm-blc text-center">
                 <h2 className="text-primary">
-                  The job request has been accepted by{" "}
+                  {getTranslations("job_accepted_by")}{" "}
                 </h2>
                 <h3>{_jobProviderName}</h3>
                 <div className="bid-confirm-btns d-flex flex-column align-items-center">
@@ -596,10 +617,10 @@ const SignInModal = ({
                     className="start-job-btn"
                     onClick={() => props.startJob()}
                   >
-                    START JOB
+                    {getTranslations("")}
                   </Button>
                   <Button color="link" onClick={() => _toggleModal()}>
-                    Remind me later
+                    {getTranslations("remind_me")}
                   </Button>
                 </div>
               </div>
@@ -609,8 +630,10 @@ const SignInModal = ({
           {_modalType === "Rate Bidder" && (
             <div className="bid-confirm-blc bidder-completion-blc text-center">
               <div className="bidder-label">{_bidderName}</div>
-              <h2 className="text-primary">Has been completed the job</h2>
-              <h3>Tap a star to rate him</h3>
+              <h2 className="text-primary">
+                {getTranslations("job_has_completed")}
+              </h2>
+              <h3>{getTranslations("tap_start")}</h3>
               <div className="bidder-rate d-flex justify-content-center">
                 <RatingBlock
                   disablestar={false}
@@ -624,7 +647,7 @@ const SignInModal = ({
                   <div className="rating-desc-rw">
                     <InputCell
                       Name={"reveiw"}
-                      Placeholder={"Reveiw"}
+                      Placeholder={getTranslations("review")}
                       Model=".reveiw"
                       InputType={"textarea"}
                       Errors={{ required: "required" }}
@@ -632,133 +655,20 @@ const SignInModal = ({
                   </div>
                   <div className="bid-confirm-btns rating-desc-rw text-center">
                     <Button color="secondary" className="start-job-btn">
-                      SUBMIT
+                      {getTranslations("submit")}
                     </Button>
                   </div>
                 </LocalForm>
               </div>
               <div className="bid-confirm-btns d-flex flex-column align-items-center">
                 <Button color="link" onClick={() => _toggleModal()}>
-                  Remind me later
+                  {getTranslations("remind_me")}
                 </Button>
               </div>
             </div>
           )}
         </ModalBody>
       </Modal>
-
-      {/* <Modal isOpen={true} size="lg" className={"d-flex flex-column align-items-center justify-content-center confirm-modal secondary-font-family"}>
-        <ModalHeader>
-          <span>Confirmation</span>
-          <Button color="link" className="close-btn btn2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
-              <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
-            </svg>
-          </Button>
-        </ModalHeader>
-        <ModalBody className={"overflow-auto"}>
-          <div className="bid-confirm-blc text-center">
-            <h2 className="text-primary">The job request has been accepted by </h2>
-            <h3>Joseph Allison</h3>
-            <div className="bid-confirm-btns d-flex flex-column align-items-center">
-              <Button color="secondary" className="start-job-btn">START JOB</Button>
-              <Button color="link">Remind me later</Button>
-            </div>
-          </div>
-        </ModalBody>
-      </Modal> */}
-
-      {/* <Modal isOpen={true} size="lg" className={"d-flex flex-column align-items-center justify-content-center confirm-modal bidder-completion secondary-font-family"}>
-        <ModalHeader className="border-0">
-          <Button color="link" className="close-btn btn2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
-              <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
-            </svg>
-          </Button>
-        </ModalHeader>
-        <ModalBody className={"overflow-auto"}>
-          <div className="bid-confirm-blc bidder-completion-blc text-center">
-            <div className="bidder-label">
-              Joseph Allison
-            </div>
-            <h2 className="text-primary">Has been completed the job</h2>
-            <h3>Tap a star to rate him</h3>
-            <div className="bidder-rate d-flex justify-content-center">
-              <RatingBlock />
-            </div>
-            <div className="bid-confirm-btns d-flex flex-column align-items-center">
-              <Button color="link">Remind me later</Button>
-            </div>
-          </div>
-        </ModalBody>
-      </Modal> */}
-
-      {/* <Modal isOpen={true} size="lg" className={"d-flex flex-column align-items-center justify-content-center bid-modal secondary-font-family"}>
-        <ModalHeader>
-          <span>Payment Completed</span>
-          <Button color="link" className="close-btn btn2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
-              <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
-            </svg>
-          </Button>
-        </ModalHeader>
-        <ModalBody className={"overflow-auto"}>
-          <div className="bid-detail-blc d-flex">
-            <div className="bid-detail-l">
-              <UserImage />
-            </div>
-            <div className="bid-detail-r">
-              <div className="bid-detail-rw">
-                <h2>
-                  Jorden Luise
-                <span>1 Day Ago</span>
-                </h2>
-                <p>
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero Lorem ipsum dolor sit amet, consetetur.
-                </p>
-                <div className="bid-price">
-                  $ 650.00
-                </div>
-              </div>
-              <div className="bid-frm-btns text-center">
-                <Button color="link" className="btn-dark">REJECT</Button>
-                <Button color="secondary">SEND</Button>
-              </div>
-            </div>
-          </div>
-        </ModalBody>
-      </Modal> */}
-
-      {/* <Modal isOpen={true} size="lg" className={"d-flex flex-column align-items-center justify-content-center payment-modal secondary-font-family text-center"}>
-        <ModalHeader className="border-0">
-          <Button color="link" className="close-btn btn2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="357" height="357" viewBox="0 0 357 357">
-              <path id="Forma_1" data-name="Forma 1" d="M357,35.7,321.3,0,178.5,142.8,35.7,0,0,35.7,142.8,178.5,0,321.3,35.7,357,178.5,214.2,321.3,357,357,321.3,214.2,178.5Z" />
-            </svg>
-          </Button>
-        </ModalHeader>
-        <ModalBody className={"overflow-auto pt-0 d-flex justify-content-center"}>
-          <div className="payment-detail-blc">
-            <div className="payment-logo">
-              <img src={require('../../../assets/images/icons/check-ball.svg')} alt="Check Icon" />
-            </div>
-            <h2>Payment Completed</h2>
-            <p>
-              <span className="d-block">1234 5678 1256 7894</span>
-              <span>26th Aug 2019 </span>
-            </p>
-            <h4>
-              Paid Amount
-            <span className="d-block">$250</span>
-            </h4>
-            <span className="to-line">to</span>
-            <div className="payment-profile d-flex justify-content-center">
-              <UserImage />
-              <label className="mb-0 d-flex align-items-center">Rapha Conrad</label>
-            </div>
-          </div>
-        </ModalBody>
-      </Modal> */}
     </div>
   );
 };

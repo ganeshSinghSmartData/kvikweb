@@ -6,13 +6,13 @@ import { Dropdown } from "react-bootstrap";
 import {
   getTranslations,
   changeLanguage,
-  getCurrentLanguage
+  getCurrentLanguage,
+  getAvailableTranslations
 } from "../../utilities/translations";
 // import { logout } from "./../../actions/user";
 import "./nav.scss";
 
 const Nav = (props) => {
-  const [lang, setLang] = useState(getCurrentLanguage());
   const loggedInUser = useSelector((state) => state.user.loggedIn);
   const stopPropagationHandler = (e) => {
     e.nativeEvent.stopImmediatePropagation();
@@ -30,14 +30,11 @@ const Nav = (props) => {
         block: "start",
         inline: "nearest"
       });
-      // let home = await document.getElementById("home");
-      // home && home.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
     }
   };
 
   const changeLang = useCallback((lang) => {
     changeLanguage(lang);
-    setLang(lang);
   }, []);
   return (
     <nav
@@ -55,8 +52,7 @@ const Nav = (props) => {
                 className="post-job-btn btn-block"
                 onClick={navVisibleHander}
               >
-                Post a Job
-                {/* getTranslations("component") */}
+                {getTranslations("post_job")}
               </Button>
             </Link>
           </li>
@@ -69,7 +65,7 @@ const Nav = (props) => {
               }}
               onClick={navVisibleHander}
             >
-              Browse Task
+              {getTranslations("browse_task")}
             </Link>
           </li>
           {!loggedInUser ? (
@@ -79,7 +75,7 @@ const Nav = (props) => {
                 to={"/about-us"}
                 onClick={navVisibleHander}
               >
-                About Qviktask
+                {getTranslations("about")} Qviktask
               </Link>
             </li>
           ) : (
@@ -90,7 +86,7 @@ const Nav = (props) => {
                   to={"/bid-list"}
                   onClick={navVisibleHander}
                 >
-                  Bids
+                  {getTranslations("bids")}
                 </Link>
               </li>
               <li>
@@ -99,16 +95,12 @@ const Nav = (props) => {
                   to={"/job-list"}
                   onClick={navVisibleHander}
                 >
-                  Jobs
+                  {getTranslations("jobs")}
                 </Link>
               </li>
             </>
           )}
-          {/* <li>
-            <Link className="btn btn-link" to={"/contact-us"} onClick={navVisibleHander}>
-              Contact Us
-            </Link>
-          </li> */}
+
           {!user.loggedIn && (
             <li>
               <Link
@@ -116,7 +108,7 @@ const Nav = (props) => {
                 to={"/register"}
                 onClick={navVisibleHander}
               >
-                Create an Account
+                {getTranslations("create_account")}
               </Link>
             </li>
           )}
@@ -127,7 +119,7 @@ const Nav = (props) => {
                 to={"/login"}
                 onClick={navVisibleHander}
               >
-                Login
+                {getTranslations("login")}
               </Link>
             )}
           </li>
@@ -139,16 +131,20 @@ const Nav = (props) => {
                 id="languageDropdown"
                 className="btn btn-light"
               >
-                {lang}
+                {getCurrentLanguage() && getCurrentLanguage().toUpperCase()}
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item as="button" onClick={() => changeLang("en")}>
-                  EN
-                </Dropdown.Item>
-                <Dropdown.Item as="button" onClick={() => changeLang("nl")}>
-                  NL
-                </Dropdown.Item>
+                {getAvailableTranslations() &&
+                  getAvailableTranslations().map((i) => (
+                    <Dropdown.Item
+                      key={i}
+                      as="button"
+                      onClick={() => changeLang(i)}
+                    >
+                      {i.toUpperCase()}
+                    </Dropdown.Item>
+                  ))}
               </Dropdown.Menu>
             </Dropdown>
           </li>

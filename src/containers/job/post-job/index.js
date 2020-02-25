@@ -240,7 +240,8 @@ class PostNewJob extends Component {
 const mapStateToProps = (state) => ({
   jobDetails: state.job.jobDetails,
   category: state.job.category,
-  user: state.user.data
+  user: state.user.data,
+  lang: state.user.lang
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -6,7 +6,6 @@ import "../src/assets/css/style.scss";
 import "../src/assets/fonts/style.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import "./utilities/translations";
 
 ReactDOM.render(<App />, document.getElementById("root"));
 

@@ -1,11 +1,6 @@
-import React, { useState } from "react";
-import { Button } from "reactstrap";
-import datetimeDifference from "datetime-difference";
-import { Link } from "react-router-dom";
+import React from "react";
 import Countdown from "react-countdown-now";
-import RatingBlock from "../../ratingBock/ratingBlock";
 import UserImage from "../userImage/userImage";
-import { DaysBetween } from "./../../../../utilities/common";
 import moment from "moment";
 import "./jobAddress.scss";
 

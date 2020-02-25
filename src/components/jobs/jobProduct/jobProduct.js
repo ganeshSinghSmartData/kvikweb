@@ -8,6 +8,7 @@ import { JobStatus, BidStatus } from "../../../utilities/constants";
 import { getJobBidCheck } from "./../../../actions/job";
 import constants from "../../../constants";
 import "./jobProduct.scss";
+import { getTranslations } from "../../../utilities/translations";
 
 /********* Get time ago in string format *********/
 
@@ -53,11 +54,11 @@ const JobProduct = ({ product, listType, path }) => {
           {product.images && product.images.length !== 0 ? (
             <img src={`${apiUrl}/${product.images[0]["path"]}`} alt="Job" />
           ) : (
-              <img
-                src={require("../../../assets/images/icons/default-job-image.svg")}
-                alt="Job"
-              />
-            )}
+            <img
+              src={require("../../../assets/images/icons/default-job-image.svg")}
+              alt="Job"
+            />
+          )}
           {path === "/bid-list" && (
             <span className={`job-status-bar position-absolute ${classname}`}>
               {workStatus[product.status]}
@@ -186,7 +187,7 @@ const JobProduct = ({ product, listType, path }) => {
               </svg>
             </span>
             <label className="d-flex flex-column">
-              Bidding ends in:
+              {getTranslations("bidding_end_in")}:
               {product && (product.jobEndDate || product.endDate) ? (
                 <Countdown
                   date={
@@ -212,18 +213,18 @@ const JobProduct = ({ product, listType, path }) => {
           <label
             className={`flex-fill mb-0 ${
               product.status === "accepted" ||
-                product.status === "in_progress" ||
-                product.status === "completed"
+              product.status === "in_progress" ||
+              product.status === "completed"
                 ? "text-success"
                 : product.status === "rejected" || product.status === "expired"
-                  ? "text-danger"
-                  : "text-primary"
-              }`}
+                ? "text-danger"
+                : "text-primary"
+            }`}
           >
-            {constants.jobStatus[product.status]}
+            {getTranslations(product.status)}
           </label>
           <span>
-            Your bid : $
+            {getTranslations("your_bid")} : $
             {(product.mybid &&
               product.mybid[0] &&
               product.mybid[0].bid_amount) ||

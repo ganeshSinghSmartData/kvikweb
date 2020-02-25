@@ -8,6 +8,7 @@ import "./reviewJob.scss";
 
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import JobDetail from "../../jobDetail/jobDetail";
+import { getTranslations } from "../../../../utilities/translations";
 
 const ReviewModal = (props) => {
   const { _jobDetails, closePrevieModal, submitJobData } = props;
@@ -35,13 +36,13 @@ const ReviewModal = (props) => {
         className="modal-lg job-review-modal d-flex flex-column align-items-center justify-content-center"
       >
         <ModalHeader>
-          <span>View Job Details</span>
+          <span>{getTranslations("view_job_details")}</span>
           <Button
             color="secondary"
             className="job-post-btn ml-auto"
             onClick={saveJobData}
           >
-            Post Now
+            {getTranslations("post_now")}
           </Button>
         </ModalHeader>
         {/* //CHANGES */}

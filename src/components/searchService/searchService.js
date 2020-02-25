@@ -8,6 +8,7 @@ import { Container, Row, Col, Button } from "reactstrap";
 import "./searchService.scss";
 import { pagination } from "../../utilities/constants";
 import { getJobProduct, reset_job_products } from "../../actions/job";
+import { getTranslations } from "../../utilities/translations";
 
 const SearchService = ({ history, className = "", posJobButton }) => {
   const loggedInUser = useSelector((state) => state.user.loggedIn);
@@ -23,7 +24,7 @@ const SearchService = ({ history, className = "", posJobButton }) => {
   return (
     <>
       <LocalForm
-        onSubmit={values => _handleSearch(values.search)}
+        onSubmit={(values) => _handleSearch(values.search)}
         className="src-service-blc d-flex flex-column flex-fill"
       >
         <div className="src-service position-relative d-flex flex-column">
@@ -32,9 +33,9 @@ const SearchService = ({ history, className = "", posJobButton }) => {
               type="search"
               name="search"
               model=".search"
-              placeholder="Search for a service"
+              placeholder={getTranslations("search_service")}
               className="border-0 flex-fill h-100 form-control"
-              onChange={e => _handleSearch(e.target.value)}
+              onChange={(e) => _handleSearch(e.target.value)}
             />
             <span className="d-flex align-items-center position-absolute">
               <svg
@@ -68,22 +69,18 @@ const SearchService = ({ history, className = "", posJobButton }) => {
                 />
               </svg>
             </span>
-            <span className="web-icn">Search</span>
+            <span className="web-icn">{getTranslations("search")}</span>
           </Button>
         </div>
       </LocalForm>
-      {
-        posJobButton ?
-          <Link
-            className="text-black"
-            to={loggedInUser ? "/post-job" : "/login"}
-          >
-            <Button className="post-job-btn btn-block">Post a Job</Button>
-          </Link> : null
-      }
-
+      {posJobButton ? (
+        <Link className="text-black" to={loggedInUser ? "/post-job" : "/login"}>
+          <Button className="post-job-btn btn-block">
+            {getTranslations("post_job")}
+          </Button>
+        </Link>
+      ) : null}
     </>
-
   );
 };
 

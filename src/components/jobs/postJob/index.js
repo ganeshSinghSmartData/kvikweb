@@ -15,6 +15,7 @@ import { getJobCategory } from "./../../../actions/job";
 import InputCell from "../../commonUi/input/inputCell";
 import Loader from "../../../components/commonUi/loader/loader";
 import ReviewJob from "./reviewJob/reviewJob";
+import { getTranslations } from "../../../utilities/translations";
 
 export default (props) => {
   let {
@@ -169,7 +170,7 @@ export default (props) => {
       <div
         className={`post-job-inner ${
           _currentstage === 3 ? "gallery-block" : ""
-          }`}
+        }`}
       >
         <LocalForm
           initialState={_jobDetails}
@@ -189,7 +190,9 @@ export default (props) => {
           {_currentstage === 1 && (
             <div className="row flex-wrap post-job-form">
               <div className="col-md-6">
-                <label className="input-title">Select Category</label>
+                <label className="input-title">
+                  {getTranslations("select_category")}
+                </label>
                 {CategoryItems && (
                   <SelectSearch
                     options={CategoryItems}
@@ -198,8 +201,8 @@ export default (props) => {
                       _selectedCategory
                         ? _selectedCategory
                         : CategoryItems &&
-                        CategoryItems.length &&
-                        CategoryItems[0].value
+                          CategoryItems.length &&
+                          CategoryItems[0].value
                     }
                     name="category"
                     onChange={(category) => _handleCategoryOnchange(category)}
@@ -208,10 +211,12 @@ export default (props) => {
                 )}
               </div>
               <div className="col-md-6">
-                <label className="input-title">Job Title</label>
+                <label className="input-title">
+                  {getTranslations("job_title")}
+                </label>
                 <InputCell
                   Name={"jobtitle"}
-                  Placeholder={"Job Title"}
+                  Placeholder={getTranslations("job_title")}
                   Model=".jobtitle"
                   InputType={"text"}
                   Length={50}
@@ -219,10 +224,12 @@ export default (props) => {
                 />
               </div>
               <div className="col-md-6">
-                <label className="input-title">About the job</label>
+                <label className="input-title">
+                  {getTranslations("about_job")}
+                </label>
                 <InputCell
                   Name={"aboutjob"}
-                  Placeholder={"About the job"}
+                  Placeholder={getTranslations("about_job")}
                   Model=".description"
                   InputType={"textarea"}
                   Length={500}
@@ -230,10 +237,12 @@ export default (props) => {
                 />
               </div>
               <div className="col-md-6">
-                <label className="input-title">Budget</label>
+                <label className="input-title">
+                  {getTranslations("budget")}
+                </label>
                 <InputCell
                   Name={"budget"}
-                  Placeholder={"Budget"}
+                  Placeholder={getTranslations("budget")}
                   Model=".budget"
                   InputType={"text"}
                   Length={6}
@@ -249,10 +258,12 @@ export default (props) => {
           {_currentstage === 2 && (
             <div className="row flex-wrap post-job-form">
               <div className="col-md-4">
-                <label className="input-title">Street</label>
+                <label className="input-title">
+                  {getTranslations("Street")}
+                </label>
                 <InputCell
                   Name={"street"}
-                  Placeholder={"Street"}
+                  Placeholder={getTranslations("Street")}
                   Model=".street"
                   InputType={"text"}
                   Length={20}
@@ -260,10 +271,10 @@ export default (props) => {
                 />
               </div>
               <div className="col-md-4">
-                <label className="input-title">City</label>
+                <label className="input-title">{getTranslations("city")}</label>
                 <InputCell
                   Name={"city"}
-                  Placeholder={"City"}
+                  Placeholder={getTranslations("city")}
                   Model=".city"
                   InputType={"text"}
                   Length={20}
@@ -271,10 +282,12 @@ export default (props) => {
                 />
               </div>
               <div className="col-md-4">
-                <label className="input-title">Postal Code</label>
+                <label className="input-title">
+                  {getTranslations("postal_code")}
+                </label>
                 <InputCell
                   Name={"postalCode"}
-                  Placeholder={"Postal Code"}
+                  Placeholder={getTranslations("postal_code")}
                   Model=".location"
                   InputType={"text"}
                   Length={6}
@@ -286,7 +299,9 @@ export default (props) => {
                 />
               </div>
               <div className="col-md-4">
-                <label className="input-title">Start Date</label>
+                <label className="input-title">
+                  {getTranslations("start_date")}
+                </label>
                 <DatePicker
                   selected={startDate}
                   onChange={(date) => {
@@ -303,7 +318,7 @@ export default (props) => {
                     );
                   }}
                   minDate={new Date()}
-                  timeInputLabel="Time:"
+                  timeInputLabel={`${getTranslations("time")}:`}
                   dateFormat="MM/dd/yyyy h:mm aa"
                   onInputClick={() => handleOnInputClick()}
                   onClickOutsideEvent={handleOnClickOutsideEvent()}
@@ -311,11 +326,13 @@ export default (props) => {
                 />
               </div>
               <div className="col-md-4">
-                <label className="input-title">Bid deadline date</label>
+                <label className="input-title">
+                  {getTranslations("bid_deadline")}
+                </label>
                 <DatePicker
                   selected={endDate}
                   onChange={(date) => setEndDate(date.getTime())}
-                  timeInputLabel="Time:"
+                  timeInputLabel={`${getTranslations("time")}:`}
                   minDate={moment()}
                   maxDate={startDate}
                   dateFormat="MM/dd/yyyy h:mm aa"
@@ -325,12 +342,14 @@ export default (props) => {
                 />
               </div>
               <div className="col-md-4">
-                <label className="input-title">Frequency</label>
+                <label className="input-title">
+                  {getTranslations("frequency")}
+                </label>
                 <InputCell
                   Name={"frequency"}
                   Model=".frequency"
                   InputType="select"
-                  Placeholder={"Frequency"}
+                  Placeholder={getTranslations("frequency")}
                   Errors={{ required: "required" }}
                 />
               </div>
@@ -433,11 +452,11 @@ export default (props) => {
               </div>
               {isImageLengthExist ? (
                 <div className="job-post-img-error text-danger text-center">
-                  You can't select more then 5 images
+                  {getTranslations("image_error")}
                 </div>
               ) : (
-                  ""
-                )}
+                ""
+              )}
             </>
           )}
 
@@ -448,7 +467,7 @@ export default (props) => {
                 className="text-black btn-dark cancel btn btn-link"
                 to={"/"}
               >
-                Cancel
+                {getTranslations("cancel")}
               </Link>
             )}
             {_currentstage !== 1 && (
@@ -460,29 +479,24 @@ export default (props) => {
                   _handleStageChange(-1);
                 }}
               >
-                Back
+                {getTranslations("back")}
               </Button>
             )}
             {_currentstage !== 3 && (
               <Button type="submit" color="secondary">
-                Next
+                {getTranslations("next")}
               </Button>
             )}
             {_currentstage === 3 && (
               <div>
-                {/* <Button
-                color="secondary"
-                disabled={isImageLengthExist}
-                onClick={_openPreviewData}
-              >
-                View Job
-              </Button> */}
                 <Button
                   color="secondary"
                   type="submit"
                   disabled={isImageLengthExist}
                 >
-                  {path == "/post-job" ? "Review Job" : "Update Job"}
+                  {path == "/post-job"
+                    ? getTranslations("review_job")
+                    : getTranslations("update_job")}
                 </Button>
               </div>
             )}
