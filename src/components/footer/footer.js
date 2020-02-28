@@ -92,8 +92,7 @@ const Footer = () => {
                 </li>
               </ul>
               <p className="p-0">
-                {getTranslations("cpyrt")} {new Date().getFullYear()}{" "}
-                {getTranslations("all_rights")}
+                &copy;{new Date().getFullYear()} {getTranslations("all_rights")}
               </p>
             </div>
           </Col>

@@ -101,7 +101,11 @@ const StatusBar = (props) => {
           </div>
           <ul className="d-flex">
             {Object.keys(getStatus(props.status)).map((item, index) => (
-              <Status {...getStatus(props.status)[item]} index={index} />
+              <Status
+                {...getStatus(props.status)[item]}
+                key={index}
+                index={index}
+              />
             ))}
           </ul>
         </div>

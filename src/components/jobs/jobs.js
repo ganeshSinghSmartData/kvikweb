@@ -52,12 +52,12 @@ const Job = ({
   let bids = useSelector((state) => state.bid);
   let products = [];
   let count = 0;
-  let active = "Active";
-  let complete = "Complete";
+  let active = "";
+  let complete = "";
 
   if (path === "/job-list") {
-    active = `${active} Job`;
-    complete = `${complete} Job`;
+    active = getTranslations("active_job");
+    complete = getTranslations("complete_job");
     if (jobType === "active") {
       products = jobs.activeJobProduct;
       count = jobs.activeJobsCount;
@@ -67,8 +67,8 @@ const Job = ({
       count = jobs.completedJobsCount;
     }
   } else if (path === "/bid-list") {
-    active = `${active} Bid`;
-    complete = `${complete} Bid`;
+    active = getTranslations("active_bid");
+    complete = getTranslations("complete_bid");
     if (jobType === "active") {
       products = bids.activeBid.reduce((d, i) => {
         d.push({ ...i.job_id });

@@ -80,3 +80,4 @@ export const USERS_REVIEW = "USERS_REVIEW";
 
 /*******************Language ********************************/
 export const LANGUAGE_CHANGED = "LANGUAGE_CHANGED";
+export const LANGUAGE_LOADER = "LANGUAGE_LOADER";

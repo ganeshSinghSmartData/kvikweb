@@ -33,11 +33,7 @@ const RenderSimilarProducts = (props) => {
                     </span>
                   </h2>
                   <JobAddress
-                    job_seeker_id={{
-                      city: item.city,
-                      street: item.street,
-                      zip_code: item.location
-                    }}
+                    job_seeker_id={item.address}
                     handleImageUpload={null}
                     imegeUploading={null}
                     editimage={false}
@@ -49,7 +45,7 @@ const RenderSimilarProducts = (props) => {
               </div>
               <div className="job-list-status d-flex">
                 <span className="job-status-lbl text-primary">
-                  {constants.jobStatus[item.status]}
+                  {getTranslations(item.status)}
                 </span>
                 <span className="job-offer-lbl ml-auto">
                   {item.bidcount} {getTranslations("offers")}

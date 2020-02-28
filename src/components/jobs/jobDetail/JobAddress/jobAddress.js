@@ -75,7 +75,7 @@ const JobAddress = ({
                   </g>
                 </svg>
               </span>
-              <p>{`${job_seeker_id["city"]}, ${job_seeker_id["zip_code"]}`}</p>
+              <p>{`${job_seeker_id["formatted_address"]}`}</p>
             </li>
           )}
 

@@ -6,10 +6,10 @@
  */
 
 const local = {
-  apiUrl: "http://172.24.4.127:4599",
-  socketUrl: "http://172.24.4.127:4599",
+  apiUrl: "http://172.24.4.39:4599",
+  socketUrl: "http://172.24.4.39:4599",
   // apiUrl: "http://172.24.4.68:3000",
-  socketUrl: "http://172.24.4.127:4599",
+  socketUrl: "http://172.24.4.39:4599",
   stripeKey: "pk_test_d1UROWtZYJBNTCKAPLSjjY1x00Vbn25a9Q"
 };
 

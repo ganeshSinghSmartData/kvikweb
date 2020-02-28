@@ -134,7 +134,7 @@ const JobProduct = ({ product, listType, path }) => {
               </svg>
             </span>
             <label>
-              Bid Count:
+              {getTranslations("bid_count")}:
               {(product.jobBidStatus &&
                 product.jobBidStatus !== 0 &&
                 product.jobBidStatus.filter(
@@ -166,7 +166,7 @@ const JobProduct = ({ product, listType, path }) => {
               </svg>
             </span>
             <label className="d-flex flex-column text-left">
-              Date
+              {getTranslations("date")}
               <span>{StringToDate(product.jobStartDate)}</span>
             </label>
           </div>

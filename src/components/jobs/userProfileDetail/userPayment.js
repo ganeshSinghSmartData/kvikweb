@@ -27,8 +27,6 @@ const UserPayment = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [date, setDate] = useState(new Date());
-  const [images, setImages] = useState([]);
-  const [imageData, setImageData] = useState({});
 
   const [stripe, setStripe] = useState(window.Stripe(stripeKey));
   const [front_image, setFrontImage] = useState({ url: "", file: {} });
@@ -195,7 +193,7 @@ const UserPayment = (props) => {
       message: getTranslations("delete_card_alert"),
       buttons: [
         {
-          label: "Yes",
+          label: getTranslations("yes"),
           onClick: () => {
             setIsLoading(true);
             dispatch(
@@ -209,7 +207,7 @@ const UserPayment = (props) => {
           }
         },
         {
-          label: "No",
+          label: getTranslations("no"),
           onClick: () => {}
         }
       ]

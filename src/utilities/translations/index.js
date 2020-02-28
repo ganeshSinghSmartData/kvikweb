@@ -2,7 +2,7 @@ import i18next from "i18next";
 import en from "./en";
 import { getAllTranslation } from "../../actions/translations";
 import { storeObj } from "../../config";
-import { LANGUAGE_CHANGED, IS_FETCHING } from "../../actions/constants";
+import { LANGUAGE_CHANGED, LANGUAGE_LOADER } from "../../actions/constants";
 
 var resources = {
   en: {
@@ -13,7 +13,6 @@ var resources = {
 var translations = [];
 
 getAllTranslation().then((res) => {
-  storeObj.store.dispatch({ type: IS_FETCHING, status: true });
   translations = Object.keys(res);
   i18next.init({
     interpolation: { escapeValue: false }, // React already does escaping
@@ -22,7 +21,7 @@ getAllTranslation().then((res) => {
     debug: true,
     resources: res || resources
   });
-  storeObj.store.dispatch({ type: IS_FETCHING, status: false });
+  storeObj.store.dispatch({ type: LANGUAGE_LOADER });
 });
 
 export const getTranslations = (val) => i18next.t(val);

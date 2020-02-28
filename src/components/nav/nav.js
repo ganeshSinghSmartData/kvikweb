@@ -140,6 +140,7 @@ const Nav = (props) => {
                     <Dropdown.Item
                       key={i}
                       as="button"
+                      className={getCurrentLanguage() === i ? "disabled" : ""}
                       onClick={() => changeLang(i)}
                     >
                       {i.toUpperCase()}
