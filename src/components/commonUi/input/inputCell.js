@@ -3,16 +3,8 @@ import { FormGroup } from "reactstrap";
 import { Control } from "react-redux-form";
 import Match from "../../../utilities/validation";
 import Error from "./../error";
-import {
-  invalidEmail,
-  invalidPass,
-  invalidNumber,
-  validateMobile,
-  lengthExist,
-  lengthShort,
-  required
-} from "./../../../utilities/message";
-import { CategoryItems, FrequencyItem } from "./../../../utilities/constants";
+import { CategoryItems, FrequencyItem } from "../../../utilities/constants";
+import { getTranslations } from "../../../utilities/translations";
 
 import "./inputCell.scss";
 const InputCell = ({
@@ -27,60 +19,61 @@ const InputCell = ({
   DefaultValue = "One-time",
   Length = "",
   HandleImageOnchange,
-  handlePostalCode = () => { },
+  handlePostalCode = () => {},
   Errors
 }) => {
   let ErrorsObject = {};
   /**************** Error validations ****************/
-  const validation = props => {
+  const validation = (props) => {
     let errors = {};
     if (Errors["required"] === "required") {
-      errors = { ...errors, required: val => !val || !val.length };
-      ErrorsObject = { required };
+      errors = { ...errors, required: (val) => !val || !val.length };
+      ErrorsObject = { required: getTranslations("required") };
     }
     if (Errors["invalidEmail"] === "invalidEmail") {
-      errors = { ...errors, invalidEmail: val => !Match.validateEmail(val) };
-      ErrorsObject = { invalidEmail };
+      errors = { ...errors, invalidEmail: (val) => !Match.validateEmail(val) };
+      ErrorsObject = { invalidEmail: getTranslations("invalidEmail") };
     }
     if (Errors["invalidPass"] === "invalidPass") {
-      errors = { ...errors, invalidPass: val => !Match.validatePassword(val) };
-      ErrorsObject = { invalidPass };
+      errors = {
+        ...errors,
+        invalidPass: (val) => !Match.validatePassword(val)
+      };
+      ErrorsObject = { invalidPass: getTranslations("invalidPass") };
     }
     if (Errors["invalidNumber"] === "invalidNumber") {
       errors = {
         ...errors,
-        invalidNumber: val => val && !Match.validateNumbers(val)
+        invalidNumber: (val) => val && !Match.validateNumbers(val)
       };
-      ErrorsObject = { invalidNumber };
+      ErrorsObject = { invalidNumber: getTranslations("invalidNumber") };
     }
 
     if (Errors["validateMobile"] === "validateMobile") {
       errors = {
         ...errors,
-        validateMobile: val => !Match.validateMobile(val)
+        validateMobile: (val) => !Match.validateMobile(val)
       };
-      ErrorsObject = { validateMobile };
+      ErrorsObject = { validateMobile: getTranslations("validateMobile") };
     }
 
     if (Errors["lengthExist"] === "lengthExist") {
       errors = {
         ...errors,
-        lengthExist: val => val && val.length > props
+        lengthExist: (val) => val && val.length > props
       };
-      ErrorsObject = { lengthExist };
+      ErrorsObject = { lengthExist: getTranslations("lengthExist") };
     }
 
     if (Errors["lengthShort"] === "lengthShort") {
       errors = {
         ...errors,
-        lengthShort: val => val.length < props
+        lengthShort: (val) => val.length < props
       };
-      ErrorsObject = { lengthShort };
+      ErrorsObject = { lengthShort: getTranslations("lengthShort") };
     }
-
     return errors;
   };
-
   return (
     <FormGroup>
       <div
@@ -170,7 +163,7 @@ const InputCell = ({
               disabled={Disabled}
               model={Model}
               className={"form-control"}
-              onChange={event => handlePostalCode(event.target.value)}
+              onChange={(event) => handlePostalCode(event.target.value)}
               errors={validation(Length ? Length : "")}
             />
           )}
@@ -225,7 +218,7 @@ const InputCell = ({
             model={Model}
             disabled={Disabled}
             multiple={Multiple}
-            onChange={event => HandleImageOnchange(event.target.files)}
+            onChange={(event) => HandleImageOnchange(event.target.files)}
             className={"form-control"}
             errors={validation()}
           ></Control.file>

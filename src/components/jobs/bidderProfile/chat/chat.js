@@ -15,6 +15,7 @@ import { css } from "glamor";
 import Spinner from "../../../commonUi/spinner/spinner";
 import { ImageView } from "./ImageView/ImageView";
 import moment from "moment";
+// import { apiUrl } from "../../../../environment";
 import { apiUrl } from "../../../../environment";
 import { getTranslations } from "../../../../utilities/translations";
 

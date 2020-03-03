@@ -345,6 +345,12 @@
     font-size: 12px;
     font-weight: 400;
     color: #435c69;
+    cursor: pointer;
+    > svg {
+      width: 9px;
+      fill: gray;
+      margin-left: 5px;
+    }
   }
 }
 

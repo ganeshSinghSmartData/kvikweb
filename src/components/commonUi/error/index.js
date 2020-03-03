@@ -1,12 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Errors } from "react-redux-form";
-import {
-  invalidEmail,
-  invalidPass,
-  invalidNumber,
-  required
-} from "./../../../utilities/message";
+import { getTranslations } from "../../../utilities/translations";
 
 const errors = ({ model, errors }) => {
   return (
@@ -15,10 +10,10 @@ const errors = ({ model, errors }) => {
       model={model}
       show="touched"
       messages={{
-        required,
-        invalidEmail,
-        invalidNumber,
-        invalidPass,
+        required: getTranslations("required"),
+        invalidEmail: getTranslations("invalidEmail"),
+        invalidNumber: getTranslations("invalidNumber"),
+        invalidPass: getTranslations("invalidPass"),
         ...errors
       }}
     />

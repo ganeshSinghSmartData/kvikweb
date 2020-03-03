@@ -5,7 +5,7 @@
  */
 
 const Message = {
-  requiredField: field => `Please enter ${field}!`,
+  requiredField: (field) => `Please enter ${field}!`, //ਕਿਰਪਾ ਕਰਕੇ $ {field} ਵਿੱਚ ਦਾਖਲ ਹੋਵੋ
   required: "This field is required. ",
   invalidNumber: "Please enter valid number.",
   validateMobile: "Please enter valid mobile number.",
