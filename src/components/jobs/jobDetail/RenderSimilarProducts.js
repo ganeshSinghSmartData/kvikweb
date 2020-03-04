@@ -6,6 +6,7 @@ import constants from "../../../constants";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { getUserJobDetails } from "../../../actions/bid";
+import { getTranslations } from "../../../utilities/translations";
 const RenderSimilarProducts = (props) => {
   const dispatch = useDispatch();
   if (!props.data && props.data.length) return null;
@@ -19,7 +20,7 @@ const RenderSimilarProducts = (props) => {
               to={`/job-details/${item._id}`}
               onClick={() => {
                 document.querySelector("#main_container").scrollTop = 0;
-                dispatch(getUserJobDetails({ jobId: item._id }))
+                dispatch(getUserJobDetails({ jobId: item._id }));
               }}
             >
               <div className="job-list-bx-rw d-flex">
@@ -32,11 +33,7 @@ const RenderSimilarProducts = (props) => {
                     </span>
                   </h2>
                   <JobAddress
-                    job_seeker_id={{
-                      city: item.city,
-                      street: item.street,
-                      zip_code: item.location
-                    }}
+                    job_seeker_id={item.address}
                     handleImageUpload={null}
                     imegeUploading={null}
                     editimage={false}
@@ -48,10 +45,10 @@ const RenderSimilarProducts = (props) => {
               </div>
               <div className="job-list-status d-flex">
                 <span className="job-status-lbl text-primary">
-                  {constants.jobStatus[item.status]}
+                  {getTranslations(item.status)}
                 </span>
                 <span className="job-offer-lbl ml-auto">
-                  {item.bidcount} offers
+                  {item.bidcount} {getTranslations("offers")}
                 </span>
               </div>
             </Link>

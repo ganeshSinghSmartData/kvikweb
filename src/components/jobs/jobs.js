@@ -9,20 +9,18 @@ import {
   DropdownItem
 } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { sidebarToggleHandler, filterToggleHandler } from "../../actions/job";
+import { filterToggleHandler } from "../../actions/job";
 import smoothscroll from "smoothscroll-polyfill";
 import JobProduct from "./jobProduct/jobProduct";
 import Sidebar from "../sidebar/sidebar";
-import Heading from "../../components/commonUi/heading/heading";
-import Paragraph from "../../components/commonUi/paragraph/paragraph";
 import { pagination } from "../../utilities/constants";
 import Spinner from "../commonUi/spinner/spinner";
 import NoData from "../commonUi/noData/noData";
 import SpinnerOverlay from "../commonUi/spinner/spinnerOverlay/spinnerOverlay";
 import "./jobs.scss";
 import { getJobProduct, reset_job_products } from "./../../actions/job";
-import { filterRange } from "../../actions/filter";
 import SearchService from "../../components/searchService/searchService";
+import { getTranslations } from "../../utilities/translations";
 smoothscroll.polyfill();
 
 const Job = ({
@@ -39,7 +37,6 @@ const Job = ({
   let [sort, setSortBy] = useState("");
   let [distance, setDistance] = useState("");
   let [budget, setBudget] = useState({});
-  const [confirmOpen, setConfirmOpen] = useState(false);
   const [dropdownOpen, setOpen] = useState(false);
   const toggle = () => setOpen(!dropdownOpen);
   let [initial, setInitial] = useState(true);
@@ -55,12 +52,12 @@ const Job = ({
   let bids = useSelector((state) => state.bid);
   let products = [];
   let count = 0;
-  let active = "Active";
-  let complete = "Complete";
+  let active = "";
+  let complete = "";
 
   if (path === "/job-list") {
-    active = `${active} Job`;
-    complete = `${complete} Job`;
+    active = getTranslations("active_job");
+    complete = getTranslations("complete_job");
     if (jobType === "active") {
       products = jobs.activeJobProduct;
       count = jobs.activeJobsCount;
@@ -70,8 +67,8 @@ const Job = ({
       count = jobs.completedJobsCount;
     }
   } else if (path === "/bid-list") {
-    active = `${active} Bid`;
-    complete = `${complete} Bid`;
+    active = getTranslations("active_bid");
+    complete = getTranslations("complete_bid");
     if (jobType === "active") {
       products = bids.activeBid.reduce((d, i) => {
         d.push({ ...i.job_id });
@@ -328,22 +325,22 @@ const Job = ({
                 </DropdownToggle>
                 <DropdownMenu right className="overflow-auto">
                   <DropdownItem onClick={() => sortBy({ budget: -1 })}>
-                    Budget - high to low
+                    {getTranslations("budget_hi_lo")}
                   </DropdownItem>
                   <DropdownItem onClick={() => sortBy({ budget: 1 })}>
-                    Budget - low to high
+                    {getTranslations("budget_lo_hi")}
                   </DropdownItem>
                   <DropdownItem onClick={() => sortBy({ created_at: -1 })}>
-                    Create Date
+                    {getTranslations("create_date")}
                   </DropdownItem>
                   <DropdownItem onClick={() => sortBy({ jobtitle: 1 })}>
-                    Title (a-z)
+                    {getTranslations("title_a_z")}
                   </DropdownItem>
                   <DropdownItem onClick={() => sortBy({ jobStartDate: -1 })}>
-                    Job Start Date
+                    {getTranslations("job_start_date")}
                   </DropdownItem>
                   <DropdownItem onClick={() => sortBy({ jobEndDate: -1 })}>
-                    Bid Deadline Date
+                    {getTranslations("bid_deadline")}
                   </DropdownItem>
                 </DropdownMenu>
               </ButtonDropdown>
@@ -433,17 +430,6 @@ const Job = ({
               }
                 `}
           >
-            {/* {path === "" && (
-              <React.Fragment>
-                <Heading className="text-primary h1">
-                  Welcome to QvikTask
-                </Heading>
-                <Paragraph>
-                  Our objective is to provide a platform where service providers and service seeker can come interact and exchange services on the bases of requirements.
-                </Paragraph>
-              </React.Fragment>
-            )} */}
-
             <div className="job-list-blc m-0" id="jobList">
               <Row
                 className={`job-listing position-relative
@@ -487,7 +473,7 @@ const Job = ({
                         onClick={() => showMoreProduct(++page)}
                       >
                         <span className="d-flex justify-content-center"></span>
-                        <span>SHOW MORE</span>
+                        <span>{getTranslations("show_more")}</span>
                       </Button>
                     </Col>
                   </Row>

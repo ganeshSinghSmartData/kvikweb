@@ -22,7 +22,7 @@ export default App;
  * */
 
 import React from "react";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { createBrowserHistory } from "history";
 import { PersistGate } from "redux-persist/lib/integration/react";
@@ -31,18 +31,27 @@ import "react-toastify/dist/ReactToastify.css";
 import configureStore from "./config";
 import Routers from "./routers";
 import Loader from "./components/commonUi/loader/loader";
+import "./utilities/translations";
 
 export const history = createBrowserHistory();
+
+const RouterProvider = () => {
+  const { langLoader } = useSelector((state) => state.loader);
+  return (
+    <ConnectedRouter history={history}>
+      <ToastContainer />
+      {langLoader ? <Loader /> : <Routers {...store} />}
+    </ConnectedRouter>
+  );
+};
+
 /************ store configration *********/
 const { persistor, store } = configureStore(history);
 const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={<Loader />} persistor={persistor}>
-        <ConnectedRouter history={history}>
-          <ToastContainer />
-          <Routers {...store} />
-        </ConnectedRouter>
+        <RouterProvider />
       </PersistGate>
     </Provider>
   );

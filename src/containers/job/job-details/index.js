@@ -183,7 +183,8 @@ const mapStateToProps = (state) => ({
   jobs: state.job.jobProduct,
   jobDetails: state.job.jobDetails,
   userJobDetails: state.bid.userJobDetails,
-  _isLoading: state.loader.isFetching
+  _isLoading: state.loader.isFetching,
+  lang: state.user.lang
 });
 
 const mapDispatchToProps = {

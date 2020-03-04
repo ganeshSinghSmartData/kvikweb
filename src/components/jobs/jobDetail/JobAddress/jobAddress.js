@@ -1,11 +1,6 @@
-import React, { useState } from "react";
-import { Button } from "reactstrap";
-import datetimeDifference from "datetime-difference";
-import { Link } from "react-router-dom";
+import React from "react";
 import Countdown from "react-countdown-now";
-import RatingBlock from "../../ratingBock/ratingBlock";
 import UserImage from "../userImage/userImage";
-import { DaysBetween } from "./../../../../utilities/common";
 import moment from "moment";
 import "./jobAddress.scss";
 
@@ -20,10 +15,6 @@ const JobAddress = ({
   showSeekerName,
   showEmail
 }) => {
-  let [timeleft, seTimeleft] = useState(
-    datetimeDifference(new Date(), new Date(DaysBetween(end_date)))
-  );
-
   return (
     <div className="job-address d-flex">
       {jobListings ? (
@@ -84,7 +75,7 @@ const JobAddress = ({
                   </g>
                 </svg>
               </span>
-              <p>{`${job_seeker_id["city"]}, ${job_seeker_id["zip_code"]}`}</p>
+              <p>{`${job_seeker_id["formatted_address"]}`}</p>
             </li>
           )}
 

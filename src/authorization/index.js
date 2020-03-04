@@ -5,12 +5,12 @@
  * */
 
 /******** Get User from store  ***********/
-export const User = store => {
+export const User = (store) => {
   return store.getState().user;
 };
 
 /******** Routing authentication middleware ***********/
-export const Authorization = store => {
+export const Authorization = (store) => {
   return User(store).loggedIn;
 };
 /******** Set Authorization token in header ***********/

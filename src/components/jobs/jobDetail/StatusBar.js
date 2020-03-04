@@ -1,34 +1,35 @@
 import React from "react";
 import constants from "../../../constants";
 import Status from "./Status";
+import { getTranslations } from "../../../utilities/translations";
 const getStatus = (status) => {
   let data = {
     not_started: {
-      title: "Open",
+      title: getTranslations("job_open"),
       isComplete: false,
       isActive: false,
       isRejected: false
     },
     accepted: {
-      title: "Bid Accepted",
+      title: getTranslations("job_bid_accepted"),
       isComplete: false,
       isActive: false,
       isRejected: false
     },
     in_progress: {
-      title: "In-Progress",
+      title: getTranslations("job_in_progress"),
       isComplete: false,
       isActive: false,
       isRejected: false
     },
     completed: {
-      title: "Completed",
+      title: getTranslations("job_completed_title"),
       isComplete: false,
       isActive: false,
       isRejected: false
     },
     approved: {
-      title: "Approved",
+      title: getTranslations("job_approved"),
       isComplete: false,
       isActive: false,
       isRejected: false
@@ -95,12 +96,16 @@ const StatusBar = (props) => {
                   : "text-primary"
               }`}
             >
-              {constants.jobStatus[props.status]}
+              {getTranslations(props.status)}
             </span>
           </div>
           <ul className="d-flex">
             {Object.keys(getStatus(props.status)).map((item, index) => (
-              <Status {...getStatus(props.status)[item]} index={index} />
+              <Status
+                {...getStatus(props.status)[item]}
+                key={index}
+                index={index}
+              />
             ))}
           </ul>
         </div>

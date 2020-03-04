@@ -33,6 +33,7 @@ import RateBidderWorkModal from "../../commonUi/modal/modal";
 import UserImage from "../../jobs/jobDetail/userImage/userImage";
 import RenderSimilarProducts from "./RenderSimilarProducts";
 import StatusBar from "./StatusBar";
+import { getTranslations } from "../../../utilities/translations";
 export default function JobDetail({
   history,
   job = {},
@@ -194,7 +195,7 @@ export default function JobDetail({
           <>
             <div className="job-detail-hd d-flex align-items-center">
               <div className="flex-fill d-flex job-detail-hd-inner align-items-center">
-                <h2 className="flex-fill">Job Details</h2>
+                <h2 className="flex-fill">{getTranslations("job_details")}</h2>
               </div>
               <Breadcrumb path={path} />
             </div>
@@ -206,7 +207,7 @@ export default function JobDetail({
                   document.querySelector("#newTaskBtn").scrollIntoView();
               }}
             >
-              View Similar Jobs
+              {getTranslations("view_similar")}
             </Button>
           </>
         )}
@@ -219,9 +220,6 @@ export default function JobDetail({
                 <div
                   className={`job-detail-pic position-relative ${noImageClass}`}
                 >
-                  {/* {imageLoad && (
-                <Spinner className="position-absolute d-flex justify-content-center align-items-center with-overlay" />
-              )} */}
                   {apiUrl && job.images && job.images.length !== 0 ? (
                     <img
                       src={
@@ -274,7 +272,7 @@ export default function JobDetail({
                       <div className="job-detail-hd-col d-flex flex-column flex-fill flex-wrap">
                         <h3>{job.jobtitle}</h3>
                         <p className="m-0 w-100">
-                          Job starts on:{" "}
+                          {getTranslations("job_start_on")}:{" "}
                           {dateTime(job.jobStartDate || job.startDate)}
                         </p>
                         {path === "/job-proposal" &&
@@ -342,7 +340,9 @@ export default function JobDetail({
                         >
                           {job.budget ? `$${job.budget}` : ""}
                         </label>
-                        <span className="sub-heading">Weekly</span>
+                        <span className="sub-heading">
+                          {getTranslations("weekly")}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -354,7 +354,7 @@ export default function JobDetail({
                             <UserImage />
                           </span>
                           <p>
-                            <label>Job Posted by</label>
+                            <label>{getTranslations("job_posted_by")}</label>
                             <span>{`${job["job_seeker_id"]["fname"]} ${job["job_seeker_id"]["lname"]}`}</span>
                           </p>
                         </li>
@@ -379,7 +379,7 @@ export default function JobDetail({
                             </svg>
                           </span>
                           <p>
-                            <label>Location</label>
+                            <label>{getTranslations("location")}</label>
                             <span className="sub-heading">
                               {`${job["street"]}, ${job["city"]}, ${job["location"]}`}
                             </span>
@@ -404,7 +404,7 @@ export default function JobDetail({
                             </svg>
                           </span>
                           <p>
-                            <label>Job starts on</label>
+                            <label>{getTranslations("job_start_on")}</label>
                             <span className="sub-heading">
                               {StringToDate(job["jobStartDate" || "startDate"])}
                             </span>
@@ -435,7 +435,7 @@ export default function JobDetail({
                         />
                       </svg>
                     </span>
-                    Bidding ends in
+                    {getTranslations("bid_end_in")}
                   </label>
                 </h3>
                 <div className="job-detail-bid d-flex justify-content-center">
@@ -467,7 +467,7 @@ export default function JobDetail({
                 </div>
               </div>
               <div className="job-detail-desc">
-                <h4>About</h4>
+                <h4>{getTranslations("about")}</h4>
                 <Paragraph>{job.description}</Paragraph>
               </div>
 
@@ -479,7 +479,7 @@ export default function JobDetail({
                       _startJob(job._id, job.job_seeker_id._id, user.data._id)
                     }
                   >
-                    Start Job
+                    {getTranslations("start_job")}
                   </Button>
                 )}
                 {job.status === "in_progress" && path !== "/job-proposal" && (
@@ -504,7 +504,7 @@ export default function JobDetail({
                         />
                       </svg>
                     </span>
-                    Mark as Complete
+                    {getTranslations("mark_complete")}
                   </Button>
                 )}
               </div>
@@ -515,10 +515,14 @@ export default function JobDetail({
                     size="lg"
                     color="secondary"
                     onClick={() =>
-                      _approveJob(job._id, job.job_seeker_id._id, job.job_provider_id)
+                      _approveJob(
+                        job._id,
+                        job.job_seeker_id._id,
+                        job.job_provider_id
+                      )
                     }
                   >
-                    Mark as Done
+                    {getTranslations("mark_done")}
                   </Button>
                 </div>
               )}
@@ -538,7 +542,7 @@ export default function JobDetail({
                       } place-bid-btn`}
                       onClick={() => openBidForm()}
                     >
-                      Place a Bid
+                      {getTranslations("place_bid")}
                     </Button>
                   </div>
                 )}
@@ -548,7 +552,7 @@ export default function JobDetail({
                     className="place-bid-btn btn btn-secondary btn-lg"
                     to={`/login`}
                   >
-                    Login
+                    {getTranslations("login")}
                   </Link>
                 </div>
               )}
@@ -561,7 +565,7 @@ export default function JobDetail({
                 user.data._id == job.job_seeker_id._id &&
                 job.bidersLIstingcheck.length !== 0 && (
                   <div className="proposal-blc flex-shrink-0">
-                    <h4>PROPOSALS</h4>
+                    <h4>{getTranslations("proposals")}</h4>
                     {job.bidersLIstingcheck.map((item, key) => {
                       return (
                         <Proposal
@@ -596,7 +600,7 @@ export default function JobDetail({
                   dispatch(getSimilarProduct(1, [job.category]));
                 }}
               >
-                View New Tasks
+                {getTranslations("new_task")}
               </Button>
               <RenderSimilarProducts data={similarProducts} />
             </div>

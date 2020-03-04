@@ -144,7 +144,8 @@ class JobProposal extends Component {
 
 const mapStateToProps = (state) => ({
   userJobDetails: state.bid.userJobDetails,
-  _isLoading: state.loader.isFetching
+  _isLoading: state.loader.isFetching,
+  lang: state.user.lang
 });
 
 const mapDispatchToProps = {

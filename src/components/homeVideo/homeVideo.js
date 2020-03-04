@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
 import { BrowserView } from "react-device-detect";
 import "./homeVideo.scss";
-const HomeVideo = (path) => {
+import { getTranslations } from "../../utilities/translations";
+const HomeVideo = () => {
   const videoRef = useRef(null);
 
   let [paused, setPaused] = useState(
@@ -13,13 +14,10 @@ const HomeVideo = (path) => {
         <div className="home-video-blc d-flex justify-items-center align-items-center">
           <div>
             <h1>
-              How it <span>works?</span>
+              {getTranslations("how_it")}{" "}
+              <span>{getTranslations("works")}</span>
             </h1>
-            <p className="text-white">
-              Our objective is to provide a platform where service providers and
-              service seeker can come interact and exchange services on the
-              bases of requirements.
-            </p>
+            <p className="text-white">{getTranslations("how_works")}</p>
             <div className="home-video-inner d-flex justify-items-center align-items-center position-relative">
               <BrowserView>
                 {paused ? (
@@ -175,7 +173,7 @@ const HomeVideo = (path) => {
                   type="video/mp4"
                 />
                 {/* <source src={require('mov_bbb.ogg')} type="video/ogg" /> */}
-                Your browser does not support HTML5 video.
+                {getTranslations("video_not_supported")}
               </video>
             </div>
           </div>

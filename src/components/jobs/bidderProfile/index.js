@@ -9,6 +9,7 @@ import UserInfo from "./userInfo/userInfo";
 import { getUserDetails } from "./../../../actions/user";
 import Breadcrumb from "../../commonUi/breadcrumb/breadcrumb";
 import "./bidderProfile.scss";
+import { getTranslations } from "../../../utilities/translations";
 
 const BidderProfile = ({ user_id, review }) => {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ const BidderProfile = ({ user_id, review }) => {
     <>
       <div className="bidder-profl-wrapper">
         <div className="job-detail-hd d-flex align-items-center flex-shrink-0">
-          <h2 className="flex-fill">Profile</h2>
+          <h2 className="flex-fill">{getTranslations("profile")}</h2>
           <Breadcrumb />
         </div>
         <div className="data-page bidder-profl-blc position-relative">
@@ -46,53 +47,30 @@ const BidderProfile = ({ user_id, review }) => {
               <div className="bidder-profl-l">
                 <JobAddress job_seeker_id={biderDetails} />
               </div>
-              <div className="bidder-profl-r ml-auto d-flex flex-column">
-                {/* <div className="profile-bar ml-auto">
-                <span className="profile-percentage">95%</span>
-                <div className="progress">
-                  <div
-                    className="progress-bar bg-primary"
-                    role="progressbar"
-                    style={{ width: "25%" }}
-                  ></div>
-                </div>
-                <span className="d-block profile-bar-txt text-left">
-                  Profile Completion
-                  </span>
-              </div> */}
-                {/* <div className="mark-btn mt-auto">
-                <Button color="secondary" block>
-                  Mark as Done
-                  </Button>
-              </div> */}
-              </div>
+              <div className="bidder-profl-r ml-auto d-flex flex-column"></div>
             </div>
             <UserInfo description={biderDetails.about} />
             <div className="bidder-profl-rw bidder-profile-l-padd bidder-profile-list">
               <ul className="d-flex flex-wrap">
                 <li>
                   <h3>{biderDetails.total_jobs}</h3>
-                  <label>Jobs</label>
+                  <label>{getTranslations("jobs")}</label>
                 </li>
                 <li>
                   <h3>${biderDetails.total_earnings}k</h3>
-                  <label>Total Earnings</label>
+                  <label>{getTranslations("total_earning")}</label>
                 </li>
-                {/* <li>
-                  <h3>1,500</h3>
-                  <label>Hours Worked</label>
-                </li> */}
               </ul>
             </div>
           </div>
           <div className="bidder-profl-blc-rw bidder-review">
-            <h2>REVIEWS</h2>
+            <h2>{getTranslations("reviews")}</h2>
             {review.length !== 0
               ? review.map((item, key) => {
                   return <Proposal props={item} key={key} />;
                 })
               : ""}
-            {review.length === 0 && <h6>No review found.</h6>}
+            {review.length === 0 && <h6>{getTranslations("no_review")}</h6>}
           </div>
 
           {/* customchatbtn */}

@@ -36,7 +36,6 @@ const FilterBlock = ({
       <div className={`filter-bar-blc position-relative ${inputClass}`}>
         <div className="filter-bar-outer">
           <InputRange
-            // step={2}
             allowSameValues={true}
             maxValue={maxValue}
             minValue={minValue || 0}
@@ -44,16 +43,7 @@ const FilterBlock = ({
             onChange={(value) => setRange(value)}
             onChangeComplete={(value) => handleRange(value)}
           />
-
-          {/* <Progress value={50} className={"filter-bar " + (props.budgetFilter ? 'secondary-bg-dark' : '')}></Progress> */}
         </div>
-        {/* <button
-            color="primary"
-            className={
-              "p-0 filter-bar-btn " +
-              (props.budgetFilter ? "btn-secondary1" : "btn-primary1")
-            }
-          ></button> */}
       </div>
     </div>
   );

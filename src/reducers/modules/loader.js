@@ -8,7 +8,8 @@ import * as TYPE from "../../actions/constants";
 
 /******** Reducers ********/
 const initialState = {
-  isFetching: false
+  isFetching: false,
+  langLoader: true
 };
 
 export default function reducer(state = initialState, action) {
@@ -21,8 +22,10 @@ export default function reducer(state = initialState, action) {
       return { ...state, isFetching: false };
     case TYPE.FILTER_FAIL:
       return { ...state, isFetching: false };
+    case TYPE.LANGUAGE_LOADER:
+      return { ...state, langLoader: false };
     case TYPE.LOGOUT_USERS:
-      return initialState;
+      return { ...state, isFetching: false, langLoader: false };
     default:
       return state;
   }

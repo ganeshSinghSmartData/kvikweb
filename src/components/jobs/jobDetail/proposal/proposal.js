@@ -10,6 +10,7 @@ import { GetCards } from "../../../../actions/user";
 import { DaysBetween } from "../../../../utilities/common";
 import AcceptProposalModal from "../../../commonUi/modal/modal";
 import { acceptBid, rejectBid } from "../../../../actions/bid";
+import { getTranslations } from "../../../../utilities/translations";
 
 const Proposal = ({ props, jobId, history, isclick = false }) => {
   const dispatch = useDispatch();
@@ -44,14 +45,14 @@ const Proposal = ({ props, jobId, history, isclick = false }) => {
   const confirmAccept = () => {
     confirmAlert({
       title: "",
-      message: "Are you sure do you want to pay for this job ?",
+      message: getTranslations("pay_job_alert"),
       buttons: [
         {
-          label: "Yes",
+          label: getTranslations("yes"),
           onClick: () => setAcceptProposal(true)
         },
         {
-          label: "No",
+          label: getTranslations("no"),
           onClick: () => setOpenModal(false)
         }
       ]
@@ -119,7 +120,10 @@ const Proposal = ({ props, jobId, history, isclick = false }) => {
       <div className="proposal-col-r time-rate text-right flex-shrink-0">
         {props.job_provider_id && (
           <React.Fragment>
-            <span className="d-block"> {daysfrom} Day Ago</span>
+            <span className="d-block">
+              {" "}
+              {daysfrom} {getTranslations("day_ago")}
+            </span>
             <h3 className="text-primary">${props.bid_amount}</h3>
           </React.Fragment>
         )}

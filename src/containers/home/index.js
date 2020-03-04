@@ -100,8 +100,7 @@ class Home extends Component {
 
   handleForgotPassword = (values) => {};
 
-  handleSocialLogin = (user) => {
-  };
+  handleSocialLogin = (user) => {};
 
   handleSocialLoginFailure = (err) => {
     console.error("social error =====>", err);
@@ -139,6 +138,7 @@ class Home extends Component {
 const mapStateToProps = (state) => ({
   /* user: state.user,
     dashboard: state.dashboard */
+  lang: state.user.lang
 });
 
 const mapDispatchToProps = (dispatch) => ({

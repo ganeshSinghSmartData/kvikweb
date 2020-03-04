@@ -31,7 +31,6 @@ export const getBidList = (params, callback) => {
         dispatch(bid_list(response));
         callback(true);
       } else {
-        console.log("errror with 401 : ", response);
         toastErrorAction(dispatch, response.msg);
         callback(false);
       }
@@ -43,12 +42,10 @@ export const getBidList = (params, callback) => {
 export const getUserBidDetails = (params, callback) => {
   return (dispatch) => {
     ApiClient.post(`${apiUrl}/bid/user_job_detail`, params).then((response) => {
-      console.log("response11111111111111111", response);
       if (response.status === 200) {
         dispatch(bid_details(response));
         callback(true);
       } else {
-        console.log("errror with 401 : ", response);
         toastErrorAction(dispatch, response.msg);
         callback(false);
       }
@@ -75,7 +72,6 @@ export const getUserCompletedBid = (
         callback(true);
         dispatch(get_completed_bid(response.data));
       } else if (response.status === 401) {
-        console.log("errror with 401 : ");
         toastErrorAction(dispatch, response.msg);
         callback(false);
       } else {
@@ -103,10 +99,8 @@ export const getUserActiveBid = (
     ).then((response) => {
       if (response.status === 200) {
         dispatch(get_active_bid(response.data));
-        console.log("Call Attempt");
         callback(true);
       } else if (response.status === 401) {
-        console.log("errror with 401 : ");
         toastErrorAction(dispatch, response.msg);
         callback(false);
       } else {
@@ -128,7 +122,6 @@ export const getUserJobDetails = (params) => {
         if (response.status === 200) {
           dispatch(user_job_details(response.data));
         } else if (response.status === 401) {
-          console.log("errror with 401 : ");
           toastErrorAction(dispatch, response.msg);
         } else {
           toastErrorAction(dispatch, response.msg);
@@ -140,10 +133,10 @@ export const getUserJobDetails = (params) => {
 };
 
 /****** action creator for get Bidder Review for the bid ********/
-export const getBidderReview = (bidder_id, callback) => {
+export const getBidderReview = (bidder_id, callback = () => {}) => {
   return (dispatch, getState) => {
     const {
-      data: { token }
+      data: { token, _id }
     } = getState().user;
     ApiClient.get(
       `${apiUrl}/reviews/get_user_reviews/${bidder_id}`,
@@ -152,13 +145,14 @@ export const getBidderReview = (bidder_id, callback) => {
     ).then((response) => {
       if (response.status === 200) {
         callback(response.data);
-        // dispatch(reject_bid(response.data));
+        if (_id === bidder_id) {
+          dispatch({ type: TYPE.USERS_REVIEW, data: response.data });
+        }
       } else if (response.status === 401) {
-        console.log("errror with 401 : ");
         callback(false);
         toastErrorAction(dispatch, response.msg);
       } else {
-        console.log("Un certain error");
+        toastErrorAction(dispatch, response.msg);
       }
     });
   };
@@ -178,10 +172,9 @@ export const rejectBid = (params, callback) => {
           // dispatch(reject_bid(response.data));
         } else if (response.status === 401) {
           callback(false);
-          console.log("errror with 401 : ");
           toastErrorAction(dispatch, response.msg);
         } else {
-          console.log("Un certain error");
+          toastErrorAction(dispatch, response.msg);
         }
       }
     );
@@ -201,11 +194,10 @@ export const acceptBid = (params, callback) => {
           callback(true);
           // dispatch(accept_bid(response.data));
         } else if (response.status === 402) {
-          console.log("errror with 401 : ");
           toastAction(false, response.msg);
           callback(false);
         } else {
-          console.log("Un certain error");
+          toastAction(false, response.msg);
         }
       }
     );
@@ -224,13 +216,11 @@ export const startBid = (params, callback) => {
           toastAction(true, response.msg);
           callback(true);
         } else if (response.status === 402) {
-          console.log("errror with 401 : ");
           callback(false);
           toastAction(false, response.msg);
         } else {
           callback(false);
           toastErrorAction(dispatch, response.msg);
-          console.log("Un certain error");
         }
       }
     );
@@ -249,11 +239,9 @@ export const endBid = (params, callback) => {
           callback(true);
           toastAction(true, response.msg);
         } else if (response.status === 402) {
-          console.log("errror with 401 : ");
           callback(false);
           toastAction(false, response.msg);
         } else {
-          console.log("Un certain error");
           callback(false);
           toastErrorAction(dispatch, response.msg);
         }

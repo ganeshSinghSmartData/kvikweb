@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
-import { logout } from "./../../actions/user";
+import { Dropdown } from "react-bootstrap";
+import {
+  getTranslations,
+  changeLanguage,
+  getCurrentLanguage,
+  getAvailableTranslations
+} from "../../utilities/translations";
+// import { logout } from "./../../actions/user";
 import "./nav.scss";
 
 const Nav = (props) => {
@@ -19,13 +26,16 @@ const Nav = (props) => {
         document
           .querySelector("#blank-div")
           .setAttribute("style", "display:block");
-      document
-        .querySelector("#home")
-        .scrollIntoView({ block: "start", inline: "nearest" });
-      // let home = await document.getElementById("home");
-      // home && home.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+      document.querySelector("#home").scrollIntoView({
+        block: "start",
+        inline: "nearest"
+      });
     }
   };
+
+  const changeLang = useCallback((lang) => {
+    changeLanguage(lang);
+  }, []);
   return (
     <nav
       className={"d-flex align-items-center " + props.className}
@@ -42,7 +52,7 @@ const Nav = (props) => {
                 className="post-job-btn btn-block"
                 onClick={navVisibleHander}
               >
-                Post a Job
+                {getTranslations("post_job")}
               </Button>
             </Link>
           </li>
@@ -55,7 +65,7 @@ const Nav = (props) => {
               }}
               onClick={navVisibleHander}
             >
-              Browse Task
+              {getTranslations("browse_task")}
             </Link>
           </li>
           {!loggedInUser ? (
@@ -65,7 +75,7 @@ const Nav = (props) => {
                 to={"/about-us"}
                 onClick={navVisibleHander}
               >
-                About Qviktask
+                {getTranslations("about")} Qviktask
               </Link>
             </li>
           ) : (
@@ -76,7 +86,7 @@ const Nav = (props) => {
                   to={"/bid-list"}
                   onClick={navVisibleHander}
                 >
-                  Bids
+                  {getTranslations("bids")}
                 </Link>
               </li>
               <li>
@@ -85,16 +95,12 @@ const Nav = (props) => {
                   to={"/job-list"}
                   onClick={navVisibleHander}
                 >
-                  Jobs
+                  {getTranslations("jobs")}
                 </Link>
               </li>
             </>
           )}
-          {/* <li>
-            <Link className="btn btn-link" to={"/contact-us"} onClick={navVisibleHander}>
-              Contact Us
-            </Link>
-          </li> */}
+
           {!user.loggedIn && (
             <li>
               <Link
@@ -102,7 +108,7 @@ const Nav = (props) => {
                 to={"/register"}
                 onClick={navVisibleHander}
               >
-                Create an Account
+                {getTranslations("create_account")}
               </Link>
             </li>
           )}
@@ -113,9 +119,35 @@ const Nav = (props) => {
                 to={"/login"}
                 onClick={navVisibleHander}
               >
-                Login
+                {getTranslations("login")}
               </Link>
             )}
+          </li>
+          <li>
+            <Dropdown>
+              <Dropdown.Toggle
+                variant="light"
+                as="button"
+                id="languageDropdown"
+                className="btn btn-light"
+              >
+                {getCurrentLanguage() && getCurrentLanguage().toUpperCase()}
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                {getAvailableTranslations() &&
+                  getAvailableTranslations().map((i) => (
+                    <Dropdown.Item
+                      key={i}
+                      as="button"
+                      className={getCurrentLanguage() === i ? "disabled" : ""}
+                      onClick={() => changeLang(i)}
+                    >
+                      {i.toUpperCase()}
+                    </Dropdown.Item>
+                  ))}
+              </Dropdown.Menu>
+            </Dropdown>
           </li>
         </ul>
       }
