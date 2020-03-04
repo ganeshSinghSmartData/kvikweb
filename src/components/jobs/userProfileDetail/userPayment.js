@@ -275,7 +275,6 @@ const UserPayment = (props) => {
                 <div className="CardDemo payment-cardDemo payment-form">
                   <LocalForm
                     onSubmit={(values) => handleBankSubmit(values)}
-                    // onSubmitFailed={(e) => console.log("error===>", e)}
                   >
                     <ul className="card-detail-item">
                       <li>
