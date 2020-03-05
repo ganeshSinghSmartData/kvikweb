@@ -140,9 +140,10 @@ class PostNewJob extends Component {
     if (jobData.budget) {
       formData.append("budget", jobData.budget);
     }
-    formData.append("street", jobData.street);
-    formData.append("city", jobData.city);
-    formData.append("location", jobData.location);
+    formData.append("address", JSON.stringify(jobData.address));
+    // formData.append("street", jobData.street);
+    // formData.append("city", jobData.city);
+    // formData.append("location", jobData.location);
     formData.append("jobStartDate", newStartDate);
     formData.append("jobEndDate", newEndDate);
     formData.append("frequency", jobData.frequency);

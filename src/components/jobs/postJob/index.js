@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
@@ -16,6 +16,7 @@ import InputCell from "../../commonUi/input/inputCell";
 import Loader from "../../../components/commonUi/loader/loader";
 import ReviewJob from "./reviewJob/reviewJob";
 import { getTranslations } from "../../../utilities/translations";
+import GooglePlace from "../../commonUi/googlePlace";
 
 export default (props) => {
   let {
@@ -36,6 +37,7 @@ export default (props) => {
     _jobDetails && _jobDetails.images ? _jobDetails.images : []
   );
   const [imageData, setImageData] = useState({});
+  const [address, setAddress] = useState({});
   let { job } = useSelector((state) => state);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -145,6 +147,12 @@ export default (props) => {
   if (images && uploadedImages && uploadedImages.length + images.length > 5) {
     isImageLengthExist = true;
   }
+  const handleChange = useCallback((data) => {
+    console.log("changed", data);
+  }, []);
+  const handleSelect = useCallback((data) => {
+    console.log("select", data);
+  }, []);
   return (
     <div className="post-wrapper data-block ml-auto mr-auto position-relative">
       {dataload && <Loader loading={dataload} />}
@@ -176,7 +184,7 @@ export default (props) => {
           initialState={_jobDetails}
           onSubmit={(values) => {
             _handleJobPost(
-              values,
+              { ...values, address },
               startDate,
               endDate,
               imageData,
@@ -257,13 +265,17 @@ export default (props) => {
           {/* Stage 2 */}
           {_currentstage === 2 && (
             <div className="row flex-wrap post-job-form">
-              <div className="col-md-4">
+              <GooglePlace
+                onselect={(address) => setAddress(address)}
+                address={address}
+              />
+              {/* <div className="col-md-4">
                 <label className="input-title">
                   {getTranslations("Street")}
                 </label>
                 <InputCell
                   Name={"street"}
-                  Placeholder={getTranslations("Street__")}
+                  Placeholder={getTranslations("street")}
                   Model=".street"
                   InputType={"text"}
                   Length={20}
@@ -297,50 +309,8 @@ export default (props) => {
                     invalidNumber: "invalidNumber"
                   }}
                 />
-              </div>
-              {/* <PlacesAutocomplete
-                value={street}
-                onChange={this.handleChange}
-                onSelect={this.handleSelect}
-              >
-                {({
-                  getInputProps,
-                  suggestions,
-                  getSuggestionItemProps,
-                  loading
-                }) => (
-                  <div>
-                    <input
-                      {...getInputProps({
-                        placeholder: "Search Places ...",
-                        className: "location-search-input"
-                      })}
-                    />
-                    <div className="autocomplete-dropdown-container">
-                      {loading && <div>Loading...</div>}
-                      {suggestions.map((suggestion) => {
-                        const className = suggestion.active
-                          ? "suggestion-item--active"
-                          : "suggestion-item";
-                        // inline style for demonstration purpose
-                        const style = suggestion.active
-                          ? { backgroundColor: "#fafafa", cursor: "pointer" }
-                          : { backgroundColor: "#ffffff", cursor: "pointer" };
-                        return (
-                          <div
-                            {...getSuggestionItemProps(suggestion, {
-                              className,
-                              style
-                            })}
-                          >
-                            <span>{suggestion.description}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-              </PlacesAutocomplete> */}
+              </div> */}
+
               <div className="col-md-4">
                 <label className="input-title">
                   {getTranslations("start_date")}
