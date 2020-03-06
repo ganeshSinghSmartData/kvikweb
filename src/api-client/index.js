@@ -6,9 +6,21 @@
 import axios from "axios";
 import querystring from "querystring";
 import { setAuthorizationToken } from "../authorization";
+import { getCurrentLanguage } from "../utilities/translations";
 
 var config = {
-  headers: { "Content-Type": "application/json" }
+  headers: {
+    "Content-Type": "application/json"
+  }
+};
+
+var langHeaders = () => {
+  return {
+    headers: {
+      ...config.headers,
+      lang: (getCurrentLanguage() && getCurrentLanguage().toLowerCase()) || "en"
+    }
+  };
 };
 
 class ApiClient {
@@ -18,8 +30,7 @@ class ApiClient {
     }
     return new Promise(function(fulfill, reject) {
       axios
-        .post(url, JSON.stringify(params), config)
-
+        .post(url, JSON.stringify(params), langHeaders())
         .then(function(response) {
           fulfill(response.data);
         })
@@ -37,7 +48,7 @@ class ApiClient {
     setAuthorizationToken(axios, token);
     return new Promise(function(fulfill, reject) {
       axios
-        .put(url, JSON.stringify(params), config)
+        .put(url, JSON.stringify(params), langHeaders())
         .then(function(response) {
           fulfill(response.data);
         })
@@ -58,8 +69,7 @@ class ApiClient {
 
     return new Promise(function(fulfill, reject) {
       axios
-        .get(url, config)
-
+        .get(url, langHeaders())
         .then(function(response) {
           fulfill(response.data);
         })
@@ -79,7 +89,7 @@ class ApiClient {
     url = query ? `${url}?${query}` : url;
     return new Promise(function(fulfill, reject) {
       axios
-        .get(url, config)
+        .get(url, langHeaders())
 
         .then(function(response) {
           fulfill(response.data);
@@ -97,7 +107,7 @@ class ApiClient {
   static patch(url, params, token = null) {
     return new Promise(function(fulfill, reject) {
       axios
-        .patch(url, JSON.stringify(params), config)
+        .patch(url, JSON.stringify(params), langHeaders())
         .then(function(response) {
           fulfill(response.data);
         })
@@ -115,7 +125,7 @@ class ApiClient {
     setAuthorizationToken(axios, token);
     return new Promise(function(fulfill, reject) {
       axios
-        .delete(url, config)
+        .delete(url, langHeaders())
         .then(function(response) {
           fulfill(response.data);
         })
@@ -134,7 +144,7 @@ class ApiClient {
     return new Promise(function(fulfill, reject) {
       axios
         .post(url, params, {
-          ...config,
+          ...langHeaders(),
           ...{ headers: { "Content-Type": "multipart/form-data" } }
         })
 
@@ -159,7 +169,7 @@ class ApiClient {
       // body.append("file", params);
       axios
         .put(url, params, {
-          ...config,
+          ...langHeaders(),
           ...{ headers: { "Content-Type": "multipart/form-data" } }
         })
 
@@ -184,7 +194,7 @@ class ApiClient {
       body.append("file", params);
       axios
         .post(url, body, {
-          ...config,
+          ...langHeaders(),
           ...{ headers: { "Content-Type": "multipart/form-data" } }
         })
 
